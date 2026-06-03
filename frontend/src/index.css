@@ -1,0 +1,35 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --color-primary: #2E86AB;
+    --color-secondary: #A8DADC;
+    --color-background: #F1FAEE;
+    --color-accent: #457B9D;
+    --color-text: #1D3557;
+  }
+
+  body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: var(--color-background);
+    color: var(--color-text);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* Touch-friendly defaults for tablet/mobile */
+  button, a, [role="button"] {
+    min-height: 44px;
+    min-width: 44px;
+  }
+}
+
+@layer utilities {
+  /* Prevent text selection on interactive elements (better for drag/swipe) */
+  .no-select {
+    user-select: none;
+    -webkit-user-select: none;
+  }
+}
