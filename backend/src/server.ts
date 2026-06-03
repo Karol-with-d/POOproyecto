@@ -1,25 +1,10 @@
-import express, { Request, Response } from 'express';
-import cors from 'cors';
-import dotenv from 'dotenv';
-import path from 'path';
+import { App } from './config/App';
 
-// Load environment variables
-dotenv.config({ path: path.join(__dirname, '..', '.env') });
+// Puerto configurable vía variable de entorno, con fallback a 3000
+const PORT = parseInt(process.env.PORT || '3000', 10);
 
-const app = express();
-const PORT = process.env.PORT || 3000;
+// Instancia de App con inyección de puerto
+const app = new App(PORT);
 
-// Global middlewares
-app.use(cors());
-app.use(express.json());
-
-// Health check endpoint
-app.get('/api/health', (_req: Request, res: Response) => {
-  res.status(200).json({ status: 'ok', timestamp: new Date().toISOString() });
-});
-
-// TODO: Register routes here (T-002+)
-
-app.listen(PORT, () => {
-  console.log(`Servidor corriendo en http://localhost:${PORT}`);
-});
+// Iniciar servidor
+app.start();
