@@ -1,0 +1,138 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+}
+
+// ============================================
+// Usuario random sin sesion (restriccion global)
+// ============================================
+model User {
+  id        String   @id @default(uuid())
+  randomName String  @map("random_name")
+  createdAt DateTime @default(now()) @map("created_at")
+
+  scores   UserScore[]
+  progress UserProgress[]
+
+  @@map("users")
+}
+
+// ============================================
+// Semanas del programa (6 semanas)
+// ============================================
+model Semana {
+  id          String @id @default(uuid())
+  number      Int    @unique
+  title       String
+  description String? @db.Text
+  topic       String
+
+  activities    Activity[]
+  quizQuestions QuizQuestion[]
+  scores        UserScore[]
+  progress      UserProgress[]
+
+  @@index([number])
+  @@map("semanas")
+}
+
+// ============================================
+// Actividades de cada semana
+// ============================================
+model Activity {
+  id       String @id @default(uuid())
+  semanaId String @map("semana_id")
+  type     String // tipo de actividad (carousel, drag-drop, etc.)
+  title    String
+  order    Int    // orden dentro de la semana
+  config   Json?  // configuracion especifica en JSON
+
+  semana Semana @relation(fields: [semanaId], references: [id], onDelete: Cascade)
+
+  scores UserScore[]
+
+  @@index([semanaId])
+  @@index([order])
+  @@map("activities")
+}
+
+// ============================================
+// Preguntas del quiz por semana
+// ============================================
+model QuizQuestion {
+  id       String @id @default(uuid())
+  semanaId String @map("semana_id")
+  question String @db.Text
+  type     String // multiple_choice | true_false
+  order    Int
+
+  semana  Semana       @relation(fields: [semanaId], references: [id], onDelete: Cascade)
+  options QuizOption[]
+
+  @@index([semanaId])
+  @@index([order])
+  @@map("quiz_questions")
+}
+
+// ============================================
+// Opciones de cada pregunta de quiz
+// ============================================
+model QuizOption {
+  id         String  @id @default(uuid())
+  questionId String  @map("question_id")
+  text       String
+  isCorrect  Boolean @map("is_correct")
+
+  question QuizQuestion @relation(fields: [questionId], references: [id], onDelete: Cascade)
+
+  @@index([questionId])
+  @@map("quiz_options")
+}
+
+// ============================================
+// Puntuaciones de usuarios (por actividad y quiz)
+// ============================================
+model UserScore {
+  id         String   @id @default(uuid())
+  userId     String   @map("user_id")
+  semanaId   String   @map("semana_id")
+  activityId String?  @map("activity_id") // nullable para scores de quiz
+  score      Int      // 0-100
+  type       String   // activity | quiz
+  createdAt  DateTime @default(now()) @map("created_at")
+
+  user     User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  semana   Semana    @relation(fields: [semanaId], references: [id], onDelete: Cascade)
+  activity Activity? @relation(fields: [activityId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([semanaId])
+  @@index([activityId])
+  @@map("user_scores")
+}
+
+// ============================================
+// Progreso del usuario por semana
+// ============================================
+model UserProgress {
+  id           String    @id @default(uuid())
+  userId       String    @map("user_id")
+  semanaId     String    @map("semana_id")
+  completed    Boolean   @default(false)
+  globalScore  Int?      @map("global_score")
+  completedAt  DateTime? @map("completed_at")
+
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  semana Semana @relation(fields: [semanaId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, semanaId])
+  @@index([userId])
+  @@index([semanaId])
+  @@map("user_progress")
+}
