@@ -1,35 +1,49 @@
+@import url('https://fonts.googleapis.com/css2?family=Lexend:wght@400&family=Quicksand:wght@600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 @layer base {
-  :root {
-    --color-primary: #2E86AB;
-    --color-secondary: #A8DADC;
-    --color-background: #F1FAEE;
-    --color-accent: #457B9D;
-    --color-text: #1D3557;
-  }
-
   body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background-color: var(--color-background);
-    color: var(--color-text);
+    font-family: 'Lexend', sans-serif;
+    background-color: #fbf8fc;
+    color: #1b1b1e;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
   }
-
-  /* Touch-friendly defaults for tablet/mobile */
-  button, a, [role="button"] {
-    min-height: 44px;
-    min-width: 44px;
-  }
 }
 
-@layer utilities {
-  /* Prevent text selection on interactive elements (better for drag/swipe) */
-  .no-select {
-    user-select: none;
-    -webkit-user-select: none;
+@layer components {
+  /* Material Symbols Outlined */
+  .material-symbols-outlined {
+    font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+  }
+  .material-symbols-outlined.fill {
+    font-variation-settings: 'FILL' 1;
+  }
+
+  /* Soft, squishy inputs */
+  .input-squishy {
+    border: 2px solid transparent;
+    transition: all 0.2s ease-in-out;
+  }
+  .input-squishy:focus {
+    border-color: #8ba888;
+    box-shadow: 0 0 0 4px rgba(139, 168, 136, 0.2);
+    outline: none;
+  }
+
+  /* 3D Button Effect */
+  .btn-3d {
+    border-bottom-width: 4px;
+    border-bottom-color: #334d33;
+    transition: all 0.1s ease;
+  }
+  .btn-3d:active {
+    transform: translateY(2px);
+    border-bottom-width: 2px;
+    margin-top: 2px;
   }
 }
