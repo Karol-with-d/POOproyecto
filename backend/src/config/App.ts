@@ -2,6 +2,12 @@ import express, { Application, Request, Response, NextFunction } from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
 
+// Rutas de la API
+import userRoutes from '../routes/user.routes';
+import semanaRoutes from '../routes/semana.routes';
+import scoreRoutes from '../routes/score.routes';
+import progressRoutes from '../routes/progress.routes';
+
 /**
  * Clase App — encapsula la inicialización y configuración del servidor Express.
  * Recibe el puerto como parámetro en el constructor (inyección de configuración).
@@ -59,9 +65,11 @@ export class App {
       });
     });
 
-    // TODO: Registrar rutas de controladores aquí (T-009+)
-    // this.app.use('/api/users', userRoutes);
-    // this.app.use('/api/semanas', semanaRoutes);
+    // Rutas de la API
+    this.app.use('/api/users', userRoutes);
+    this.app.use('/api/semanas', semanaRoutes);
+    this.app.use('/api/scores', scoreRoutes);
+    this.app.use('/api', progressRoutes);
   }
 
   /**
