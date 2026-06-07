@@ -1,44 +1,43 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { createUser } from '../services/api';
 
 /**
- * WelcomePage — Pantalla de inicio/bienvenida adaptada del diseño UNIVO Login.
+ * WelcomePage — Pantalla de bienvenida donde el niño escribe su nombre.
  * 
- * Nota: Aunque visualmente parece un login, no hay autenticacion real.
- * El niño escribe su propio nombre (random name) y se persiste en BD.
- * Si no escribe nada, el backend genera uno aleatorio como fallback.
+ * Flujo:
+ * 1. Niño escribe un nombre inventado en el campo
+ * 2. Toca "Entrar"
+ * 3. Frontend envía POST /api/users al backend
+ * 4. Backend persiste el usuario y retorna { id, randomName, createdAt }
+ * 5. Frontend guarda el usuario en localStorage
+ * 6. Navega al home
  * 
  * Restricciones globales cumplidas:
  * - Sin sesiones ni tokens de seguridad
- * - Usuario identificado por nombre escrito por el niño
- * - Interaccion 100% tactil (tap)
+ * - Sin tipeo de contraseñas (solo nombre libre)
+ * - Interacción 100% táctil (tap)
  */
 export default function WelcomePage() {
   const navigate = useNavigate();
   const [nickname, setNickname] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState('');
 
   const handleStart = async (e: React.FormEvent) => {
     e.preventDefault();
+    setError('');
     setIsLoading(true);
 
     try {
-      // TODO: conectar con POST /api/users enviando el nombre del niño
-      // Por ahora, simulamos la creacion localmente
-      const randomNames = ['CieloAzul123', 'FuerteLeon456', 'RapidoTigre789', 'BrillanteSol321'];
-      const randomName = randomNames[Math.floor(Math.random() * randomNames.length)];
-      const userId = crypto.randomUUID();
-
-      const user = {
-        id: userId,
-        randomName: nickname.trim() || randomName,
-        createdAt: new Date().toISOString(),
-      };
+      const name = nickname.trim() || undefined;
+      const user = await createUser(name || 'Explorador');
 
       localStorage.setItem('plataforma_user', JSON.stringify(user));
       navigate('/home');
-    } catch (error) {
-      console.error('Error al crear usuario:', error);
+    } catch (err: any) {
+      console.error('Error al crear usuario:', err);
+      setError('Ups, algo salió mal. Intenta de nuevo.');
     } finally {
       setIsLoading(false);
     }
@@ -66,8 +65,10 @@ export default function WelcomePage() {
         <div className="w-full max-w-[1024px] grid grid-cols-4 md:grid-cols-12 gap-gutter items-center">
           {/* Illustration Area */}
           <div className="col-span-4 md:col-span-6 flex justify-center items-center mb-lg md:mb-0">
-            <div className="relative w-full max-w-[400px] aspect-square rounded-full bg-surface-container-low flex items-center justify-center p-md overflow-hidden border-2 border-surface-container-high"
-                 style={{ boxShadow: 'inset 0 4px 24px rgba(74,101,73,0.05)' }}>
+            <div
+              className="relative w-full max-w-[400px] aspect-square rounded-full bg-surface-container-low flex items-center justify-center p-md overflow-hidden border-2 border-surface-container-high"
+              style={{ boxShadow: 'inset 0 4px 24px rgba(74,101,73,0.05)' }}
+            >
               {/* Soft organic blob background */}
               <div className="absolute inset-0 bg-gradient-to-br from-primary-fixed to-secondary-fixed opacity-30 blur-2xl rounded-full scale-110"></div>
               <img
@@ -93,6 +94,12 @@ export default function WelcomePage() {
                 </p>
               </div>
 
+              {error && (
+                <div className="mb-md p-sm bg-error-container text-on-error-container rounded-xl text-center font-body-md">
+                  {error}
+                </div>
+              )}
+
               <form className="flex flex-col gap-lg" onSubmit={handleStart}>
                 {/* Username Field */}
                 <div className="flex flex-col gap-xs">
@@ -110,7 +117,8 @@ export default function WelcomePage() {
                       placeholder="Tu nombre aquí"
                       value={nickname}
                       onChange={(e) => setNickname(e.target.value)}
-                      className="input-squishy w-full bg-surface-container-low text-on-surface rounded-xl py-sm pl-[48px] pr-sm font-body-lg text-body-lg h-[64px] border-2 border-surface-container placeholder:text-outline-variant focus:bg-surface-container-lowest"
+                      disabled={isLoading}
+                      className="input-squishy w-full bg-surface-container-low text-on-surface rounded-xl py-sm pl-[48px] pr-sm font-body-lg text-body-lg h-[64px] border-2 border-surface-container placeholder:text-outline-variant focus:bg-surface-container-lowest disabled:opacity-60"
                     />
                   </div>
                 </div>
