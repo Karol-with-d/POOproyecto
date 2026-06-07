@@ -6,7 +6,7 @@ import { UserService } from '../services/UserService';
  * UserController — maneja los endpoints de usuario.
  * Inyecta UserService en el constructor (inyección de dependencias).
  * 
- * Nota POO (T-008): separación de responsabilidades.
+ * Nota POO: separación de responsabilidades.
  */
 export class UserController extends BaseController {
   private userService: UserService;
@@ -17,12 +17,14 @@ export class UserController extends BaseController {
   }
 
   /**
-   * POST /api/users/random
-   * Genera un usuario con nombre aleatorio y lo persiste.
+   * POST /api/users
+   * Crea un usuario con el nombre proporcionado por el niño.
+   * Si no se envía nombre, genera uno aleatorio como fallback.
    */
-  async createRandom(req: Request, res: Response): Promise<void> {
+  async create(req: Request, res: Response): Promise<void> {
     try {
-      const user = await this.userService.createRandomUser();
+      const { randomName } = req.body;
+      const user = await this.userService.createUser(randomName);
       this.sendSuccess(res, user, 201);
     } catch (error) {
       this.sendError(res, 'Error al crear usuario', 500);

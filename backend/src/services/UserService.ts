@@ -8,11 +8,12 @@ import type { User } from '@prisma/client';
  */
 export class UserService {
   /**
-   * Crea un usuario con nombre aleatorio.
+   * Crea un usuario con el nombre proporcionado.
+   * Si no se proporciona nombre, genera uno aleatorio.
    */
-  async createRandomUser(): Promise<User> {
-    const randomName = await UserModel.createRandomName();
-    return UserModel.create({ randomName });
+  async createUser(randomName?: string): Promise<User> {
+    const name = randomName?.trim() || await UserModel.createRandomName();
+    return UserModel.create({ randomName: name });
   }
 
   /**

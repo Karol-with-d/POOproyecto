@@ -8,8 +8,8 @@ const router = Router();
 const userService = new UserService();
 const userController = new UserController(userService);
 
-// POST /api/users/random — genera usuario con nombre aleatorio
-router.post('/random', (req, res) => userController.createRandom(req, res));
+// POST /api/users — crea usuario con nombre proporcionado o aleatorio
+router.post('/', (req, res) => userController.create(req, res));
 
 // GET /api/users/:id — detalle de usuario
 router.get('/:id', (req, res) => userController.getById(req, res));

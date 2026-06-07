@@ -5,12 +5,12 @@ import { useNavigate } from 'react-router-dom';
  * WelcomePage — Pantalla de inicio/bienvenida adaptada del diseño UNIVO Login.
  * 
  * Nota: Aunque visualmente parece un login, no hay autenticacion real.
- * El usuario random se genera automaticamente via API (T-008).
- * El campo de nombre es opcional y se usa como apodo personal.
+ * El niño escribe su propio nombre (random name) y se persiste en BD.
+ * Si no escribe nada, el backend genera uno aleatorio como fallback.
  * 
  * Restricciones globales cumplidas:
  * - Sin sesiones ni tokens de seguridad
- * - Usuario random generado por el backend
+ * - Usuario identificado por nombre escrito por el niño
  * - Interaccion 100% tactil (tap)
  */
 export default function WelcomePage() {
@@ -23,8 +23,8 @@ export default function WelcomePage() {
     setIsLoading(true);
 
     try {
-      // TODO: T-008 — conectar con POST /api/users/random
-      // Por ahora, simulamos un usuario random localmente
+      // TODO: conectar con POST /api/users enviando el nombre del niño
+      // Por ahora, simulamos la creacion localmente
       const randomNames = ['CieloAzul123', 'FuerteLeon456', 'RapidoTigre789', 'BrillanteSol321'];
       const randomName = randomNames[Math.floor(Math.random() * randomNames.length)];
       const userId = crypto.randomUUID();
