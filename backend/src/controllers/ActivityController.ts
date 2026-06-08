@@ -9,7 +9,7 @@ export class ActivityController extends BaseController {
   private activityService: ActivityService;
 
   constructor(activityService: ActivityService) {
-    super();
+    super('ActivityController');
     this.activityService = activityService;
   }
 

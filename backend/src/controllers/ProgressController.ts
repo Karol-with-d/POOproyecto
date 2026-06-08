@@ -9,7 +9,7 @@ export class ProgressController extends BaseController {
   private progressService: ProgressService;
 
   constructor(progressService: ProgressService) {
-    super();
+    super('ProgressController');
     this.progressService = progressService;
   }
 

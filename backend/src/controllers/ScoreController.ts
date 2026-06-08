@@ -9,7 +9,7 @@ export class ScoreController extends BaseController {
   private scoreService: ScoreService;
 
   constructor(scoreService: ScoreService) {
-    super();
+    super('ScoreController');
     this.scoreService = scoreService;
   }
 

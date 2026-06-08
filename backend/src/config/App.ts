@@ -1,6 +1,8 @@
 import express, { Application, Request, Response, NextFunction } from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
+import morgan from 'morgan';
+import { Logger } from '../utils/logger';
 
 // Rutas de la API
 import userRoutes from '../routes/user.routes';
@@ -39,6 +41,24 @@ export class App {
    * Registra middlewares globales: CORS, JSON parser, etc.
    */
   private initializeMiddlewares(): void {
+    const appLogger = new Logger('App');
+
+    // Logging de peticiones HTTP
+    this.app.use(
+      morgan((tokens, req, res) => {
+        return [
+          `[${new Date().toISOString()}]`,
+          `[HTTP]`,
+          tokens.method(req, res),
+          tokens.url(req, res),
+          tokens.status(req, res),
+          tokens['response-time'](req, res) + 'ms',
+          '-',
+          tokens['remote-addr'](req, res),
+        ].join(' ');
+      })
+    );
+
     // CORS configurado para aceptar peticiones del frontend
     const frontendUrl = process.env.FRONTEND_URL || 'http://localhost:5173';
     this.app.use(
@@ -47,6 +67,7 @@ export class App {
         credentials: false, // sin sesiones ni tokens (restricción global)
       })
     );
+    appLogger.info('CORS habilitado para', { frontendUrl });
 
     // Parseo de JSON
     this.app.use(express.json());
@@ -76,8 +97,16 @@ export class App {
    * Middleware de manejo de errores global.
    */
   private initializeErrorHandling(): void {
-    this.app.use((err: Error, _req: Request, res: Response, _next: NextFunction) => {
-      console.error('Error:', err.message);
+    const errorLogger = new Logger('ErrorHandler');
+
+    this.app.use((err: Error, req: Request, res: Response, _next: NextFunction) => {
+      errorLogger.error('Error no capturado', {
+        message: err.message,
+        stack: err.stack,
+        url: req.originalUrl,
+        method: req.method,
+        body: req.body,
+      });
       res.status(500).json({
         status: 'error',
         message: 'Error interno del servidor',
@@ -85,7 +114,8 @@ export class App {
     });
 
     // 404 — ruta no encontrada
-    this.app.use((_req: Request, res: Response) => {
+    this.app.use((req: Request, res: Response) => {
+      errorLogger.warn('Ruta no encontrada', { method: req.method, url: req.originalUrl });
       res.status(404).json({
         status: 'error',
         message: 'Recurso no encontrado',

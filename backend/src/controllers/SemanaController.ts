@@ -12,7 +12,7 @@ export class SemanaController extends BaseController {
   private semanaService: SemanaService;
 
   constructor(semanaService: SemanaService) {
-    super();
+    super('SemanaController');
     this.semanaService = semanaService;
   }
 

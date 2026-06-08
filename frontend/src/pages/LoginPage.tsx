@@ -3,22 +3,22 @@ import { useNavigate } from 'react-router-dom';
 import { createUser } from '../services/api';
 
 /**
- * WelcomePage — Pantalla de bienvenida donde el niño escribe su nombre.
- * 
+ * LoginPage — Pantalla de inicio de sesión donde el niño escribe su nombre.
+ *
  * Flujo:
  * 1. Niño escribe un nombre inventado en el campo
  * 2. Toca "Entrar"
  * 3. Frontend envía POST /api/users al backend
  * 4. Backend persiste el usuario y retorna { id, randomName, createdAt }
  * 5. Frontend guarda el usuario en localStorage
- * 6. Navega al home
- * 
+ * 6. Navega al home (/home)
+ *
  * Restricciones globales cumplidas:
  * - Sin sesiones ni tokens de seguridad
  * - Sin tipeo de contraseñas (solo nombre libre)
  * - Interacción 100% táctil (tap)
  */
-export default function WelcomePage() {
+export default function LoginPage() {
   const navigate = useNavigate();
   const [nickname, setNickname] = useState('');
   const [isLoading, setIsLoading] = useState(false);
