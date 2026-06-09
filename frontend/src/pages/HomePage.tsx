@@ -70,7 +70,15 @@ export default function HomePage() {
           <div className="flex items-center justify-between gap-3 rounded-xl px-4 py-3 border-b-4 transition-transform hover:-translate-y-1 border-[#334d33] bg-white text-on-surface">
             <div className="flex items-center gap-4">
               <div className="w-10 h-10 rounded-full overflow-hidden bg-primary-container flex items-center justify-center">
-                <span className="material-symbols-outlined text-on-primary-container">face</span>
+                <img
+                  alt="Avatar de usuario"
+                  className="w-full h-full object-cover"
+                  src="/images/avatar.png"
+                  onError={(e) => {
+                    const target = e.target as HTMLImageElement;
+                    target.style.display = 'none';
+                  }}
+                />
               </div>
               <span className="font-label-lg">{userName}</span>
             </div>
@@ -91,9 +99,9 @@ export default function HomePage() {
           </div>
           <div className="w-32 h-32 md:w-40 md:h-40 rounded-full border-4 border-surface-container-highest shadow-md bg-primary-container flex items-center justify-center overflow-hidden">
             <img
-              alt="Avatar de usuario"
+              alt="Guia de aventura"
               className="w-full h-full object-cover"
-              src="/images/avatar.png"
+              src="/images/guide.png"
               onError={(e) => {
                 // Fallback si la imagen no existe aun
                 (e.target as HTMLImageElement).style.display = 'none';
