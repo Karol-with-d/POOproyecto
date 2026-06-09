@@ -74,7 +74,12 @@ export default function LoginPage() {
               <img
                 alt="Personaje explorador de ciencias"
                 className="relative z-10 w-full h-full object-cover rounded-full shadow-sm opacity-90 object-center"
-                src="https://lh3.googleusercontent.com/aida-public/AB6AXuCAhhBWFLa0i_5lwsVu_0uB8j5DK-yPvHxC4qQLUFNiiVXmnJe-gFW-gnLaV4_arqKvW3e57r_w0P-WBejmKP4Y7cnsGVVGeKEdJGBi6XbznVPVE8VctEJ9WmykXxbh2xSeE9kbUOWsmrc3uE44AZBrp8e3dI-M9Oyq2-QlSZcjLXWeSabwP8dK4Gh-D86SCvCR0tnGUqSm12-kTae41yHYqJLfW9t0xBsgG_GGhtUuYUpsTxAEWwdlvVCciIRJmehjcAfI_F_qsPMr"
+                src="/images/avatar.png"
+                onError={(e) => {
+                  // Fallback si la imagen no existe aun
+                  const target = e.target as HTMLImageElement;
+                  target.style.display = 'none';
+                }}
               />
             </div>
           </div>

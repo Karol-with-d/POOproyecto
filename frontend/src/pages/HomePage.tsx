@@ -90,7 +90,22 @@ export default function HomePage() {
             <div className="absolute -bottom-2 left-1/2 -translate-x-1/2 w-4 h-4 bg-white border-b-4 border-r-4 border-surface-container-highest transform rotate-45"></div>
           </div>
           <div className="w-32 h-32 md:w-40 md:h-40 rounded-full border-4 border-surface-container-highest shadow-md bg-primary-container flex items-center justify-center overflow-hidden">
-            <span className="material-symbols-outlined text-6xl md:text-7xl text-on-primary-container">psychology</span>
+            <img
+              alt="Avatar de usuario"
+              className="w-full h-full object-cover"
+              src="/images/avatar.png"
+              onError={(e) => {
+                // Fallback si la imagen no existe aun
+                (e.target as HTMLImageElement).style.display = 'none';
+                const parent = (e.target as HTMLImageElement).parentElement;
+                if (parent) {
+                  const fallback = document.createElement('span');
+                  fallback.className = 'material-symbols-outlined text-6xl md:text-7xl text-on-primary-container';
+                  fallback.textContent = 'psychology';
+                  parent.appendChild(fallback);
+                }
+              }}
+            />
           </div>
         </div>
 
