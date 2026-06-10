@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import { getSemanas } from '../services/api';
 
 interface SemanaData {
@@ -67,13 +67,16 @@ export default function HomePage() {
             <span className="material-symbols-outlined">map</span>
             <span className="font-label-lg">Mapa</span>
           </a>
-          <div className="flex items-center justify-between gap-3 rounded-xl px-4 py-3 border-b-4 transition-transform hover:-translate-y-1 border-[#334d33] bg-white text-on-surface">
+          <Link
+            to="/perfil"
+            className="flex items-center justify-between gap-3 rounded-xl px-4 py-3 border-b-4 transition-transform hover:-translate-y-1 border-[#334d33] bg-white text-on-surface"
+          >
             <div className="flex items-center gap-4">
               <div className="w-10 h-10 rounded-full overflow-hidden bg-primary-container flex items-center justify-center">
                 <img
                   alt="Avatar de usuario"
                   className="w-full h-full object-cover"
-                  src="/images/avatar.png"
+                  src="/images/Boxer Frog Box Toad.jpg"
                   onError={(e) => {
                     const target = e.target as HTMLImageElement;
                     target.style.display = 'none';
@@ -82,10 +85,8 @@ export default function HomePage() {
               </div>
               <span className="font-label-lg">{userName}</span>
             </div>
-            <button className="text-on-surface opacity-80 hover:opacity-100 transition-opacity">
-              <span className="material-symbols-outlined">settings</span>
-            </button>
-          </div>
+            <span className="material-symbols-outlined text-on-surface opacity-80">settings</span>
+          </Link>
         </nav>
       </aside>
 
@@ -101,7 +102,7 @@ export default function HomePage() {
             <img
               alt="Guia de aventura"
               className="w-full h-full object-cover"
-              src="/images/guide.png"
+              src="/images/download (12).jpg"
               onError={(e) => {
                 // Fallback si la imagen no existe aun
                 (e.target as HTMLImageElement).style.display = 'none';
