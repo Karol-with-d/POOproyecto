@@ -97,7 +97,7 @@ export default function ProfilePage() {
               <img
                 alt="Avatar de usuario"
                 className="w-full h-full object-cover"
-                src="/images/avatar.png"
+                src="/images/Boxer Frog Box Toad.jpg"
                 onError={(e) => { (e.target as HTMLImageElement).style.display = 'none'; }}
               />
             </div>
@@ -124,7 +124,7 @@ export default function ProfilePage() {
                   <img
                     alt="Avatar de usuario"
                     className="w-full h-full object-cover"
-                    src="/images/avatar.png"
+                    src="/images/Boxer Frog Box Toad.jpg"
                     onError={(e) => { (e.target as HTMLImageElement).style.display = 'none'; }}
                   />
                 </div>
@@ -188,11 +188,11 @@ export default function ProfilePage() {
             {/* Action Buttons */}
             <div className="mt-lg w-full flex flex-col sm:flex-row gap-4 justify-center">
               <Link
-                to="/home"
+                to="/login"
                 className="squishy-button flex items-center justify-center gap-2 px-8 py-4 bg-primary text-on-primary rounded-2xl font-label-lg text-label-lg w-full sm:w-auto"
               >
-                <span className="material-symbols-outlined">map</span>
-                Volver al Mapa
+                <span className="material-symbols-outlined">logout</span>
+                Cambiar de usuario
               </Link>
             </div>
           </div>
