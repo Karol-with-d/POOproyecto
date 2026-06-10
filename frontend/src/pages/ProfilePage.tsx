@@ -1,24 +1,48 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
+import { getUserProgress } from '../services/api';
 
 interface UserData {
+  id: string;
   randomName: string;
+}
+
+interface ProgressData {
+  semanaId: string;
+  semanaNumber: number;
+  completed: boolean;
+  score: number | null;
 }
 
 /**
  * ProfilePage — Perfil del usuario con progreso de semanas.
  * 
  * Nota: Diseño visual adaptado del mockup UNIVO Perfil.
+ * La barra de progreso se sincroniza con el backend en tiempo real.
  */
 export default function ProfilePage() {
   const [userName, setUserName] = useState('Explorador');
-  const [completedWeeks] = useState<number[]>([1, 2, 3]);
+  const [progress, setProgress] = useState<ProgressData[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     const stored = localStorage.getItem('plataforma_user');
     if (stored) {
       const user: UserData = JSON.parse(stored);
       setUserName(user.randomName);
+
+      // Cargar progreso real desde la API
+      getUserProgress(user.id)
+        .then((data) => {
+          setProgress(data);
+          setIsLoading(false);
+        })
+        .catch((err) => {
+          console.error('Error cargando progreso:', err);
+          setIsLoading(false);
+        });
+    } else {
+      setIsLoading(false);
     }
   }, []);
 
@@ -30,6 +54,15 @@ export default function ProfilePage() {
     { number: 5, label: 'Sem. 5' },
     { number: 6, label: 'Sem. 6' },
   ];
+
+  // Determinar si una semana está completada según el progreso del API
+  const isWeekCompleted = (weekNumber: number): boolean => {
+    const weekProgress = progress.find((p) => p.semanaNumber === weekNumber);
+    return weekProgress?.completed ?? false;
+  };
+
+  // Contar semanas completadas
+  const completedCount = progress.filter((p) => p.completed).length;
 
   return (
     <div className="font-body-md text-on-surface antialiased overflow-hidden selection:bg-primary-container selection:text-on-primary-container">
@@ -64,7 +97,7 @@ export default function ProfilePage() {
               <img
                 alt="Avatar de usuario"
                 className="w-full h-full object-cover"
-                src="/images/Boxer Frog Box Toad.jpg"
+                src="/images/avatar.png"
                 onError={(e) => { (e.target as HTMLImageElement).style.display = 'none'; }}
               />
             </div>
@@ -91,7 +124,7 @@ export default function ProfilePage() {
                   <img
                     alt="Avatar de usuario"
                     className="w-full h-full object-cover"
-                    src="/images/Boxer Frog Box Toad.jpg"
+                    src="/images/avatar.png"
                     onError={(e) => { (e.target as HTMLImageElement).style.display = 'none'; }}
                   />
                 </div>
@@ -112,32 +145,43 @@ export default function ProfilePage() {
                     <span className="material-symbols-outlined text-primary">bolt</span>
                     Energía de Aprendizaje
                   </h2>
+                  {!isLoading && (
+                    <span className="font-label-md text-label-md text-primary">
+                      {completedCount} de 6 semanas
+                    </span>
+                  )}
                 </div>
 
                 {/* Large Progress Bar */}
-                <div className="flex gap-2 w-full h-10">
-                  {weeks.map((week) => {
-                    const isCompleted = completedWeeks.includes(week.number);
-                    return (
-                      <div key={week.number} className="flex-1 flex flex-col gap-1">
-                        <div
-                          className={`h-4 w-full rounded-full shadow-sm ${
-                            isCompleted
-                              ? 'bg-primary'
-                              : 'bg-surface-container-highest border border-outline-variant'
-                          }`}
-                        ></div>
-                        <span
-                          className={`text-[10px] text-center font-bold ${
-                            isCompleted ? 'text-primary' : 'text-outline'
-                          }`}
-                        >
-                          {week.label}
-                        </span>
-                      </div>
-                    );
-                  })}
-                </div>
+                {isLoading ? (
+                  <div className="flex items-center justify-center h-10">
+                    <span className="font-body-md text-outline">Cargando progreso...</span>
+                  </div>
+                ) : (
+                  <div className="flex gap-2 w-full h-10">
+                    {weeks.map((week) => {
+                      const completed = isWeekCompleted(week.number);
+                      return (
+                        <div key={week.number} className="flex-1 flex flex-col gap-1">
+                          <div
+                            className={`h-4 w-full rounded-full shadow-sm transition-all duration-500 ${
+                              completed
+                                ? 'bg-primary'
+                                : 'bg-surface-container-highest border border-outline-variant'
+                            }`}
+                          ></div>
+                          <span
+                            className={`text-[10px] text-center font-bold ${
+                              completed ? 'text-primary' : 'text-outline'
+                            }`}
+                          >
+                            {week.label}
+                          </span>
+                        </div>
+                      );
+                    })}
+                  </div>
+                )}
               </div>
             </div>
 
