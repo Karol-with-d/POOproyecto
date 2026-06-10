@@ -35,7 +35,7 @@ export default function ProfilePage() {
     <div className="font-body-md text-on-surface antialiased overflow-hidden selection:bg-primary-container selection:text-on-primary-container">
       {/* Top AppBar (Mobile Only) */}
       <header className="md:hidden flex justify-between items-center px-margin-mobile py-4 w-full top-0 sticky bg-surface shadow-sm z-50">
-        <div className="font-headline-md text-headline-md text-primary font-bold tracking-tight">UNIVO</div>
+        <div className="font-headline-md text-headline-md text-primary font-bold tracking-tight">CIENCIA SEGUNDO GRADO</div>
         <div className="flex gap-4 text-primary">
           <span className="material-symbols-outlined fill">star</span>
           <span className="material-symbols-outlined fill">bolt</span>
@@ -45,7 +45,7 @@ export default function ProfilePage() {
       <div className="flex h-screen w-full relative">
         {/* Side Navigation Bar (Desktop Only) */}
         <nav className="hidden md:flex flex-col p-6 gap-2 bg-surface-container-low border-r-2 border-outline-variant h-screen w-64 fixed left-0 top-0 z-40">
-          <div className="font-headline-md text-headline-md text-primary font-bold mb-8 tracking-tight pl-4">UNIVO</div>
+          <div className="font-headline-md text-headline-md text-primary font-bold mb-8 tracking-tight pl-4">CIENCIA SEGUNDO GRADO</div>
 
           <Link
             to="/home"
@@ -64,7 +64,7 @@ export default function ProfilePage() {
               <img
                 alt="Avatar de usuario"
                 className="w-full h-full object-cover"
-                src="/images/avatar.png"
+                src="/images/Boxer Frog Box Toad.jpg"
                 onError={(e) => { (e.target as HTMLImageElement).style.display = 'none'; }}
               />
             </div>
@@ -91,7 +91,7 @@ export default function ProfilePage() {
                   <img
                     alt="Avatar de usuario"
                     className="w-full h-full object-cover"
-                    src="/images/avatar.png"
+                    src="/images/Boxer Frog Box Toad.jpg"
                     onError={(e) => { (e.target as HTMLImageElement).style.display = 'none'; }}
                   />
                 </div>
