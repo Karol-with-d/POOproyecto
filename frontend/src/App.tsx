@@ -18,6 +18,8 @@ import ReflectionCardsStartPage from './pages/ReflectionCardsStartPage';
 import ReflectionCardsGamePage from './pages/ReflectionCardsGamePage';
 import BuildItStartPage from './pages/BuildItStartPage';
 import BuildItGamePage from './pages/BuildItGamePage';
+import HechoDeStartPage from './pages/HechoDeStartPage';
+import HechoDeGamePage from './pages/HechoDeGamePage';
 
 function App() {
   return (
@@ -41,6 +43,8 @@ function App() {
         <Route path="/semana/:semanaId/reflection-cards/play" element={<ReflectionCardsGamePage />} />
         <Route path="/semana/:semanaId/build-it" element={<BuildItStartPage />} />
         <Route path="/semana/:semanaId/build-it/play" element={<BuildItGamePage />} />
+        <Route path="/semana/:semanaId/hecho-de" element={<HechoDeStartPage />} />
+        <Route path="/semana/:semanaId/hecho-de/play" element={<HechoDeGamePage />} />
         <Route path="/perfil" element={<ProfilePage />} />
         <Route path="/" element={<Navigate to="/login" replace />} />
       </Routes>

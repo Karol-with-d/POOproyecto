@@ -20,7 +20,7 @@ export default function Semana3Page() {
       desc: 'Explora el jardín y el mercado para descubrir de qué materiales están hechos los objetos que nos rodean.',
       color: 'bg-[#ccebc7]',
       image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuDB2C7fpZD0p374C5W7SgegXpBjwu3EcQshRAj88SjhM2hErvVZcl3N39HmSNv0BSnJnh8kK3XYG6hT1Tvz4mQxB-aOv2X8qnFLY48MAO_SPBllgQvdzQamChc7m2luD0SFtCG4kEs41woHBXl79-AFBHdiCoXilykFLhMywAiwwbE5S4KT5cFnYYOwI88D4YdjwfzA-7VCTEXiC6pH3nH5qvbTzKXC2YUGaTdaBHlewqBlCC5xkGeTvi1SoXEfgjNrJIXtY1xS-bQ',
-      link: null as string | null,
+      link: '/semana/3/hecho-de',
     },
     {
       id: 'a-reparar',
