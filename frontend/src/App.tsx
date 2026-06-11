@@ -10,6 +10,7 @@ import RescataPulgarcitoStartPage from './pages/RescataPulgarcitoStartPage';
 import RescataPulgarcitoGamePage from './pages/RescataPulgarcitoGamePage';
 import SortBySizeStartPage from './pages/SortBySizeStartPage';
 import SortBySizeGamePage from './pages/SortBySizeGamePage';
+import ColeccionandoObjetosGamePage from './pages/ColeccionandoObjetosGamePage';
 
 function App() {
   return (
@@ -25,6 +26,7 @@ function App() {
         <Route path="/semana/:semanaId/rescata-pulgarcito/play" element={<RescataPulgarcitoGamePage />} />
         <Route path="/semana/:semanaId/sort-by-size" element={<SortBySizeStartPage />} />
         <Route path="/semana/:semanaId/sort-by-size/play" element={<SortBySizeGamePage />} />
+        <Route path="/semana/2/coleccionando-objetos/play" element={<ColeccionandoObjetosGamePage />} />
         <Route path="/perfil" element={<ProfilePage />} />
         <Route path="/" element={<Navigate to="/login" replace />} />
       </Routes>

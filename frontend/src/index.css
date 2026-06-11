@@ -180,4 +180,73 @@
     border-color: #3e6378 !important;
     border-style: solid !important;
   }
+
+  /* Coleccionando Objetos Animations */
+  @keyframes popIn {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.2); }
+    100% { transform: scale(1); }
+  }
+  .animate-pop {
+    animation: popIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+  }
+
+  @keyframes sparkle {
+    0% { box-shadow: 0 0 0 0 rgba(255, 215, 0, 0.7); }
+    50% { box-shadow: 0 0 30px 15px rgba(255, 215, 0, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(255, 215, 0, 0); }
+  }
+  .sparkle-effect {
+    animation: sparkle 0.6s ease-out;
+  }
+
+  @keyframes bounceHappy {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-20px); }
+  }
+  .animate-bounce-happy {
+    animation: bounceHappy 0.5s ease-in-out infinite;
+  }
+
+  @keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+  }
+  .animate-float {
+    animation: float 3s ease-in-out infinite;
+  }
+
+  .interact-zone {
+    position: absolute;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: transform 0.2s;
+    border-radius: 20%;
+  }
+  .interact-zone:hover:not(.collected) {
+    transform: scale(1.05);
+    background-color: rgba(255, 255, 255, 0.2);
+  }
+
+  .emoji-reveal {
+    font-size: clamp(3rem, 6vw, 6rem);
+    filter: brightness(0) drop-shadow(2px 2px 0 white) drop-shadow(-2px -2px 0 white) drop-shadow(2px -2px 0 white) drop-shadow(-2px 2px 0 white);
+    opacity: 1;
+    transition: filter 0.3s ease;
+  }
+  .interact-zone.collected .emoji-reveal {
+    filter: drop-shadow(0px 4px 6px rgba(0,0,0,0.3));
+  }
+
+  .particle {
+    position: absolute;
+    pointer-events: none;
+    animation: fall linear forwards;
+  }
+  @keyframes fall {
+    0% { transform: translateY(-100px) rotate(0deg); opacity: 1; }
+    100% { transform: translateY(800px) rotate(360deg); opacity: 0; }
+  }
 }

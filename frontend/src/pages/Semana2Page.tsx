@@ -122,7 +122,7 @@ export default function Semana2Page() {
                     {activity.desc}
                   </p>
                   <button
-                    onClick={() => alert('Próximamente')}
+                    onClick={() => activity.id === 'coleccionando-objetos' ? navigate('/semana/2/coleccionando-objetos/play') : alert('Próximamente')}
                     className="bg-[#4D6B53] text-white font-bold py-3 lg:py-4 px-4 lg:px-6 rounded-full w-full hover:bg-opacity-90 transition-colors shadow-sm lg:text-lg"
                   >
                     Jugar
