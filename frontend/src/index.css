@@ -46,4 +46,138 @@
     border-bottom-width: 2px;
     margin-top: 2px;
   }
+
+  /* Clay Game Styles */
+  .clay-shadow {
+    box-shadow: 0 8px 16px -4px rgba(74, 101, 73, 0.15), 0 4px 8px -2px rgba(74, 101, 73, 0.1);
+  }
+  .clay-border {
+    border: 2px solid #efedf1;
+    border-bottom-width: 4px;
+  }
+  .btn-press:active {
+    transform: translateY(2px);
+    border-bottom-width: 2px;
+    box-shadow: inset 0 2px 4px rgba(0,0,0,0.1);
+  }
+  .draggable {
+    cursor: grab;
+  }
+  .draggable:active {
+    cursor: grabbing;
+  }
+  .drop-target-active {
+    background-color: rgba(176, 207, 173, 0.2) !important;
+    border-color: #4a6549 !important;
+  }
+
+  /* Confetti */
+  .confetti-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 9999;
+    overflow: hidden;
+  }
+  .confetti-particle {
+    position: absolute;
+    top: -10px;
+    animation: fall linear forwards;
+  }
+  @keyframes fall {
+    to {
+      transform: translateY(110vh) rotate(720deg);
+    }
+  }
+
+  /* General Float Animation */
+  @keyframes float {
+    0% { transform: translateY(0px); }
+    50% { transform: translateY(-10px); }
+    100% { transform: translateY(0px); }
+  }
+  .animate-float {
+    animation: float 4s ease-in-out infinite;
+  }
+
+  /* Rescata a Pulgarcito Animations */
+  @keyframes float-pulgarcito {
+    0% { transform: translateY(0px); }
+    50% { transform: translateY(-10px); }
+    100% { transform: translateY(0px); }
+  }
+  .animate-float-pulgarcito {
+    animation: float-pulgarcito 4s ease-in-out infinite;
+  }
+
+  @keyframes bounce-greet {
+    0%, 100% { transform: translateY(0) rotate(0); }
+    25% { transform: translateY(-15px) rotate(5deg); }
+    50% { transform: translateY(0) rotate(0); }
+    75% { transform: translateY(-15px) rotate(-5deg); }
+  }
+  .animate-bounce-greet {
+    animation: bounce-greet 2s ease-in-out infinite;
+  }
+
+  .walk-to-bridge {
+    transform: translate(120px, 0px) !important;
+    animation: none !important;
+  }
+  .walk-across {
+    transform: translate(450px, 0px) !important;
+    animation: none !important;
+  }
+  .fall-down {
+    transform: translate(150px, 150px) rotate(90deg) scale(0.5) !important;
+    opacity: 0 !important;
+    animation: none !important;
+  }
+  .plank-tilt {
+    transform: rotate(15deg) translateY(10px) translateX(-10px) !important;
+  }
+  .plank-fall {
+    transform: translateY(100px) rotate(-45deg) !important;
+    opacity: 0 !important;
+  }
+
+  /* Sort by Size Animations */
+  @keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-8px); }
+    75% { transform: translateX(8px); }
+  }
+  .animate-shake {
+    animation: shake 0.4s ease-in-out;
+  }
+
+  .correct-glow {
+    box-shadow: 0 0 25px 10px rgba(74, 101, 73, 0.8) !important;
+    border-color: #4a6549 !important;
+  }
+  .error-glow {
+    box-shadow: 0 0 25px 10px rgba(186, 26, 26, 0.8) !important;
+    border-color: #ba1a1a !important;
+  }
+
+  .confetti-piece {
+    position: absolute;
+    width: 10px;
+    height: 20px;
+    background: #ffd300;
+    top: 0;
+    opacity: 0;
+  }
+
+  .dropzone {
+    transition: background-color 0.3s, border-color 0.3s;
+  }
+  .dropzone.dragover {
+    background-color: #bfe5fe !important;
+    border-color: #3e6378 !important;
+    border-style: solid !important;
+  }
 }
