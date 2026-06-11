@@ -74,7 +74,7 @@ export default function LoginPage() {
               <img
                 alt="Personaje explorador de ciencias"
                 className="relative z-10 w-full h-full object-cover rounded-full shadow-sm opacity-90 object-center"
-                src="/images/avatar.png"
+                src="/images/LoginImage.png"
                 onError={(e) => {
                   // Fallback si la imagen no existe aun
                   const target = e.target as HTMLImageElement;

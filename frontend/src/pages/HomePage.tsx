@@ -43,10 +43,7 @@ export default function HomePage() {
   }, []);
 
   const handleWeekClick = (weekNumber: number) => {
-    if (weekNumber === 1) {
-      navigate(`/semana/1`);
-    }
-    // Semanas bloqueadas no navegan
+    navigate(`/semana/${weekNumber}`);
   };
 
   // Determina el offset de zigzag para cada nodo
@@ -128,8 +125,7 @@ export default function HomePage() {
         {/* Learning Path (Zigzag) */}
         <div className="relative flex flex-col items-center w-full gap-16 md:gap-24 max-w-md mx-auto">
           {WEEK_CONFIG.map((week, index) => {
-            const isFirst = index === 0;
-            const isLocked = !isFirst;
+            const isLocked = false;
             const semana = semanas.find((s) => s.number === week.number);
             const displayTitle = semana?.title || week.label;
 
