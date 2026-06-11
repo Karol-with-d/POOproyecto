@@ -28,7 +28,7 @@ export default function Semana3Page() {
       desc: '¡Manos a la obra! Ayuda a reparar los objetos rotos en el taller de inventos.',
       color: 'bg-[#bfe5fe]',
       image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuDrC3TntOYS6w71TVxV7FdfvIavyh_EMQ61tnM71T1n55obBOYHNjUJqeJvcuj_CFSbzFNMpDcDFoHmhHW5vzY4Js7NK5AIi9bEUHf5_xie23VoOG-auodzX0qj1HCMo7O_85XLMOq_FAfaRaOZWKpW9NFgxM_iRGtRQTSpwsBpJF1VZ7B2ERZgYQRgc0MDdwqkZumBDaOp2ewyTlDZ-QsNt77xDrVSI6bnIjlGmp4Zss0zsne8WUVZ9ntLqp8190ei3LKkkFhKEvM',
-      link: null as string | null,
+      link: '/semana/3/build-it',
     },
     {
       id: 'tarjetas-reflexion',

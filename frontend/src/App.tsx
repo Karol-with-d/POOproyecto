@@ -16,6 +16,8 @@ import CajaMisteriosaGamePage from './pages/CajaMisteriosaGamePage';
 import FabricaMisteriosaGamePage from './pages/FabricaMisteriosaGamePage';
 import ReflectionCardsStartPage from './pages/ReflectionCardsStartPage';
 import ReflectionCardsGamePage from './pages/ReflectionCardsGamePage';
+import BuildItStartPage from './pages/BuildItStartPage';
+import BuildItGamePage from './pages/BuildItGamePage';
 
 function App() {
   return (
@@ -37,6 +39,8 @@ function App() {
         <Route path="/semana/2/fabrica-misteriosa/play" element={<FabricaMisteriosaGamePage />} />
         <Route path="/semana/:semanaId/reflection-cards" element={<ReflectionCardsStartPage />} />
         <Route path="/semana/:semanaId/reflection-cards/play" element={<ReflectionCardsGamePage />} />
+        <Route path="/semana/:semanaId/build-it" element={<BuildItStartPage />} />
+        <Route path="/semana/:semanaId/build-it/play" element={<BuildItGamePage />} />
         <Route path="/perfil" element={<ProfilePage />} />
         <Route path="/" element={<Navigate to="/login" replace />} />
       </Routes>
