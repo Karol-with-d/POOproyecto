@@ -4,8 +4,8 @@ import { useNavigate, Link } from 'react-router-dom';
  * Semana3Page — Hub de actividades de la Semana 3: Utilidad y Reciclaje.
  *
  * Diseño UNIVO verde (alineado con Semana1Page). 3 tarjetas de actividad
- * + banner de Quiz Final. Los botones "Jugar" / "Empezar" muestran
- * "Próximamente" hasta que existan las páginas de juego.
+ * + banner de Quiz Final. La tarjeta "Tarjetas de Reflexión" enlaza al
+ * juego Reflection Cards; las otras dos muestran "Próximamente".
  */
 export default function Semana3Page() {
   const navigate = useNavigate();
@@ -20,6 +20,7 @@ export default function Semana3Page() {
       desc: 'Explora el jardín y el mercado para descubrir de qué materiales están hechos los objetos que nos rodean.',
       color: 'bg-[#ccebc7]',
       image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuDB2C7fpZD0p374C5W7SgegXpBjwu3EcQshRAj88SjhM2hErvVZcl3N39HmSNv0BSnJnh8kK3XYG6hT1Tvz4mQxB-aOv2X8qnFLY48MAO_SPBllgQvdzQamChc7m2luD0SFtCG4kEs41woHBXl79-AFBHdiCoXilykFLhMywAiwwbE5S4KT5cFnYYOwI88D4YdjwfzA-7VCTEXiC6pH3nH5qvbTzKXC2YUGaTdaBHlewqBlCC5xkGeTvi1SoXEfgjNrJIXtY1xS-bQ',
+      link: null as string | null,
     },
     {
       id: 'a-reparar',
@@ -27,6 +28,7 @@ export default function Semana3Page() {
       desc: '¡Manos a la obra! Ayuda a reparar los objetos rotos en el taller de inventos.',
       color: 'bg-[#bfe5fe]',
       image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuDrC3TntOYS6w71TVxV7FdfvIavyh_EMQ61tnM71T1n55obBOYHNjUJqeJvcuj_CFSbzFNMpDcDFoHmhHW5vzY4Js7NK5AIi9bEUHf5_xie23VoOG-auodzX0qj1HCMo7O_85XLMOq_FAfaRaOZWKpW9NFgxM_iRGtRQTSpwsBpJF1VZ7B2ERZgYQRgc0MDdwqkZumBDaOp2ewyTlDZ-QsNt77xDrVSI6bnIjlGmp4Zss0zsne8WUVZ9ntLqp8190ei3LKkkFhKEvM',
+      link: null as string | null,
     },
     {
       id: 'tarjetas-reflexion',
@@ -34,6 +36,7 @@ export default function Semana3Page() {
       desc: 'Piensa y reflexiona sobre lo que has aprendido hoy sobre el cuidado de nuestro planeta.',
       color: 'bg-[#f3e0c2]',
       image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuBKm3lu7LMBEFgBLFnCugX1k5aoX1-4pD3T5xSurow1c94J--e-p_JFl4qSW0L1XciQbfCQkEQmoSrB-t4lExqDORSa726IoOTOCW24BFSTw2Lsur5zp_AWgpVs8IjU7oD4-VCZG5ZcSkBnCqR7F7AfW_InJHRwQjTg5vASrTW5sOkfajaiI7M_fHly_HnMzFIrcezYpzOnUnQpGuVx2V8CxXXKNDjj6oEWauVnUE4uadP87yylcBikUvhRMH-abEs5j5EKiLE4BkA',
+      link: '/semana/3/reflection-cards',
     },
   ];
 
@@ -96,7 +99,7 @@ export default function Semana3Page() {
                   {activity.desc}
                 </p>
                 <button
-                  onClick={() => alert('Próximamente')}
+                  onClick={() => activity.link ? navigate(activity.link) : alert('Próximamente')}
                   className="squishy-button w-full mt-4 py-3 px-6 bg-[#4a6549] text-white font-label-lg text-label-lg rounded-xl flex items-center justify-center gap-2"
                 >
                   <span className="material-symbols-outlined" style={{ fontVariationSettings: '"FILL" 1' }}>
