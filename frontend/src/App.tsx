@@ -3,6 +3,7 @@ import LoginPage from './pages/LoginPage';
 import HomePage from './pages/HomePage';
 import ProfilePage from './pages/ProfilePage';
 import Semana1Page from './pages/Semana1Page';
+import Semana2Page from './pages/Semana2Page';
 import DescriptionMatchStartPage from './pages/DescriptionMatchStartPage';
 import DescriptionMatchGamePage from './pages/DescriptionMatchGamePage';
 import RescataPulgarcitoStartPage from './pages/RescataPulgarcitoStartPage';
@@ -16,6 +17,7 @@ function App() {
       <Routes>
         <Route path="/login" element={<LoginPage />} />
         <Route path="/home" element={<HomePage />} />
+        <Route path="/semana/2" element={<Semana2Page />} />
         <Route path="/semana/:semanaId" element={<Semana1Page />} />
         <Route path="/semana/:semanaId/description-match" element={<DescriptionMatchStartPage />} />
         <Route path="/semana/:semanaId/description-match/play" element={<DescriptionMatchGamePage />} />
