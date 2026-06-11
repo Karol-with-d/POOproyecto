@@ -12,6 +12,7 @@ import SortBySizeStartPage from './pages/SortBySizeStartPage';
 import SortBySizeGamePage from './pages/SortBySizeGamePage';
 import ColeccionandoObjetosGamePage from './pages/ColeccionandoObjetosGamePage';
 import CajaMisteriosaGamePage from './pages/CajaMisteriosaGamePage';
+import FabricaMisteriosaGamePage from './pages/FabricaMisteriosaGamePage';
 
 function App() {
   return (
@@ -29,6 +30,7 @@ function App() {
         <Route path="/semana/:semanaId/sort-by-size/play" element={<SortBySizeGamePage />} />
         <Route path="/semana/2/coleccionando-objetos/play" element={<ColeccionandoObjetosGamePage />} />
         <Route path="/semana/2/caja-misteriosa/play" element={<CajaMisteriosaGamePage />} />
+        <Route path="/semana/2/fabrica-misteriosa/play" element={<FabricaMisteriosaGamePage />} />
         <Route path="/perfil" element={<ProfilePage />} />
         <Route path="/" element={<Navigate to="/login" replace />} />
       </Routes>
