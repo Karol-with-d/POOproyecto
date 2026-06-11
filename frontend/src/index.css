@@ -249,4 +249,58 @@
     0% { transform: translateY(-100px) rotate(0deg); opacity: 1; }
     100% { transform: translateY(800px) rotate(360deg); opacity: 0; }
   }
+
+  /* Caja Misteriosa Animations */
+  @keyframes floatCM {
+    0% { transform: translateY(0px) rotate(0deg); }
+    50% { transform: translateY(-10px) rotate(2deg); }
+    100% { transform: translateY(0px) rotate(0deg); }
+  }
+  .animate-float {
+    animation: floatCM 4s ease-in-out infinite;
+  }
+
+  @keyframes popInCM {
+    0% { transform: scale(0.5); opacity: 0; }
+    80% { transform: scale(1.1); opacity: 1; }
+    100% { transform: scale(1); opacity: 1; }
+  }
+  .animate-pop-in {
+    animation: popInCM 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+  }
+
+  @keyframes sparkleParticle {
+    0%, 100% { opacity: 0; transform: scale(0) rotate(0deg); }
+    50% { opacity: 1; transform: scale(1) rotate(180deg); }
+  }
+  .sparkle-particle {
+    position: absolute;
+    animation: sparkleParticle 1s ease-in-out forwards;
+  }
+
+  @keyframes fadeOutCross {
+    0% { opacity: 1; transform: scale(1); }
+    100% { opacity: 0; transform: scale(1.5); }
+  }
+  .animate-wrong-x {
+    animation: fadeOutCross 0.8s ease-out forwards;
+  }
+
+  .silhouette {
+    filter: brightness(0);
+  }
+
+  .game-btn {
+    border-bottom-width: 4px;
+    transition: all 0.1s ease-in-out;
+  }
+  .game-btn:active:not(:disabled) {
+    transform: translateY(2px);
+    border-bottom-width: 2px;
+    margin-top: 2px;
+  }
+
+  .interact-glow:hover:not(:disabled) {
+    box-shadow: 0 0 15px rgba(139, 154, 130, 0.4);
+  }
 }
