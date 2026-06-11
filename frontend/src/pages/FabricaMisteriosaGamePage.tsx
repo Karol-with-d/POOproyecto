@@ -324,9 +324,9 @@ export default function FabricaMisteriosaGamePage() {
           />
         </div>
 
-        {/* Bins Container */}
+        {/* Bins Container — oculto hasta que se revele el objeto */}
         <div
-          className={`absolute bottom-0 left-0 w-full px-12 flex justify-around items-end z-10 transition-all duration-500 ${
+          className={`absolute left-0 w-full px-12 flex justify-around items-end z-10 transition-all duration-500 ${
             showBins ? 'bottom-[30px]' : '-bottom-[200px]'
           }`}
           style={{
