@@ -1,3 +1,4 @@
+import 'dotenv/config';
 import { App } from './config/App';
 
 // Puerto configurable vía variable de entorno, con fallback a 3000

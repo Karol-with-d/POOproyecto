@@ -1,6 +1,4 @@
-import { PrismaClient } from '@prisma/client';
-
-const prisma = new PrismaClient();
+import { prisma } from '../src/config/prisma';
 
 /**
  * SeedService — clase que encapsula la lógica de poblado de la base de datos.

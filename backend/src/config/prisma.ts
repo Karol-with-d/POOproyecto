@@ -1,15 +1,24 @@
 import { PrismaClient } from '@prisma/client';
+import { PrismaMariaDb } from '@prisma/adapter-mariadb';
 import { Logger } from '../utils/logger';
 
 const logger = new Logger('Prisma');
 
 /**
  * Singleton de PrismaClient para evitar múltiples instancias en desarrollo.
- * Configurado con logging de queries para diagnóstico.
+ * Usa el driver adapter de MariaDB (mysql2) para soportar auth plugins modernos de MySQL 8.0.
  */
 const globalForPrisma = global as unknown as { prisma: PrismaClient };
 
+const connectionString = process.env.DATABASE_URL;
+if (!connectionString) {
+  throw new Error('DATABASE_URL no está definida en las variables de entorno');
+}
+
+const adapter = new PrismaMariaDb(connectionString);
+
 const prismaOptions: any = {
+  adapter,
   log: [
     { emit: 'event', level: 'query' },
     { emit: 'event', level: 'info' },

@@ -9,6 +9,7 @@
     "start": "node dist/server.js",
     "seed": "ts-node prisma/seed.ts",
     "postinstall": "prisma generate",
+    "db:setup": "ts-node src/scripts/db-setup.ts",
     "db:migrate": "prisma migrate dev",
     "db:studio": "prisma studio"
   },
@@ -21,12 +22,14 @@
   "author": "Equipo POO 2026",
   "license": "MIT",
   "dependencies": {
+    "@prisma/adapter-mariadb": "^7.8.0",
     "@prisma/client": "^6.6.0",
     "cors": "^2.8.5",
     "dotenv": "^16.3.1",
     "express": "^4.18.2",
     "express-validator": "^7.3.2",
-    "morgan": "^1.11.0"
+    "morgan": "^1.11.0",
+    "mysql2": "^3.22.5"
   },
   "devDependencies": {
     "@types/cors": "^2.8.17",
