@@ -28,6 +28,7 @@ import BuildItStartPage from './pages/BuildItStartPage';
 import BuildItGamePage from './pages/BuildItGamePage';
 import HechoDeStartPage from './pages/HechoDeStartPage';
 import HechoDeGamePage from './pages/HechoDeGamePage';
+import Semana1QuizPage from './pages/Semana1QuizPage';
 
 function App() {
   return (
@@ -42,6 +43,7 @@ function App() {
         <Route path="/semana/5/semillas" element={<SemillasGamePage />} />
         <Route path="/semana/5/busqueda" element={<BusquedaGamePage />} />
         <Route path="/semana/5/quiz" element={<QuizIntroPage />} />
+        <Route path="/semana/1/quiz" element={<Semana1QuizPage />} />
         <Route path="/semana/5/superpoderes" element={<SuperpoderesStartPage />} />
         <Route path="/semana/5/superpoderes/play" element={<SuperpoderesGamePage />} />
         <Route path="/semana/6" element={<Semana6Page />} />

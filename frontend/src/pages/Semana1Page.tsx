@@ -50,6 +50,7 @@ export default function Semana1Page() {
       borderColor: 'border-[#a89880]',
       textColor: 'text-[#3a3228]',
       image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuB5iLzQhBmpvdhN880h1nFnbhV7A07HKfSX7Z2KM-8FAGfko7Imk5NV8Ie0MVSMpj-jNS8OLfyGjmLBXiwTbStvWkjsb4yB1xJHDqYkVOJ1VDZk4cZehc6N_Dy6i9KcP5z2Le9rlNNXYJYs3IVWuH4v6VMA85VfrunOrrt84KOaXE2o2DhAbCruSzZgvCeOQoYFIpQl2JZ_E5dTu79e1NU1SHYNpZhBIIkk3PToJpOKnrMxQWmpvUC2dIa4fRCDQN9kLJx_N3X31IZX',
+      link: '/semana/1/quiz',
     },
   ];
 
