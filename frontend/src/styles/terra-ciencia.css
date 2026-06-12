@@ -1,0 +1,454 @@
+/* ============================================
+ * Terra Ciencia — Scoped design tokens
+ * Usado solo por Semana5Page. Prefijo `tc-` para
+ * evitar colisiones con el tema UNIVO global.
+ * ============================================ */
+
+@import url('https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600;700&family=Literata:ital,wght@0,400;0,700;1,400&family=Nunito+Sans:wght@400;600;700;800&display=swap');
+
+:root {
+  --tc-primary: #4a7c59;
+  --tc-primary-container: #78a886;
+  --tc-on-primary: #ffffff;
+  --tc-on-primary-container: #d8f0de;
+  --tc-on-primary-fixed-variant: #2a6038;
+  --tc-secondary: #6b6358;
+  --tc-tertiary: #705c30;
+  --tc-tertiary-container: #c4a66a;
+  --tc-on-tertiary: #ffffff;
+  --tc-on-tertiary-container: #554020;
+  --tc-surface: #faf6f0;
+  --tc-surface-bright: #faf6f0;
+  --tc-surface-container: #f0ece4;
+  --tc-surface-container-low: #f5f1ea;
+  --tc-surface-container-lowest: #ffffff;
+  --tc-surface-container-high: #eae6de;
+  --tc-surface-dim: #dbd7cf;
+  --tc-on-surface: #2e3230;
+  --tc-on-surface-variant: #4a4e4a;
+  --tc-outline-variant: #c4c8bc;
+  --tc-outline: #74796e;
+  --tc-background: #faf6f0;
+  --tc-error: #b83230;
+  --tc-shadow-3d-primary: 0 6px 0 0 #2a6038;
+  --tc-shadow-3d-tertiary: 0 6px 0 0 #554020;
+}
+
+/* Font families */
+.tc-fredoka {
+  font-family: 'Fredoka', sans-serif;
+}
+.tc-literata {
+  font-family: 'Literata', serif;
+}
+.tc-nunito {
+  font-family: 'Nunito Sans', sans-serif;
+}
+
+/* Wood-grain background texture */
+.tc-wood-texture {
+  background-color: #faf6f0;
+  background-image: url('https://www.transparenttextures.com/patterns/wood-pattern.png');
+}
+
+/* Notebook paper grid (subtle dotted + lines) */
+.tc-paper-grid {
+  background-image:
+    radial-gradient(#e4e0d8 1px, transparent 1px),
+    linear-gradient(to right, #f5f1ea 1px, transparent 1px),
+    linear-gradient(to bottom, #f5f1ea 1px, transparent 1px);
+  background-size: 20px 20px, 100px 100px, 100px 100px;
+}
+
+/* Magnifier cursor (kid-friendly) */
+.tc-cursor-magnifier,
+.tc-cursor-magnifier * {
+  cursor: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='40' height='48' viewport='0 0 100 100' style='fill:black;font-size:24px;'><text y='50%'>🔍</text></svg>"),
+    auto;
+}
+
+/* Clay-button: squishy 3D effect */
+.tc-clay-button {
+  transition: transform 0.15s ease;
+  cursor: pointer;
+}
+.tc-clay-button:active {
+  transform: translateY(4px);
+  box-shadow: 0 2px 0 0 currentColor;
+}
+
+/* Hover lift micro-interaction (replaces Stitch's mousemove JS) */
+.tc-clay-button:hover {
+  transform: scale(1.02) rotate(-1deg);
+}
+
+/* Stamp-card: dashed border + corner mask */
+.tc-stamp-card {
+  mask-image: radial-gradient(circle at 12px 12px, transparent 12px, black 13px);
+  mask-size: 24px 24px;
+}
+
+/* Dot border for notebook-bottom edge */
+.tc-dot-border {
+  background-image: radial-gradient(#74796e 2px, transparent 2px);
+  background-size: 12px 12px;
+}
+
+/* Image hover zoom helper (replaces Stitch's mousemove parallax) */
+.tc-img-zoom {
+  transition: transform 0.3s ease;
+}
+.tc-img-zoom:hover {
+  transform: scale(1.1);
+}
+
+/* ============================================
+ * Superpoderes — Jungle background + animations
+ * ============================================ */
+
+/* Jungle background — leaves pattern via inline SVG */
+.tc-jungle-bg {
+  background-image:
+    linear-gradient(
+      to bottom,
+      rgba(250, 246, 240, 0.8),
+      rgba(228, 224, 216, 0.9)
+    ),
+    url("data:image/svg+xml;utf8,<svg width='100%25' height='100%25' xmlns='http://www.w3.org/2000/svg'><defs><pattern id='leaves' width='100' height='100' patternUnits='userSpaceOnUse'><path d='M50 10 C 20 20, 20 50, 50 90 C 80 50, 80 20, 50 10 Z' fill='%23c8e8d0' opacity='0.4'/><path d='M10 50 C 20 20, 50 20, 90 50 C 50 80, 20 80, 10 50 Z' fill='%238ecf9e' opacity='0.3'/></pattern></defs><rect width='100%25' height='100%25' fill='url(%23leaves)'/></svg>");
+  background-size: cover;
+  background-position: center;
+}
+
+/* Float animations for character placement */
+@keyframes tc-float {
+  0% { transform: translateY(0px); }
+  50% { transform: translateY(-10px); }
+  100% { transform: translateY(0px); }
+}
+.tc-float-anim {
+  animation: tc-float 6s ease-in-out infinite;
+}
+.tc-float-anim-delayed {
+  animation: tc-float 7s ease-in-out infinite 2s;
+}
+
+/* Bouncy 3D button effect (front layer pushes down on press) */
+.tc-bouncy-btn-wrap {
+  position: relative;
+  border: none;
+  background: transparent;
+  outline: none;
+  cursor: pointer;
+}
+.tc-bouncy-btn-shadow {
+  position: absolute;
+  inset: 0;
+  border-radius: 1rem;
+  transform: translateY(0.5rem);
+  transition: transform 0.15s ease;
+}
+.tc-bouncy-btn-wrap:hover .tc-bouncy-btn-shadow {
+  transform: translateY(0.75rem);
+}
+.tc-bouncy-btn-wrap:active .tc-bouncy-btn-shadow {
+  transform: translateY(0);
+}
+.tc-bouncy-btn-front {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 1rem;
+  border-width: 4px;
+  border-style: solid;
+  transition: transform 0.15s ease;
+}
+.tc-bouncy-btn-wrap:hover .tc-bouncy-btn-front {
+  transform: translateY(-0.25rem);
+}
+.tc-bouncy-btn-wrap:active .tc-bouncy-btn-front {
+  transform: translateY(0.5rem);
+}
+
+/* Small text shadow helper */
+.tc-text-shadow-sm {
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.15);
+}
+
+/* ============================================
+ * Superpoderes Game — Flip cards + celebration
+ * ============================================ */
+
+/* Dot pattern background (green polka dots on cream) */
+.tc-dot-pattern-bg {
+  background-color: var(--tc-background);
+  background-image:
+    radial-gradient(var(--tc-primary-container) 0.5px, transparent 0.5px),
+    radial-gradient(var(--tc-primary-container) 0.5px, var(--tc-background) 0.5px);
+  background-size: 20px 20px;
+  background-position: 0 0, 10px 10px;
+}
+
+/* Flip card */
+.tc-flip-card {
+  perspective: 1000px;
+}
+.tc-flip-card-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+  transform-style: preserve-3d;
+}
+.tc-flip-card.tc-flipped .tc-flip-card-inner {
+  transform: rotateY(180deg);
+}
+.tc-flip-card-face {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+.tc-flip-card-back {
+  transform: rotateY(180deg);
+}
+
+/* Paper shadow — layered offset for the "cut paper" feel */
+.tc-paper-shadow {
+  box-shadow:
+    4px 4px 0 0 rgba(74, 124, 89, 0.2),
+    8px 8px 0 0 rgba(74, 124, 89, 0.1);
+}
+
+/* Celebration overlay */
+.tc-celebration-overlay {
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.5s ease;
+}
+.tc-celebration-overlay.tc-active {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* Bounce-slow animation */
+@keyframes tc-bounce-slow {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+.tc-bounce-slow {
+  animation: tc-bounce-slow 3s infinite ease-in-out;
+}
+
+/* Bubble text — outlined + offset shadow */
+.tc-bubble-text {
+  -webkit-text-stroke: 2px var(--tc-primary);
+  text-shadow: 4px 4px 0 rgba(74, 124, 89, 0.2);
+}
+
+/* ============================================
+ * Misión Cumplida — End screen animations
+ * ============================================ */
+
+/* Slow pulse (background blobs) */
+@keyframes tc-pulse-slow {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.6; }
+}
+.tc-pulse-slow {
+  animation: tc-pulse-slow 4s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+/* Subtle bounce (CTA button) */
+@keyframes tc-bounce-subtle {
+  0%, 100% { transform: translateY(-3%); animation-timing-function: cubic-bezier(0.8, 0, 1, 1); }
+  50% { transform: none; animation-timing-function: cubic-bezier(0, 0, 0.2, 1); }
+}
+.tc-bounce-subtle {
+  animation: tc-bounce-subtle 2s infinite;
+}
+
+/* Shimmer sweep (CTA button on hover) */
+@keyframes tc-shimmer {
+  0% { transform: translateX(-100%) skewX(12deg); }
+  100% { transform: translateX(200%) skewX(12deg); }
+}
+.tc-shimmer-anim {
+  animation: tc-shimmer 1.5s infinite;
+}
+
+/* Glow shadow (badge) */
+.tc-glow {
+  box-shadow: 0 0 40px rgba(196, 166, 106, 0.4);
+}
+
+/* ============================================
+ * Mis Semillas — Stamp game styles
+ * ============================================ */
+
+/* Stamp icon pop-in animation (applied to inner icon) */
+.tc-stamp-anim {
+  animation: tc-stamp 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+}
+@keyframes tc-stamp {
+  0% { transform: scale(3); opacity: 0; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+/* Bounce-pop for emoji effects (water_drop, sun, etc.) */
+.tc-bounce-pop {
+  animation: tc-bouncePop 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  display: inline-block;
+}
+@keyframes tc-bouncePop {
+  0% { transform: scale(0.8); opacity: 0; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+/* Horizontal slide carousel */
+.tc-slide-container {
+  display: flex;
+  transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+  height: 100%;
+}
+.tc-slide {
+  width: 100vw;
+  flex-shrink: 0;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Observation bubble (hidden by default) */
+.tc-observation-bubble {
+  display: none;
+}
+.tc-observation-bubble.tc-active {
+  display: block;
+  animation: tc-bubbleIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+@keyframes tc-bubbleIn {
+  0% { transform: scale(0); opacity: 0; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+/* Day background gradients */
+.tc-bg-day-1 { background: linear-gradient(to bottom, #dbeafe, #fdf4ff); }
+.tc-bg-day-2 { background: linear-gradient(to bottom, #ecfdf5, #fefce8); }
+.tc-bg-day-3 { background: linear-gradient(to bottom, #f0fdf4, #ecfeff); }
+.tc-bg-day-4 { background: linear-gradient(to bottom, #eff6ff, #fdf2f8); }
+.tc-bg-day-5 { background: linear-gradient(to bottom, #fff7ed, #f0fdf4); }
+
+/* Grass silhouette at bottom of day slides */
+.tc-grass-element {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: 15%;
+  background: var(--tc-primary);
+  clip-path: polygon(
+    0% 100%, 100% 100%, 100% 30%, 95% 50%, 90% 20%, 85% 60%, 80% 10%,
+    75% 55%, 70% 30%, 65% 65%, 60% 20%, 55% 50%, 50% 10%, 45% 60%,
+    40% 30%, 35% 70%, 30% 15%, 25% 55%, 20% 35%, 15% 60%, 10% 20%, 5% 50%, 0% 30%
+  );
+  opacity: 0.2;
+  pointer-events: none;
+}
+
+/* ============================================
+ * Búsqueda — Lupa de Detective styles
+ * ============================================ */
+
+/* Clay texture — mint desk background */
+.tc-clay-texture {
+  background-color: #d8f0de;
+  background-image: radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.4) 0%, transparent 80%);
+  box-shadow: inset 0 0 40px rgba(74, 124, 89, 0.05);
+}
+
+/* Card shadow */
+.tc-card-shadow {
+  box-shadow: 0 10px 30px -5px rgba(46, 50, 48, 0.1), 0 4px 6px -2px rgba(46, 50, 48, 0.05);
+}
+
+/* Shake animation (used for wrong-answer feedback) */
+.tc-shake {
+  animation: tc-shake 0.5s cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
+}
+@keyframes tc-shake {
+  10%, 90% { transform: translate3d(-1px, 0, 0); }
+  20%, 80% { transform: translate3d(2px, 0, 0); }
+  30%, 50%, 70% { transform: translate3d(-4px, 0, 0); }
+  40%, 60% { transform: translate3d(4px, 0, 0); }
+}
+
+/* Fade in/out for view transitions */
+.tc-fade-in { animation: tc-fadeIn 0.4s ease-out; }
+.tc-fade-out { animation: tc-fadeOut 0.4s ease-in; }
+@keyframes tc-fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes tc-fadeOut {
+  from { opacity: 1; transform: translateY(0); }
+  to { opacity: 0; transform: translateY(-10px); }
+}
+
+/* Custom magnifier cursor (only on devices with fine pointer) */
+.tc-custom-cursor {
+  position: fixed;
+  width: 80px;
+  height: 80px;
+  pointer-events: none;
+  z-index: 9999;
+  transform: translate(-50%, -50%);
+  transition: width 0.2s, height 0.2s;
+}
+
+/* Hide native cursor when custom cursor is active */
+.tc-cursor-none,
+.tc-cursor-none * {
+  cursor: none !important;
+}
+
+/* ============================================
+ * Quiz — Sabio intro screen styles
+ * ============================================ */
+
+/* Speech bubble with downward-pointing triangle */
+.tc-speech-bubble {
+  position: relative;
+}
+.tc-speech-bubble::after {
+  content: '';
+  position: absolute;
+  bottom: -20px;
+  left: 50%;
+  transform: translateX(-50%);
+  border-width: 20px 20px 0;
+  border-style: solid;
+  border-color: #ffffff transparent transparent;
+  filter: drop-shadow(0 4px 2px rgba(46, 50, 48, 0.06));
+}
+
+/* Pulse custom — CTA button glow + scale */
+@keyframes tc-pulse-custom {
+  0%, 100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(74, 124, 89, 0.4); }
+  50% { transform: scale(1.05); box-shadow: 0 0 0 15px rgba(74, 124, 89, 0); }
+}
+.tc-pulse-custom {
+  animation: tc-pulse-custom 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+/* Hide horizontal scrollbar on theme cards row */
+.tc-scroll-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.tc-scroll-hide::-webkit-scrollbar {
+  display: none;
+}

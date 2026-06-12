@@ -5,6 +5,14 @@ import ProfilePage from './pages/ProfilePage';
 import Semana1Page from './pages/Semana1Page';
 import Semana2Page from './pages/Semana2Page';
 import Semana3Page from './pages/Semana3Page';
+import Semana4Page from './pages/Semana4Page';
+import Semana5Page from './pages/Semana5Page';
+import Semana6Page from './pages/Semana6Page';
+import SuperpoderesStartPage from './pages/SuperpoderesStartPage';
+import SuperpoderesGamePage from './pages/SuperpoderesGamePage';
+import SemillasGamePage from './pages/SemillasGamePage';
+import BusquedaGamePage from './pages/BusquedaGamePage';
+import QuizIntroPage from './pages/QuizIntroPage';
 import DescriptionMatchStartPage from './pages/DescriptionMatchStartPage';
 import DescriptionMatchGamePage from './pages/DescriptionMatchGamePage';
 import RescataPulgarcitoStartPage from './pages/RescataPulgarcitoStartPage';
@@ -29,6 +37,14 @@ function App() {
         <Route path="/home" element={<HomePage />} />
         <Route path="/semana/2" element={<Semana2Page />} />
         <Route path="/semana/3" element={<Semana3Page />} />
+        <Route path="/semana/4" element={<Semana4Page />} />
+        <Route path="/semana/5" element={<Semana5Page />} />
+        <Route path="/semana/5/semillas" element={<SemillasGamePage />} />
+        <Route path="/semana/5/busqueda" element={<BusquedaGamePage />} />
+        <Route path="/semana/5/quiz" element={<QuizIntroPage />} />
+        <Route path="/semana/5/superpoderes" element={<SuperpoderesStartPage />} />
+        <Route path="/semana/5/superpoderes/play" element={<SuperpoderesGamePage />} />
+        <Route path="/semana/6" element={<Semana6Page />} />
         <Route path="/semana/:semanaId" element={<Semana1Page />} />
         <Route path="/semana/:semanaId/description-match" element={<DescriptionMatchStartPage />} />
         <Route path="/semana/:semanaId/description-match/play" element={<DescriptionMatchGamePage />} />
