@@ -492,4 +492,25 @@
     transform: translateY(4px);
     box-shadow: 0 0 0 0 rgba(195, 200, 191, 1);
   }
+
+  /* Similitudes Game */
+  @keyframes similitudes-float {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-15px); }
+  }
+  .similitudes-float {
+    animation: similitudes-float 3s ease-in-out infinite;
+  }
+
+  @keyframes similitudes-star-pop {
+    0% { transform: scale(0) rotate(-45deg); opacity: 0; }
+    70% { transform: scale(1.2) rotate(10deg); }
+    100% { transform: scale(1) rotate(0deg); opacity: 1; }
+  }
+  .similitudes-star-pop {
+    animation: similitudes-star-pop 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+  }
+  .similitudes-star-pop:nth-child(1) { animation-delay: 0.1s; opacity: 0; }
+  .similitudes-star-pop:nth-child(2) { animation-delay: 0.25s; opacity: 0; }
+  .similitudes-star-pop:nth-child(3) { animation-delay: 0.4s; opacity: 0; }
 }

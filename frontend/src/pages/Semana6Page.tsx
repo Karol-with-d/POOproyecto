@@ -38,7 +38,7 @@ export default function Semana6Page() {
       btnIcon: 'arrow_forward',
       btnClass:
         'bg-primary text-on-primary border-b-4 border-primary-container hover:bg-primary-container hover:text-on-primary-container',
-      onClick: () => alert('Próximamente'),
+      onClick: () => navigate('/semana/6/similitudes'),
     },
     {
       id: 'movimiento',
