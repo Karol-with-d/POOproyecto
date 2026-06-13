@@ -9,7 +9,7 @@ const IMG_FINAL      = '/images/semana6/moverse/final.png';
 const ACTIVITIES = [
   { title: '¡Salta 10 veces!',              image: '/images/semana6/moverse/act1-salta.png',       duration: 10 },
   { title: '¡Corre en tu lugar 15 segundos!', image: '/images/semana6/moverse/act2-corre.png',     duration: 15 },
-  { title: '¡5 sentadillas!',               image: '/images/semana6/moverse/act3-sentadillas.png', duration: 30 },
+  { title: '¡15 sentadillas!',               image: '/images/semana6/moverse/act3-sentadillas.png', duration: 30 },
 ];
 
 const FEELINGS = [
