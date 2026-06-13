@@ -30,6 +30,7 @@ import HechoDeStartPage from './pages/HechoDeStartPage';
 import HechoDeGamePage from './pages/HechoDeGamePage';
 import Semana1QuizPage from './pages/Semana1QuizPage';
 import SimilitudesGamePage from './pages/SimilitudesGamePage';
+import MovimientoGamePage from './pages/MovimientoGamePage';
 
 function App() {
   return (
@@ -49,6 +50,7 @@ function App() {
         <Route path="/semana/5/superpoderes/play" element={<SuperpoderesGamePage />} />
         <Route path="/semana/6" element={<Semana6Page />} />
         <Route path="/semana/6/similitudes" element={<SimilitudesGamePage />} />
+        <Route path="/semana/6/movimiento" element={<MovimientoGamePage />} />
         <Route path="/semana/:semanaId" element={<Semana1Page />} />
         <Route path="/semana/:semanaId/description-match" element={<DescriptionMatchStartPage />} />
         <Route path="/semana/:semanaId/description-match/play" element={<DescriptionMatchGamePage />} />

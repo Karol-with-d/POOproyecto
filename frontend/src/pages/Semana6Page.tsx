@@ -53,7 +53,7 @@ export default function Semana6Page() {
       btnIcon: 'play_circle',
       btnClass:
         'bg-secondary text-on-secondary border-b-4 border-secondary-fixed-dim hover:bg-secondary-container hover:text-on-secondary-container',
-      onClick: () => alert('Próximamente'),
+      onClick: () => navigate('/semana/6/movimiento'),
     },
     {
       id: 'habitats',
