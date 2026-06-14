@@ -32,6 +32,7 @@ import Semana1QuizPage from './pages/Semana1QuizPage';
 import Semana2QuizPage from './pages/Semana2QuizPage';
 import MartaDialogoPage from './pages/MartaDialogoPage';
 import Semana5QuizPage from './pages/Semana5QuizPage';
+import Semana3QuizPage from './pages/Semana3QuizPage';
 import Semana6QuizPage from './pages/Semana6QuizPage';
 import SimilitudesGamePage from './pages/SimilitudesGamePage';
 import MovimientoGamePage from './pages/MovimientoGamePage';
@@ -45,6 +46,7 @@ function App() {
         <Route path="/home" element={<HomePage />} />
         <Route path="/semana/2" element={<Semana2Page />} />
         <Route path="/semana/3" element={<Semana3Page />} />
+        <Route path="/semana/3/quiz" element={<Semana3QuizPage />} />
         <Route path="/semana/4" element={<Semana4Page />} />
         <Route path="/semana/5" element={<Semana5Page />} />
         <Route path="/semana/5/semillas" element={<SemillasGamePage />} />
