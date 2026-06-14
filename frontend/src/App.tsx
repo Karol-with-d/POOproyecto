@@ -29,6 +29,7 @@ import BuildItGamePage from './pages/BuildItGamePage';
 import HechoDeStartPage from './pages/HechoDeStartPage';
 import HechoDeGamePage from './pages/HechoDeGamePage';
 import Semana1QuizPage from './pages/Semana1QuizPage';
+import Semana2QuizPage from './pages/Semana2QuizPage';
 import SimilitudesGamePage from './pages/SimilitudesGamePage';
 import MovimientoGamePage from './pages/MovimientoGamePage';
 import HabitatsGamePage from './pages/HabitatsGamePage';
@@ -60,6 +61,7 @@ function App() {
         <Route path="/semana/:semanaId/rescata-pulgarcito/play" element={<RescataPulgarcitoGamePage />} />
         <Route path="/semana/:semanaId/sort-by-size" element={<SortBySizeStartPage />} />
         <Route path="/semana/:semanaId/sort-by-size/play" element={<SortBySizeGamePage />} />
+        <Route path="/semana/2/quiz" element={<Semana2QuizPage />} />
         <Route path="/semana/2/coleccionando-objetos/play" element={<ColeccionandoObjetosGamePage />} />
         <Route path="/semana/2/caja-misteriosa/play" element={<CajaMisteriosaGamePage />} />
         <Route path="/semana/2/fabrica-misteriosa/play" element={<FabricaMisteriosaGamePage />} />

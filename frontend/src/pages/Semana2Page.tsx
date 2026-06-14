@@ -177,7 +177,7 @@ export default function Semana2Page() {
               </p>
             </div>
             <button
-              onClick={() => alert('Próximamente')}
+              onClick={() => navigate('/semana/2/quiz')}
               className="text-white font-bold py-3 md:py-4 px-8 md:px-10 rounded-full hover:opacity-90 transition-colors shadow-lg z-10 whitespace-nowrap text-lg"
               style={{ backgroundColor: '#4D6B53', border: '2px solid #668C6D' }}
             >
