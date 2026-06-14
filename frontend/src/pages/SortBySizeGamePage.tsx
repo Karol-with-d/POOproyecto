@@ -12,11 +12,11 @@ interface BasketItem {
 }
 
 const baskets: BasketItem[] = [
-  { id: 'basket-1', value: 1, alt: '1 apple', src: 'https://lh3.googleusercontent.com/aida/AP1WRLvarL0fac4s2ezWACNMBQi9qcF_eqAQkSexgcq4rCJY_sWfrtVQRf7lTkvQMjWnsSVBuNlYyueubWuKC0XttqQQ9H7VO9dWMvLic9oHatHLX8VME60mme3DvD4hD8kwEPXuCWDExwBrm8hATg1PlumaAH9tRe-urWf_5aXgxkim0tkWeKwebO1XOX3akbvsL9IO1u8i5j_Rdf4li4auGhCdsXqfNTsJbTf-9FZX_nX3q5q-XXxQ8r4Opvs' },
-  { id: 'basket-2', value: 2, alt: '2 bananas', src: 'https://lh3.googleusercontent.com/aida/AP1WRLsh3ibcttpbVTAqAK9AUTAyIbz0f8CWwLNdLfB9xTnT-eOMOUhyQoF8mWnAjRvK8Bk8nxO8fiw2PnwCA6ME7fJvrdMcXAKgFk6EeD1OLFFy1ftla4WtUdQM1zG_fH7HCQEfdZ8OHcICrptUE1QuU43V49MFZeSmDg-gC-e77Tp7l5BzQJ6SIXwbdWYlx84GRUK0J5MFqR22PZ83NZSh2TScdXh7LHCcvQlyfJDmTM6NtVwjsgOWuFEPHFEe' },
+  { id: 'basket-1', value: 1, alt: '1 apple', src: '/images/1manzana.png' },
+  { id: 'basket-2', value: 2, alt: '2 bananas', src: '/images/2bananas.png' },
   { id: 'basket-3', value: 3, alt: '3 grapes', src: 'https://lh3.googleusercontent.com/aida-public/AB6AXuAiiNcYxd1nggNGmOxgZ2tswSaf9Mgjq1eM71hNNdF-2mSbzBCEpZCckcsQAwJOBG4y1zuXlcl0al8MA4IYvJ82ADtw8c3pVEme4ONLsWIhHwBi8HQKwuihajldyCHjwHUCeEa_cmFh5l-IWv1y1E0MPubh7eFE08UT9N88p0prXLH9RkOAzaofKeUmYRMIeu-aJAqpr8s5e3UzJ_N5NLduR8mX1UI0hpOxqblGi9dknu2f6Gk6cQpxrlFhoR15aN9svDpjEOJe-m8v' },
   { id: 'basket-4', value: 4, alt: '4 oranges', src: 'https://lh3.googleusercontent.com/aida-public/AB6AXuAjwCOKKdLGFfZcjdTLloyWeH6JbHvpNPOUe8HmAGmEdOuWmwpCVtrvyBJueWl36R0-zMqlzUWn4d4yTndwgkruX1H43zO56Ic8U9N42H5ytKn65PeyT7JBWL7c5oqCvACp16Lnc02e4nuarC8t1YyntW1RF9N1xuy7iFhO6_1pYM8fU1AEJKSUX72CijEA2PktgmQOfFbKKoOJMPFaKpoBfCmfmgJfRa-W4CPQrrrCBY6SQ6B2W_Ky_tj0mcazKnELVjL-SHQnq2mM' },
-  { id: 'basket-5', value: 5, alt: '5 mixed fruits', src: 'https://lh3.googleusercontent.com/aida/AP1WRLvcTdbARakl3uSnn4wmmCfvnjKMnMB_gjRNsAvXhiYrvYUmwhAHU_sDwjhWe3krFZlQPjazoiPJ-LlV6ayvYuNR6e77F05fibeGwF-MbPy9h8IyethmZVDwEzKKkw3goCfVRs4ozPzK5DYOzcFHFzmQjBXLxafwa8oR_Kre_Pcha9KAbHUsZLgEGx0PwzF1EKIKmBH4LOkB9Qibz4LGf9pJxyT32RC3bmE4axISCQzKojNEBI7kpc4A48Nj' },
+  { id: 'basket-5', value: 5, alt: '5 mixed fruits', src: '/images/mixfrutas.png' },
 ];
 
 const dropZonesLevel1 = [
@@ -28,7 +28,7 @@ const dropZonesLevel1 = [
 ];
 
 /* =============================
-   LEVEL 2: TALLER DE MAGIA
+  LEVEL 2: TALLER DE MAGIA
    ============================= */
 interface FlaskItem {
   id: string;
