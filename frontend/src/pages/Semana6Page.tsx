@@ -68,7 +68,7 @@ export default function Semana6Page() {
       btnIcon: 'search',
       btnClass:
         'bg-tertiary text-on-tertiary border-b-4 border-tertiary-fixed hover:bg-tertiary-fixed hover:text-on-tertiary-fixed',
-      onClick: () => alert('Próximamente'),
+      onClick: () => navigate('/semana/6/habitats'),
     },
     {
       id: 'quiz',
