@@ -83,7 +83,7 @@ export default function Semana6Page() {
       btnIcon: 'fact_check',
       btnClass:
         'bg-surface-container-highest text-on-surface border-b-4 border-outline-variant hover:bg-surface-dim',
-      onClick: () => alert('Próximamente'),
+      onClick: () => navigate('/semana/6/quiz'),
     },
   ];
 
