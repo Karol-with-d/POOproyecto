@@ -31,6 +31,7 @@ import HechoDeGamePage from './pages/HechoDeGamePage';
 import Semana1QuizPage from './pages/Semana1QuizPage';
 import Semana2QuizPage from './pages/Semana2QuizPage';
 import MartaDialogoPage from './pages/MartaDialogoPage';
+import Semana5QuizPage from './pages/Semana5QuizPage';
 import SimilitudesGamePage from './pages/SimilitudesGamePage';
 import MovimientoGamePage from './pages/MovimientoGamePage';
 import HabitatsGamePage from './pages/HabitatsGamePage';
@@ -47,7 +48,7 @@ function App() {
         <Route path="/semana/5" element={<Semana5Page />} />
         <Route path="/semana/5/semillas" element={<SemillasGamePage />} />
         <Route path="/semana/5/busqueda" element={<BusquedaGamePage />} />
-        <Route path="/semana/5/quiz" element={<QuizIntroPage />} />
+        <Route path="/semana/5/quiz" element={<Semana5QuizPage />} />
         <Route path="/semana/1/quiz" element={<Semana1QuizPage />} />
         <Route path="/semana/5/superpoderes" element={<SuperpoderesStartPage />} />
         <Route path="/semana/5/superpoderes/play" element={<SuperpoderesGamePage />} />
