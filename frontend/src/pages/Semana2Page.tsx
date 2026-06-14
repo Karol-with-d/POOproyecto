@@ -158,7 +158,7 @@ export default function Semana2Page() {
                   border: '4px solid white',
                   transform: 'translateY(50%)',
                 }}
-                onClick={() => alert('Próximamente')}
+                onClick={() => navigate('/semana/2/marta')}
               >
                 <span className="text-white font-bold text-xs tracking-wider">START</span>
               </button>
