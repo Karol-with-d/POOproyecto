@@ -1,5 +1,6 @@
-import { useState, useRef, useCallback } from 'react';
+import { useState, useRef, useCallback, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { saveQuizScoreForSemanaNumber } from '../services/api';
 
 // ── Images ─────────────────────────────────────────────────────────────────
 const IMG_BRAIN    = '/images/semana5/quiz/intro-brain.png';
@@ -36,8 +37,6 @@ const QUESTIONS = [
   },
 ];
 
-type Screen = 'intro' | 'q1' | 'q2' | 'q3' | 'results';
-const SCREENS: Screen[] = ['intro', 'q1', 'q2', 'q3', 'results'];
 
 type OptionState = 'idle' | 'correct' | 'wrong' | 'highlight';
 
@@ -67,8 +66,25 @@ export default function Semana5QuizPage() {
   const fireConfetti = useConfetti();
 
   const [screenIdx, setScreenIdx] = useState(0); // 0=intro,1=q1,2=q2,3=q3,4=results
-  const [prevIdx, setPrevIdx]     = useState(-1);
   const [score, setScore]         = useState(0);
+  const hasSaved = useRef(false);
+
+  useEffect(() => {
+    if (screenIdx === 4 && !hasSaved.current) {
+      hasSaved.current = true;
+      const stored = localStorage.getItem('plataforma_user');
+      if (stored) {
+        const user = JSON.parse(stored) as { id: string };
+        const percentage = Math.round((score / 30) * 100);
+        saveQuizScoreForSemanaNumber({ userId: user.id, semanaNumber: 5, score: percentage }).catch(err => {
+          console.error('Error guardando quiz Semana 5:', err);
+        });
+      }
+    } else if (screenIdx !== 4) {
+      hasSaved.current = false;
+    }
+  }, [screenIdx, score]);
+
   const [userChoices, setUserChoices] = useState<Record<number, boolean>>({});
   // per-question option states: idle | correct | wrong | highlight
   const [optStates, setOptStates] = useState<OptionState[][]>([
@@ -82,12 +98,10 @@ export default function Semana5QuizPage() {
   const goTo = (next: number) => {
     if (transitioning.current) return;
     transitioning.current = true;
-    setPrevIdx(screenIdx);
     setScreenIdx(next);
     setTimeout(() => { transitioning.current = false; }, 450);
   };
 
-  const qIdx = screenIdx - 1; // 0-based question index when on a question screen
 
   const handleAnswer = (qNum: number, optIdx: number) => {
     if (locked[qNum]) return;
@@ -113,7 +127,6 @@ export default function Semana5QuizPage() {
 
   const restart = () => {
     setScreenIdx(0);
-    setPrevIdx(-1);
     setScore(0);
     setUserChoices({});
     setOptStates([
@@ -124,8 +137,6 @@ export default function Semana5QuizPage() {
     setLocked([false, false, false]);
   };
 
-  // Slide direction
-  const goingForward = screenIdx > prevIdx;
 
   const getSlideClass = (idx: number) => {
     if (idx === screenIdx) return 'translate-x-0 opacity-100 pointer-events-auto z-10';

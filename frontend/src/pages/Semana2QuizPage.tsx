@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { saveQuizScoreForSemanaNumber } from '../services/api';
 
 // ── Quiz data ──────────────────────────────────────────────────────────────
 interface Option { emoji: string; label: string }
@@ -112,6 +113,24 @@ export default function Semana2QuizPage() {
   const [selected, setSelected] = useState<number | null>(null);
   const [checked, setChecked] = useState(false);
   const [score, setScore] = useState(0);
+  const hasSaved = useRef(false);
+
+  useEffect(() => {
+    if (screen === 'results' && !hasSaved.current) {
+      hasSaved.current = true;
+      const stored = localStorage.getItem('plataforma_user');
+      if (stored) {
+        const user = JSON.parse(stored) as { id: string };
+        const percentage = Math.round((score / 3) * 100);
+        saveQuizScoreForSemanaNumber({ userId: user.id, semanaNumber: 2, score: percentage }).catch(err => {
+          console.error('Error guardando quiz Semana 2:', err);
+        });
+      }
+    } else if (screen !== 'results') {
+      hasSaved.current = false;
+    }
+  }, [screen, score]);
+
 
   const q = QUESTIONS[qIdx];
   const isCorrect = checked && selected === q.correctIndex;

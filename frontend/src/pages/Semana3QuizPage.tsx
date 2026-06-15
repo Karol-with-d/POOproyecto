@@ -1,5 +1,6 @@
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { saveQuizScoreForSemanaNumber } from '../services/api';
 
 // ── Images ─────────────────────────────────────────────────────────────────
 const IMG_HERO  = '/images/semana3/quiz/intro-hero.png';
@@ -85,8 +86,25 @@ export default function Semana3QuizPage() {
   const fireConfetti = useConfetti();
 
   const [screen, setScreen] = useState<Screen>(0);
-  const [prev, setPrev]     = useState(-1);
   const [score, setScore]   = useState(0);
+  const hasSaved = useRef(false);
+
+  useEffect(() => {
+    if (screen === 4 && !hasSaved.current) {
+      hasSaved.current = true;
+      const stored = localStorage.getItem('plataforma_user');
+      if (stored) {
+        const user = JSON.parse(stored) as { id: string };
+        const percentage = Math.round((score / 30) * 100);
+        saveQuizScoreForSemanaNumber({ userId: user.id, semanaNumber: 3, score: percentage }).catch(err => {
+          console.error('Error guardando quiz Semana 3:', err);
+        });
+      }
+    } else if (screen !== 4) {
+      hasSaved.current = false;
+    }
+  }, [screen, score]);
+
   const [choices, setChoices] = useState<Record<number, boolean>>({});
   const [optStates, setOptStates] = useState<OptionState[][]>([
     ['idle', 'idle', 'idle', 'idle'],
@@ -95,7 +113,7 @@ export default function Semana3QuizPage() {
   ]);
   const [locked, setLocked] = useState([false, false, false]);
 
-  const goTo = (next: number) => { setPrev(screen); setScreen(next as Screen); };
+  const goTo = (next: number) => { setScreen(next as Screen); };
 
   const handleAnswer = (qi: number, oi: number) => {
     if (locked[qi]) return;
@@ -114,7 +132,7 @@ export default function Semana3QuizPage() {
   };
 
   const restart = () => {
-    setScreen(0); setPrev(-1); setScore(0); setChoices({});
+    setScreen(0); setScore(0); setChoices({});
     setOptStates([['idle','idle','idle','idle'],['idle','idle','idle','idle'],['idle','idle','idle','idle']]);
     setLocked([false, false, false]);
   };

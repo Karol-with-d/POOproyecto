@@ -18,7 +18,6 @@ import SuperpoderesStartPage from './pages/SuperpoderesStartPage';
 import SuperpoderesGamePage from './pages/SuperpoderesGamePage';
 import SemillasGamePage from './pages/SemillasGamePage';
 import BusquedaGamePage from './pages/BusquedaGamePage';
-import QuizIntroPage from './pages/QuizIntroPage';
 import DescriptionMatchStartPage from './pages/DescriptionMatchStartPage';
 import DescriptionMatchGamePage from './pages/DescriptionMatchGamePage';
 import RescataPulgarcitoStartPage from './pages/RescataPulgarcitoStartPage';
