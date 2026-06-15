@@ -93,15 +93,30 @@ export async function saveScore(data: {
   });
 }
 
-export async function getGlobalScore(userId: string): Promise<any> {
-  return fetchApi<any>(`/users/${userId}/global-score`);
+export interface UserProgress {
+  semanaId: string;
+  semanaNumber: number;
+  completed: boolean;
+  score: number | null;
+  activitiesCompleted: number;
+  totalActivities: number;
+}
+
+export interface GlobalScoreResponse {
+  global: number;
+  breakdown: { semanaId: string; score: number }[];
+  message: string;
+}
+
+export async function getGlobalScore(userId: string): Promise<GlobalScoreResponse> {
+  return fetchApi<GlobalScoreResponse>(`/scores/users/${userId}/global-score`);
 }
 
 // ============================================
 // Progreso
 // ============================================
-export async function getUserProgress(userId: string): Promise<any[]> {
-  return fetchApi<any[]>(`/users/${userId}/progress`);
+export async function getUserProgress(userId: string): Promise<UserProgress[]> {
+  return fetchApi<UserProgress[]>(`/users/${userId}/progress`);
 }
 
 export async function markSemanaCompleted(
@@ -113,4 +128,24 @@ export async function markSemanaCompleted(
     method: 'PATCH',
     body: JSON.stringify({ score }),
   });
+}
+
+export async function saveQuizScoreForSemanaNumber(data: {
+  userId: string;
+  semanaNumber: number;
+  score: number;
+}): Promise<void> {
+  const semanas = await getSemanas();
+  const semana = semanas.find((item) => item.number === data.semanaNumber);
+  if (!semana) {
+    throw new Error(`Semana ${data.semanaNumber} no existe`);
+  }
+
+  await saveScore({
+    userId: data.userId,
+    semanaId: semana.id,
+    score: data.score,
+    type: 'quiz',
+  });
+  await markSemanaCompleted(data.userId, semana.id, data.score);
 }

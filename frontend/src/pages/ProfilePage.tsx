@@ -1,18 +1,12 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { getUserProgress } from '../services/api';
+import { getGlobalScore, getSemanas, getUserProgress, type GlobalScoreResponse, type Semana, type UserProgress } from '../services/api';
 
 interface UserData {
   id: string;
   randomName: string;
 }
 
-interface ProgressData {
-  semanaId: string;
-  semanaNumber: number;
-  completed: boolean;
-  score: number | null;
-}
 
 /**
  * ProfilePage — Perfil del usuario con progreso de semanas.
@@ -22,8 +16,11 @@ interface ProgressData {
  */
 export default function ProfilePage() {
   const [userName, setUserName] = useState('Explorador');
-  const [progress, setProgress] = useState<ProgressData[]>([]);
+  const [progress, setProgress] = useState<UserProgress[]>([]);
+  const [semanas, setSemanas] = useState<Semana[]>([]);
+  const [globalScore, setGlobalScore] = useState<GlobalScoreResponse | null>(null);
   const [isLoading, setIsLoading] = useState(true);
+  const [loadError, setLoadError] = useState('');
 
   useEffect(() => {
     const stored = localStorage.getItem('plataforma_user');
@@ -31,14 +28,22 @@ export default function ProfilePage() {
       const user: UserData = JSON.parse(stored);
       setUserName(user.randomName);
 
-      // Cargar progreso real desde la API
-      getUserProgress(user.id)
-        .then((data) => {
-          setProgress(data);
-          setIsLoading(false);
+      // Cargar progreso real, semanas y nota global en paralelo
+      Promise.all([
+        getUserProgress(user.id),
+        getSemanas(),
+        getGlobalScore(user.id)
+      ])
+        .then(([progressData, semanasData, globalScoreData]) => {
+          setProgress(progressData);
+          setSemanas(semanasData);
+          setGlobalScore(globalScoreData);
         })
         .catch((err) => {
           console.error('Error cargando progreso:', err);
+          setLoadError('No se pudieron cargar las puntuaciones.');
+        })
+        .finally(() => {
           setIsLoading(false);
         });
     } else {
@@ -64,6 +69,18 @@ export default function ProfilePage() {
   // Contar semanas completadas
   const completedCount = progress.filter((p) => p.completed).length;
 
+  const completedQuizCount = progress.filter((p) => p.score !== null).length;
+
+  const recordedScores = progress.filter((p) => p.score !== null).map((p) => p.score as number);
+  const averageOfRecordedScores = recordedScores.length > 0
+    ? recordedScores.reduce((sum, s) => sum + s, 0) / recordedScores.length
+    : 0;
+
+  const displayGlobal = Math.round(
+    globalScore && typeof globalScore.global === 'number'
+      ? globalScore.global
+      : averageOfRecordedScores
+  );
   return (
     <div className="font-body-md text-on-surface antialiased overflow-hidden selection:bg-primary-container selection:text-on-primary-container">
       {/* Top AppBar (Mobile Only) */}
@@ -113,7 +130,7 @@ export default function ProfilePage() {
           <span className="material-symbols-outlined absolute top-[20%] right-[15%] opacity-10 animate-[float_15s_infinite_ease-in-out] pointer-events-none text-primary text-[100px]" style={{ animationDelay: '4s' }}>biotech</span>
           <span className="material-symbols-outlined absolute top-[70%] right-[12%] opacity-10 animate-[float_15s_infinite_ease-in-out] pointer-events-none text-primary text-[70px]" style={{ animationDelay: '1s' }}>emoji_nature</span>
 
-          <div className="max-w-[800px] mx-auto px-margin-mobile md:px-margin-desktop py-lg min-h-full flex flex-col items-center justify-center relative z-10">
+          <div className="max-w-[950px] w-full mx-auto px-margin-mobile md:px-margin-desktop py-lg min-h-full flex flex-col items-center justify-center relative z-10">
             {/* Avatar & Header Section */}
             <div className="flex flex-col items-center text-center mb-xl w-full max-w-md">
               <div className="relative mb-6">
@@ -183,6 +200,133 @@ export default function ProfilePage() {
                   </div>
                 )}
               </div>
+            </div>
+
+            {/* Score Dashboard Section */}
+            <div className="w-full mt-6 bg-surface-container-lowest rounded-3xl border-2 border-surface-container p-6 md:p-8 flex flex-col gap-6 shadow-[0_4px_12px_rgba(74,101,73,0.05)]">
+              <div>
+                <h2 className="font-headline-md text-headline-md text-primary font-bold flex items-center gap-2">
+                  <span className="material-symbols-outlined">analytics</span>
+                  Sistema de Puntuación
+                </h2>
+                <p className="font-body-md text-body-md text-outline">
+                  Seguimiento de tu rendimiento académico
+                </p>
+              </div>
+
+              {isLoading ? (
+                <div className="flex items-center justify-center py-8">
+                  <span className="font-body-md text-outline animate-pulse">Cargando puntuaciones...</span>
+                </div>
+              ) : loadError ? (
+                <div className="bg-error-container text-on-error-container p-4 rounded-2xl text-center text-sm font-semibold flex items-center justify-center gap-2">
+                  <span className="material-symbols-outlined">error</span>
+                  {loadError}
+                </div>
+              ) : (
+                <>
+                  {/* Global and Weekly summary Widgets */}
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    {/* Global Score Widget */}
+                    <div className="bg-surface-container-low rounded-2xl p-4 flex items-center gap-4 border border-outline-variant">
+                      <div className="flex-shrink-0 text-primary">
+                        <svg viewBox="0 0 36 36" className="w-20 h-20">
+                          <path
+                            className="text-surface-container-highest"
+                            stroke="currentColor"
+                            strokeWidth="3.5"
+                            fill="none"
+                            d="M18 2.0845
+                              a 15.9155 15.9155 0 0 1 0 31.831
+                              a 15.9155 15.9155 0 0 1 0 -31.831"
+                          />
+                          <path
+                            className="text-primary transition-all duration-500"
+                            stroke="currentColor"
+                            strokeWidth="3.5"
+                            strokeDasharray={`${displayGlobal}, 100`}
+                            strokeLinecap="round"
+                            fill="none"
+                            d="M18 2.0845
+                              a 15.9155 15.9155 0 0 1 0 31.831
+                              a 15.9155 15.9155 0 0 1 0 -31.831"
+                          />
+                          <text x="18" y="21.5" className="font-bold font-headline-md text-[8px]" fill="currentColor" textAnchor="middle">
+                            {displayGlobal}%
+                          </text>
+                        </svg>
+                      </div>
+                      <div>
+                        <h3 className="font-label-lg text-label-lg text-on-surface font-bold">Nota Global</h3>
+                        <p className="font-body-md text-body-md text-outline">
+                          Promedio de tus actividades y quizes calificados.
+                        </p>
+                      </div>
+                    </div>
+
+                    {/* Weekly Summary Widget */}
+                    <div className="bg-surface-container-low rounded-2xl p-4 flex items-center gap-4 border border-outline-variant">
+                      <div className="w-20 h-20 rounded-full bg-primary-container text-on-primary-container flex flex-col items-center justify-center flex-shrink-0">
+                        <span className="material-symbols-outlined text-3xl">emoji_events</span>
+                        <span className="font-headline-sm text-headline-sm font-bold mt-0.5">
+                          {completedQuizCount}/{semanas.length || 6}
+                        </span>
+                      </div>
+                      <div>
+                        <h3 className="font-label-lg text-label-lg text-on-surface font-bold">Pruebas Completadas</h3>
+                        <p className="font-body-md text-body-md text-outline">
+                          Quizes aprobados y guardados en tu bitácora de ciencias.
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Table of Scores */}
+                  <div className="overflow-x-auto border border-outline-variant rounded-2xl bg-surface-container-low w-full">
+                    <table className="w-full text-left border-collapse">
+                      <thead>
+                        <tr className="bg-surface-container-high border-b border-outline-variant">
+                          <th className="p-3 font-label-md text-label-md text-on-surface font-bold">Semana</th>
+                          <th className="p-3 font-label-md text-label-md text-on-surface font-bold">Tema</th>
+                          <th className="p-3 font-label-md text-label-md text-on-surface-variant font-bold text-center">Peso</th>
+                          <th className="p-3 font-label-md text-label-md text-on-surface font-bold text-right">Calificación</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {semanas.slice().sort((a, b) => a.number - b.number).map((semana) => {
+                          const matchingProgress = progress.find(
+                            (p) => p.semanaId === semana.id || p.semanaNumber === semana.number
+                          );
+                          const score = matchingProgress?.score ?? null;
+                          const topicText = semana.title.replace(/^Semana \d+:\s*/, '');
+                          const weight = `${(100 / (semanas.length || 6)).toFixed(2)}%`;
+
+                          return (
+                            <tr key={semana.id} className="border-b border-outline-variant last:border-b-0 hover:bg-surface-container-high transition-colors">
+                              <td className="p-3 font-body-md font-semibold text-primary whitespace-nowrap">
+                                Sem. {semana.number}
+                              </td>
+                              <td className="p-3 font-body-md text-on-surface-variant">
+                                {topicText}
+                              </td>
+                              <td className="p-3 font-body-md text-on-surface-variant text-center whitespace-nowrap">
+                                {weight}
+                              </td>
+                              <td className="p-3 font-body-md text-right whitespace-nowrap">
+                                {score !== null ? (
+                                  <span className="font-bold text-primary">{score}/100</span>
+                                 ) : (
+                                  <span className="text-outline italic">Pendiente</span>
+                                 )}
+                              </td>
+                            </tr>
+                          );
+                        })}
+                      </tbody>
+                    </table>
+                  </div>
+                </>
+              )}
             </div>
 
             {/* Action Buttons */}

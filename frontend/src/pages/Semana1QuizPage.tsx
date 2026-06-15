@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { saveQuizScoreForSemanaNumber } from '../services/api';
 
 // ── Images used in answer options ──────────────────────────────────────────
 const IMG_NOTEBOOK =
@@ -66,8 +67,33 @@ export default function Semana1QuizPage() {
   const [selected, setSelected] = useState<number | null>(null);
   const [checked, setChecked] = useState(false);
   const [score, setScore] = useState(0);
+  const [saveStatus, setSaveStatus] = useState<'idle' | 'saving' | 'saved' | 'error'>('idle');
+  const [saveError, setSaveError] = useState('');
 
   const currentQ = QUESTIONS[questionIndex];
+
+  const persistQuizScore = async (finalScore: number) => {
+    const stored = localStorage.getItem('plataforma_user');
+    if (!stored) {
+      setSaveStatus('error');
+      setSaveError('No hay usuario activo para guardar la puntuación.');
+      return;
+    }
+
+    const user = JSON.parse(stored) as { id: string };
+    const percentage = Math.round((finalScore / QUESTIONS.length) * 100);
+    setSaveStatus('saving');
+    setSaveError('');
+
+    try {
+      await saveQuizScoreForSemanaNumber({ userId: user.id, semanaNumber: 1, score: percentage });
+      setSaveStatus('saved');
+    } catch (error) {
+      console.error('Error guardando quiz Semana 1:', error);
+      setSaveStatus('error');
+      setSaveError('No se pudo guardar tu puntuación. Intenta de nuevo más tarde.');
+    }
+  };
 
   const handleCheck = () => {
     if (selected === null) return;
@@ -82,6 +108,7 @@ export default function Semana1QuizPage() {
       setSelected(null);
       setChecked(false);
     } else {
+      persistQuizScore(score);
       setScreen('results');
     }
   };
@@ -92,6 +119,8 @@ export default function Semana1QuizPage() {
     setSelected(null);
     setChecked(false);
     setScore(0);
+    setSaveStatus('idle');
+    setSaveError('');
   };
 
   // ── Shared layout wrapper ───────────────────────────────────────────────
@@ -254,6 +283,27 @@ export default function Semana1QuizPage() {
               </div>
 
               <p className="font-body-lg text-body-lg text-on-surface-variant">{msg}</p>
+
+              {/* Guardado de puntuación */}
+              {saveStatus === 'saving' && (
+                <div className="text-secondary text-sm animate-pulse flex items-center justify-center gap-1">
+                  <span className="material-symbols-outlined text-sm">sync</span>
+                  Guardando puntuación...
+                </div>
+              )}
+              {saveStatus === 'saved' && (
+                <div className="text-primary text-sm font-semibold flex items-center justify-center gap-1">
+                  <span className="material-symbols-outlined text-sm">cloud_done</span>
+                  Puntuación guardada en tu bitácora.
+                </div>
+              )}
+              {saveStatus === 'error' && (
+                <div className="text-error text-sm font-semibold flex items-center justify-center gap-1">
+                  <span className="material-symbols-outlined text-sm">error</span>
+                  {saveError}
+                </div>
+              )}
+
 
               {/* Per-question summary */}
               <div className="flex flex-col gap-2 mt-2 text-left">

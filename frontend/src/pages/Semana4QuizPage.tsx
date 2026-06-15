@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { saveQuizScoreForSemanaNumber } from '../services/api';
 
 /**
  * Semana4QuizPage — Desafío Final de la Semana 4: Propiedades Químicas.
@@ -14,7 +15,31 @@ export default function Semana4QuizPage() {
   const [showFeedback, setShowFeedback] = useState(false);
   const [score, setScore] = useState(0);
   const [quizFinished, setQuizFinished] = useState(false);
+  const [saveStatus, setSaveStatus] = useState<'idle' | 'saving' | 'saved' | 'error'>('idle');
+  const [saveError, setSaveError] = useState('');
 
+  const persistQuizScore = async (finalScore: number) => {
+    const stored = localStorage.getItem('plataforma_user');
+    if (!stored) {
+      setSaveStatus('error');
+      setSaveError('No hay usuario activo para guardar la puntuación.');
+      return;
+    }
+
+    const user = JSON.parse(stored) as { id: string };
+    const percentage = Math.round((finalScore / totalQuestions) * 100);
+    setSaveStatus('saving');
+    setSaveError('');
+
+    try {
+      await saveQuizScoreForSemanaNumber({ userId: user.id, semanaNumber: 4, score: percentage });
+      setSaveStatus('saved');
+    } catch (error) {
+      console.error('Error guardando quiz Semana 4:', error);
+      setSaveStatus('error');
+      setSaveError('No se pudo guardar tu puntuación. Intenta de nuevo más tarde.');
+    }
+  };
   const questions = [
     {
       text: 'La oxidación es un cambio químico que puede cambiar el color de las frutas.',
@@ -96,6 +121,7 @@ export default function Semana4QuizPage() {
     if (currentIdx < totalQuestions - 1) {
       setCurrentIdx((prev) => prev + 1);
     } else {
+      persistQuizScore(score);
       setQuizFinished(true);
     }
   };
@@ -292,10 +318,22 @@ export default function Semana4QuizPage() {
                 {score}/{totalQuestions}
               </div>
             </div>
-            <p className="font-body-md text-primary flex items-center gap-2">
-              <span className="material-symbols-outlined text-sm" style={{ fontVariationSettings: '"FILL" 1' }}>check_circle</span>
-              Tu resultado se ha guardado con éxito
-            </p>
+            {saveStatus === 'saving' || saveStatus === 'idle' ? (
+              <p className="font-body-md text-secondary animate-pulse flex items-center gap-2">
+                <span className="material-symbols-outlined text-sm animate-spin">sync</span>
+                Guardando tu resultado...
+              </p>
+            ) : saveStatus === 'saved' ? (
+              <p className="font-body-md text-primary flex items-center gap-2">
+                <span className="material-symbols-outlined text-sm" style={{ fontVariationSettings: '"FILL" 1' }}>check_circle</span>
+                Tu resultado se ha guardado con éxito
+              </p>
+            ) : (
+              <p className="font-body-md text-error flex items-center gap-2">
+                <span className="material-symbols-outlined text-sm">error</span>
+                {saveError}
+              </p>
+            )}
             <button
               onClick={handleFinish}
               className="w-full bg-primary text-white font-label-lg py-4 rounded-full shadow-[0_8px_0_#2a3f29] active:shadow-none active:translate-y-2 transition-all duration-100 button-press quicksand-text"
