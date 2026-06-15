@@ -13,7 +13,7 @@ export default function Semana4Page() {
   const handleHome = () => navigate('/home');
 
   const handleStartQuiz = () => {
-    alert('Próximamente');
+    navigate('/semana/4/quiz');
   };
 
   const handleActivityClick = (activityName: string) => {
@@ -23,6 +23,10 @@ export default function Semana4Page() {
       navigate('/semana/4/fermentacion');
     } else if (activityName === 'Ácidos y Bases') {
       navigate('/semana/4/opuestos');
+    } else if (activityName === 'Quimioluminiscencia') {
+      navigate('/semana/4/quimioluminiscencia');
+    } else if (activityName === 'Combustión') {
+      navigate('/semana/4/combustion');
     } else {
       alert(`${activityName}: Próximamente`);
     }
@@ -206,10 +210,10 @@ export default function Semana4Page() {
               />
             </div>
             <h3 className="font-headline-md text-headline-md text-[#334d33] quicksand-text mb-2">
-              Lumi y las Luces
+              Lumi y la quimioluminiscencia
             </h3>
             <p className="font-body-md text-body-md text-on-surface-variant mb-4">
-              Brilla en la oscuridad.
+              ¡Brilla en la oscuridad!
             </p>
             <div className="mt-auto flex items-center justify-between">
               <div className="flex items-center gap-2 bg-[#334d33] text-white px-8 py-3 rounded-full font-bold shadow-sm hover:scale-105 transition-all quicksand-text text-label-lg ml-auto">
