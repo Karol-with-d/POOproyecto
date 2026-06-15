@@ -268,7 +268,7 @@ export default function CajaMisteriosaGamePage() {
                       <img
                         alt="Caja Misteriosa"
                         className="w-64 h-64 lg:w-80 lg:h-80 object-contain drop-shadow-xl"
-                        src="https://lh3.googleusercontent.com/aida/AP1WRLsjIrruft2ddAn7Qh9aGGIKv60ICrZvIG3KC1pLWksK88Gc9pGaR1IvHkJ3SsGesDG1E0kXBpJbKQpfF5djW3iuLkiUP8giskr0PNYLkQ_lmjCOtAk8-gBixtze5aJrwV5Eik243pdfWze424RlCB63T7riyvWif5NuV9ZgzMmHA3ru2YAJ-DawONkAwVt2YhQ8HIxo_b_gSRlvk0Bb-aAcMGIx5nnf7sMSkEh6TQ2-c6-xlO9j5R3bXA"
+                        src="/images/cajamisteriosa.png"
                       />
                     </div>
                   </>

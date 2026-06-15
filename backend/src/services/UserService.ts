@@ -18,6 +18,16 @@ export class UserService {
     this.logger.info('createUser iniciado', { randomName });
     const name = randomName?.trim() || await UserModel.createRandomName();
     this.logger.debug('Nombre final para crear usuario', { name });
+
+    // If a name was provided, reuse the existing user so scores persist across sessions.
+    if (randomName?.trim()) {
+      const existing = await prisma.user.findFirst({ where: { randomName: name } });
+      if (existing) {
+        this.logger.info('Usuario existente encontrado, reutilizando', { userId: existing.id });
+        return existing;
+      }
+    }
+
     const user = await UserModel.create({ randomName: name });
     this.logger.info('createUser completado', { userId: user.id });
     return user;
