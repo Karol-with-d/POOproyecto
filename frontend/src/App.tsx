@@ -6,6 +6,7 @@ import Semana1Page from './pages/Semana1Page';
 import Semana2Page from './pages/Semana2Page';
 import Semana3Page from './pages/Semana3Page';
 import Semana4Page from './pages/Semana4Page';
+import OxidacionPage from './pages/OxidacionPage';
 import Semana5Page from './pages/Semana5Page';
 import Semana6Page from './pages/Semana6Page';
 import SuperpoderesStartPage from './pages/SuperpoderesStartPage';
@@ -41,6 +42,7 @@ function App() {
         <Route path="/semana/2" element={<Semana2Page />} />
         <Route path="/semana/3" element={<Semana3Page />} />
         <Route path="/semana/4" element={<Semana4Page />} />
+        <Route path="/semana/4/oxidacion" element={<OxidacionPage />} />
         <Route path="/semana/5" element={<Semana5Page />} />
         <Route path="/semana/5/semillas" element={<SemillasGamePage />} />
         <Route path="/semana/5/busqueda" element={<BusquedaGamePage />} />

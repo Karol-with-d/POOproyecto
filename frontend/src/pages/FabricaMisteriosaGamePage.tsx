@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback, useRef } from 'react';
+import { useState, useEffect, useCallback, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 interface GameObject {
@@ -297,7 +297,7 @@ export default function FabricaMisteriosaGamePage() {
           ref={containerRef}
           onClick={handleSphereClick}
           className={`absolute z-20 flex items-center justify-center cursor-pointer ${
-            objectAnimating ? 'launch-anim' : ''
+            (launchAnimation || objectAnimating) ? 'launch-anim' : ''
           } ${pulsing ? 'pulsing' : ''} ${errorShake ? 'error-shake' : ''}`}
           style={{
             top: '394px',
