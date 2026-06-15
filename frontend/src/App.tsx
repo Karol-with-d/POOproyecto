@@ -35,8 +35,14 @@ import BuildItGamePage from './pages/BuildItGamePage';
 import HechoDeStartPage from './pages/HechoDeStartPage';
 import HechoDeGamePage from './pages/HechoDeGamePage';
 import Semana1QuizPage from './pages/Semana1QuizPage';
+import Semana2QuizPage from './pages/Semana2QuizPage';
+import MartaDialogoPage from './pages/MartaDialogoPage';
+import Semana5QuizPage from './pages/Semana5QuizPage';
+import Semana3QuizPage from './pages/Semana3QuizPage';
+import Semana6QuizPage from './pages/Semana6QuizPage';
 import SimilitudesGamePage from './pages/SimilitudesGamePage';
 import MovimientoGamePage from './pages/MovimientoGamePage';
+import HabitatsGamePage from './pages/HabitatsGamePage';
 
 function App() {
   return (
@@ -46,6 +52,7 @@ function App() {
         <Route path="/home" element={<HomePage />} />
         <Route path="/semana/2" element={<Semana2Page />} />
         <Route path="/semana/3" element={<Semana3Page />} />
+        <Route path="/semana/3/quiz" element={<Semana3QuizPage />} />
         <Route path="/semana/4" element={<Semana4Page />} />
         <Route path="/semana/4/oxidacion" element={<OxidacionPage />} />
         <Route path="/semana/4/fermentacion" element={<FermentacionPage />} />
@@ -56,13 +63,15 @@ function App() {
         <Route path="/semana/5" element={<Semana5Page />} />
         <Route path="/semana/5/semillas" element={<SemillasGamePage />} />
         <Route path="/semana/5/busqueda" element={<BusquedaGamePage />} />
-        <Route path="/semana/5/quiz" element={<QuizIntroPage />} />
+        <Route path="/semana/5/quiz" element={<Semana5QuizPage />} />
         <Route path="/semana/1/quiz" element={<Semana1QuizPage />} />
         <Route path="/semana/5/superpoderes" element={<SuperpoderesStartPage />} />
         <Route path="/semana/5/superpoderes/play" element={<SuperpoderesGamePage />} />
         <Route path="/semana/6" element={<Semana6Page />} />
         <Route path="/semana/6/similitudes" element={<SimilitudesGamePage />} />
         <Route path="/semana/6/movimiento" element={<MovimientoGamePage />} />
+        <Route path="/semana/6/habitats" element={<HabitatsGamePage />} />
+        <Route path="/semana/6/quiz" element={<Semana6QuizPage />} />
         <Route path="/semana/:semanaId" element={<Semana1Page />} />
         <Route path="/semana/:semanaId/description-match" element={<DescriptionMatchStartPage />} />
         <Route path="/semana/:semanaId/description-match/play" element={<DescriptionMatchGamePage />} />
@@ -70,6 +79,8 @@ function App() {
         <Route path="/semana/:semanaId/rescata-pulgarcito/play" element={<RescataPulgarcitoGamePage />} />
         <Route path="/semana/:semanaId/sort-by-size" element={<SortBySizeStartPage />} />
         <Route path="/semana/:semanaId/sort-by-size/play" element={<SortBySizeGamePage />} />
+        <Route path="/semana/2/quiz" element={<Semana2QuizPage />} />
+        <Route path="/semana/2/marta" element={<MartaDialogoPage />} />
         <Route path="/semana/2/coleccionando-objetos/play" element={<ColeccionandoObjetosGamePage />} />
         <Route path="/semana/2/caja-misteriosa/play" element={<CajaMisteriosaGamePage />} />
         <Route path="/semana/2/fabrica-misteriosa/play" element={<FabricaMisteriosaGamePage />} />

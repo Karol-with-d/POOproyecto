@@ -123,7 +123,7 @@ export default function Semana3Page() {
             </p>
           </div>
           <button
-            onClick={() => alert('Próximamente')}
+            onClick={() => navigate('/semana/3/quiz')}
             className="squishy-button whitespace-nowrap py-3 px-lg bg-[#4a6549] text-white font-label-lg text-label-lg rounded-xl flex items-center justify-center gap-2"
           >
             <span className="material-symbols-outlined">play_circle</span>
