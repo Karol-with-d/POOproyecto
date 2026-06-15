@@ -19,6 +19,8 @@ export default function Semana4Page() {
   const handleActivityClick = (activityName: string) => {
     if (activityName === 'Oxidación') {
       navigate('/semana/4/oxidacion');
+    } else if (activityName === 'Fermentación') {
+      navigate('/semana/4/fermentacion');
     } else {
       alert(`${activityName}: Próximamente`);
     }
