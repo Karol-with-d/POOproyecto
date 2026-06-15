@@ -21,6 +21,8 @@ export default function Semana4Page() {
       navigate('/semana/4/oxidacion');
     } else if (activityName === 'Fermentación') {
       navigate('/semana/4/fermentacion');
+    } else if (activityName === 'Ácidos y Bases') {
+      navigate('/semana/4/opuestos');
     } else {
       alert(`${activityName}: Próximamente`);
     }
