@@ -10,6 +10,7 @@ import semanaRoutes from '../routes/semana.routes';
 import scoreRoutes from '../routes/score.routes';
 import progressRoutes from '../routes/progress.routes';
 
+
 /**
  * Clase App — encapsula la inicialización y configuración del servidor Express.
  * Recibe el puerto como parámetro en el constructor (inyección de configuración).
