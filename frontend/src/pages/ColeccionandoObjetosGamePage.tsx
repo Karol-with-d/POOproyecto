@@ -1,221 +1,1460 @@
-import React, { useState, useRef, useCallback } from 'react';
+import React, { useState, useRef, useCallback, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 interface GameItem {
   id: string;
   emoji: string;
-  style: React.CSSProperties;
+  label: string;
+
+  // Posición para computadora
+  desktopStyle: React.CSSProperties;
+
+  // Posición para tablet
+  tabletStyle: React.CSSProperties;
+
+  // Posición para celular
+  mobileStyle: React.CSSProperties;
 }
 
+interface Round {
+  id: string;
+  name: string;
+  question: string;
+  celebration: string;
+}
+
+interface Sparkle {
+  id: number;
+  x: number;
+  y: number;
+  emoji: string;
+}
+
+interface WrongIndicator {
+  id: number;
+  x: number;
+  y: number;
+}
+
+
+// OBJETOS DEL JUEGO
+// ─────────────────────────────────────────────────────────────────────────────
+ 
+// Cada objeto tiene una posición diferente dependiendo
+ // del tamaño de pantalla:
+ //
+ // - desktopStyle → computadora
+ // - tabletStyle  → tablet
+ // - mobileStyle  → celular
+
 const items: GameItem[] = [
-  { id: 'backpack', emoji: '🎒', style: { top: '25%', left: '8%', width: '15%', height: '25%' } },
-  { id: 'books', emoji: '📚', style: { top: '35%', left: '25%', width: '13%', height: '18%' } },
-  { id: 'paper1', emoji: '📄', style: { top: '32%', left: '62%', width: '8%', height: '15%' } },
-  { id: 'notebook', emoji: '📓', style: { top: '25%', left: '74%', width: '10%', height: '20%' } },
-  { id: 'paper2', emoji: '📄', style: { top: '38%', left: '85%', width: '8%', height: '16%' } },
+  {
+    id: 'mochila',
+    emoji: '🎒',
+    label: 'Mochila',
+
+    desktopStyle: {
+      top: '25%',
+      left: '8%',
+      width: '15%',
+      height: '25%',
+    },
+
+    tabletStyle: {
+      top: '27%',
+      left: '5%',
+      width: '19%',
+      height: '24%',
+    },
+
+    mobileStyle: {
+      top: '29%',
+      left: '5%',
+      width: '27%',
+      height: '18%',
+    },
+  },
+
+  {
+    id: 'libros',
+    emoji: '📚',
+    label: 'Libros',
+
+    desktopStyle: {
+      top: '35%',
+      left: '25%',
+      width: '13%',
+      height: '18%',
+    },
+
+    tabletStyle: {
+      top: '37%',
+      left: '26%',
+      width: '17%',
+      height: '18%',
+    },
+
+    mobileStyle: {
+      top: '30%',
+      left: '38%',
+      width: '25%',
+      height: '18%',
+    },
+  },
+
+  {
+    id: 'papel',
+    emoji: '📄',
+    label: 'Hoja de papel',
+
+    desktopStyle: {
+      top: '32%',
+      left: '61%',
+      width: '10%',
+      height: '16%',
+    },
+
+    tabletStyle: {
+      top: '34%',
+      left: '62%',
+      width: '14%',
+      height: '17%',
+    },
+
+    mobileStyle: {
+      top: '48%',
+      left: '8%',
+      width: '25%',
+      height: '17%',
+    },
+  },
+
+  {
+    id: 'cuaderno',
+    emoji: '📓',
+    label: 'Cuaderno',
+
+    desktopStyle: {
+      top: '25%',
+      left: '74%',
+      width: '10%',
+      height: '20%',
+    },
+
+    tabletStyle: {
+      top: '27%',
+      left: '77%',
+      width: '14%',
+      height: '20%',
+    },
+
+    mobileStyle: {
+      top: '49%',
+      left: '38%',
+      width: '25%',
+      height: '18%',
+    },
+  },
+
+  {
+    id: 'lapiz',
+    emoji: '✏️',
+    label: 'Lápiz',
+
+    desktopStyle: {
+      top: '58%',
+      left: '80%',
+      width: '12%',
+      height: '18%',
+    },
+
+    tabletStyle: {
+      top: '58%',
+      left: '78%',
+      width: '16%',
+      height: '18%',
+    },
+
+    mobileStyle: {
+      top: '69%',
+      left: '65%',
+      width: '27%',
+      height: '18%',
+    },
+  },
+];
+
+// ORDEN DE LAS RONDAS
+// ─────────────────────────────────────────────────────────────────────────────
+
+// IMPORTANTE:
+// Siempre será: 1. Mochila 2. Libros 3. Papel 4. Cuaderno 5. Lápiz
+
+const BASE_ROUNDS: Round[] = [
+  {
+    id: 'mochila',
+    name: 'la mochila',
+    question: '¿Dónde está la mochila?',
+    celebration: '¡Muy bien! ¡Encontraste la mochila! 🎒',
+  },
+
+  {
+    id: 'libros',
+    name: 'los libros',
+    question: '¿Dónde están los libros?',
+    celebration: '¡Excelente! ¡Son los libros! 📚',
+  },
+
+  {
+    id: 'papel',
+    name: 'la hoja de papel',
+    question: '¿Dónde está la hoja de papel?',
+    celebration: '¡Genial! ¡Encontraste el papel! 📄',
+  },
+
+  {
+    id: 'cuaderno',
+    name: 'el cuaderno',
+    question: '¿Dónde está el cuaderno?',
+    celebration: '¡Súper! ¡Ese es el cuaderno! 📓',
+  },
+
+  {
+    id: 'lapiz',
+    name: 'el lápiz',
+    question: '¿Dónde está el lápiz?',
+    celebration: '¡Fantástico! ¡Encontraste el lápiz! ✏️',
+  },
 ];
 
 const confettiEmojis = ['⭐', '🎊', '🎉', '✨'];
 
-function createConfetti(container: HTMLElement) {
-  for (let i = 0; i < 50; i++) {
-    const particle = document.createElement('div');
-    particle.innerText = confettiEmojis[Math.floor(Math.random() * confettiEmojis.length)];
-    particle.className = 'particle text-3xl z-40';
-    particle.style.left = `${Math.random() * 100}%`;
-    particle.style.top = '-50px';
-    particle.style.animationDuration = `${Math.random() * 2 + 2}s`;
-    particle.style.animationDelay = `${Math.random() * 1}s`;
-    container.appendChild(particle);
-  }
-}
-
-export default function ColeccionandoObjetosGamePage() {
+export default function ColeccionandoObjetos() {
   const navigate = useNavigate();
-  const [foundCount, setFoundCount] = useState(0);
-  const [collectedItems, setCollectedItems] = useState<Set<string>>(new Set());
-  const [showSpeech, setShowSpeech] = useState(true);
+
+  // ESTADOS
+  // ─────────────────────────────────────────────────────────────────────────────
+
+  // Las rondas mantienen SIEMPRE el orden de BASE_ROUNDS
+  const [rounds, setRounds] = useState<Round[]>(BASE_ROUNDS);
+
+  // Ronda actual
+  const [currentRoundIndex, setCurrentRoundIndex] = useState(0);
+
+  // Objetos encontrados
+  const [foundObjects, setFoundObjects] = useState<Set<string>>(
+    new Set()
+  );
+
+  // Evita que se pueda hacer clic mientras aparece
+  // la celebración de una respuesta correcta
+  const [isProcessing, setIsProcessing] = useState(false);
+
+  // Indica si terminó todo el juego
   const [gameWon, setGameWon] = useState(false);
-  const [speechText, setSpeechText] = useState('¡Hola! Toca las siluetas oscuras para coleccionar los objetos perdidos.');
+
+  // Mostrar/ocultar globo
+  const [showSpeech, setShowSpeech] = useState(true);
+
+  // Texto del globo
+  const [speechText, setSpeechText] = useState(
+    `¡Hola! ${BASE_ROUNDS[0].question}`
+  );
+
+  // Tipo de mensaje
+  const [speechType, setSpeechType] = useState<
+    'normal' | 'success' | 'error' | 'win'
+  >('normal');
+
+  // Destellos
+  const [sparkles, setSparkles] = useState<Sparkle[]>([]);
+
+  // Indicadores
+  const [wrongIndicators, setWrongIndicators] = useState<
+    WrongIndicator[]
+  >([]);
+
+  // Objeto que está haciendo la animación de error
+  const [shakingItem, setShakingItem] = useState<string | null>(
+    null
+  );
+
+   // REFERENCIAS
+   // ─────────────────────────────────────────────────────────────────────────────
+
   const gameContainerRef = useRef<HTMLDivElement>(null);
-  const [sparkles, setSparkles] = useState<{ id: number; x: number; y: number; emoji: string }[]>([]);
+
   const sparkleIdRef = useRef(0);
 
-  const handleItemClick = useCallback((item: GameItem) => {
-    if (collectedItems.has(item.id)) return;
+  const wrongIdRef = useRef(0);
 
-    const container = gameContainerRef.current;
-    if (!container) return;
+  const timeoutRefs = useRef<ReturnType<typeof setTimeout>[]>([]);
 
-    // Create sparkles
-    const rect = container.getBoundingClientRect();
-    const itemX = rect.left + (parseFloat(item.style.left as string) / 100) * rect.width + ((parseFloat(item.style.width as string) / 100) * rect.width) / 2;
-    const itemY = rect.top + (parseFloat(item.style.top as string) / 100) * rect.height + ((parseFloat(item.style.height as string) / 100) * rect.height) / 2;
+   // RONDA ACTUAL
+   // ─────────────────────────────────────────────────────────────────────────────
 
-    const newSparkles = [];
-    const emojis = ['⭐', '✨', '🌟'];
-    for (let i = 0; i < 5; i++) {
-      newSparkles.push({
-        id: sparkleIdRef.current++,
-        x: itemX + (Math.random() * 40 - 20),
-        y: itemY + (Math.random() * 40 - 20),
-        emoji: emojis[Math.floor(Math.random() * emojis.length)],
-      });
+  const currentRound = rounds[currentRoundIndex];
+
+  // LIMPIAR TIMEOUTS
+ // ─────────────────────────────────────────────────────────────────────────────
+
+  const clearAllTimeouts = () => {
+    timeoutRefs.current.forEach((timeout) => {
+      clearTimeout(timeout);
+    });
+
+    timeoutRefs.current = [];
+  };
+
+   // CREAR DESTELLOS
+   // ─────────────────────────────────────────────────────────────────────────────
+
+  const createSparkles = useCallback(
+    (x: number, y: number) => {
+      const newSparkles: Sparkle[] = [];
+
+      for (let i = 0; i < 8; i++) {
+        newSparkles.push({
+          id: sparkleIdRef.current++,
+
+          x: x + (Math.random() * 10 - 5),
+
+          y: y + (Math.random() * 10 - 5),
+
+          emoji: '✨',
+        });
+      }
+
+      setSparkles((previous) => [
+        ...previous, ...newSparkles,
+      ]);
+
+      const timeout = setTimeout(() => {
+        setSparkles((previous) =>
+          previous.filter(
+            (sparkle) =>
+              !newSparkles.some(
+                (newSparkle) =>
+                  newSparkle.id === sparkle.id
+              )
+          )
+        );
+      }, 900);
+
+      timeoutRefs.current.push(timeout);
+    },
+    []
+ );
+
+// FEEDBACK DE RESPUESTA INCORRECTA
+// ─────────────────────────────────────────────────────────────────────────────
+
+  const showWrongFeedback = useCallback(
+    (x: number, y: number, itemId: string) => {
+      const newId = wrongIdRef.current++;
+
+      setWrongIndicators((previous) => [
+        ...previous,
+        {
+          id: newId,
+          x,
+          y,
+        },
+      ]);
+
+      setShakingItem(itemId);
+
+      setSpeechText('¡Ups! Inténtalo otra vez.');
+
+      setSpeechType('error');
+
+      setShowSpeech(true);
+
+      const timeout = setTimeout(() => {
+        setWrongIndicators((previous) =>
+          previous.filter(
+            (indicator) => indicator.id !== newId
+          )
+        );
+
+        setShakingItem(null);
+
+        // MUY IMPORTANTE:Después del error volvemos a mostrar la pregunta de la ronda ACTUAL.
+        
+        setSpeechText(currentRound.question);
+
+        setSpeechType('normal');
+      }, 3200);
+
+      timeoutRefs.current.push(timeout);
+    },
+    [currentRound]
+  );
+
+   // CLICK EN UN OBJETO
+   // ─────────────────────────────────────────────────────────────────────────────
+
+  const handleItemClick = (
+    item: GameItem,
+    event: React.MouseEvent<HTMLButtonElement>
+  ) => {
+    if (isProcessing || gameWon) {
+      return;
     }
-    setSparkles((prev) => [...prev, ...newSparkles]);
-    setTimeout(() => {
-      setSparkles((prev) => prev.filter((s) => !newSparkles.find((ns) => ns.id === s.id)));
-    }, 1000);
 
-    // Update collected items
-    setCollectedItems((prev) => new Set(prev).add(item.id));
+    const rect =
+      event.currentTarget.getBoundingClientRect();
 
-    const newCount = foundCount + 1;
-    setFoundCount(newCount);
+    const gameRect =
+      gameContainerRef.current?.getBoundingClientRect();
 
-    // Hide speech on first interaction
-    if (newCount === 1) {
-      setShowSpeech(false);
+    if (!gameRect) {
+      return;
     }
 
-    // Check win condition
-    if (newCount === items.length) {
-      setTimeout(() => {
+    // Calculamos la posición del objeto dentro del escenario.
+
+    const x =
+      ((rect.left + rect.width / 2 - gameRect.left) /
+        gameRect.width) *
+      100;
+
+    const y =
+      ((rect.top + rect.height / 2 - gameRect.top) /
+        gameRect.height) *
+      100;
+
+  
+   //  OBJETO INCORRECTO
+   // ─────────────────────────────────────────────────────────────────────────────
+  
+
+    if (item.id !== currentRound.id) {
+      showWrongFeedback(x, y, item.id);
+
+      return;
+    }
+
+  // OBJETO CORRECTO
+  // ─────────────────────────────────────────────────────────────────────────────
+
+    setIsProcessing(true);
+
+    createSparkles(x, y);
+
+    setFoundObjects((previous) => {
+      const updated = new Set(previous);
+
+      updated.add(item.id);
+
+      return updated;
+    });
+
+    //Mostrar felicitación
+
+    setSpeechText(currentRound.celebration);
+
+    setSpeechType('success');
+
+    setShowSpeech(true);
+
+    // Comprobamos si es la última ronda
+
+    const isLastRound =
+      currentRoundIndex === rounds.length - 1;
+
+    const timeout = setTimeout(() => {
+      if (isLastRound) {
+  
+  // JUEGO TERMINADO
+  // ─────────────────────────────────────────────────────────────────────────────
+
         setGameWon(true);
-        setSpeechText('¡Felicidades, encontraste todo!');
+
+        setSpeechText(
+          '¡Completaste todas las rondas! 🎉'
+        );
+
+        setSpeechType('win');
+
         setShowSpeech(true);
-        if (container) {
-          createConfetti(container);
-        }
-      }, 800);
-    }
-  }, [collectedItems, foundCount]);
+      } else {
+   
+  // SIGUIENTE RONDA
+  // ─────────────────────────────────────────────────────────────────────────────
+
+        const nextRoundIndex =
+          currentRoundIndex + 1;
+
+        setCurrentRoundIndex(nextRoundIndex);
+
+        // Como las rondas NO se mezclan, aquí siempre coincide la pregunta con el siguiente objeto.
+
+        setSpeechText(
+          rounds[nextRoundIndex].question
+        );
+
+        setSpeechType('normal');
+
+        setShowSpeech(true);
+      }
+
+      setIsProcessing(false);
+    }, 3500);
+
+    timeoutRefs.current.push(timeout);
+  };
+
+   // REINICIAR JUEGO
+   // ─────────────────────────────────────────────────────────────────────────────
 
   const handleRestart = () => {
-    setFoundCount(0);
-    setCollectedItems(new Set());
-    setShowSpeech(true);
+    clearAllTimeouts();
+
+     // Volvemos al orden original. 1. Mochila 2. Libros 3. Papel 4.Cuaderno 5.Lápiz
+
+    setRounds(BASE_ROUNDS);
+
+    setCurrentRoundIndex(0);
+
+    setFoundObjects(new Set());
+
+    setIsProcessing(false);
+
     setGameWon(false);
-    setSpeechText('¡Hola! Toca las siluetas oscuras para coleccionar los objetos perdidos.');
-    // Clear confetti particles
-    const container = gameContainerRef.current;
-    if (container) {
-      const particles = container.querySelectorAll('.particle');
-      particles.forEach((p) => p.remove());
-    }
+
+    setShowSpeech(true);
+
+  // La primera pregunta siempre será la de la mochila.
+
+    setSpeechText(
+      `¡Hola! ${BASE_ROUNDS[0].question}`
+    );
+
+    setSpeechType('normal');
+
+    setSparkles([]);
+
+    setWrongIndicators([]);
+
+    setShakingItem(null);
+
+  // Eliminar confeti anterior
+
+    const particles =
+      gameContainerRef.current?.querySelectorAll(
+        '.particle'
+      );
+
+    particles?.forEach((particle) =>
+      particle.remove()
+    );
   };
+
+   // SALIR
+   // ─────────────────────────────────────────────────────────────────────────────
 
   const handleExit = () => {
     navigate('/semana/2');
   };
 
+   // CREAR CONFETI
+   // ─────────────────────────────────────────────────────────────────────────────
+
+  const createConfetti = useCallback(() => {
+    const container =
+      gameContainerRef.current;
+
+    if (!container) {
+      return;
+    }
+
+    for (let i = 0; i < 50; i++) {
+      const particle =
+        document.createElement('div');
+
+      particle.className = 'particle';
+
+      particle.textContent =
+        confettiEmojis[
+          Math.floor(
+            Math.random() *
+              confettiEmojis.length
+          )
+        ];
+
+      particle.style.position = 'absolute';
+
+      particle.style.left =
+        `${Math.random() * 100}%`;
+
+      particle.style.top = '-5%';
+
+      particle.style.fontSize =
+        `${1.2 + Math.random() * 1.5}rem`;
+
+      particle.style.animation =
+        `fall ${
+          2 + Math.random() * 3
+        }s linear forwards`;
+
+      particle.style.animationDelay =
+        `${Math.random() * 1.5}s`;
+
+      particle.style.zIndex = '60';
+
+      container.appendChild(particle);
+    }
+  }, []);
+
+   // CUANDO TERMINA EL JUEGO
+   // ─────────────────────────────────────────────────────────────────────────────
+
+  useEffect(() => {
+    if (gameWon) {
+      createConfetti();
+    }
+  }, [gameWon, createConfetti]);
+
+  // LIMPIEZA
+  // ─────────────────────────────────────────────────────────────────────────────
+
+  useEffect(() => {
+    return () => {
+      clearAllTimeouts();
+    };
+  }, []);
+
+  // RENDER
+  // ─────────────────────────────────────────────────────────────────────────────
   return (
-    <div className="font-sans antialiased min-h-screen flex flex-col items-center justify-center bg-[#fdf2f8] p-4 lg:p-8">
-      {/* Game Container */}
+    <div
+      className="
+        min-h-screen
+        w-full
+
+        bg-pink-100
+
+        p-2
+        sm:p-4
+        md:p-6
+
+        flex
+        items-center
+        justify-center
+      "
+    >
       <div
         ref={gameContainerRef}
-        className={`relative w-full max-w-[1400px] aspect-[1376/768] bg-cover bg-center overflow-hidden rounded-3xl shadow-2xl border-8 border-purple-300 mx-auto ${
-          gameWon ? 'animate-bounce-happy' : ''
-        }`}
+        className={`
+          relative
+
+          w-full
+          max-w-[1376px]
+
+          /* =========================
+             COMPUTADORA
+             ========================= */
+
+          aspect-[1376/768]
+
+          /* =========================
+             CELULAR
+             ========================= */
+
+          max-md:aspect-auto
+          max-md:h-[78vh]
+          max-md:min-h-[560px]
+          max-md:max-h-[760px]
+
+          /* =========================
+             TABLET
+             ========================= */
+
+          md:max-lg:aspect-auto
+          md:max-lg:h-[75vh]
+          md:max-lg:min-h-[600px]
+
+          /* =========================
+             FONDO
+             ========================= */
+
+          bg-cover
+          bg-center
+
+          overflow-hidden
+
+          rounded-2xl
+          md:rounded-3xl
+
+          shadow-2xl
+
+          border-4
+          md:border-8
+
+          border-purple-300
+
+          mx-auto
+
+          ${gameWon
+            ? 'animate-bounce-happy'
+            : ''
+          }
+        `}
         style={{
-          backgroundImage: `url('https://lh3.googleusercontent.com/aida-public/AB6AXuA003da2WW-A8i8I_KkVAxIN5pjOUYgP-pU6XFwNUMAaQN7DxzQgQV_RM-c9Zv5vtTKc9fhT7i_iOYe_l-TSqFdvOXq6Q8gZlqWykd_zeimsfbo5RUFmln5iZAihXHiWP3aoNOMVhbRnQpEUXKFLjSRVJJ9V-7Q5V1bMTlUgSFbJ-9ozXnVrjvaiKLC4nUPOiqcizx3BZSpiTtjE3N64-pwCQ3pET3Ipm1oebI4G7xMeiFQ00wGnEVwl6aFzr0KW0NyFfTuaXdmrbo')`,
+          backgroundImage:
+            "url('https://lh3.googleusercontent.com/aida-public/AB6AXuA003da2WW-A8i8I_KkVAxIN5pjOUYgP-pU6XFwNUMAaQN7DxzQgQV_RM-c9Zv5vtTKc9fhT7i_iOYe_l-TSqFdvOXq6Q8gZlqWykd_zeimsfbo5RUFmln5iZAihXHiWP3aoNOMVhbRnQpEUXKFLjSRVJJ9V-7Q5V1bMTlUgSFbJ-9ozXnVrjvaiKLC4nUPOiqcizx3BZSpiTtjE3N64-pwCQ3pET3Ipm1oebI4G7xMeiFQ00wGnEVwl6aFzr0KW0NyFfTuaXdmrbo')",
         }}
       >
-        {/* UI Overlay */}
-        <header className="absolute top-0 left-0 w-full p-4 flex flex-col items-center pointer-events-none z-50">
+
+        {/* =================================================
+            TÍTULO
+        ================================================= */}
+
+        <div
+          className="
+            absolute
+
+            top-[3%]
+            left-0
+
+            w-full
+
+            text-center
+
+            z-40
+
+            pointer-events-none
+
+            px-2
+          "
+        >
           <h1
-            className="text-4xl md:text-6xl lg:text-7xl font-black text-white drop-shadow-[0_4px_4px_rgba(0,0,0,0.5)] tracking-wide"
-            style={{ WebkitTextStroke: '2px rgb(91, 33, 182)' }}
+            className="
+              font-bold
+
+              text-white
+
+              text-xl
+              sm:text-2xl
+              md:text-4xl
+              lg:text-5xl
+
+              drop-shadow-[3px_3px_0px_#7c3aed]
+            "
           >
             Coleccionando objetos
           </h1>
-          <div className="mt-2 bg-white/90 border-4 border-purple-400 rounded-full px-6 lg:px-8 py-2 lg:py-3 shadow-lg">
-            <p className="text-xl md:text-3xl lg:text-4xl font-bold text-purple-700">
-              {foundCount} de {items.length} objetos encontrados
+        </div>
+
+        {/* =================================================
+            CONTADOR DE RONDA
+        ================================================= */}
+
+        <div
+          className="
+            absolute
+
+            top-[4%]
+            right-[3%]
+
+            z-50
+
+            bg-white/90
+
+            rounded-full
+
+            px-3
+            py-1
+
+            md:px-5
+            md:py-2
+
+            shadow-lg
+          "
+        >
+          <span
+            className="
+              font-bold
+
+              text-purple-700
+
+              text-xs
+              sm:text-sm
+              md:text-lg
+            "
+          >
+            Ronda {currentRoundIndex + 1} de{' '}
+            {rounds.length}
+          </span>
+        </div>
+
+        {/* =================================================
+            GLOBO DE DIÁLOGO
+        ================================================= */}
+
+        {showSpeech && (
+          <div
+            className={`
+              absolute
+
+              z-45
+
+              left-1/2
+              -translate-x-1/2
+
+              /* =========================
+                 COMPUTADORA
+                 ========================= */
+
+              top-[20%]
+
+              w-[30%]
+
+              max-w-[320px]
+
+              /* =========================
+                 TABLET
+                 ========================= */
+
+              md:max-lg:top-[18%]
+
+              md:max-lg:w-[38%]
+
+              /* =========================
+                 CELULAR
+                 ========================= */
+
+              max-md:top-[14%]
+
+              max-md:w-[72%]
+
+              max-md:max-w-[360px]
+
+              /* =========================
+                 ESPACIADO
+                 ========================= */
+
+              px-4
+              py-3
+
+              md:px-5
+              md:py-4
+
+              rounded-2xl
+              md:rounded-3xl
+
+              border-4
+
+              shadow-xl
+
+              text-center
+
+              ${
+                speechType === 'error'
+                  ? 'bg-red-100 border-red-400 text-red-700'
+                  : speechType === 'success'
+                  ? 'bg-green-100 border-green-400 text-green-700'
+                  : speechType === 'win'
+                  ? 'bg-purple-100 border-purple-400 text-purple-700'
+                  : 'bg-white border-purple-300 text-purple-800'
+              }
+            `}
+          >
+            <p
+              className="
+                font-bold
+
+                text-xs
+                sm:text-sm
+                md:text-base
+                lg:text-lg
+
+                leading-snug
+              "
+            >
+              {speechText}
             </p>
           </div>
-        </header>
+        )}
 
-        {/* Guide Character Speech Bubble */}
-        <div
-          className={`absolute top-[25%] left-[30%] md:left-[35%] w-[30%] max-w-[300px] bg-white border-4 border-purple-300 rounded-3xl p-4 shadow-xl z-40 transition-opacity duration-500 ${
-            showSpeech ? 'opacity-100' : 'opacity-0 pointer-events-none'
-          }`}
-          style={{ animation: showSpeech ? 'float 3s ease-in-out infinite' : 'none' }}
-        >
-          <p className="text-lg md:text-xl lg:text-2xl font-bold text-gray-700 text-center">
-            {speechText}
-          </p>
-          {/* Bubble tail */}
-          <div className="absolute -bottom-4 right-[20%] w-6 h-6 bg-white border-b-4 border-r-4 border-purple-300 transform rotate-45"></div>
-        </div>
+        {/* =================================================
+            OBJETOS
+        ================================================= */}
 
-        {/* Win Message Overlay */}
-        <div
-          className={`absolute inset-0 z-50 flex flex-col items-center justify-center transition-opacity duration-500 ${
-            gameWon ? 'opacity-100' : 'opacity-0 pointer-events-none'
-          }`}
-        >
-          <div
-            className={`bg-gradient-to-r from-purple-400 to-pink-400 p-8 lg:p-12 rounded-3xl shadow-2xl border-4 border-white text-center transform transition-transform duration-500 ${
-              gameWon ? 'scale-100' : 'scale-90'
-            }`}
-          >
-            <h2 className="text-5xl md:text-7xl lg:text-8xl font-black text-white mb-4 lg:mb-6 drop-shadow-md">
-              ¡Felicidades!
-            </h2>
-            <div className="flex flex-col gap-3 lg:gap-4">
-              <button
-                onClick={handleRestart}
-                className="bg-white text-purple-600 font-bold text-2xl lg:text-3xl py-3 lg:py-4 px-8 lg:px-10 rounded-full hover:bg-gray-100 hover:scale-105 transition-all shadow-lg pointer-events-auto"
-              >
-                Volver a jugar
-              </button>
-              <button
-                onClick={handleExit}
-                className="bg-purple-600 text-white font-bold text-2xl lg:text-3xl py-3 lg:py-4 px-8 lg:px-10 rounded-full hover:bg-purple-700 hover:scale-105 transition-all shadow-lg pointer-events-auto"
-              >
-                Salir
-              </button>
-            </div>
-          </div>
-        </div>
+        {items.map((item) => {
+          const isCollected =
+            foundObjects.has(item.id);
 
-        {/* Interactive Objects */}
-        {items.map((item) => (
-          <div
-            key={item.id}
-            className={`interact-zone absolute flex justify-center items-center transition-transform duration-200 rounded-[20%] ${
-              collectedItems.has(item.id) ? 'collected cursor-default' : 'cursor-pointer hover:scale-105'
-            }`}
-            style={item.style}
-            onClick={() => handleItemClick(item)}
-          >
-            <span
-              className={`emoji-reveal text-[clamp(3rem,6vw,6rem)] transition-all duration-300 ${
-                collectedItems.has(item.id) ? 'animate-pop' : ''
-              }`}
+          const responsiveClasses = `
+            absolute
+
+            z-35
+
+            flex
+            items-center
+            justify-center
+
+            rounded-[24%]
+
+            cursor-pointer
+
+            transition-all
+            duration-300
+
+            hover:scale-110
+            focus:scale-110
+
+            focus:outline-none
+          `;
+
+          return (
+            <button
+              key={item.id}
+              type="button"
+              aria-label={item.label}
+              disabled={
+                isCollected ||
+                isProcessing
+              }
+              onClick={(event) =>
+                handleItemClick(
+                  item,
+                  event
+                )
+              }
+              className={`
+                ${responsiveClasses}
+
+                ${
+                  shakingItem === item.id
+                    ? 'animate-shake'
+                    : ''
+                }
+
+                ${
+                  isCollected
+                    ? 'opacity-100 scale-110'
+                    : ''
+                }
+              `}
+              style={{
+              // Posición de computadora
+                ...item.desktopStyle,
+
+              // Variables para tablet
+              
+                '--tablet-top':
+                  item.tabletStyle.top,
+
+                '--tablet-left':
+                  item.tabletStyle.left,
+
+                '--tablet-width':
+                  item.tabletStyle.width,
+
+                '--tablet-height':
+                  item.tabletStyle.height,
+
+                // Variables para celular
+
+                '--mobile-top':
+                  item.mobileStyle.top,
+
+                '--mobile-left':
+                  item.mobileStyle.left,
+
+                '--mobile-width':
+                  item.mobileStyle.width,
+
+                '--mobile-height':
+                  item.mobileStyle.height,
+              } as React.CSSProperties}
             >
-              {item.emoji}
-            </span>
-          </div>
-        ))}
+              <span
+                className={`
+                  text-[clamp(2rem,5vw,5rem)]
 
-        {/* Sparkles */}
+                  select-none
+
+                  transition-all
+                  duration-500
+
+                  ${
+                    isCollected
+                      ? 'drop-shadow-[0_0_12px_rgba(255,255,255,0.9)]'
+                      : 'brightness-0 drop-shadow-[0_0_8px_rgba(124,58,237,0.7)]'
+                  }
+                `}
+              >
+                {item.emoji}
+              </span>
+            </button>
+          );
+        })}
+
+        {/* =================================================
+            DESTELLOS
+        ================================================= */}
+
         {sparkles.map((sparkle) => (
           <div
             key={sparkle.id}
-            className="absolute text-2xl lg:text-3xl pointer-events-none animate-pop"
+            className="
+              absolute
+
+              z-50
+
+              pointer-events-none
+
+              text-xl
+              md:text-3xl
+
+              animate-sparkle
+            "
             style={{
-              left: `${sparkle.x}px`,
-              top: `${sparkle.y}px`,
-              transition: 'opacity 0.5s ease 0.5s',
+              left: `${sparkle.x}%`,
+              top: `${sparkle.y}%`,
+
+              transform:
+                'translate(-50%, -50%)',
             }}
           >
             {sparkle.emoji}
           </div>
         ))}
+
+        {/* =================================================
+            INDICADOR DE ERROR
+        ================================================= */}
+
+        {wrongIndicators.map(
+          (indicator) => (
+            <div
+              key={indicator.id}
+              className="
+                absolute
+
+                z-50
+
+                pointer-events-none
+
+                text-3xl
+                md:text-5xl
+
+                font-bold
+
+                animate-float-up
+              "
+              style={{
+                left: `${indicator.x}%`,
+                top: `${indicator.y}%`,
+
+                transform:
+                  'translate(-50%, -50%)',
+              }}
+            >
+              ❌
+            </div>
+          )
+        )}
+
+        {/* =================================================
+            MODAL FINAL
+        ================================================= */}
+
+        {gameWon && (
+          <div
+            className="
+              absolute
+
+              inset-0
+
+              z-[70]
+
+              flex
+              items-center
+              justify-center
+
+              bg-purple-900/40
+
+              backdrop-blur-sm
+
+              p-4
+            "
+          >
+            <div
+              className="
+                w-full
+
+                max-w-[520px]
+
+                rounded-3xl
+
+                bg-gradient-to-br
+                from-purple-500
+                to-pink-500
+
+                p-5
+                sm:p-7
+                md:p-10
+
+                text-center
+
+                shadow-2xl
+
+                border-4
+                border-white
+              "
+            >
+              <div
+                className="
+                  text-5xl
+                  md:text-7xl
+
+                  mb-3
+                "
+              >
+                🎉
+              </div>
+
+              <h2
+                className="
+                  text-white
+
+                  font-bold
+
+                  text-2xl
+                  sm:text-3xl
+                  md:text-4xl
+
+                  mb-4
+                "
+              >
+                ¡Muy bien!
+              </h2>
+
+              <p
+                className="
+                  text-white
+
+                  font-semibold
+
+                  text-sm
+                  sm:text-base
+                  md:text-lg
+
+                  mb-7
+                "
+              >
+                ¡Completaste todas las rondas
+                y encontraste todos los
+                objetos!
+              </p>
+
+              <div
+                className="
+                  flex
+
+                  flex-col
+                  sm:flex-row
+
+                  gap-3
+
+                  justify-center
+                "
+              >
+                <button
+                  type="button"
+                  onClick={handleRestart}
+                  className="
+                    rounded-full
+
+                    bg-white
+
+                    text-purple-700
+
+                    font-bold
+
+                    px-6
+                    py-3
+
+                    hover:scale-105
+
+                    transition-transform
+                  "
+                >
+                  Volver a jugar
+                </button>
+
+                <button
+                  type="button"
+                  onClick={handleExit}
+                  className="
+                    rounded-full
+
+                    bg-purple-900
+
+                    text-white
+
+                    font-bold
+
+                    px-6
+                    py-3
+
+                    hover:scale-105
+
+                    transition-transform
+                  "
+                >
+                  Salir
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
+
       </div>
+
+      {/* =====================================================
+          ANIMACIONES
+      ===================================================== */}
+
+      <style>{`
+        @keyframes sparkle {
+          0% {
+            transform:
+              translate(-50%, -50%)
+              scale(0);
+
+            opacity: 0;
+          }
+
+          50% {
+            transform:
+              translate(-50%, -50%)
+              scale(1.4);
+
+            opacity: 1;
+          }
+
+          100% {
+            transform:
+              translate(-50%, -50%)
+              scale(0);
+
+            opacity: 0;
+          }
+        }
+
+        @keyframes shake {
+          0%, 100% {
+            transform: translateX(0);
+          }
+
+          20% {
+            transform: translateX(-8px);
+          }
+
+          40% {
+            transform: translateX(8px);
+          }
+
+          60% {
+            transform: translateX(-6px);
+          }
+
+          80% {
+            transform: translateX(6px);
+          }
+        }
+
+        @keyframes floatUp {
+          0% {
+            opacity: 1;
+
+            transform:
+              translate(-50%, -50%)
+              translateY(0);
+          }
+
+          100% {
+            opacity: 0;
+
+            transform:
+              translate(-50%, -50%)
+              translateY(-60px);
+          }
+        }
+
+        @keyframes fall {
+          from {
+            transform:
+              translateY(-20px)
+              rotate(0deg);
+          }
+
+          to {
+            transform:
+              translateY(900px)
+              rotate(360deg);
+          }
+        }
+
+        @keyframes bounceHappy {
+          0%, 100% {
+            transform: scale(1);
+          }
+
+          50% {
+            transform: scale(1.015);
+          }
+        }
+
+        .animate-sparkle {
+          animation:
+            sparkle
+            0.9s
+            ease-out
+            forwards;
+        }
+
+        .animate-shake {
+          animation:
+            shake
+            0.45s
+            ease-in-out;
+        }
+
+        .animate-float-up {
+          animation:
+            floatUp
+            1.2s
+            ease-out
+            forwards;
+        }
+
+        .animate-bounce-happy {
+          animation:
+            bounceHappy
+            0.8s
+            ease-in-out
+            2;
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+          *,
+          *::before,
+          *::after {
+            animation-duration:
+              0.01ms !important;
+
+            animation-iteration-count:
+              1 !important;
+
+            transition-duration:
+              0.01ms !important;
+          }
+        }
+      `}</style>
+
+      {/* =====================================================
+          RESPONSIVE DE OBJETOS
+      ===================================================== */}
+
+      <style>{`
+        /*
+         * ===================================================
+         * TABLET
+         * 768px - 1023px
+         * ===================================================
+         */
+
+        @media (min-width: 768px) and (max-width: 1023px) {
+          button[aria-label="Mochila"] {
+            top: var(--tablet-top) !important;
+            left: var(--tablet-left) !important;
+            width: var(--tablet-width) !important;
+            height: var(--tablet-height) !important;
+          }
+
+          button[aria-label="Libros"] {
+            top: var(--tablet-top) !important;
+            left: var(--tablet-left) !important;
+            width: var(--tablet-width) !important;
+            height: var(--tablet-height) !important;
+          }
+
+          button[aria-label="Hoja de papel"] {
+            top: var(--tablet-top) !important;
+            left: var(--tablet-left) !important;
+            width: var(--tablet-width) !important;
+            height: var(--tablet-height) !important;
+          }
+
+          button[aria-label="Cuaderno"] {
+            top: var(--tablet-top) !important;
+            left: var(--tablet-left) !important;
+            width: var(--tablet-width) !important;
+            height: var(--tablet-height) !important;
+          }
+
+          button[aria-label="Lápiz"] {
+            top: var(--tablet-top) !important;
+            left: var(--tablet-left) !important;
+            width: var(--tablet-width) !important;
+            height: var(--tablet-height) !important;
+          }
+        }
+
+        /*
+         * ===================================================
+         * CELULAR
+         * Menos de 768px
+         * ===================================================
+         */
+
+        @media (max-width: 767px) {
+          button[aria-label="Mochila"] {
+            top: var(--mobile-top) !important;
+            left: var(--mobile-left) !important;
+            width: var(--mobile-width) !important;
+            height: var(--mobile-height) !important;
+          }
+
+          button[aria-label="Libros"] {
+            top: var(--mobile-top) !important;
+            left: var(--mobile-left) !important;
+            width: var(--mobile-width) !important;
+            height: var(--mobile-height) !important;
+          }
+
+          button[aria-label="Hoja de papel"] {
+            top: var(--mobile-top) !important;
+            left: var(--mobile-left) !important;
+            width: var(--mobile-width) !important;
+            height: var(--mobile-height) !important;
+          }
+
+          button[aria-label="Cuaderno"] {
+            top: var(--mobile-top) !important;
+            left: var(--mobile-left) !important;
+            width: var(--mobile-width) !important;
+            height: var(--mobile-height) !important;
+          }
+
+          button[aria-label="Lápiz"] {
+            top: var(--mobile-top) !important;
+            left: var(--mobile-left) !important;
+            width: var(--mobile-width) !important;
+            height: var(--mobile-height) !important;
+          }
+        }
+      `}</style>
     </div>
   );
 }
+
+
+
+

@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 const IMG_COLECCIONANDO = '/images/semana2/card-coleccionando.png';
 const IMG_CAJA = '/images/semana2/card-caja-misteriosa.png';
 const IMG_FABRICA = '/images/semana2/card-fabrica.png';
-const IMG_MARTA_BG = '/images/semana2/aprende-marta-bg.png';
+const IMG_MARTA_BG = '/images/semana2/page marta.png';
 
 export default function Semana2Page() {
   const navigate = useNavigate();
