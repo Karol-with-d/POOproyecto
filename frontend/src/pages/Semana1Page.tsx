@@ -49,7 +49,6 @@ export default function Semana1Page() {
   const navigate = useNavigate();
 
   const handleBack = () => navigate('/home');
-  const handleHome = () => navigate('/home');
 
   const activities = [
     {
@@ -107,14 +106,7 @@ export default function Semana1Page() {
         <h1 className="font-headline-md text-headline-md font-bold text-[#4a6549] text-center flex-1 mx-4 truncate">
           Semana 1: Medidas
         </h1>
-        <div className="flex gap-2">
-          <button
-            onClick={handleHome}
-            className="text-[#4a6549] hover:scale-105 transition-transform duration-200 active:scale-95 flex items-center justify-center p-2 rounded-full hover:bg-[#e3e2e6]"
-          >
-            <span className="material-symbols-outlined">home</span>
-          </button>
-        </div>
+        <div className="w-10 h-10" aria-hidden="true" />
       </header>
 
       {/* ===== Main Content ===== */}

@@ -81,23 +81,18 @@ export default function Semana5Page() {
         style={{ backgroundColor: 'var(--tc-surface-container-low)' }}
       >
         <div className="flex items-center gap-3">
-          <span className="material-symbols-outlined text-3xl" style={{ color: 'var(--tc-primary)' }}>
-            park
-          </span>
+          <button
+            onClick={handleHome}
+            aria-label="Volver"
+            className="w-10 h-10 flex items-center justify-center rounded-full transition-transform active:scale-95"
+            style={{ color: 'var(--tc-primary)' }}
+          >
+            <span className="material-symbols-outlined">arrow_back</span>
+          </button>
           <h1 className="text-2xl font-bold" style={{ color: 'var(--tc-primary)' }}>
             Semana 5: Vida
           </h1>
         </div>
-        <nav className="hidden md:flex gap-8 items-center">
-          <button
-            onClick={handleHome}
-            className="font-bold transition-transform active:scale-95 flex items-center gap-1"
-            style={{ color: 'var(--tc-primary)' }}
-          >
-            <span className="material-symbols-outlined">home</span>
-            Inicio
-          </button>
-        </nav>
       </header>
 
       <main className="flex-1 relative flex flex-col items-center justify-start p-6 space-y-6 overflow-y-auto">

@@ -11,7 +11,6 @@ export default function Semana4Page() {
   const navigate = useNavigate();
 
   const handleBack = () => navigate('/home');
-  const handleHome = () => navigate('/home');
 
   const handleStartQuiz = () => {
     navigate('/semana/4/quiz');
@@ -88,12 +87,7 @@ export default function Semana4Page() {
             Semana 4: Propiedades Químicas
           </h1>
         </div>
-        <button
-          onClick={handleHome}
-          className="w-10 h-10 flex items-center justify-center rounded-full hover:bg-surface-variant transition-colors"
-        >
-          <span className="material-symbols-outlined text-[#334d33]">home</span>
-        </button>
+        <div className="w-10 h-10" aria-hidden="true" />
       </header>
 
       {/* Main Content */}
