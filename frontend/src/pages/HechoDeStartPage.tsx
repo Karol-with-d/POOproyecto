@@ -35,12 +35,11 @@ export default function HechoDeStartPage() {
 
           {/* Illustration Container */}
           <div className="w-full aspect-square max-w-[280px] bg-[#ffffff] rounded-2xl flex items-center justify-center p-6 border-2 border-[#c3c8bf] relative z-10">
-            <span
-              className="material-symbols-outlined"
-              style={{ fontSize: '180px', color: '#4a6549', fontVariationSettings: "'FILL' 1" }}
-            >
-              science
-            </span>
+            <img
+              alt="Objetos del mercado y el jardín"
+              className="w-full h-full object-contain"
+              src="/images/semana3/card-hechos.svg"
+            />
           </div>
 
           {/* Instruction Text */}

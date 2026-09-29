@@ -1,4 +1,6 @@
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+import KidFrame from './components/KidFrame';
+import GameFrame from './components/GameFrame';
 import LoginPage from './pages/LoginPage';
 import HomePage from './pages/HomePage';
 import ProfilePage from './pages/ProfilePage';
@@ -46,32 +48,34 @@ import HabitatsGamePage from './pages/HabitatsGamePage';
 function App() {
   return (
     <BrowserRouter>
+      <KidFrame>
       <Routes>
         <Route path="/login" element={<LoginPage />} />
         <Route path="/home" element={<HomePage />} />
         <Route path="/semana/2" element={<Semana2Page />} />
         <Route path="/semana/3" element={<Semana3Page />} />
-        <Route path="/semana/3/quiz" element={<Semana3QuizPage />} />
         <Route path="/semana/4" element={<Semana4Page />} />
+        <Route path="/semana/5" element={<Semana5Page />} />
+        <Route path="/semana/6" element={<Semana6Page />} />
+        <Route path="/semana/:semanaId" element={<Semana1Page />} />
+        <Route element={<GameFrame />}>
+        <Route path="/semana/3/quiz" element={<Semana3QuizPage />} />
         <Route path="/semana/4/oxidacion" element={<OxidacionPage />} />
         <Route path="/semana/4/fermentacion" element={<FermentacionPage />} />
         <Route path="/semana/4/opuestos" element={<OpuestosPage />} />
         <Route path="/semana/4/quimioluminiscencia" element={<QuimioluminiscenciaPage />} />
         <Route path="/semana/4/combustion" element={<CombustionPage />} />
         <Route path="/semana/4/quiz" element={<Semana4QuizPage />} />
-        <Route path="/semana/5" element={<Semana5Page />} />
         <Route path="/semana/5/semillas" element={<SemillasGamePage />} />
         <Route path="/semana/5/busqueda" element={<BusquedaGamePage />} />
         <Route path="/semana/5/quiz" element={<Semana5QuizPage />} />
         <Route path="/semana/1/quiz" element={<Semana1QuizPage />} />
         <Route path="/semana/5/superpoderes" element={<SuperpoderesStartPage />} />
         <Route path="/semana/5/superpoderes/play" element={<SuperpoderesGamePage />} />
-        <Route path="/semana/6" element={<Semana6Page />} />
         <Route path="/semana/6/similitudes" element={<SimilitudesGamePage />} />
         <Route path="/semana/6/movimiento" element={<MovimientoGamePage />} />
         <Route path="/semana/6/habitats" element={<HabitatsGamePage />} />
         <Route path="/semana/6/quiz" element={<Semana6QuizPage />} />
-        <Route path="/semana/:semanaId" element={<Semana1Page />} />
         <Route path="/semana/:semanaId/description-match" element={<DescriptionMatchStartPage />} />
         <Route path="/semana/:semanaId/description-match/play" element={<DescriptionMatchGamePage />} />
         <Route path="/semana/:semanaId/rescata-pulgarcito" element={<RescataPulgarcitoStartPage />} />
@@ -89,9 +93,11 @@ function App() {
         <Route path="/semana/:semanaId/build-it/play" element={<BuildItGamePage />} />
         <Route path="/semana/:semanaId/hecho-de" element={<HechoDeStartPage />} />
         <Route path="/semana/:semanaId/hecho-de/play" element={<HechoDeGamePage />} />
+        </Route>
         <Route path="/perfil" element={<ProfilePage />} />
         <Route path="/" element={<Navigate to="/login" replace />} />
       </Routes>
+      </KidFrame>
     </BrowserRouter>
   );
 }

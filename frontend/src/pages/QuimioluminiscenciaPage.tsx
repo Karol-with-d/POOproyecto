@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { showKidMessage } from '../components/KidFrame';
 
 /**
  * QuimioluminiscenciaPage — Actividad de la Semana 4: Lumi y la Quimioluminiscencia.
@@ -67,7 +68,7 @@ export default function QuimioluminiscenciaPage() {
   };
 
   const handleFinish = () => {
-    alert('¡Lección de quimioluminiscencia completada!');
+    showKidMessage('¡Lección de quimioluminiscencia completada!');
     navigate('/semana/4');
   };
 

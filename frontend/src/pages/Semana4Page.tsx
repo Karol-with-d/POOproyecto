@@ -1,4 +1,5 @@
 import { useNavigate, Link } from 'react-router-dom';
+import { showKidMessage } from '../components/KidFrame';
 
 /**
  * Semana4Page — Hub de actividades de la Semana 4: Propiedades Químicas.
@@ -28,7 +29,7 @@ export default function Semana4Page() {
     } else if (activityName === 'Combustión') {
       navigate('/semana/4/combustion');
     } else {
-      alert(`${activityName}: Próximamente`);
+      showKidMessage(`${activityName}: muy pronto podrás jugar.`, 'soon');
     }
   };
 
@@ -99,9 +100,6 @@ export default function Semana4Page() {
       <main className="flex-1 max-w-[1440px] mx-auto px-margin-mobile md:px-margin-desktop py-8 relative z-10">
         {/* Welcome Hero */}
         <section className="mb-8 text-center md:text-left">
-          <h2 className="font-headline-lg-mobile md:font-headline-lg text-headline-lg-mobile md:text-headline-lg text-[#334d33] mb-2 quicksand-text">
-            ¡Bienvenido a la Semana 4!
-          </h2>
           <p className="font-body-lg text-body-lg text-on-surface-variant max-w-2xl">
             Explora los secretos de la materia. Aprende cómo los elementos se transforman, brillan y cambian nuestro mundo a través de las reacciones químicas.
           </p>
@@ -178,7 +176,7 @@ export default function Semana4Page() {
                 <img
                   alt="Básico"
                   className="w-full h-4/5 object-contain"
-                  src="/images/semana4/basico.avif"
+                  src="/images/semana4/basico.svg"
                 />
               </div>
               </div>
@@ -284,10 +282,10 @@ export default function Semana4Page() {
       <footer className="w-full py-12 px-margin-mobile md:px-margin-desktop bg-[#f4f4ef] mt-12 flex flex-col items-center z-10 pb-[120px] md:pb-12">
         <div className="flex items-center gap-3 mb-4">
           <span className="material-symbols-outlined text-[#334d33] text-3xl">biotech</span>
-          <span className="font-headline-md text-headline-md font-bold text-[#334d33]">Discovery Lab</span>
+          <span className="font-headline-md text-headline-md font-bold text-[#334d33]">Laboratorio de ciencias</span>
         </div>
         <p className="font-body-md text-body-md text-on-surface-variant text-center max-w-md">
-          Semana 4: Propiedades Químicas
+          Explora cómo cambian los materiales.
         </p>
       </footer>
 
@@ -298,7 +296,7 @@ export default function Semana4Page() {
           className="flex flex-col items-center justify-center text-[#434841] px-4 py-2 hover:bg-[#8ba888]/50 hover:scale-105 transition-transform duration-200"
         >
           <span className="material-symbols-outlined mb-1">map</span>
-          <span className="font-label-md text-label-md text-xs">Map</span>
+          <span className="font-label-md text-label-md text-xs">Mapa</span>
         </Link>
         <div className="flex flex-col items-center justify-center bg-[#8ba888] text-[#243d24] rounded-full px-6 py-2 scale-90 transition-all duration-200 ease-out">
           <span
@@ -307,7 +305,7 @@ export default function Semana4Page() {
           >
             experiment
           </span>
-          <span className="font-label-md text-label-md text-xs">Lab</span>
+          <span className="font-label-md text-label-md text-xs">Laboratorio</span>
         </div>
         <Link
           to="/perfil"
@@ -315,9 +313,7 @@ export default function Semana4Page() {
         >
           <span className="material-symbols-outlined mb-1">groups</span>
           <span className="font-label-md text-label-md text-xs text-center leading-tight">
-            Science
-            <br />
-            Buddies
+            Amigos
           </span>
         </Link>
         <Link
@@ -325,7 +321,7 @@ export default function Semana4Page() {
           className="flex flex-col items-center justify-center text-[#434841] px-4 py-2 hover:bg-[#8ba888]/50 hover:scale-105 transition-transform duration-200"
         >
           <span className="material-symbols-outlined mb-1">stars</span>
-          <span className="font-label-md text-label-md text-xs">Progress</span>
+          <span className="font-label-md text-label-md text-xs">Progreso</span>
         </Link>
       </nav>
     </div>

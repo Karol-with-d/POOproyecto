@@ -22,7 +22,7 @@ export default function DescriptionMatchStartPage() {
       {/* Top App Bar */}
       <header className="absolute top-0 w-full flex justify-center items-center py-6 px-5 md:px-[120px] z-10">
         <h1 className="font-headline-lg-mobile md:font-headline-lg text-[#4a6549] text-center">
-          Description Match
+          Empareja palabras
         </h1>
       </header>
 

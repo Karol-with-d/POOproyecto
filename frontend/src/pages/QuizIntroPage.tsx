@@ -32,9 +32,7 @@ export default function QuizIntroPage() {
   const handleStart = () => {
     setLoading(true);
     setTimeout(() => {
-      // Por ahora no hay /play implementado → fallback
-      alert('Próximamente');
-      setLoading(false);
+      navigate('/semana/5/quiz');
     }, 500);
   };
 

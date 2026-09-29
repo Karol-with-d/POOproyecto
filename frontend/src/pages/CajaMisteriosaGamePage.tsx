@@ -308,7 +308,7 @@ export default function CajaMisteriosaGamePage() {
                 let iconClass = 'text-outline';
 
                 if (isWrong) {
-                  btnClasses = 'bg-surface-variant text-outline opacity-50 cursor-not-allowed border-outline';
+                  btnClasses = 'kid-wrong bg-[#ffebee] text-[#6b1c1c] border-[#c62828]';
                   icon = 'cancel';
                   iconClass = '';
                 } else if (isCorrectAndRevealed) {

@@ -1,5 +1,6 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { playFromFeedback } from '../services/sounds';
 
 /* =============================
    LEVEL 1: MERCADO DE FRUTAS
@@ -161,6 +162,7 @@ export default function SortBySizeGamePage() {
   const [shakingZones, setShakingZones] = useState<Set<string>>(new Set());
   const [gameCompleted, setGameCompleted] = useState(false);
   const [feedback, setFeedback] = useState<string | null>(null);
+  useEffect(() => { playFromFeedback(feedback); }, [feedback]);
 
   /* =============================
      LEVEL 1 HANDLERS
@@ -267,7 +269,7 @@ export default function SortBySizeGamePage() {
 
     if (correctCount === 5) {
       if (currentLevel === 1) {
-        setFeedback('¡Perfecto! Has completado el nivel 1.');
+        setFeedback('¡Perfecto! Has completado esta parte.');
         fireConfetti();
       } else {
         setFeedback('¡Felicidades! Has completado el Taller de Magia.');
@@ -362,7 +364,7 @@ export default function SortBySizeGamePage() {
           {/* Instructions Card */}
           <div className="bg-surface/95 backdrop-blur-sm rounded-xl p-4 shadow-[0_8px_30px_rgb(0,0,0,0.12)] border-2 border-surface-variant max-w-2xl text-center">
             <h2 className="font-headline-lg text-2xl md:text-3xl text-secondary mb-2">
-              {currentLevel === 1 ? '¡Ordena las Canastas!' : 'Nivel 2: Ordenamiento Mágico'}
+              {currentLevel === 1 ? '¡Ordena las Canastas!' : 'Ordenamiento mágico'}
             </h2>
             <p className="font-body-lg text-base md:text-body-lg text-on-surface">
               {currentLevel === 1
@@ -382,7 +384,7 @@ export default function SortBySizeGamePage() {
               />
             ))}
             <span className="font-label-md text-label-md text-on-surface-variant ml-2">
-              Nivel {currentLevel}/2
+              Progreso {currentLevel} de 2
             </span>
           </div>
 
@@ -552,7 +554,7 @@ export default function SortBySizeGamePage() {
                   <span className="material-symbols-outlined text-4xl group-hover:rotate-12 transition-transform">
                     arrow_forward
                   </span>
-                  Siguiente Nivel
+                  Seguir
                 </button>
               ) : (
                 <button

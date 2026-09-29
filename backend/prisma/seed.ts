@@ -207,10 +207,20 @@ class SeedService {
 // ============================================
 // Ejecutar seed
 // ============================================
-const seedService = new SeedService();
+async function main(): Promise<void> {
+  if (process.env.SEED_IF_EMPTY === 'true') {
+    const existing = await prisma.semana.count();
+    if (existing > 0) {
+      console.log(`Seed omitido: ya hay ${existing} semanas.`);
+      return;
+    }
+  }
 
-seedService
-  .run()
+  const seedService = new SeedService();
+  await seedService.run();
+}
+
+main()
   .catch((e) => {
     console.error('❌ Error en seed:', e);
     process.exit(1);

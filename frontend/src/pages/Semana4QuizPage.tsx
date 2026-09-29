@@ -1,6 +1,8 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { saveQuizScoreForSemanaNumber } from '../services/api';
+import { playMiss, playSuccess } from '../services/sounds';
+import { showKidMessage } from '../components/KidFrame';
 
 /**
  * Semana4QuizPage — Desafío Final de la Semana 4: Propiedades Químicas.
@@ -38,6 +40,7 @@ export default function Semana4QuizPage() {
       console.error('Error guardando quiz Semana 4:', error);
       setSaveStatus('error');
       setSaveError('No se pudo guardar tu puntuación. Intenta de nuevo más tarde.');
+      showKidMessage('No se pudo guardar tu nota. Intenta otra vez.', 'soon');
     }
   };
   const questions = [
@@ -112,6 +115,9 @@ export default function Semana4QuizPage() {
     setShowFeedback(true);
     if (choice === currentQ.ans) {
       setScore((prev) => prev + 1);
+      playSuccess();
+    } else {
+      playMiss();
     }
   };
 

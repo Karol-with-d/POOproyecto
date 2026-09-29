@@ -21,7 +21,7 @@ const DAYS = [
     id: 1,
     badge: 'Día 1',
     text: 'La semilla está dormida bajo la tierra',
-    img: 'https://lh3.googleusercontent.com/aida-public/AB6AXuAJ2qp9d_e2-fk2OkXSEHOuquFw-c9hlFfOajqEvC4voKJ8i9iAHSBPGyiYZQ4a6ehfxkXJVsjzuPQ4AgcXOSj0QKPexMgVxfiSM3_rThqpATY3jRBLpg8hwXHQKAM0K5SvkG8-QM7KdgldjLrEtTUWEsHYUUBeEq6QI5UDuy4BVWj9XYGaYukfJir5AcHt3QQQzusqzWNdCuq1yRPwtSpuAwupCqF4WDeC7DHkZXa-fMYK8QiLT1f3KAvwyNngi3Oupbi7duXj9op-',
+    img: '/images/semana5/semilla-dia1.png',
     bgClass: 'tc-bg-day-1',
     icon: 'water_drop',
     effect: '💧',
@@ -30,7 +30,7 @@ const DAYS = [
     id: 2,
     badge: 'Día 2',
     text: 'La semilla se abre y aparece una raíz',
-    img: 'https://lh3.googleusercontent.com/aida-public/AB6AXuCUsual176_ApSXW-ehXFv83o74nMkdQ7jxpqnz7yvPPgfH0Bb77TrLmj4anWFF2tpzhYUzyHJvjB_erxpWC4QoY3kay35vKEh4aBu_NIEt7NcHDPDR4dcSrLtYQVMP4AW64mSdpQuG5Es0AFJ6EFPAuSwsPgUMpMmqqno3w3C5ReoDlq3ubXYfPG9apeIXJFZXGcjGiC63JB1jzJL9o95Pch4yxTNyGNbH-woSEBBQ5I6hGkJbklTKrtVWX2x2gzlSMWycI_X8bkog',
+    img: '/images/semana5/semilla-dia2.png',
     bgClass: 'tc-bg-day-2',
     icon: 'wb_sunny',
     effect: '☀️',
@@ -39,7 +39,7 @@ const DAYS = [
     id: 3,
     badge: 'Día 3',
     text: 'Asoma un tallo muy delgadito',
-    img: 'https://lh3.googleusercontent.com/aida-public/AB6AXuDvmKh4OY_vXebkDkmM-rp5TxcZasdNBwtgAWJPcmEg2BzVgH0hYybKbmy2bPDA1bDyrc55VUJI3xLuZVtkzgY-qoki68OtPesIyxhtZsl2MCLC91zT9qDX9IT0Ki01NAy7eqB6liaM25VwHAuilvHzTa0eFilwXDV3rBbBez9d-wfFLi9LPfAgwqeca-C5YmZYPGA8bZloh3fR4pOfb5wgysSuS0eOUO34ryu75XkeT5ZEkm6Eb_fHH0JyQuCXF7_i2j2JRryXYANo',
+    img: '/images/semana5/semilla-dia3.png',
     bgClass: 'tc-bg-day-3',
     icon: 'eco',
     effect: '🌿',
@@ -48,7 +48,7 @@ const DAYS = [
     id: 4,
     badge: 'Día 4',
     text: 'Salen las primeras hojitas grandes',
-    img: 'https://lh3.googleusercontent.com/aida-public/AB6AXuCPvT6G3k2GTGUh4Ff5ESGbTMZIDQDaNuyMTUP9ozgEVJUsfhIgO5L9vq683OEnsJaVzcCQ97UhUl9kAnYDqq6aYjriFBcGQC6KNmiSnvkar4ZrTUJ1XTTHzdk-2JSh-TtOtWB3rtaGXHpddS6C_3U5Ycfm57-_8YBtr5COyHZ3K33eQ8vDS7MkWG22mtLq7s6n_j9_KVbDvlelcF-81sfhv6sk7Chg9ceEnOMKcyRM3DtWuYMO6ErJUEwiuMLgNyNj31kF-8_-2aKI',
+    img: '/images/semana5/semilla-dia4.png',
     bgClass: 'tc-bg-day-4',
     icon: 'grade',
     effect: '⭐',
@@ -57,17 +57,15 @@ const DAYS = [
     id: 5,
     badge: 'Día 5',
     text: '¡Ya es una plántula! Necesita luz y agua',
-    img: 'https://lh3.googleusercontent.com/aida-public/AB6AXuAKQSqQRIsw5NCsWvCjf9VX_et-I5ae7cDhPJxWjTaklCWCMEodAqbATuyqTj9oNBLARg9lsmV9Yllx-wC9gMLK_OTOlwS34XhWY_RdiAinCJWg-gvKqR1zoVnA3WoIkW1xa9SSaqv16ppeqZxGvJK4lP4lZI4SCX6NKdk_Qs0ky4G6Sic47eVzWNAKW3_8uhF4AE1WiLtLlNqDgaKs9RcH3zWk7W0yDxVmUMbTiB2A1-aJ3oTF7UW__rGd_9CmWNDq_sQBsOXDVUbB',
+    img: '/images/semana5/semilla-dia5.png',
     bgClass: 'tc-bg-day-5',
     icon: 'filter_vintage',
     effect: '🌸',
   },
 ];
 
-const INTRO_IMG =
-  'https://lh3.googleusercontent.com/aida-public/AB6AXuDtpq6R-vsADMxp_zqulEUIuWVxmShOI8wkYJT5xDfqeI2RbPPzYKB-w6AXnnX3j4MkYiZ1qjZzEHsoXsfLSkPbVolmk_QZZVATEB1u46hAnBqpiDG--4Mq1mwACnT3GmHVdNP4GHY9lQijnDmZBW3ElywLtuRY2v6dADuNXijrv2gHT7pm6YnzTg3sVosbKBe18l2T4cJv5Tr_60Abjr4WH6CN9agXLm1GI9DrLwpjKif0y0L06CBwuouO_vpXCuCxAU-_rQgyjrj8';
-const FINAL_IMG =
-  'https://lh3.googleusercontent.com/aida-public/AB6AXuDdENmR_FzpUmAkW7eFrWZLNRWHQDk2GrzSngMBk2pSNVOTWeoS9OV6IRfGXNnr41SkvB2l9qPC_H7pE7ha0yysR2INJto6cKd1Mt4hvUbXe9vfrU6kLP92Gxm72pOCjvn_ilZcmOrY9ZJykOTiTnzNtf2h9tGqXRQOv_keBpN2MlkSgXTfgg3ldBh8qWZI9K3CwIIYJA_wXCa1TXIDKLKvtaPbaPdzBxqGn3iJiXOScANVV2UU_MwjML6YaXd8UR5hLxO7sqQyQVvu';
+const INTRO_IMG = '/images/semana5/semilla-intro.png';
+const FINAL_IMG = '/images/semana5/semilla-final.png';
 
 const TOTAL_SLIDES = 7;
 

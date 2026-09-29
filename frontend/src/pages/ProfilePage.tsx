@@ -82,7 +82,7 @@ export default function ProfilePage() {
       : averageOfRecordedScores
   );
   return (
-    <div className="font-body-md text-on-surface antialiased overflow-hidden selection:bg-primary-container selection:text-on-primary-container">
+    <div className="font-body-md text-on-surface antialiased min-h-screen selection:bg-primary-container selection:text-on-primary-container">
       {/* Top AppBar (Mobile Only) */}
       <header className="md:hidden flex justify-between items-center px-margin-mobile py-4 w-full top-0 sticky bg-surface shadow-sm z-50">
         <div className="font-headline-md text-headline-md text-primary font-bold tracking-tight">CIENCIA SEGUNDO GRADO</div>
@@ -92,7 +92,7 @@ export default function ProfilePage() {
         </div>
       </header>
 
-      <div className="flex h-screen w-full relative">
+      <div className="flex min-h-screen w-full relative">
         {/* Side Navigation Bar (Desktop Only) */}
         <nav className="hidden md:flex flex-col p-6 gap-2 bg-surface-container-low border-r-2 border-outline-variant h-screen w-64 fixed left-0 top-0 z-40">
           <div className="font-headline-md text-headline-md text-primary font-bold mb-8 tracking-tight pl-4">CIENCIA SEGUNDO GRADO</div>
@@ -114,7 +114,7 @@ export default function ProfilePage() {
               <img
                 alt="Avatar de usuario"
                 className="w-full h-full object-cover"
-                src="/images/Boxer Frog Box Toad.jpg"
+                src="/images/LoginImage.png"
                 onError={(e) => { (e.target as HTMLImageElement).style.display = 'none'; }}
               />
             </div>
@@ -141,7 +141,7 @@ export default function ProfilePage() {
                   <img
                     alt="Avatar de usuario"
                     className="w-full h-full object-cover"
-                    src="/images/Boxer Frog Box Toad.jpg"
+                    src="/images/LoginImage.png"
                     onError={(e) => { (e.target as HTMLImageElement).style.display = 'none'; }}
                   />
                 </div>

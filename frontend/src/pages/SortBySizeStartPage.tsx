@@ -20,7 +20,7 @@ export default function SortBySizeStartPage() {
         {/* Header Section */}
         <header className="flex flex-col items-center space-y-sm">
           <h1 className="font-headline-lg-mobile text-headline-lg-mobile md:font-headline-lg md:text-headline-lg font-bold text-primary tracking-tight">
-            Sort by Size
+            Ordena por tamaño
           </h1>
           <p className="font-body-lg text-body-lg text-on-surface-variant max-w-md">
             Organicemos cosas de menor a mayor!
@@ -30,7 +30,7 @@ export default function SortBySizeStartPage() {
         {/* Illustration Section */}
         <div className="relative w-full max-w-[280px] md:max-w-[400px] aspect-square rounded-3xl bg-surface-container-lowest p-md flex items-center justify-center">
           <img
-            alt="Sort by Size Illustration"
+            alt="Ilustración de ordenar por tamaño"
             className="w-full h-full object-contain animate-float"
             style={{ filter: 'drop-shadow(rgba(74, 101, 73, 0.15) 0px 10px 15px)' }}
             src="https://lh3.googleusercontent.com/aida-public/AB6AXuC11AnZnniwWpLXgMxquqkQDzWUf8P8LrCxGofU7Ssj5VZxisW0YLa6mU-gcLbQC02jTsryzDh6GEOv_KcXCg1yTAHa0XfTfjdDMdjG0rZbjhpzV5ak4Ci6wEQduT1nnsVoDCPI4MeeK28OHFqHmZrfqA-gg0K8eR-oUWKFzv-mFIcnBgH4C1ARzS-tXvtC4kcsHjQB9O28uYZzznZ_AUt7DyGuF91Gi8PxzDBCdmfBXTneNKSGCDxHivGELrFrgoeaFc7a2s87CO3l"

@@ -1,6 +1,8 @@
 import { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { saveQuizScoreForSemanaNumber } from '../services/api';
+import { playMiss, playSuccess } from '../services/sounds';
+import { showKidMessage } from '../components/KidFrame';
 
 // ── Quiz data ──────────────────────────────────────────────────────────────
 interface Option { emoji: string; label: string }
@@ -124,6 +126,7 @@ export default function Semana2QuizPage() {
         const percentage = Math.round((score / 3) * 100);
         saveQuizScoreForSemanaNumber({ userId: user.id, semanaNumber: 2, score: percentage }).catch(err => {
           console.error('Error guardando quiz Semana 2:', err);
+          showKidMessage('No se pudo guardar tu nota. Intenta otra vez.', 'soon');
         });
       }
     } else if (screen !== 'results') {
@@ -137,7 +140,12 @@ export default function Semana2QuizPage() {
 
   const handleCheck = () => {
     if (selected === null) return;
-    if (selected === q.correctIndex) setScore((s) => s + 1);
+    if (selected === q.correctIndex) {
+      setScore((s) => s + 1);
+      playSuccess();
+    } else {
+      playMiss();
+    }
     setChecked(true);
   };
 
@@ -193,7 +201,7 @@ export default function Semana2QuizPage() {
             style={{ backgroundColor: '#F2E8D5', border: '2px solid #E1D5BD', boxShadow: '0 4px 12px rgba(0,0,0,0.08)' }}
           >
             <h2 className="text-3xl font-extrabold mb-2" style={{ color: '#1A1A1A' }}>
-              ¡Quiz Final de la Semana 2!
+              ¿Listo para el quiz?
             </h2>
             <p className="text-base font-medium" style={{ color: '#4A4A4A' }}>
               ¿Recuerdas todo lo que aprendiste? ¡Vamos a descubrirlo!

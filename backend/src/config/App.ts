@@ -1,7 +1,9 @@
 import express, { Application, Request, Response, NextFunction } from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
+import fs from 'fs';
 import morgan from 'morgan';
+import path from 'path';
 import { Logger } from '../utils/logger';
 
 // Rutas de la API
@@ -92,6 +94,29 @@ export class App {
     this.app.use('/api/semanas', semanaRoutes);
     this.app.use('/api/scores', scoreRoutes);
     this.app.use('/api', progressRoutes);
+
+    this.serveFrontend();
+  }
+
+  /**
+   * Sirve el frontend compilado cuando existe public/ (despliegue en Fly.io).
+   * En local, Vite sirve el frontend y este directorio no existe.
+   */
+  private serveFrontend(): void {
+    const publicDir = path.join(__dirname, '..', '..', 'public');
+    const indexPath = path.join(publicDir, 'index.html');
+    if (!fs.existsSync(indexPath)) {
+      return;
+    }
+
+    this.app.use(express.static(publicDir));
+    this.app.use((req: Request, res: Response, next: NextFunction) => {
+      if (req.method !== 'GET' || req.path.startsWith('/api')) {
+        next();
+        return;
+      }
+      res.sendFile(indexPath);
+    });
   }
 
   /**
@@ -128,8 +153,8 @@ export class App {
    * Inicia el servidor en el puerto configurado.
    */
   public start(): void {
-    this.app.listen(this.port, () => {
-      console.log(`🚀 Servidor corriendo en http://localhost:${this.port}`);
+    this.app.listen(this.port, '0.0.0.0', () => {
+      console.log(`🚀 Servidor corriendo en http://0.0.0.0:${this.port}`);
       console.log(`🩺 Health check: http://localhost:${this.port}/api/health`);
       console.log(`🌐 CORS habilitado para: ${process.env.FRONTEND_URL || 'http://localhost:5173'}`);
     });

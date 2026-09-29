@@ -11,7 +11,8 @@
     "postinstall": "prisma generate",
     "db:setup": "ts-node src/scripts/db-setup.ts",
     "db:migrate": "prisma migrate dev",
-    "db:studio": "prisma studio"
+    "db:studio": "prisma studio",
+    "deploy:release": "prisma migrate deploy && ts-node prisma/seed.ts"
   },
   "keywords": [
     "univo",

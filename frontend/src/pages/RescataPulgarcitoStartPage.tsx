@@ -22,7 +22,7 @@ export default function RescataPulgarcitoStartPage() {
         <div className="flex items-center gap-4">
           <button
             onClick={handleBack}
-            aria-label="Go Back"
+            aria-label="Volver"
             className="w-12 h-12 flex items-center justify-center rounded-full bg-surface-container hover:bg-surface-container-highest transition-colors text-primary"
           >
             <span className="material-symbols-outlined" style={{ fontSize: '28px' }}>
@@ -34,7 +34,7 @@ export default function RescataPulgarcitoStartPage() {
         <div className="flex items-center gap-4">
           <button
             onClick={handleHome}
-            aria-label="Home"
+            aria-label="Inicio"
             className="w-12 h-12 flex items-center justify-center rounded-full bg-surface-container hover:bg-surface-container-highest transition-colors text-primary"
           >
             <span className="material-symbols-outlined" style={{ fontSize: '28px' }}>

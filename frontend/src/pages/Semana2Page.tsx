@@ -61,7 +61,7 @@ export default function Semana2Page() {
               <path d="M10 19l-7-7m0 0l7-7m-7 7h18" strokeLinecap="round" strokeLinejoin="round" />
             </svg>
           </button>
-          <h1 className="text-xl font-bold tracking-wide" style={{ color: '#1A1A1A' }}>Tiny Travelers</h1>
+          <h1 className="text-xl font-bold tracking-wide" style={{ color: '#1A1A1A' }}>Semana 2: Materiales</h1>
           <button
             onClick={() => navigate('/home')}
             className="hover:opacity-70 transition-opacity p-2"
@@ -78,9 +78,6 @@ export default function Semana2Page() {
 
           {/* Section Title */}
           <div className="text-center mb-10 w-full max-w-3xl relative">
-            <h2 className="text-[32px] md:text-[40px] font-extrabold mb-3 leading-tight" style={{ color: '#1A1A1A' }}>
-              Semana 2: Identificando objetos
-            </h2>
             <p className="text-lg md:text-xl font-medium" style={{ color: '#4A4A4A' }}>
               Descubre el mundo de los objetos con estos divertidos desafíos.
             </p>

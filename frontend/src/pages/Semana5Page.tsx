@@ -1,4 +1,5 @@
 import { useNavigate, Link } from 'react-router-dom';
+import { showKidMessage } from '../components/KidFrame';
 import '../styles/terra-ciencia.css';
 
 /**
@@ -23,8 +24,7 @@ export default function Semana5Page() {
       buttonClass: 'bg-[var(--tc-primary)] text-[var(--tc-on-primary)]',
       shadowClass: 'shadow-[var(--tc-shadow-3d-primary)]',
       textClass: 'text-[var(--tc-secondary)]',
-      image:
-        'https://lh3.googleusercontent.com/aida-public/AB6AXuCKdrIOObHhfbzuMWSlrQq61i-kkuXH8k5YlBEBpcAnqxIwy-8SoTAHrmrn8WikKD9EgMTG8LSJai7_HpPJCjOPeDfCt7tmRUKb8B3ZPtYtzuQAmYA9SeLMIgApmbq8pExD-lnxh16vgFMSx5sb8P3kFIowd9PnArrNNiUHhnr_BrqpCXLQSadzHPqnnw_Q87a3WB4KIM1NxCUuGuU-jCek5ffvaHJI37x9eR-Q5EAzS_H6SrAUyIcMRQGrpvJSMPk3Xpt9CbB137mS',
+      image: '/images/semana5/card-semillas.png',
     },
     {
       id: 'superpoderes',
@@ -35,8 +35,7 @@ export default function Semana5Page() {
       buttonClass: 'bg-[var(--tc-tertiary)] text-[var(--tc-on-tertiary)]',
       shadowClass: 'shadow-[var(--tc-shadow-3d-tertiary)]',
       textClass: 'text-[var(--tc-tertiary)]',
-      image:
-        'https://lh3.googleusercontent.com/aida-public/AB6AXuCpMWrYt7yvsvLu9v0w2mnKbjbMuWfyebb1wZG67BL4Q8pCDNVN98Wvc9tmTfRoz12z9iFRkK5A52iCIhUaudiD4r9E00dHWMVXkw_KmtnRUQvngWEKNJ8R5smkmi1BaxMROODxikWSquoTEThU569nM0RGmPskYfa4NYRci8kjBb3gkD34ega8R-jUgpt0aF_w6JfhKFeh9idXfdCyNCTFEB-2q5B0l5VFxQe29MPOS19LVuTOmalxx0RuLAjcQhePdqfjLis67OYW',
+      image: '/images/semana5/card-superpoderes.png',
     },
     {
       id: 'busqueda',
@@ -47,8 +46,7 @@ export default function Semana5Page() {
       buttonClass: 'bg-[var(--tc-primary-container)] text-[var(--tc-on-primary-container)]',
       shadowClass: 'shadow-[var(--tc-shadow-3d-primary)]',
       textClass: 'text-[var(--tc-on-primary-fixed-variant)]',
-      image:
-        'https://lh3.googleusercontent.com/aida-public/AB6AXuBUHHY8BsXqp5wmFHNEX1bBr0wx2cl2tc3bXbsQTlJsXcIvGof0cwDjltEoLY63UChvQJ0vvBGjEdSn8OdMwC8oB12sB8XV1fksCYgbiOCMkIfGgyY0xG3MdHFVbObGAjIiSEpgNNEMDPblj-Jedj09S4CZ7ZjKav4v4lULy8pFxodu2RaMSmzq7vjxBG0p0QDwVEBhOCwC-kBhj8HHIquU1eNGHhVJR3bmLlPcejuhTm6UJa2a2I9E-VUz2XMrEa-BbnFQK4i8F440',
+      image: '/images/semana5/card-busqueda.png',
     },
   ];
 
@@ -65,7 +63,7 @@ export default function Semana5Page() {
       navigate('/semana/5/busqueda');
       return;
     }
-    alert('Próximamente');
+    showKidMessage('Muy pronto podrás jugar esta actividad.', 'soon');
   };
 
   const handleQuizClick = () => {
@@ -87,7 +85,7 @@ export default function Semana5Page() {
             park
           </span>
           <h1 className="text-2xl font-bold" style={{ color: 'var(--tc-primary)' }}>
-            Terra Ciencia
+            Semana 5: Vida
           </h1>
         </div>
         <nav className="hidden md:flex gap-8 items-center">
@@ -100,18 +98,6 @@ export default function Semana5Page() {
             Inicio
           </button>
         </nav>
-        <div className="flex items-center gap-4">
-          <button className="p-2 hover:bg-[var(--tc-primary-container)]/20 rounded-full transition-colors active:scale-95">
-            <span className="material-symbols-outlined" style={{ color: 'var(--tc-secondary)' }}>
-              account_circle
-            </span>
-          </button>
-          <button className="p-2 hover:bg-[var(--tc-primary-container)]/20 rounded-full transition-colors active:scale-95">
-            <span className="material-symbols-outlined" style={{ color: 'var(--tc-secondary)' }}>
-              settings
-            </span>
-          </button>
-        </div>
       </header>
 
       <main className="flex-1 relative flex flex-col items-center justify-start p-6 space-y-6 overflow-y-auto">
@@ -146,12 +132,6 @@ export default function Semana5Page() {
               src="https://lh3.googleusercontent.com/aida-public/AB6AXuAUnQOF91l6z8uf0-uAa_zSox4zBLQeHMMYuD4JKsfIOSbpKh9-bkxkprysRAPfJdZg7JuYU8wjWabge92dIn0iDi1i58_Ygw2T9lXm3dau52edvh0rchpu3dSp-hQ6LRqtt1CGFK1Q7na3V-jp70tahVdiKzjHd3bgE3c2zQizg4oB2gEXyLB4sV1jt0L6eTYrx38utXA5DIZbv7gp0-VWoaomXKwk81zGQfV9m7a8NYgWm8atF9VxMfqYcmW1UuLet4QPz_BZBAIG"
             />
           </div>
-          <h2
-            className="text-4xl md:text-5xl font-bold tracking-tight"
-            style={{ color: 'var(--tc-primary)' }}
-          >
-            Semana 5
-          </h2>
           <p
             className="tc-literata text-xl mt-2 italic"
             style={{ color: 'var(--tc-on-surface-variant)' }}
@@ -219,7 +199,7 @@ export default function Semana5Page() {
               <img
                 alt="Cerebro con corona y preguntas"
                 className="w-24 h-24 object-contain"
-                src="https://lh3.googleusercontent.com/aida-public/AB6AXuAvzDP2g0VXAH2FdmxUq65debKsgcnBtuXxTkohcjuRp25pGWmlTBylK3pgq1lpziKrBzu94vzfuNTLImF92vWzptYsL91tbfeIcJLSbTIfv3R0GFT0UOEqZA4J4QR0ozLqojKnNerFKoHnfqEhWKGfCtqrOWSv0MsC_KgCFZM90y8ebg1gX3gC7Ztx1xMqIoAwxozSe-ylwNDGVQMeSyLtcGG-m5cjw6tJi3ekTulZtg5x8wWN0_va4dPdS-8OjmS4fuZ18r0F8CzX"
+                src="/images/semana5/quiz/intro-brain.png"
               />
             </div>
             <div className="flex-1 text-center md:text-left">

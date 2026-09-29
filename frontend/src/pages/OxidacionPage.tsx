@@ -1,5 +1,31 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { showKidMessage } from '../components/KidFrame';
+
+function ChoiceButtons({
+  value,
+  options,
+  onChange,
+}: {
+  value: string;
+  options: string[];
+  onChange: (next: string) => void;
+}) {
+  return (
+    <div className="flex flex-wrap gap-2 p-3 bg-white rounded-xl">
+      {options.map((option) => (
+        <button
+          key={option}
+          type="button"
+          className={`kid-choice ${value === option ? 'kid-choice-on' : ''}`}
+          onClick={() => onChange(option)}
+        >
+          {option}
+        </button>
+      ))}
+    </div>
+  );
+}
 
 /**
  * OxidacionPage — Actividad de la Semana 4: El Misterio de la Oxidación.
@@ -31,7 +57,7 @@ export default function OxidacionPage() {
   };
 
   const handleFinish = () => {
-    alert('¡Observación guardada con éxito!');
+    showKidMessage('¡Observación guardada!');
     navigate('/semana/4');
   };
 
@@ -223,24 +249,16 @@ export default function OxidacionPage() {
                 <span className="material-symbols-outlined text-[#334d33] md:hidden">palette</span>
                 <span className="font-label-lg text-[#334d33] quicksand-text">Color</span>
               </div>
-              <div className="bg-white rounded-xl shadow-sm border border-outline-variant/30 overflow-hidden focus-within:border-[#b0cfac] focus-within:border-2 transition-all">
-                <input
-                  className="w-full p-4 border-none focus:ring-0 font-body-md bg-transparent placeholder-outline-variant outline-none"
-                  placeholder="Escribe el color..."
-                  type="text"
-                  value={freshColor}
-                  onChange={(e) => setFreshColor(e.target.value)}
-                />
-              </div>
-              <div className="bg-white rounded-xl shadow-sm border border-outline-variant/30 overflow-hidden focus-within:border-[#b0cfac] focus-within:border-2 transition-all">
-                <input
-                  className="w-full p-4 border-none focus:ring-0 font-body-md bg-transparent placeholder-outline-variant outline-none"
-                  placeholder="Escribe el color..."
-                  type="text"
-                  value={oxidizedColor}
-                  onChange={(e) => setOxidizedColor(e.target.value)}
-                />
-              </div>
+              <ChoiceButtons
+                value={freshColor}
+                options={['Amarillo', 'Verde', 'Café']}
+                onChange={setFreshColor}
+              />
+              <ChoiceButtons
+                value={oxidizedColor}
+                options={['Café', 'Oscuro', 'Marrón']}
+                onChange={setOxidizedColor}
+              />
 
               {/* Row: Olor */}
               <div className="flex items-center gap-3 p-4 bg-white rounded-xl md:bg-transparent md:p-0">
@@ -283,24 +301,16 @@ export default function OxidacionPage() {
                 <span className="material-symbols-outlined text-[#334d33] md:hidden">texture</span>
                 <span className="font-label-lg text-[#334d33] quicksand-text">Textura</span>
               </div>
-              <div className="bg-white rounded-xl shadow-sm border border-outline-variant/30 overflow-hidden focus-within:border-[#b0cfac] focus-within:border-2 transition-all">
-                <input
-                  className="w-full p-4 border-none focus:ring-0 font-body-md bg-transparent placeholder-outline-variant outline-none"
-                  placeholder="¿Cómo se siente?"
-                  type="text"
-                  value={freshTexture}
-                  onChange={(e) => setFreshTexture(e.target.value)}
-                />
-              </div>
-              <div className="bg-white rounded-xl shadow-sm border border-outline-variant/30 overflow-hidden focus-within:border-[#b0cfac] focus-within:border-2 transition-all">
-                <input
-                  className="w-full p-4 border-none focus:ring-0 font-body-md bg-transparent placeholder-outline-variant outline-none"
-                  placeholder="¿Cómo se siente?"
-                  type="text"
-                  value={oxidizedTexture}
-                  onChange={(e) => setOxidizedTexture(e.target.value)}
-                />
-              </div>
+              <ChoiceButtons
+                value={freshTexture}
+                options={['Suave', 'Lisa', 'Jugosa']}
+                onChange={setFreshTexture}
+              />
+              <ChoiceButtons
+                value={oxidizedTexture}
+                options={['Rugosa', 'Dura', 'Pegajosa']}
+                onChange={setOxidizedTexture}
+              />
 
               {/* Row: Es Comestible */}
               <div className="flex items-center gap-3 p-4 bg-white rounded-xl md:bg-transparent md:p-0">

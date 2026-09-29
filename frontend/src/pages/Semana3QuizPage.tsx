@@ -1,6 +1,8 @@
 import { useState, useCallback, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { saveQuizScoreForSemanaNumber } from '../services/api';
+import { playMiss, playSuccess } from '../services/sounds';
+import { showKidMessage } from '../components/KidFrame';
 
 // ── Images ─────────────────────────────────────────────────────────────────
 const IMG_HERO  = '/images/semana3/quiz/intro-hero.png';
@@ -98,6 +100,7 @@ export default function Semana3QuizPage() {
         const percentage = Math.round((score / 30) * 100);
         saveQuizScoreForSemanaNumber({ userId: user.id, semanaNumber: 3, score: percentage }).catch(err => {
           console.error('Error guardando quiz Semana 3:', err);
+          showKidMessage('No se pudo guardar tu nota. Intenta otra vez.', 'soon');
         });
       }
     } else if (screen !== 4) {
@@ -127,7 +130,8 @@ export default function Semana3QuizPage() {
     ));
     setLocked(l => l.map((v, i) => i === qi ? true : v));
     setChoices(c => ({ ...c, [qi]: correct }));
-    if (correct) { setScore(s => s + 10); fireConfetti(); }
+    if (correct) { setScore(s => s + 10); fireConfetti(); playSuccess(); }
+    else playMiss();
     setTimeout(() => goTo(screen + 1), 1200);
   };
 
@@ -227,7 +231,7 @@ export default function Semana3QuizPage() {
             <div className="space-y-3">
               <div className="inline-flex items-center gap-2 font-bold px-4 py-1.5 rounded-full text-sm border" style={{ backgroundColor: '#ccebc7', color: '#4a6549', borderColor: '#4a654940' }}>
                 <span className="material-symbols-outlined text-base filled-icon">recycling</span>
-                Evaluación Semana 3
+                Evaluación
               </div>
               <h2 className="text-4xl font-extrabold text-[#4a6549] tracking-tight" style={{ fontFamily: 'Literata, serif' }}>
                 ¡Quiz Semanal!

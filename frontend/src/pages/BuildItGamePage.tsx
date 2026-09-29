@@ -16,27 +16,27 @@ const ZONES: Zone[] = [
   {
     id: 'table',
     name: 'Mesa Rota',
-    image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuAR_ADx2JxqRI_64HXuIgn3puBWU5__DhPjx20qGX0ub_5K6znUS814I7w5-lwC28TlpRVDGXTxdsyjhRVb9cfoD3nFlMTJWDzizEQrgYnkIIM7Q57gk9d21yBREKZ7xaseplTobOVI7oUzUtEaCAiGjVIcXEg_JZsw1MFe7Fik3S8qq_G9afor02E4lKEMnEuuEJHWYu-4QJlH1FUwMB9r3SLNEUmiSXp0P_3apnMt1IwcQazLkzCiGW29o0QIYVk0HYp2DS17gwQ',
+    image: '/images/semana3/mesa.png',
     correct: 'wood',
   },
   {
     id: 'window',
     name: 'Ventana Rota',
-    image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuAqlA6l7xSv5tvsRNvq5oVf-n77LVsS1KCknSGn7EmdHlQJqbf_NUjLhi8jrUO1iBmziw8JzOL2HW-rXPOwBhZqgi9Q8RfVXpkehK5vGjIkUjJXU8gMb8otUiY5oVm1ZKqMOGl7iLKxD8X2iDRtm3uVZgdTrYjmbXN6V4ann_kTOqw0Pjk2RVchoqGwqxiSfmp-eTHKsk7OZVObMtCqU5slLThmrAjD8i2Q9-ct-6W1VRoH0R1Eb9vekrnODm2BBT8A6rFU3Se_znk',
+    image: '/images/semana3/ventana.png',
     correct: 'glass',
   },
   {
     id: 'toolbox',
     name: 'Caja Rota',
-    image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuBil4co6kRWO1ac2ylegthibLIN3ZVRmn9IuVMjvJ6e9a_j9jOUW_4wcua5WuxDjF9_-XcDY_zcno-4BbvPPwqh3k7Eq4AShfVs_FDrm9-TPx4GVnuZbEj137b8zsMfQYD7m29bsJ8P5L2dN2Vy_DnMONuw5FeEzljfCM3CC5uJ39VTFWZNgjdxVAwzPxiiKtRAFaQ0qZ7Q2j8B3DcZioMcQAv4qF6Xe5_TGS3LuWH1a8QLGX_ukvOIDuUS0VYiH8YgrvAO8ypy64I',
+    image: '/images/semana3/caja.png',
     correct: 'metal',
   },
 ];
 
-const MATERIALS: { id: Material; label: string; icon: string; bgClass: string; iconColor: string }[] = [
-  { id: 'wood', label: 'Madera', icon: 'forest', bgClass: 'bg-tertiary-fixed hover:bg-[#eadeb5] border-[#d5c09e]', iconColor: 'text-on-tertiary-fixed' },
-  { id: 'glass', label: 'Vidrio', icon: 'window', bgClass: 'bg-secondary-fixed hover:bg-[#d8efff] border-[#add6f4]', iconColor: 'text-on-secondary-fixed' },
-  { id: 'metal', label: 'Metal', icon: 'precision_manufacturing', bgClass: 'bg-surface-variant hover:bg-surface-container-high border-[#cfced2]', iconColor: 'text-on-surface-variant' },
+const MATERIALS: { id: Material; label: string; image: string; bgClass: string }[] = [
+  { id: 'wood', label: 'Madera', image: '/images/semana3/madera.png', bgClass: 'bg-tertiary-fixed hover:bg-[#eadeb5] border-[#d5c09e]' },
+  { id: 'glass', label: 'Vidrio', image: '/images/semana3/vidrio.png', bgClass: 'bg-secondary-fixed hover:bg-[#d8efff] border-[#add6f4]' },
+  { id: 'metal', label: 'Metal', image: '/images/semana3/metal.png', bgClass: 'bg-surface-variant hover:bg-surface-container-high border-[#cfced2]' },
 ];
 
 function triggerConfetti() {
@@ -139,7 +139,7 @@ export default function BuildItGamePage() {
             arrow_back
           </button>
           <h1 className="font-headline-md text-headline-md-mobile md:text-headline-md text-primary font-bold hidden sm:block">
-            Build It! / ¿Qué va dónde?
+            ¿Qué va dónde?
           </h1>
           <h1 className="font-headline-md text-primary font-bold sm:hidden">¡A reparar!</h1>
         </div>
@@ -187,9 +187,8 @@ export default function BuildItGamePage() {
                   <div className={`relative ${isRepaired ? 'opacity-60' : ''}`}>
                     <img
                       alt={zone.name}
-                      className="w-32 h-32 md:w-48 md:h-48 object-contain drop-shadow-xl"
+                      className="repair-object object-contain drop-shadow-xl"
                       src={zone.image}
-                      loading="lazy"
                     />
                     {isRepaired && (
                       <div className="absolute inset-0 flex items-center justify-center">
@@ -202,15 +201,9 @@ export default function BuildItGamePage() {
                       </div>
                     )}
                   </div>
-                  <div className="opacity-0 group-hover:opacity-100 transition-opacity bg-surface px-4 py-2 rounded-full shadow-md border-2 border-outline-variant mt-2">
+                  <div className="bg-surface px-4 py-2 rounded-full shadow-md border-2 border-outline-variant mt-3">
                     <span className="font-label-md text-label-md text-on-surface">{zone.name}</span>
                   </div>
-                  <span
-                    className="material-symbols-outlined text-primary text-5xl opacity-0 group-hover:opacity-100 transition-opacity absolute -top-4"
-                    style={{ fontVariationSettings: "'FILL' 1" }}
-                  >
-                    build
-                  </span>
                 </button>
               );
             })}
@@ -258,13 +251,8 @@ export default function BuildItGamePage() {
                   onClick={() => handleMaterialSelect(mat.id)}
                   className={`tactile-button flex flex-col items-center justify-center p-4 ${mat.bgClass} rounded-xl border-2 focus:ring-4 focus:ring-secondary-container outline-none group`}
                 >
-                  <div className="w-14 h-14 rounded-full flex items-center justify-center mb-3 group-hover:scale-110 transition-transform shadow-inner bg-white/40">
-                    <span
-                      className={`material-symbols-outlined text-[32px] ${mat.iconColor}`}
-                      style={{ fontVariationSettings: "'FILL' 1" }}
-                    >
-                      {mat.icon}
-                    </span>
+                  <div className="w-16 h-16 rounded-2xl flex items-center justify-center mb-3 group-hover:scale-110 transition-transform shadow-inner bg-white overflow-hidden">
+                    <img src={mat.image} alt="" className="w-full h-full object-cover" />
                   </div>
                   <span className="font-label-lg text-label-lg">{mat.label}</span>
                 </button>
@@ -317,7 +305,7 @@ export default function BuildItGamePage() {
       <nav className="md:hidden fixed bottom-0 left-0 w-full z-40 flex justify-around items-center px-4 pb-4 pt-2 bg-surface rounded-t-xl shadow-[0_-4px_6px_-1px_rgba(74,101,73,0.1)]">
         <button className="flex flex-col items-center justify-center text-on-surface-variant px-4 py-2 hover:bg-surface-container-high transition-all rounded-xl">
           <span className="material-symbols-outlined text-[24px] mb-1">explore</span>
-          <span className="font-label-md text-label-md">Map</span>
+          <span className="font-label-md text-label-md">Mapa</span>
         </button>
         <div className="flex flex-col items-center justify-center bg-primary-container text-on-primary-container rounded-full px-6 py-2 shadow-inner">
           <span

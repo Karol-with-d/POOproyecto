@@ -1,4 +1,44 @@
 import { useNavigate, Link } from 'react-router-dom';
+import { showKidMessage } from '../components/KidFrame';
+
+function ActivityArt({ id }: { id: string }) {
+  if (id === 'description-match') {
+    return (
+      <svg viewBox="0 0 200 120" className="w-full h-full" aria-hidden="true">
+        <rect width="200" height="120" fill="#fff6df" />
+        <circle cx="58" cy="60" r="28" fill="#ff8a65" />
+        <rect x="112" y="32" width="58" height="56" rx="12" fill="#64b5f6" />
+      </svg>
+    );
+  }
+  if (id === 'rescata-pulgarcito') {
+    return (
+      <svg viewBox="0 0 200 120" className="w-full h-full" aria-hidden="true">
+        <rect width="200" height="120" fill="#e3f4ff" />
+        <rect x="20" y="78" width="50" height="16" rx="4" fill="#8d6e63" />
+        <rect x="78" y="70" width="50" height="16" rx="4" fill="#a1887f" transform="rotate(-8 103 78)" />
+        <rect x="130" y="78" width="50" height="16" rx="4" fill="#8d6e63" />
+        <circle cx="100" cy="42" r="16" fill="#ffd54f" />
+      </svg>
+    );
+  }
+  if (id === 'sort-by-size') {
+    return (
+      <svg viewBox="0 0 200 120" className="w-full h-full" aria-hidden="true">
+        <rect width="200" height="120" fill="#fff6df" />
+        <circle cx="40" cy="78" r="14" fill="#ef5350" />
+        <circle cx="90" cy="70" r="22" fill="#ff7043" />
+        <circle cx="150" cy="60" r="30" fill="#e53935" />
+      </svg>
+    );
+  }
+  return (
+    <svg viewBox="0 0 200 120" className="w-full h-full" aria-hidden="true">
+      <rect width="200" height="120" fill="#fff6df" />
+      <polygon points="100,22 112,52 146,52 118,70 128,102 100,82 72,102 82,70 54,52 88,52" fill="#ffd54f" />
+    </svg>
+  );
+}
 
 /**
  * Semana1Page — Hub de actividades de la Semana 1: Medidas.
@@ -14,7 +54,7 @@ export default function Semana1Page() {
   const activities = [
     {
       id: 'description-match',
-      title: 'Description Match',
+      title: 'Empareja palabras',
       desc: 'Empareja las palabras.',
       color: 'bg-[#c4b5a0]',
       borderColor: 'border-[#a89880]',
@@ -34,7 +74,7 @@ export default function Semana1Page() {
     },
     {
       id: 'sort-by-size',
-      title: 'Sort by Size',
+      title: 'Ordena por tamaño',
       desc: 'Ordena de menor a mayor.',
       color: 'bg-[#c4b5a0]',
       borderColor: 'border-[#a89880]',
@@ -55,7 +95,7 @@ export default function Semana1Page() {
   ];
 
   return (
-    <div className="bg-[#f8f5f0] text-[#1b1b1e] antialiased min-h-screen flex flex-col font-body-md">
+    <div className="bg-transparent text-[#1b1b1e] antialiased min-h-screen flex flex-col font-body-md">
       {/* ===== TopAppBar ===== */}
       <header className="bg-[#fbf8fc] text-[#4a6549] top-0 sticky z-50 flex justify-between items-center w-full px-5 md:px-[120px] py-2 shadow-sm">
         <button
@@ -65,7 +105,7 @@ export default function Semana1Page() {
           <span className="material-symbols-outlined">arrow_back</span>
         </button>
         <h1 className="font-headline-md text-headline-md font-bold text-[#4a6549] text-center flex-1 mx-4 truncate">
-          Week 1: Tiny Travelers
+          Semana 1: Medidas
         </h1>
         <div className="flex gap-2">
           <button
@@ -81,9 +121,6 @@ export default function Semana1Page() {
       <main className="flex-1 w-full max-w-[800px] mx-auto px-5 md:px-[120px] py-8 pb-[120px] md:pb-8 flex flex-col gap-8">
         {/* Hero Section */}
         <section className="text-center">
-          <h2 className="font-headline-lg-mobile md:font-headline-lg text-headline-lg-mobile md:text-headline-lg text-[#1b1b1e] mb-2">
-            Semana 1: Comencemos a Medir
-          </h2>
           <p className="font-body-lg text-body-lg text-[#434841]">
             Explora el mundo a tu alrededor con estas divertidas actividades de medición.
           </p>
@@ -101,12 +138,7 @@ export default function Semana1Page() {
             >
               {/* Image */}
               <div className="w-full h-40 rounded-lg overflow-hidden border-2 border-white bg-[#fbf8fc] relative">
-                <img
-                  alt={activity.title}
-                  className="w-full h-full object-cover"
-                  src={activity.image}
-                  loading="lazy"
-                />
+                <ActivityArt id={activity.id} />
               </div>
 
               {/* Content */}
@@ -120,7 +152,7 @@ export default function Semana1Page() {
                   </p>
                 </div>
                 <button
-                  onClick={() => activity.link ? navigate(activity.link) : alert('Próximamente')}
+                  onClick={() => activity.link ? navigate(activity.link) : showKidMessage('Muy pronto podrás jugar esta actividad.', 'soon')}
                   className="mt-3 w-full bg-[#4a6549] text-white font-label-md text-label-md py-2 px-6 rounded-full transition-all border-b-4 border-[#334d33] active:translate-y-0.5 active:border-b-2 flex items-center justify-center gap-2"
                 >
                   <span className="material-symbols-outlined" style={{ fontVariationSettings: '"FILL" 1' }}>
@@ -141,14 +173,14 @@ export default function Semana1Page() {
           className="flex flex-col items-center justify-center text-[#434841] px-4 py-2 hover:bg-[#8ba888]/50 hover:scale-105 transition-transform duration-200"
         >
           <span className="material-symbols-outlined mb-1">map</span>
-          <span className="font-label-md text-label-md text-xs">Map</span>
+          <span className="font-label-md text-label-md text-xs">Mapa</span>
         </Link>
 
         <div className="flex flex-col items-center justify-center bg-[#8ba888] text-[#243d24] rounded-full px-6 py-2 scale-90 transition-all duration-200 ease-out">
           <span className="material-symbols-outlined mb-1" style={{ fontVariationSettings: '"FILL" 1' }}>
             experiment
           </span>
-          <span className="font-label-md text-label-md text-xs">Lab</span>
+          <span className="font-label-md text-label-md text-xs">Laboratorio</span>
         </div>
 
         <Link
@@ -157,9 +189,7 @@ export default function Semana1Page() {
         >
           <span className="material-symbols-outlined mb-1">groups</span>
           <span className="font-label-md text-label-md text-xs text-center leading-tight">
-            Science
-            <br />
-            Buddies
+            Amigos
           </span>
         </Link>
 
@@ -168,7 +198,7 @@ export default function Semana1Page() {
           className="flex flex-col items-center justify-center text-[#434841] px-4 py-2 hover:bg-[#8ba888]/50 hover:scale-105 transition-transform duration-200"
         >
           <span className="material-symbols-outlined mb-1">stars</span>
-          <span className="font-label-md text-label-md text-xs">Progress</span>
+          <span className="font-label-md text-label-md text-xs">Progreso</span>
         </Link>
       </nav>
     </div>

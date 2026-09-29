@@ -196,7 +196,7 @@ export default function SuperpoderesGamePage() {
                     <img
                       alt="Broti - semilla con cara sonriente brotando"
                       className="w-full h-full object-cover"
-                      src="/images/niñocrece.png"
+                      src="/images/semana5/broti.png"
                     />
                   </div>
                   <p
@@ -227,9 +227,9 @@ export default function SuperpoderesGamePage() {
                     }}
                   >
                     <img
-                      alt="Niño probándose ropa pequeña"
+                      alt="Un niño y una planta que crecieron"
                       className="w-full h-full object-contain"
-                      src="/images/niñocrece.png"
+                      src="/images/semana5/broti-crecer.png"
                     />
                   </div>
                 </div>
@@ -270,7 +270,7 @@ export default function SuperpoderesGamePage() {
                     <img
                       alt="Veloz - guepardo corriendo feliz"
                       className="w-full h-full object-cover"
-                      src="/images/Juaguar.png"
+                      src="/images/semana5/veloz.png"
                     />
                   </div>
                   <p
@@ -303,7 +303,7 @@ export default function SuperpoderesGamePage() {
                     <img
                       alt="Veloz el guepardo corriendo feliz por la sabana"
                       className="w-full h-full object-contain"
-                      src="/images/Juaguar.png"
+                      src="/images/semana5/veloz-correr.png"
                     />
                   </div>
                 </div>
@@ -344,7 +344,7 @@ export default function SuperpoderesGamePage() {
                     <img
                       alt="Mamá Rana - una mamá con sus crías"
                       className="w-full h-full object-cover"
-                      src="/images/momfrog.jpg"
+                      src="/images/semana5/rana.png"
                     />
                   </div>
                   <p
@@ -377,7 +377,7 @@ export default function SuperpoderesGamePage() {
                     <img
                       alt="Mamá rana con sus renacuajos"
                       className="w-full h-full object-contain"
-                      src="/images/momfrog.jpg"
+                      src="/images/semana5/rana-familia.png"
                     />
                   </div>
                 </div>
@@ -418,7 +418,7 @@ export default function SuperpoderesGamePage() {
                     <img
                       alt="Comi - oruga feliz comiendo una hoja verde"
                       className="w-full h-full object-cover"
-                      src="/images/comi"
+                      src="/images/semana5/comi.png"
                     />
                   </div>
                   <p
@@ -449,9 +449,9 @@ export default function SuperpoderesGamePage() {
                     }}
                   >
                     <img
-                      alt="Oruga comiendo vs hambrienta"
+                      alt="Oruga comiendo y oruga con hambre"
                       className="w-full h-full object-contain"
-                      src="/images/comi"
+                      src="/images/semana5/comi-comer.png"
                     />
                   </div>
                 </div>
@@ -554,7 +554,7 @@ export default function SuperpoderesGamePage() {
                 <img
                   alt="Personaje Broti"
                   className="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-500"
-                  src="https://lh3.googleusercontent.com/aida-public/AB6AXuAKX9hIziY26X60dWmlqrNiqC1wfM7RcwKjhcNbCXq78Y14r9WKbnE0mrWhr2gdyJNchQ7NIM_jVe9oUHYX5Dgd8e07LCmCmb3SiUgX3znRWWtLnEy88g3Q17mCxDFgj0CH7l2w-W5gFWLIkNK-U_iBB3CEj5hr2dhR1A_y1jcxzLkZvgRNdVVLEJEI54IiUDAnF593P8yqJMDdOHgNPYbSxO3MNA3AilgcehU6Pe4M0f0CQeC4ttVj0rysyThw53ORKbh9IYLLZWLh"
+                  src="/images/semana5/broti.png"
                 />
               </div>
               <h3
@@ -587,7 +587,7 @@ export default function SuperpoderesGamePage() {
                 <img
                   alt="Personaje Veloz"
                   className="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-500"
-                  src="https://lh3.googleusercontent.com/aida-public/AB6AXuCjzHEtnZMQdJOIdl8keCaMOgHTyfV8M08ZyxuW_AR7-mDKxkKyzArF5kmQQ1uI52usoD5Svkdz6QYErAHdYWzu9VuDEK0-2Su-1OtzzQIY1PqbfUWPDjZ-4IFKQZvE6-fRghrEZLWPKP8QnhaBol9YpPZGdqHn1YBvbVFIe5qQNcrUtNg_OvLy2f9CSFdlLbhLMU2x_1fMQ45AnUzixaMlxTGuA8Wd7Tb15s6hoIvuZudueOkQWsjg_JkhpXS0_U0XKaBjYTbj1V29"
+                  src="/images/semana5/veloz.png"
                 />
               </div>
               <h3
@@ -620,7 +620,7 @@ export default function SuperpoderesGamePage() {
                 <img
                   alt="Personaje Mamá Rana"
                   className="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-500"
-                  src="https://lh3.googleusercontent.com/aida-public/AB6AXuAnCoxE4kvWzKZBJ7gRWb5OKIYkE4ULdjE-d9KtZT3sEtVI20G4oUQ5_WT0FEdbPxYfBI8Xlq4dImO0jrQ-UW9UAYbuRrDUJ0khTnyyXGFLApH3mJmuS-8fW27w68rbFVzTIoqUHuh23XkZi-gRNjWDbsQXA1n8zY5E3Th8-DA82zj7oRDT8U5hPqWpqn5_1AqlBRH0kc3LK-8OViGUY9XHsm9mOgCFFzC_vUWqAPkQUa_TEI2vJ_brAaJy4aTgl_vbbs50zvGeYHpp"
+                  src="/images/semana5/rana.png"
                 />
               </div>
               <h3
@@ -653,7 +653,7 @@ export default function SuperpoderesGamePage() {
                 <img
                   alt="Personaje Comi"
                   className="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-500"
-                  src="/images/comi"
+                  src="/images/semana5/comi.png"
                 />
               </div>
               <h3

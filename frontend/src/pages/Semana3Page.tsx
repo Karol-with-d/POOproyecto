@@ -1,4 +1,5 @@
 import { useNavigate, Link } from 'react-router-dom';
+import { showKidMessage } from '../components/KidFrame';
 
 /**
  * Semana3Page — Hub de actividades de la Semana 3: Utilidad y Reciclaje.
@@ -19,7 +20,7 @@ export default function Semana3Page() {
       title: '¿De qué están hechos?',
       desc: 'Explora el jardín y el mercado para descubrir de qué materiales están hechos los objetos que nos rodean.',
       color: 'bg-[#ccebc7]',
-      image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuDB2C7fpZD0p374C5W7SgegXpBjwu3EcQshRAj88SjhM2hErvVZcl3N39HmSNv0BSnJnh8kK3XYG6hT1Tvz4mQxB-aOv2X8qnFLY48MAO_SPBllgQvdzQamChc7m2luD0SFtCG4kEs41woHBXl79-AFBHdiCoXilykFLhMywAiwwbE5S4KT5cFnYYOwI88D4YdjwfzA-7VCTEXiC6pH3nH5qvbTzKXC2YUGaTdaBHlewqBlCC5xkGeTvi1SoXEfgjNrJIXtY1xS-bQ',
+      image: '/images/semana3/card-hechos.svg',
       link: '/semana/3/hecho-de',
     },
     {
@@ -27,7 +28,7 @@ export default function Semana3Page() {
       title: '¡A reparar!',
       desc: '¡Manos a la obra! Ayuda a reparar los objetos rotos en el taller de inventos.',
       color: 'bg-[#bfe5fe]',
-      image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuDrC3TntOYS6w71TVxV7FdfvIavyh_EMQ61tnM71T1n55obBOYHNjUJqeJvcuj_CFSbzFNMpDcDFoHmhHW5vzY4Js7NK5AIi9bEUHf5_xie23VoOG-auodzX0qj1HCMo7O_85XLMOq_FAfaRaOZWKpW9NFgxM_iRGtRQTSpwsBpJF1VZ7B2ERZgYQRgc0MDdwqkZumBDaOp2ewyTlDZ-QsNt77xDrVSI6bnIjlGmp4Zss0zsne8WUVZ9ntLqp8190ei3LKkkFhKEvM',
+      image: '/images/semana3/card-reparar.svg',
       link: '/semana/3/build-it',
     },
     {
@@ -35,7 +36,7 @@ export default function Semana3Page() {
       title: 'Tarjetas de Reflexión',
       desc: 'Piensa y reflexiona sobre lo que has aprendido hoy sobre el cuidado de nuestro planeta.',
       color: 'bg-[#f3e0c2]',
-      image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuBKm3lu7LMBEFgBLFnCugX1k5aoX1-4pD3T5xSurow1c94J--e-p_JFl4qSW0L1XciQbfCQkEQmoSrB-t4lExqDORSa726IoOTOCW24BFSTw2Lsur5zp_AWgpVs8IjU7oD4-VCZG5ZcSkBnCqR7F7AfW_InJHRwQjTg5vASrTW5sOkfajaiI7M_fHly_HnMzFIrcezYpzOnUnQpGuVx2V8CxXXKNDjj6oEWauVnUE4uadP87yylcBikUvhRMH-abEs5j5EKiLE4BkA',
+      image: '/images/semana3/card-reflexion.svg',
       link: '/semana/3/reflection-cards',
     },
   ];
@@ -51,7 +52,7 @@ export default function Semana3Page() {
           <span className="material-symbols-outlined">arrow_back</span>
         </button>
         <h1 className="font-headline-md text-headline-md font-bold text-[#4a6549] text-center flex-1 mx-4 truncate">
-          UNIVO
+          Semana 3: Utilidad y Reciclaje
         </h1>
         <div className="flex gap-2">
           <button
@@ -67,9 +68,6 @@ export default function Semana3Page() {
       <main className="flex-1 w-full max-w-[1400px] mx-auto px-5 md:px-[120px] py-8 pb-[120px] md:pb-8 flex flex-col gap-8">
         {/* Hero Section */}
         <section className="text-left">
-          <h2 className="font-headline-lg-mobile md:font-headline-lg text-headline-lg-mobile md:text-headline-lg text-[#1b1b1e] mb-2">
-            Semana 3: Utilidad y Reciclaje
-          </h2>
           <p className="font-body-lg text-body-lg text-[#434841]">
             Descubre cómo los materiales se transforman y cómo podemos darles una nueva vida.
           </p>
@@ -99,7 +97,7 @@ export default function Semana3Page() {
                   {activity.desc}
                 </p>
                 <button
-                  onClick={() => activity.link ? navigate(activity.link) : alert('Próximamente')}
+                  onClick={() => activity.link ? navigate(activity.link) : showKidMessage('Muy pronto podrás jugar esta actividad.', 'soon')}
                   className="squishy-button w-full mt-4 py-3 px-6 bg-[#4a6549] text-white font-label-lg text-label-lg rounded-xl flex items-center justify-center gap-2"
                 >
                   <span className="material-symbols-outlined" style={{ fontVariationSettings: '"FILL" 1' }}>
@@ -142,14 +140,14 @@ export default function Semana3Page() {
           className="flex flex-col items-center justify-center text-[#434841] px-4 py-2 hover:bg-[#8ba888]/50 hover:scale-105 transition-transform duration-200"
         >
           <span className="material-symbols-outlined mb-1">map</span>
-          <span className="font-label-md text-label-md text-xs">Map</span>
+          <span className="font-label-md text-label-md text-xs">Mapa</span>
         </Link>
 
         <div className="flex flex-col items-center justify-center bg-[#8ba888] text-[#243d24] rounded-full px-6 py-2 scale-90 transition-all duration-200 ease-out">
           <span className="material-symbols-outlined mb-1" style={{ fontVariationSettings: '"FILL" 1' }}>
             experiment
           </span>
-          <span className="font-label-md text-label-md text-xs">Lab</span>
+          <span className="font-label-md text-label-md text-xs">Laboratorio</span>
         </div>
 
         <Link
@@ -158,9 +156,7 @@ export default function Semana3Page() {
         >
           <span className="material-symbols-outlined mb-1">groups</span>
           <span className="font-label-md text-label-md text-xs text-center leading-tight">
-            Science
-            <br />
-            Buddies
+            Amigos
           </span>
         </Link>
 
@@ -169,7 +165,7 @@ export default function Semana3Page() {
           className="flex flex-col items-center justify-center text-[#434841] px-4 py-2 hover:bg-[#8ba888]/50 hover:scale-105 transition-transform duration-200"
         >
           <span className="material-symbols-outlined mb-1">stars</span>
-          <span className="font-label-md text-label-md text-xs">Progress</span>
+          <span className="font-label-md text-label-md text-xs">Progreso</span>
         </Link>
       </nav>
     </div>

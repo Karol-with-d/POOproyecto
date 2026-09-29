@@ -35,12 +35,11 @@ export default function BuildItStartPage() {
 
           {/* Illustration Container */}
           <div className="w-full aspect-square max-w-[280px] bg-[#ffffff] rounded-2xl flex items-center justify-center p-6 border-2 border-[#c3c8bf] relative z-10">
-            <span
-              className="material-symbols-outlined"
-              style={{ fontSize: '180px', color: '#3e6378', fontVariationSettings: "'FILL' 1" }}
-            >
-              handyman
-            </span>
+            <img
+              alt="Mesa, ventana y caja por reparar"
+              className="w-full h-full object-contain"
+              src="/images/semana3/card-reparar.svg"
+            />
           </div>
 
           {/* Instruction Text */}

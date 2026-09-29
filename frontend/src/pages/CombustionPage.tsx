@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { showKidMessage } from '../components/KidFrame';
 
 /**
  * CombustionPage — Actividad de la Semana 4: El Gran Drama Químico (Combustión).
@@ -35,7 +36,7 @@ export default function CombustionPage() {
   };
 
   const handleFinish = () => {
-    alert('¡Lección de combustión completada!');
+    showKidMessage('¡Lección de combustión completada!');
     navigate('/semana/4');
   };
 

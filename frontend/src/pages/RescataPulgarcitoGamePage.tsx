@@ -1,5 +1,6 @@
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { playFromFeedback } from '../services/sounds';
 
 const CONFETTI_COLORS = ['#4a6549', '#3e6378', '#6a5d45', '#ba1a1a', '#8ba888', '#bfe5fe'];
 
@@ -72,6 +73,9 @@ export default function RescataPulgarcitoGamePage() {
   const [pulgarcitoState, setPulgarcitoState] = useState<PulgarcitoState>('idle');
   const [isChecking, setIsChecking] = useState(false);
   const [feedback, setFeedback] = useState<{ text: string; type: 'success' | 'error' } | null>(null);
+  useEffect(() => {
+    playFromFeedback(feedback);
+  }, [feedback]);
   const [gameCompleted, setGameCompleted] = useState(false);
 
   // Level 1 state
@@ -118,7 +122,7 @@ export default function RescataPulgarcitoGamePage() {
           setPulgarcitoState('walk-across');
           setTimeout(() => {
             triggerConfetti();
-            setFeedback({ text: '¡Perfecto! Pulgarcito cruzó el puente. ¡Siguiente nivel!', type: 'success' });
+            setFeedback({ text: '¡Perfecto! Pulgarcito cruzó el puente.', type: 'success' });
             setL1Completed(true);
             setIsChecking(false);
           }, 1500);
@@ -257,7 +261,7 @@ export default function RescataPulgarcitoGamePage() {
   // ── Derived ─────────────────────────────────────────────────────────────
 
   const progressPct = currentLevel === 1 ? 33 : gameCompleted ? 100 : 66;
-  const progressLabel = currentLevel === 1 ? '1 / 2' : gameCompleted ? '2 / 2' : '2 / 2';
+  const progressLabel = currentLevel === 1 ? '1 de 2' : '2 de 2';
 
   const l2Sum = l2Selected.reduce((a, s) => a + s.size, 0);
 
@@ -282,17 +286,17 @@ export default function RescataPulgarcitoGamePage() {
       <header className="bg-surface-container-low w-full top-0 z-40 flex justify-between items-center px-margin-mobile md:px-margin-desktop py-base">
         <button
           onClick={handleBack}
-          aria-label="Back"
+          aria-label="Atrás"
           className="text-primary hover:scale-105 transition-transform duration-200 active:scale-95 flex items-center justify-center p-2 rounded-full"
         >
           <span className="material-symbols-outlined fill" style={{ fontSize: '28px' }}>arrow_back</span>
         </button>
         <h1 className="font-headline-md text-headline-md font-bold text-primary text-center flex-1">
-          Week 1: Tiny Travelers
+          Semana 1: Medidas
         </h1>
         <button
           onClick={handleHome}
-          aria-label="Home"
+          aria-label="Inicio"
           className="text-primary hover:scale-105 transition-transform duration-200 active:scale-95 flex items-center justify-center p-2 rounded-full"
         >
           <span className="material-symbols-outlined fill" style={{ fontSize: '28px' }}>home</span>
@@ -471,7 +475,7 @@ export default function RescataPulgarcitoGamePage() {
                       disabled={isChecking}
                       className={`w-full bg-tertiary-fixed rounded-xl p-sm border-2 border-on-surface-variant flex items-center justify-between hover:bg-tertiary-fixed-dim transition-all ${
                         l1Selected === plank.size ? 'bg-primary-fixed border-primary' : ''
-                      } ${plank.size === L1_CORRECT ? 'animate-float-pulgarcito' : ''}`}
+                      } ${feedback?.type === 'error' && l1Selected === plank.size ? 'kid-wrong' : ''} ${plank.size === L1_CORRECT ? 'animate-float-pulgarcito' : ''}`}
                     >
                       <div className="flex items-center gap-sm">
                         <span className="material-symbols-outlined text-on-tertiary-fixed">view_day</span>
@@ -498,7 +502,7 @@ export default function RescataPulgarcitoGamePage() {
                         disabled={isChecking}
                         className={`w-full bg-tertiary-fixed rounded-xl p-sm border-2 border-on-surface-variant flex items-center justify-between hover:bg-tertiary-fixed-dim transition-all ${
                           isSelected ? 'bg-primary-fixed border-primary' : ''
-                        } ${isCorrectSize && !isSelected ? 'animate-float-pulgarcito' : ''}`}
+                        } ${feedback?.type === 'error' && isSelected && !isCorrectSize ? 'kid-wrong' : ''} ${isCorrectSize && !isSelected ? 'animate-float-pulgarcito' : ''}`}
                       >
                         <div className="flex items-center gap-sm">
                           <span className="material-symbols-outlined text-on-tertiary-fixed">view_day</span>
@@ -546,7 +550,7 @@ export default function RescataPulgarcitoGamePage() {
                   className="w-full bg-primary text-on-primary font-label-lg text-label-lg py-4 rounded-xl border-2 border-on-surface-variant flex items-center justify-center gap-sm hover:bg-surface-tint transition-all animate-pulse"
                 >
                   <span className="material-symbols-outlined">arrow_forward</span>
-                  Nivel 2: ¡El río más ancho!
+                  Seguir: el río más ancho
                 </button>
               ) : currentLevel === 1 ? (
                 <button
@@ -578,21 +582,21 @@ export default function RescataPulgarcitoGamePage() {
 
       {/* BottomNavBar */}
       <nav className="md:hidden bg-surface-container w-full z-50 fixed bottom-0 left-0 flex justify-around items-center px-4 pb-4 pt-2 shadow-[0_-4px_20px_rgba(74,101,73,0.1)] rounded-t-xl">
-        <button className="flex flex-col items-center justify-center text-on-surface-variant px-4 py-2">
+        <button type="button" onClick={() => navigate('/home')} className="flex flex-col items-center justify-center text-on-surface-variant px-4 py-2">
           <span className="material-symbols-outlined mb-1">map</span>
-          <span className="font-label-md text-label-md">Map</span>
+          <span className="font-label-md text-label-md">Mapa</span>
         </button>
-        <button className="flex flex-col items-center justify-center bg-primary-container text-on-primary-container rounded-full px-6 py-2 scale-90">
+        <button type="button" className="flex flex-col items-center justify-center bg-primary-container text-on-primary-container rounded-full px-6 py-2 scale-90">
           <span className="material-symbols-outlined mb-1" style={{ fontVariationSettings: '"FILL" 1' }}>experiment</span>
-          <span className="font-label-md text-label-md">Lab</span>
+          <span className="font-label-md text-label-md">Laboratorio</span>
         </button>
-        <button className="flex flex-col items-center justify-center text-on-surface-variant px-4 py-2">
+        <button type="button" onClick={() => navigate('/perfil')} className="flex flex-col items-center justify-center text-on-surface-variant px-4 py-2">
           <span className="material-symbols-outlined mb-1">groups</span>
-          <span className="font-label-md text-label-md">Science Buddies</span>
+          <span className="font-label-md text-label-md">Amigos</span>
         </button>
-        <button className="flex flex-col items-center justify-center text-on-surface-variant px-4 py-2">
+        <button type="button" onClick={() => navigate('/perfil')} className="flex flex-col items-center justify-center text-on-surface-variant px-4 py-2">
           <span className="material-symbols-outlined mb-1">stars</span>
-          <span className="font-label-md text-label-md">Progress</span>
+          <span className="font-label-md text-label-md">Progreso</span>
         </button>
       </nav>
     </div>

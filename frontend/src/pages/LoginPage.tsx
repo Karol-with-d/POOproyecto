@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { createUser } from '../services/api';
+import { showKidMessage } from '../components/KidFrame';
 
 /**
  * LoginPage — Pantalla de inicio de sesión donde el niño escribe su nombre.
@@ -44,19 +45,9 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="min-h-screen flex flex-col overflow-x-hidden bg-background text-on-background selection:bg-primary-container selection:text-on-primary-container">
-      {/* TopAppBar */}
-      <header className="bg-surface text-primary font-headline-md text-headline-md font-bold flex justify-between items-center w-full px-margin-mobile md:px-margin-desktop py-base z-50">
-        <div className="flex items-center gap-sm">
-          <span className="font-headline-md text-headline-md font-bold text-primary">UNIVO</span>
-        </div>
-        <button
-          aria-label="Account"
-          className="w-12 h-12 rounded-full flex items-center justify-center hover:bg-secondary-container/50 transition-colors opacity-50 cursor-not-allowed"
-          disabled
-        >
-          <span className="material-symbols-outlined text-[28px] text-on-surface-variant">account_circle</span>
-        </button>
+    <div className="min-h-screen flex flex-col overflow-x-hidden bg-transparent text-on-background selection:bg-primary-container selection:text-on-primary-container">
+      <header className="text-primary font-headline-md text-headline-md font-bold flex justify-between items-center w-full px-margin-mobile md:px-margin-desktop py-base z-50">
+        <span className="font-headline-md text-headline-md font-bold text-primary">UNIVO</span>
       </header>
 
       {/* Main Content Canvas */}
@@ -109,8 +100,20 @@ export default function LoginPage() {
                 {/* Username Field */}
                 <div className="flex flex-col gap-xs">
                   <label className="font-label-lg text-label-lg text-on-surface ml-sm" htmlFor="username">
-                    Nombre de Usuario
+                    ¿Cómo te llamas?
                   </label>
+                  <div className="flex flex-wrap gap-2 mb-2">
+                    {['Explorador', 'Luna', 'Sol', 'Río'].map((name) => (
+                      <button
+                        key={name}
+                        type="button"
+                        className={`kid-name ${nickname === name ? 'kid-name-on' : ''}`}
+                        onClick={() => setNickname(name)}
+                      >
+                        {name}
+                      </button>
+                    ))}
+                  </div>
                   <div className="relative">
                     <div className="absolute inset-y-0 left-0 pl-sm flex items-center pointer-events-none">
                       <span className="material-symbols-outlined text-outline">face</span>
@@ -119,7 +122,7 @@ export default function LoginPage() {
                       id="username"
                       name="username"
                       type="text"
-                      placeholder="Tu nombre aquí"
+                      placeholder="O escribe otro nombre"
                       value={nickname}
                       onChange={(e) => setNickname(e.target.value)}
                       disabled={isLoading}
@@ -132,22 +135,23 @@ export default function LoginPage() {
                 <button
                   type="submit"
                   disabled={isLoading}
-                  className="mt-sm w-full bg-primary text-on-primary font-headline-md text-headline-md py-sm rounded-xl h-[72px] flex items-center justify-center gap-sm btn-3d disabled:opacity-70 disabled:cursor-not-allowed"
+                  className="kid-cta mt-sm w-full text-white font-headline-md text-headline-md py-sm rounded-xl h-[72px] flex items-center justify-center gap-sm btn-3d disabled:opacity-70 disabled:cursor-not-allowed"
                 >
-                  {isLoading ? 'Cargando...' : 'Entrar'}
+                  {isLoading ? 'Estamos abriendo el laboratorio' : 'Entrar'}
                   <span className="material-symbols-outlined fill">arrow_forward</span>
                 </button>
               </form>
 
               {/* Help Link */}
               <div className="mt-lg text-center">
-                <a
-                  href="#"
+                <button
+                  type="button"
+                  onClick={() => showKidMessage('Puedes tocar un nombre o entrar sin escribir. Tu aventura se guarda en este aparato.', 'soon')}
                   className="font-label-md text-label-md text-primary hover:text-on-primary-fixed-variant flex items-center justify-center gap-xs transition-colors"
                 >
                   <span className="material-symbols-outlined text-[20px]">help</span>
                   ¿Necesitas ayuda?
-                </a>
+                </button>
               </div>
             </div>
           </div>

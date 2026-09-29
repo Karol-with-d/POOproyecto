@@ -57,8 +57,8 @@ export default function Semana6Page() {
     },
     {
       id: 'habitats',
+      image: '/images/semana6/card-habitats.svg',
       imageBg: 'bg-tertiary-container',
-      iconFallback: 'travel_explore',
       badgeIcon: 'public',
       badgeLabel: 'Entorno',
       badgeColor: 'text-tertiary',
@@ -108,7 +108,7 @@ export default function Semana6Page() {
                   </button>
                 </div>
                 <h1 className="font-headline-lg text-headline-lg text-primary mb-2">
-                  Semana de Exploración
+                  Semana 6: Naturaleza
                 </h1>
                 <p className="font-body-lg text-body-lg text-on-surface-variant">
                   ¡Hola, pequeño científico! Mira lo que tenemos preparado para ti hoy.

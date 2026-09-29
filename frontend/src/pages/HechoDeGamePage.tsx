@@ -14,6 +14,7 @@ interface GameObject {
   title: string;
   shortName: string;
   icon: string;
+  image: string;
   bgClass: string;
   iconColor: string;
   q1: { title: string; options: Option[] };
@@ -27,6 +28,7 @@ const OBJECTS: GameObject[] = [
     title: 'Regadera de Metal',
     shortName: 'Regadera',
     icon: 'water_drop',
+    image: '/images/semana3/regadera.png',
     bgClass: 'bg-surface-variant',
     iconColor: 'text-on-surface-variant',
     q1: {
@@ -49,9 +51,10 @@ const OBJECTS: GameObject[] = [
   },
   {
     id: 'caja',
-    title: 'Caja de Madera',
-    shortName: 'Caja de Madera',
+    title: 'Caja',
+    shortName: 'Caja',
     icon: 'inventory_2',
+    image: '/images/semana3/caja-madera.png',
     bgClass: 'bg-tertiary-fixed',
     iconColor: 'text-on-tertiary-fixed',
     q1: {
@@ -74,9 +77,10 @@ const OBJECTS: GameObject[] = [
   },
   {
     id: 'tarros',
-    title: 'Botella de Vidrio',
-    shortName: 'Botella de Vidrio',
+    title: 'Botella',
+    shortName: 'Botella',
     icon: 'liquor',
+    image: '/images/semana3/botella.png',
     bgClass: 'bg-secondary-fixed',
     iconColor: 'text-on-secondary-fixed',
     q1: {
@@ -102,6 +106,7 @@ const OBJECTS: GameObject[] = [
     title: 'Ropa del Granjero',
     shortName: 'Ropa',
     icon: 'checkroom',
+    image: '/images/semana3/ropa.png',
     bgClass: 'bg-primary-container',
     iconColor: 'text-on-primary-container',
     q1: {
@@ -127,6 +132,7 @@ const OBJECTS: GameObject[] = [
     title: 'Estructura del Molino',
     shortName: 'Molino',
     icon: 'wind_power',
+    image: '/images/semana3/molino.png',
     bgClass: 'bg-surface-variant',
     iconColor: 'text-on-surface-variant',
     q1: {
@@ -149,9 +155,10 @@ const OBJECTS: GameObject[] = [
   },
   {
     id: 'caja_calabazas',
-    title: 'Caja de Calabazas',
-    shortName: 'Caja de Calabazas',
+    title: 'Caja con Calabazas',
+    shortName: 'Caja con Calabazas',
     icon: 'bakery_dining',
+    image: '/images/semana3/calabazas.png',
     bgClass: 'bg-tertiary-fixed',
     iconColor: 'text-on-tertiary-fixed',
     q1: {
@@ -366,12 +373,7 @@ export default function HechoDeGamePage() {
                   <div
                     className={`w-20 h-20 md:w-28 md:h-28 rounded-2xl ${obj.bgClass} flex items-center justify-center`}
                   >
-                    <span
-                      className={`material-symbols-outlined text-5xl md:text-7xl ${obj.iconColor}`}
-                      style={{ fontVariationSettings: "'FILL' 1" }}
-                    >
-                      {obj.icon}
-                    </span>
+                    <img src={obj.image} alt="" className="w-16 h-16 md:w-24 md:h-24 object-contain" />
                   </div>
                   <h3 className="font-label-md md:font-label-lg text-label-md md:text-label-lg text-center text-on-surface font-semibold">
                     {obj.shortName}
@@ -435,12 +437,7 @@ export default function HechoDeGamePage() {
                 <div
                   className={`w-14 h-14 md:w-16 md:h-16 rounded-2xl ${currentObject.bgClass} flex items-center justify-center shadow-inner`}
                 >
-                  <span
-                    className={`material-symbols-outlined text-3xl md:text-4xl ${currentObject.iconColor}`}
-                    style={{ fontVariationSettings: "'FILL' 1" }}
-                  >
-                    {currentObject.icon}
-                  </span>
+                  <img src={currentObject.image} alt="" className="w-12 h-12 md:w-14 md:h-14 object-contain" />
                 </div>
                 <h2 className="font-headline-lg-mobile md:font-headline-lg text-headline-lg-mobile md:text-headline-lg font-bold text-on-surface">
                   {currentObject.title}

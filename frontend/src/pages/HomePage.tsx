@@ -1,13 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
-import { getSemanas } from '../services/api';
-
-interface SemanaData {
-  id: string;
-  number: number;
-  title: string;
-  topic: string;
-}
+import { getUserProgress } from '../services/api';
 
 // Ilustraciones originales: iconos Material Symbols por tema de semana
 const WEEK_CONFIG = [
@@ -27,19 +20,21 @@ const WEEK_CONFIG = [
  */
 export default function HomePage() {
   const navigate = useNavigate();
-  const [semanas, setSemanas] = useState<SemanaData[]>([]);
   const [userName, setUserName] = useState('Explorador');
+  const [completed, setCompleted] = useState<number[]>([]);
 
   useEffect(() => {
     // Cargar nombre del usuario desde localStorage
     const stored = localStorage.getItem('plataforma_user');
     if (stored) {
       const user = JSON.parse(stored);
-      setUserName(user.randomName);
+      setUserName(String(user.randomName || 'Explorador').trim());
+      if (user.id) {
+        getUserProgress(user.id)
+          .then((rows) => setCompleted(rows.filter((row) => row.completed).map((row) => row.semanaNumber)))
+          .catch(() => undefined);
+      }
     }
-
-    // Cargar semanas desde la API
-    getSemanas().then((data) => setSemanas(data)).catch(console.error);
   }, []);
 
   const handleWeekClick = (weekNumber: number) => {
@@ -53,17 +48,20 @@ export default function HomePage() {
   };
 
   return (
-    <div className="min-h-screen flex flex-col md:flex-row bg-surface text-on-background antialiased">
+    <div className="min-h-screen flex flex-col md:flex-row bg-transparent text-on-background antialiased">
       {/* Sidebar (Desktop) */}
       <aside className="hidden md:flex flex-col w-64 border-r-4 border-surface-container-highest h-screen sticky top-0 p-6 z-50 bg-surface-bright">
         <div className="mb-8">
           <h2 className="font-headline-md text-primary uppercase tracking-tighter text-headline-md">CIENCIA SEGUNDO GRADO</h2>
         </div>
         <nav className="flex flex-col gap-4">
-          <a className="flex items-center gap-4 rounded-xl px-4 py-3 border-b-4 transition-transform hover:-translate-y-1 bg-primary-container text-on-primary-container border-[#334d33]" href="#">
+          <Link
+            to="/home"
+            className="flex items-center gap-4 rounded-xl px-4 py-3 border-b-4 transition-transform hover:-translate-y-1 bg-primary-container text-on-primary-container border-[#334d33]"
+          >
             <span className="material-symbols-outlined">map</span>
             <span className="font-label-lg">Mapa</span>
-          </a>
+          </Link>
           <Link
             to="/perfil"
             className="flex items-center justify-between gap-3 rounded-xl px-4 py-3 border-b-4 transition-transform hover:-translate-y-1 border-[#334d33] bg-white text-on-surface"
@@ -73,7 +71,7 @@ export default function HomePage() {
                 <img
                   alt="Avatar de usuario"
                   className="w-full h-full object-cover"
-                  src="/images/Boxer Frog Box Toad.jpg"
+                  src="/images/LoginImage.png"
                   onError={(e) => {
                     const target = e.target as HTMLImageElement;
                     target.style.display = 'none';
@@ -99,7 +97,7 @@ export default function HomePage() {
             <img
               alt="Guia de aventura"
               className="w-full h-full object-cover"
-              src="/images/download (12).jpg"
+              src="/images/LoginImage.png"
               onError={(e) => {
                 // Fallback si la imagen no existe aun
                 (e.target as HTMLImageElement).style.display = 'none';
@@ -126,8 +124,9 @@ export default function HomePage() {
         <div className="relative flex flex-col items-center w-full gap-16 md:gap-24 max-w-md mx-auto">
           {WEEK_CONFIG.map((week, index) => {
             const isLocked = false;
-            const semana = semanas.find((s) => s.number === week.number);
-            const displayTitle = semana?.title || week.label;
+            const done = completed.includes(week.number);
+            const nextWeek = [1, 2, 3, 4, 5, 6].find((number) => !completed.includes(number));
+            const isNext = week.number === nextWeek;
 
             return (
               <div
@@ -156,16 +155,21 @@ export default function HomePage() {
 
                 {/* Floating Island / Node */}
                 <div
-                  className={`relative w-24 h-24 md:w-32 md:h-32 border-4 border-surface-container-highest shadow-[0_8px_0_0_#e3e2e6] flex flex-col items-center justify-center p-4 transform hover:-translate-y-2 transition-transform duration-300 z-10 mb-6 rounded-full overflow-hidden ${
+                  className={`relative w-24 h-24 md:w-32 md:h-32 border-4 border-surface-container-highest shadow-[0_8px_0_0_#e3e2e6] flex flex-col items-center justify-center p-4 transform hover:-translate-y-2 transition-transform duration-300 z-10 mb-6 rounded-full ${
                     isLocked ? 'bg-surface-container-low grayscale' : week.color
                   }`}
                 >
                   <span className={`material-symbols-outlined text-5xl md:text-6xl drop-shadow-md ${isLocked ? 'text-outline-variant opacity-60' : week.textColor}`}>
                     {week.icon}
                   </span>
-                  {isLocked && (
-                    <div className="absolute bg-surface-container-highest rounded-full p-2 border-2 border-outline-variant">
-                      <span className="material-symbols-outlined text-outline-variant text-2xl">lock</span>
+                  {done && (
+                    <div className="absolute -right-1 -top-1 bg-[#ffe38a] text-[#243d24] rounded-full px-2 py-1 text-xs font-bold border-2 border-[#e2b100]">
+                      ¡Lista!
+                    </div>
+                  )}
+                  {isNext && !done && (
+                    <div className="absolute -right-2 -top-2 bg-[#3d9a4a] text-white rounded-full px-2 py-1 text-xs font-bold">
+                      ¡Vamos!
                     </div>
                   )}
                 </div>
@@ -185,13 +189,23 @@ export default function HomePage() {
                       play_arrow
                     </span>
                   )}
-                  {displayTitle}
+                  Semana {week.number}
                 </button>
               </div>
             );
           })}
         </div>
       </main>
+      <nav className="md:hidden fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-4 pb-4 pt-2 bg-[#fffdf6] border-t-4 border-[#2f6a38]">
+        <Link to="/home" className="flex flex-col items-center justify-center min-h-[48px] px-4 py-2 font-bold text-[#243d24]">
+          <span className="material-symbols-outlined">map</span>
+          Mapa
+        </Link>
+        <Link to="/perfil" className="flex flex-col items-center justify-center min-h-[48px] px-4 py-2 font-bold text-[#243d24]">
+          <span className="material-symbols-outlined">face</span>
+          Mi perfil
+        </Link>
+      </nav>
     </div>
   );
 }

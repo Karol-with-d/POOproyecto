@@ -1,6 +1,8 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { saveQuizScoreForSemanaNumber } from '../services/api';
+import { playMiss, playSuccess } from '../services/sounds';
+import { showKidMessage } from '../components/KidFrame';
 
 // ── Images used in answer options ──────────────────────────────────────────
 const IMG_NOTEBOOK =
@@ -92,13 +94,19 @@ export default function Semana1QuizPage() {
       console.error('Error guardando quiz Semana 1:', error);
       setSaveStatus('error');
       setSaveError('No se pudo guardar tu puntuación. Intenta de nuevo más tarde.');
+      showKidMessage('No se pudo guardar tu nota. Intenta otra vez.', 'soon');
     }
   };
 
   const handleCheck = () => {
     if (selected === null) return;
     const correct = selected === currentQ.correctIndex;
-    if (correct) setScore((s) => s + 1);
+    if (correct) {
+      setScore((s) => s + 1);
+      playSuccess();
+    } else {
+      playMiss();
+    }
     setChecked(true);
   };
 

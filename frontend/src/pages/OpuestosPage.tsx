@@ -1,4 +1,5 @@
 import { useNavigate } from 'react-router-dom';
+import { showKidMessage } from '../components/KidFrame';
 
 /**
  * OpuestosPage — Actividad de la Semana 4: Conoce a los Opuestos.
@@ -14,7 +15,7 @@ export default function OpuestosPage() {
   };
 
   const handleFinish = () => {
-    alert('¡Lección de Ácidos y Bases completada!');
+    showKidMessage('¡Lección de ácidos y bases completada!');
     navigate('/semana/4');
   };
 
@@ -98,7 +99,7 @@ export default function OpuestosPage() {
               <img
                 alt="Básico Character"
                 className="w-full h-full object-contain rounded-2xl scale-110"
-                src="/images/semana4/basico.avif"
+                src="/images/semana4/basico.svg"
               />
               <div className="absolute -left-8 bg-[#bfe5fe] text-[#42677c] p-4 rounded-2xl rounded-br-none shadow-md font-label-lg max-w-[200px] -top-10 quicksand-text text-left">
                 ¡Yo soy suavecito como el jabón!

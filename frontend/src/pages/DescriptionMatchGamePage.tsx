@@ -1,5 +1,6 @@
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { playFromFeedback } from '../services/sounds';
 
 interface LevelItem {
   id: string;
@@ -83,6 +84,8 @@ export default function DescriptionMatchGamePage() {
   const [draggedItemId, setDraggedItemId] = useState<string | null>(null);
   const [isDragOver, setIsDragOver] = useState(false);
   const [feedback, setFeedback] = useState<string | null>(null);
+  const [wrongItemId, setWrongItemId] = useState<string | null>(null);
+  useEffect(() => { playFromFeedback(feedback); }, [feedback]);
   const [levelCompleted, setLevelCompleted] = useState(false);
   const [gameCompleted, setGameCompleted] = useState(false);
 
@@ -117,6 +120,7 @@ export default function DescriptionMatchGamePage() {
     if (!droppedItemId && draggedItemId) {
       setDroppedItemId(draggedItemId);
       setFeedback(null);
+      setWrongItemId(null);
     }
     setDraggedItemId(null);
   };
@@ -124,6 +128,7 @@ export default function DescriptionMatchGamePage() {
   const handleReset = useCallback(() => {
     setDroppedItemId(null);
     setFeedback(null);
+    setWrongItemId(null);
     setLevelCompleted(false);
   }, []);
 
@@ -132,9 +137,11 @@ export default function DescriptionMatchGamePage() {
     if (droppedItemId === level.correctItemId) {
       const itemName = level.items.find((i) => i.id === level.correctItemId)?.name || 'objeto';
       setFeedback(`¡Excelente! Has encontrado el ${itemName}.`);
+      setWrongItemId(null);
       setLevelCompleted(true);
       triggerConfetti();
     } else {
+      setWrongItemId(droppedItemId);
       setFeedback('Ese objeto es el incorrecto, ¡vuelve a intentarlo!');
     }
   }, [droppedItemId, level]);
@@ -144,6 +151,7 @@ export default function DescriptionMatchGamePage() {
       setCurrentLevel((prev) => prev + 1);
       setDroppedItemId(null);
       setFeedback(null);
+      setWrongItemId(null);
       setLevelCompleted(false);
     } else {
       setGameCompleted(true);
@@ -156,6 +164,7 @@ export default function DescriptionMatchGamePage() {
     setCurrentLevel(0);
     setDroppedItemId(null);
     setFeedback(null);
+    setWrongItemId(null);
     setLevelCompleted(false);
     setGameCompleted(false);
   }, []);
@@ -273,7 +282,7 @@ export default function DescriptionMatchGamePage() {
                 />
               ))}
               <span className="font-label-md text-label-md text-on-surface-variant ml-2">
-                Nivel {currentLevel + 1}/{levels.length}
+                Progreso {currentLevel + 1} de {levels.length}
               </span>
             </div>
 
@@ -300,7 +309,7 @@ export default function DescriptionMatchGamePage() {
                 </div>
               ) : (
                 <div className="m-auto absolute inset-0 flex items-center justify-center">
-                  <div className="bg-surface-container-lowest rounded-lg clay-shadow flex items-center justify-center w-32 h-32">
+                  <div className={`bg-surface-container-lowest rounded-lg clay-shadow flex items-center justify-center w-32 h-32 ${wrongItemId === droppedItem.id ? 'kid-wrong' : ''}`}>
                     <img
                       alt={droppedItem.alt}
                       className="object-contain z-10 pointer-events-none w-24 h-24"
@@ -355,7 +364,7 @@ export default function DescriptionMatchGamePage() {
                   onClick={handleNextLevel}
                 >
                   <span className="material-symbols-outlined">arrow_forward</span>
-                  {currentLevel < levels.length - 1 ? 'Siguiente nivel' : 'Finalizar'}
+                  {currentLevel < levels.length - 1 ? 'Seguir' : 'Finalizar'}
                 </button>
               )}
             </div>
@@ -373,7 +382,7 @@ export default function DescriptionMatchGamePage() {
           <span className="material-symbols-outlined" style={{ fontVariationSettings: '"FILL" 1' }}>
             science
           </span>
-          <span className="text-xs mt-1 font-bold">Lab</span>
+          <span className="text-xs mt-1 font-bold">Laboratorio</span>
         </div>
         <div className="flex flex-col items-center justify-center text-on-surface-variant p-2">
           <span className="material-symbols-outlined">trending_up</span>

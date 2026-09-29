@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { showKidMessage } from '../components/KidFrame';
 
 /**
  * FermentacionPage — Actividad de la Semana 4: La Magia de la Fermentación.
@@ -21,7 +22,7 @@ export default function FermentacionPage() {
   };
 
   const handleFinish = () => {
-    alert('¡Lección de fermentación completada!');
+    showKidMessage('¡Lección de fermentación completada!');
     navigate('/semana/4');
   };
 

@@ -1,6 +1,8 @@
 import { useState, useRef, useCallback, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { saveQuizScoreForSemanaNumber } from '../services/api';
+import { playMiss, playSuccess } from '../services/sounds';
+import { showKidMessage } from '../components/KidFrame';
 
 // ── Images ─────────────────────────────────────────────────────────────────
 const IMG_BRAIN    = '/images/semana5/quiz/intro-brain.png';
@@ -78,6 +80,7 @@ export default function Semana5QuizPage() {
         const percentage = Math.round((score / 30) * 100);
         saveQuizScoreForSemanaNumber({ userId: user.id, semanaNumber: 5, score: percentage }).catch(err => {
           console.error('Error guardando quiz Semana 5:', err);
+          showKidMessage('No se pudo guardar tu nota. Intenta otra vez.', 'soon');
         });
       }
     } else if (screenIdx !== 4) {
@@ -120,7 +123,8 @@ export default function Semana5QuizPage() {
     setOptStates(newStates);
     setLocked(locked.map((v, i) => i === qNum ? true : v));
     setUserChoices(prev => ({ ...prev, [qNum]: correct }));
-    if (correct) { setScore(s => s + 10); fireConfetti(); }
+    if (correct) { setScore(s => s + 10); fireConfetti(); playSuccess(); }
+    else playMiss();
 
     setTimeout(() => goTo(screenIdx + 1), 1200);
   };

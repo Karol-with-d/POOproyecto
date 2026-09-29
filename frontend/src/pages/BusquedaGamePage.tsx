@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import '../styles/terra-ciencia.css';
+import { playFromFeedback } from '../services/sounds';
 
 /**
  * BusquedaGamePage — "La Lupa de Detective" (Modo Laboratorio).
@@ -21,7 +22,7 @@ const ASSETS = [
     isLiving: true,
   },
   {
-    id: '/images/bici',
+    id: '/images/bici.avif',
     name: 'Bicicleta',
     isLiving: false,
   },
@@ -68,6 +69,10 @@ export default function BusquedaGamePage() {
   const [solved, setSolved] = useState<Set<number>>(new Set());
   const [shakingIndex, setShakingIndex] = useState<number | null>(null);
   const [feedback, setFeedback] = useState<Record<number, string>>({});
+  useEffect(() => {
+    const values = Object.values(feedback);
+    playFromFeedback(values[values.length - 1]);
+  }, [feedback]);
   const [cursorPos, setCursorPos] = useState<{ x: number; y: number }>({ x: 0, y: 0 });
   const [useCustomCursor, setUseCustomCursor] = useState(false);
 
@@ -310,7 +315,7 @@ export default function BusquedaGamePage() {
                     isSolved
                       ? 'border-4'
                       : 'border border-outline-variant hover:-translate-y-1'
-                  } ${isShaking ? 'tc-shake' : ''}`}
+                  } ${isShaking ? 'tc-shake kid-wrong' : ''}`}
                   style={
                     isSolved
                       ? {

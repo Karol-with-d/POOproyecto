@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { saveScore, markSemanaCompleted } from '../services/api';
+import { playFromFeedback } from '../services/sounds';
 
 type CardAction = 'bota' | 'recicla' | 'reutiliza';
 type ContainerClass =
@@ -20,32 +21,33 @@ interface CardData {
   id: string;
   name: string;
   icon: string;
+  image: string;
   colorClass: ContainerClass;
   textClass: TextClass;
   correct: CardAction;
 }
 
 const CARDS: CardData[] = [
-  { id: 'can', name: 'Lata de Soda', icon: 'local_drink', colorClass: 'bg-secondary-container', textClass: 'text-on-secondary-container', correct: 'recicla' },
-  { id: 'jar', name: 'Frasco de Vidrio', icon: 'potted_plant', colorClass: 'bg-primary-container', textClass: 'text-on-primary-container', correct: 'recicla' },
-  { id: 'bottle', name: 'Botella de Plástico', icon: 'water_bottle', colorClass: 'bg-tertiary-container', textClass: 'text-on-tertiary-container', correct: 'recicla' },
-  { id: 'box', name: 'Caja de Cartón', icon: 'inventory_2', colorClass: 'bg-surface-variant', textClass: 'text-on-surface-variant', correct: 'recicla' },
-  { id: 'peel', name: 'Cáscara de Plátano', icon: 'nutrition', colorClass: 'bg-error-container', textClass: 'text-on-error-container', correct: 'bota' },
-  { id: 'apple', name: 'Corazón de Manzana', icon: 'eco', colorClass: 'bg-error-container', textClass: 'text-on-error-container', correct: 'bota' },
-  { id: 'newspaper', name: 'Periódico', icon: 'newspaper', colorClass: 'bg-surface-variant', textClass: 'text-on-surface-variant', correct: 'recicla' },
-  { id: 'shoe', name: 'Zapato Viejo', icon: 'directions_run', colorClass: 'bg-tertiary-container', textClass: 'text-on-tertiary-container', correct: 'bota' },
-  { id: 'eggs', name: 'Cáscaras de Huevo', icon: 'egg_alt', colorClass: 'bg-error-container', textClass: 'text-on-error-container', correct: 'bota' },
-  { id: 'bag', name: 'Bolsa de Plástico', icon: 'shopping_bag', colorClass: 'bg-secondary-container', textClass: 'text-on-secondary-container', correct: 'recicla' },
-  { id: 'milk', name: 'Cartón de Leche', icon: 'takeout_dining', colorClass: 'bg-surface-variant', textClass: 'text-on-surface-variant', correct: 'recicla' },
-  { id: 'toy', name: 'Juguete Roto', icon: 'toys', colorClass: 'bg-tertiary-container', textClass: 'text-on-tertiary-container', correct: 'bota' },
-  { id: 'metalcan', name: 'Lata de Metal', icon: 'kitchen', colorClass: 'bg-secondary-container', textClass: 'text-on-secondary-container', correct: 'recicla' },
-  { id: 'leaves', name: 'Hojas Secas', icon: 'forest', colorClass: 'bg-error-container', textClass: 'text-on-error-container', correct: 'bota' },
-  { id: 'glassbottle', name: 'Botella de Vidrio', icon: 'liquor', colorClass: 'bg-primary-container', textClass: 'text-on-primary-container', correct: 'recicla' },
-  { id: 'tire', name: 'Neumático Viejo', icon: 'tire_repair', colorClass: 'bg-surface-variant', textClass: 'text-on-surface-variant', correct: 'reutiliza' },
-  { id: 'emptyjar', name: 'Frasco Vacío', icon: 'inventory', colorClass: 'bg-primary-container', textClass: 'text-on-primary-container', correct: 'reutiliza' },
-  { id: 'cerealbox', name: 'Caja de Cereal', icon: 'dashboard', colorClass: 'bg-tertiary-container', textClass: 'text-on-tertiary-container', correct: 'reutiliza' },
-  { id: 'glassvase', name: 'Jarrón de Vidrio', icon: 'local_florist', colorClass: 'bg-secondary-container', textClass: 'text-on-secondary-container', correct: 'reutiliza' },
-  { id: 'fabric', name: 'Retazos de Tela', icon: 'dry_cleaning', colorClass: 'bg-error-container', textClass: 'text-on-error-container', correct: 'reutiliza' },
+  { id: 'can', name: 'Lata de Soda', icon: 'local_drink', image: '/images/semana3/reflexion/lata.png', colorClass: 'bg-secondary-container', textClass: 'text-on-secondary-container', correct: 'recicla' },
+  { id: 'jar', name: 'Frasco de Vidrio', icon: 'potted_plant', image: '/images/semana3/reflexion/frasco.png', colorClass: 'bg-primary-container', textClass: 'text-on-primary-container', correct: 'recicla' },
+  { id: 'bottle', name: 'Botella de Plástico', icon: 'water_bottle', image: '/images/semana3/reflexion/botella-plastico.png', colorClass: 'bg-tertiary-container', textClass: 'text-on-tertiary-container', correct: 'recicla' },
+  { id: 'box', name: 'Caja de Cartón', icon: 'inventory_2', image: '/images/semana3/reflexion/carton.png', colorClass: 'bg-surface-variant', textClass: 'text-on-surface-variant', correct: 'recicla' },
+  { id: 'peel', name: 'Cáscara de Plátano', icon: 'nutrition', image: '/images/semana3/reflexion/platano.png', colorClass: 'bg-error-container', textClass: 'text-on-error-container', correct: 'bota' },
+  { id: 'apple', name: 'Corazón de Manzana', icon: 'eco', image: '/images/semana3/reflexion/manzana.png', colorClass: 'bg-error-container', textClass: 'text-on-error-container', correct: 'bota' },
+  { id: 'newspaper', name: 'Periódico', icon: 'newspaper', image: '/images/semana3/reflexion/periodico.png', colorClass: 'bg-surface-variant', textClass: 'text-on-surface-variant', correct: 'recicla' },
+  { id: 'shoe', name: 'Zapato Viejo', icon: 'directions_run', image: '/images/semana3/reflexion/zapato.png', colorClass: 'bg-tertiary-container', textClass: 'text-on-tertiary-container', correct: 'bota' },
+  { id: 'eggs', name: 'Cáscaras de Huevo', icon: 'egg_alt', image: '/images/semana3/reflexion/huevo.png', colorClass: 'bg-error-container', textClass: 'text-on-error-container', correct: 'bota' },
+  { id: 'bag', name: 'Bolsa de Plástico', icon: 'shopping_bag', image: '/images/semana3/reflexion/bolsa.png', colorClass: 'bg-secondary-container', textClass: 'text-on-secondary-container', correct: 'recicla' },
+  { id: 'milk', name: 'Cartón de Leche', icon: 'takeout_dining', image: '/images/semana3/reflexion/leche.png', colorClass: 'bg-surface-variant', textClass: 'text-on-surface-variant', correct: 'recicla' },
+  { id: 'toy', name: 'Juguete Roto', icon: 'toys', image: '/images/semana3/reflexion/juguete.png', colorClass: 'bg-tertiary-container', textClass: 'text-on-tertiary-container', correct: 'bota' },
+  { id: 'metalcan', name: 'Lata de Metal', icon: 'kitchen', image: '/images/semana3/reflexion/lata-metal.png', colorClass: 'bg-secondary-container', textClass: 'text-on-secondary-container', correct: 'recicla' },
+  { id: 'leaves', name: 'Hojas Secas', icon: 'forest', image: '/images/semana3/reflexion/hojas.png', colorClass: 'bg-error-container', textClass: 'text-on-error-container', correct: 'bota' },
+  { id: 'glassbottle', name: 'Botella de Vidrio', icon: 'liquor', image: '/images/semana3/reflexion/botella-vidrio.png', colorClass: 'bg-primary-container', textClass: 'text-on-primary-container', correct: 'recicla' },
+  { id: 'tire', name: 'Neumático Viejo', icon: 'tire_repair', image: '/images/semana3/reflexion/neumatico.png', colorClass: 'bg-surface-variant', textClass: 'text-on-surface-variant', correct: 'reutiliza' },
+  { id: 'emptyjar', name: 'Frasco Vacío', icon: 'inventory', image: '/images/semana3/reflexion/frasco-vacio.png', colorClass: 'bg-primary-container', textClass: 'text-on-primary-container', correct: 'reutiliza' },
+  { id: 'cerealbox', name: 'Caja de Cereal', icon: 'dashboard', image: '/images/semana3/reflexion/cereal.png', colorClass: 'bg-tertiary-container', textClass: 'text-on-tertiary-container', correct: 'reutiliza' },
+  { id: 'glassvase', name: 'Jarrón de Vidrio', icon: 'local_florist', image: '/images/semana3/reflexion/jarron.png', colorClass: 'bg-secondary-container', textClass: 'text-on-secondary-container', correct: 'reutiliza' },
+  { id: 'fabric', name: 'Retazos de Tela', icon: 'dry_cleaning', image: '/images/semana3/reflexion/tela.png', colorClass: 'bg-error-container', textClass: 'text-on-error-container', correct: 'reutiliza' },
 ];
 
 const ACTION_LABELS: Record<CardAction, { label: string; icon: string; container: ContainerClass; text: TextClass }> = {
@@ -84,6 +86,7 @@ export default function ReflectionCardsGamePage() {
   const [completed, setCompleted] = useState<Set<string>>(new Set());
   const [score, setScore] = useState(0);
   const [feedback, setFeedback] = useState<null | 'correct' | 'wrong'>(null);
+  useEffect(() => { playFromFeedback(feedback); }, [feedback]);
   const [shakeKey, setShakeKey] = useState(0);
   const [gameFinished, setGameFinished] = useState(false);
 
@@ -150,14 +153,7 @@ export default function ReflectionCardsGamePage() {
   return (
     <div className="bg-background text-on-background font-body-md min-h-screen flex flex-col relative overflow-x-hidden">
       {/* Background Image Layer */}
-      <div className="fixed inset-0 z-0">
-        <img
-          alt="Cozy classroom background"
-          className="w-full h-full object-cover opacity-60"
-          src="https://lh3.googleusercontent.com/aida/AP1WRLv0zYOyKb31v5OzaCP3YydatiExNVGhrCKdCpbHSMnXnACA36CvIKzZ0IJvZVx0e6WR6fWkRvfr4XlHNPmPLONOrYxn3YwYNcvioV1q8WZy8NZlE2tUtwDn0DQJVtnqI5qyHGnVzYJ7amuA468ftj9d-cYcjF2N0eaDARAEBUYUvvX1H7zf9h-g3gX9PPjirBAAudYlZnGea3CWKPf5hkvMIAxZNPTBxOeUcMY6XriQxg_Hqge86K45Gwg"
-        />
-        <div className="absolute inset-0 bg-overlay"></div>
-      </div>
+      <div className="fixed inset-0 z-0 bg-[#f3f8ef]" />
 
       {/* TopAppBar */}
       <header className="bg-surface text-primary font-label-lg flex justify-between items-center px-5 md:px-20 h-16 max-w-7xl mx-auto w-full z-10 relative">
@@ -196,7 +192,7 @@ export default function ReflectionCardsGamePage() {
       </div>
 
       {/* Main Game Board */}
-      <main className="flex-1 flex flex-col items-center justify-start p-5 md:p-8 z-10 relative w-full max-w-5xl mx-auto pb-12 pt-4">
+      <main className="scroll-board flex-1 flex flex-col items-center justify-start p-5 md:p-8 z-10 relative w-full max-w-5xl mx-auto pb-12 pt-4">
         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-6 md:gap-8 w-full">
           {CARDS.map((card) => {
             const isDone = completed.has(card.id);
@@ -208,12 +204,8 @@ export default function ReflectionCardsGamePage() {
                   isDone ? 'card-done' : ''
                 }`}
               >
-                <div className={`w-16 h-16 md:w-24 md:h-24 rounded-2xl ${card.colorClass} flex items-center justify-center mb-3`}>
-                  <span
-                    className={`material-symbols-outlined text-4xl md:text-5xl ${card.textClass}`}
-                  >
-                    {card.icon}
-                  </span>
+                <div className={`w-16 h-16 md:w-24 md:h-24 rounded-2xl ${card.colorClass} flex items-center justify-center mb-3 overflow-hidden`}>
+                  <img src={card.image} alt="" className="w-full h-full object-contain" />
                 </div>
                 <h3 className="font-label-md text-label-md text-center text-on-surface leading-tight">
                   {card.name}
@@ -239,7 +231,7 @@ export default function ReflectionCardsGamePage() {
             key={shakeKey}
             onClick={(e) => e.stopPropagation()}
             className={`bg-surface rounded-3xl w-full max-w-xl flex flex-col items-center relative clay-shadow overflow-hidden transform transition-transform duration-300 p-6 md:p-8 ${
-              feedback === 'wrong' ? 'animate-shake' : 'scale-100'
+              feedback === 'wrong' ? 'animate-shake kid-wrong' : 'scale-100'
             }`}
           >
             {/* Close Button */}
@@ -290,12 +282,7 @@ export default function ReflectionCardsGamePage() {
               <div
                 className={`w-64 h-64 rounded-3xl flex items-center justify-center shadow-inner relative mb-6 ${activeCard.colorClass}`}
               >
-                <span
-                  className={`material-symbols-outlined ${activeCard.textClass}`}
-                  style={{ fontSize: '120px' }}
-                >
-                  {activeCard.icon}
-                </span>
+                <img src={activeCard.image} alt="" className="w-52 h-52 object-contain" />
               </div>
               <h2 className="font-headline-md text-headline-md text-on-surface text-center mb-8">
                 {activeCard.name}
