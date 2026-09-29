@@ -155,8 +155,8 @@ const OBJECTS: GameObject[] = [
   },
   {
     id: 'caja_calabazas',
-    title: 'Caja con Calabazas',
-    shortName: 'Caja con Calabazas',
+    title: 'Caja con calabazas',
+    shortName: 'Caja con calabazas',
     icon: 'bakery_dining',
     image: '/images/semana3/calabazas.png',
     bgClass: 'bg-tertiary-fixed',
