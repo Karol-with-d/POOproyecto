@@ -170,7 +170,7 @@ export default function Semana4Page() {
                 <img
                   alt="Básico"
                   className="w-full h-4/5 object-contain"
-                  src="/images/semana4/basico.svg"
+                  src="/images/semana4/basico.png"
                 />
               </div>
               </div>
