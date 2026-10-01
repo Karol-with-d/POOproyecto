@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useResetScrollOn } from '../components/WeekScrollReset';
 
 // ── Data ─────────────────────────────────────────────────────────────────────
 type Habitat = 'ocean' | 'forest' | 'desert' | 'field';
@@ -101,6 +102,7 @@ function AnimalCard({ animal, onDragStart }: { animal: AnimalData; onDragStart: 
 export default function HabitatsGamePage() {
   const navigate = useNavigate();
   const [screen, setScreen] = useState<Screen>('start');
+  useResetScrollOn(screen);
   const [placedAnimals, setPlacedAnimals] = useState<Set<string>>(new Set());
   const [draggingId, setDraggingId] = useState<string | null>(null);
   const [dragOverHabitat, setDragOverHabitat] = useState<string | null>(null);

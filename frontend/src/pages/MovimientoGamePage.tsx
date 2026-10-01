@@ -1,5 +1,6 @@
 import { useState, useEffect, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useResetScrollOn } from '../components/WeekScrollReset';
 
 // ── Images ──────────────────────────────────────────────────────────────────
 const IMG_HERO       = '/images/semana6/moverse/hero.png';
@@ -55,6 +56,7 @@ export default function MovimientoGamePage() {
 
   const [screen, setScreen]       = useState<Screen>('start');
   const [actIdx, setActIdx]       = useState(0);
+  useResetScrollOn(`${screen}-${actIdx}`);
   const [timeLeft, setTimeLeft]   = useState(ACTIVITIES[0].duration);
   const [timerRunning, setTimerRunning] = useState(false);
 

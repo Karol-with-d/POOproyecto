@@ -1,5 +1,6 @@
 import { useState, useRef, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useResetScrollOn } from '../components/WeekScrollReset';
 import '../styles/terra-ciencia.css';
 
 /**
@@ -72,6 +73,7 @@ const TOTAL_SLIDES = 7;
 export default function SemillasGamePage() {
   const navigate = useNavigate();
   const [currentStep, setCurrentStep] = useState(0);
+  useResetScrollOn(currentStep);
   const [visitedSteps, setVisitedSteps] = useState<Set<number>>(new Set([0]));
   const [stampedSteps, setStampedSteps] = useState<Set<number>>(new Set());
   const [activeBubbles, setActiveBubbles] = useState<Set<number>>(new Set());

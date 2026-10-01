@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useResetScrollOn } from '../components/WeekScrollReset';
 
 const IMG_HERO = '/images/semana6/similitudes/hero.png';
 
@@ -132,6 +133,7 @@ export default function SimilitudesGamePage() {
   const navigate = useNavigate();
   const [screen, setScreen] = useState<Screen>('start');
   const [qIdx, setQIdx] = useState(0);
+  useResetScrollOn(`${screen}-${qIdx}`);
   const [optStates, setOptStates] = useState<OptionState[]>(['idle', 'idle', 'idle']);
   const [checked, setChecked] = useState(false);
   const [score, setScore] = useState(0);

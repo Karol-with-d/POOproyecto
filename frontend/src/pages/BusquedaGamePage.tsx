@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useResetScrollOn } from '../components/WeekScrollReset';
 import '../styles/terra-ciencia.css';
 import { playFromFeedback } from '../services/sounds';
 
@@ -65,6 +66,7 @@ type View = 'intro' | 'game' | 'finish';
 export default function BusquedaGamePage() {
   const navigate = useNavigate();
   const [view, setView] = useState<View>('intro');
+  useResetScrollOn(view);
   const [score, setScore] = useState(0);
   const [solved, setSolved] = useState<Set<number>>(new Set());
   const [shakingIndex, setShakingIndex] = useState<number | null>(null);
