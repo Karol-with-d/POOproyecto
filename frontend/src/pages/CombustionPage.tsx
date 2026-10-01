@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { showKidMessage } from '../components/KidFrame';
 
@@ -18,18 +18,41 @@ export default function CombustionPage() {
   // Interactive Stage States
   const [currentStage, setCurrentStage] = useState(1);
   const [visibleStage, setVisibleStage] = useState(1);
-  const [isTransitioning, setIsTransitioning] = useState(false);
   const [activeStageClass, setActiveStageClass] = useState(false);
+  const busyRef = useRef(false);
+  const visibleRef = useRef(1);
 
   useEffect(() => {
-    setMounted(true);
-  }, []);
+    visibleRef.current = visibleStage;
+  }, [visibleStage]);
+
+  const nextStage = () => {
+    if (busyRef.current) return;
+    busyRef.current = true;
+    setActiveStageClass(true);
+    window.setTimeout(() => setActiveStageClass(false), 400);
+    setCurrentStage(0);
+    window.setTimeout(() => {
+      const next = visibleRef.current >= 4 ? 1 : visibleRef.current + 1;
+      visibleRef.current = next;
+      setVisibleStage(next);
+      setCurrentStage(next);
+      busyRef.current = false;
+    }, 280);
+  };
+
+  useEffect(() => {
+    if (screen !== 'lab') return;
+    const timer = window.setInterval(nextStage, 2400);
+    return () => window.clearInterval(timer);
+  }, [screen]);
 
   const handleBack = () => {
     if (screen === 'lab') {
       setScreen('welcome');
       setCurrentStage(1);
       setVisibleStage(1);
+      visibleRef.current = 1;
     } else {
       navigate('/semana/4');
     }
@@ -40,27 +63,9 @@ export default function CombustionPage() {
     navigate('/semana/4');
   };
 
-  const nextStage = () => {
-    if (isTransitioning) return;
-    setIsTransitioning(true);
-    setActiveStageClass(true);
-
-    // Visual feedback on card
-    setTimeout(() => {
-      setActiveStageClass(false);
-    }, 400);
-
-    // Phase 1: Fade out current visible stage
-    setCurrentStage(0);
-
-    // Phase 2: After fade-out, switch to next stage and fade in
-    setTimeout(() => {
-      const next = visibleStage >= 4 ? 1 : visibleStage + 1;
-      setVisibleStage(next);
-      setCurrentStage(next);
-      setIsTransitioning(false);
-    }, 300);
-  };
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   const stages = [
     {
@@ -111,9 +116,25 @@ export default function CombustionPage() {
         .character-float {
           animation: float 4s ease-in-out infinite;
         }
-        @keyframes float {
+        .paper-sway { animation: paperSway 1.6s ease-in-out infinite; }
+        .fire-flicker { animation: fireFlicker 0.35s ease-in-out infinite; filter: drop-shadow(0 0 18px #ff6a00); }
+        .smoke-rise { animation: smokeRise 2s ease-in-out infinite; }
+        .ash-settle { animation: ashSettle 0.8s ease-in-out infinite; }
+        @keyframes paperSway {
+          0%, 100% { transform: rotate(-2deg) translateY(0); }
+          50% { transform: rotate(3deg) translateY(-8px); }
+        }
+        @keyframes fireFlicker {
+          0%, 100% { transform: scale(1) rotate(-1deg); }
+          50% { transform: scale(1.08) rotate(2deg); }
+        }
+        @keyframes smokeRise {
+          0% { transform: translateY(12px) scale(0.92); opacity: 0.7; }
+          100% { transform: translateY(-18px) scale(1.05); opacity: 1; }
+        }
+        @keyframes ashSettle {
           0%, 100% { transform: translateY(0); }
-          50% { transform: translateY(-10px); }
+          40% { transform: translateY(6px) rotate(1deg); }
         }
       `}} />
 
@@ -225,7 +246,9 @@ export default function CombustionPage() {
                         >
                           <img
                             alt={stage.label}
-                            className="max-h-56 object-contain"
+                            className={`max-h-56 object-contain ${
+                              stage.id === 1 ? 'paper-sway' : stage.id === 2 ? 'fire-flicker' : stage.id === 3 ? 'smoke-rise' : 'ash-settle'
+                            }`}
                             src={stage.src}
                           />
                         </div>
@@ -235,6 +258,16 @@ export default function CombustionPage() {
                 </div>
 
                 {/* Interaction Hint */}
+                <div className="flex justify-center gap-2 mb-4">
+                  {stages.map((stage) => (
+                    <span
+                      key={stage.id}
+                      className={`h-2.5 rounded-full transition-all duration-300 ${
+                        stage.id === visibleStage ? 'w-8 bg-[#e4572e]' : 'w-2.5 bg-[#c3c8bf]'
+                      }`}
+                    />
+                  ))}
+                </div>
                 <button
                   onClick={(e) => {
                     e.stopPropagation(); // Avoid double click event
@@ -242,7 +275,7 @@ export default function CombustionPage() {
                   }}
                   className="w-full flex items-center justify-center gap-2 text-on-surface-variant active-scale transition-transform font-label-lg text-label-lg quicksand-text"
                 >
-                  Toca para ver el drama de la transformación
+                  El papel cambia solo. También puedes tocarlo.
                   <span className="material-symbols-outlined animate-bounce">touch_app</span>
                 </button>
               </div>
@@ -271,6 +304,7 @@ export default function CombustionPage() {
               setScreen('welcome');
               setCurrentStage(1);
               setVisibleStage(1);
+      visibleRef.current = 1;
             } else {
               navigate('/semana/4');
             }

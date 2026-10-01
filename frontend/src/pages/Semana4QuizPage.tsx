@@ -47,61 +47,59 @@ export default function Semana4QuizPage() {
     {
       text: 'La oxidación es un cambio químico que puede cambiar el color de las frutas.',
       ans: true,
-      icon: 'apple',
+      img: '/images/semana4/oxidacion.png',
       msg: '¡Correcto! El oxígeno reacciona con las enzimas de la fruta.',
     },
     {
       text: 'La fermentación es el proceso químico que hace que la masa del pan crezca.',
       ans: true,
-      icon: 'bakery_dining',
+      img: '/images/semana4/fermentacion.png',
       msg: '¡Exacto! Las levaduras liberan CO₂ que hace que la masa se infle.',
     },
     {
       text: 'Los ácidos son suaves y resbaladizos al tacto como el jabón.',
       ans: false,
-      icon: 'soap',
+      img: '/images/semana4/basico.png',
       msg: '¡Falso! Esas son las Bases. Los ácidos suelen ser agrios y punzantes.',
     },
     {
       text: 'La combustión es una reacción química que libera energía en forma de luz y calor.',
       ans: true,
-      icon: 'local_fire_department',
+      img: '/images/semana4/combus.png',
       msg: '¡Así es! Es una reacción rápida con el oxígeno.',
     },
     {
       text: 'La quimioluminiscencia permite a seres vivos como las luciérnagas producir su propia luz.',
       ans: true,
-      icon: 'auto_awesome',
+      img: '/images/semana4/lumi_character.png',
       msg: '¡Increíble! Como las luciérnagas o algunas medusas.',
     },
     {
-      text: 'Los metales como el hierro se pueden oxidar si se mojan y se dejan al aire libre.',
-      ans: true,
-      icon: 'construction',
+      img: '/images/semana4/oxido-hierro.png',
       msg: '¡Correcto! El metal reacciona con el oxígeno y el agua, formando óxido rojizo.',
     },
     {
       text: 'El vinagre y el jugo de limón son ejemplos de sustancias básicas.',
       ans: false,
-      icon: 'nutrition',
+      img: '/images/semana4/acido.png',
       msg: '¡Falso! El vinagre y el limón son ácidos, por eso tienen ese sabor tan agrio.',
     },
     {
       text: 'Al quemar un papel en la combustión, podemos volver a convertir las cenizas resultantes en papel.',
       ans: false,
-      icon: 'delete_forever',
+      img: '/images/semana4/cenizas.png',
       msg: '¡Muy bien! La combustión es un cambio irreversible: las cenizas no pueden volver a ser papel.',
     },
     {
       text: 'Las barras luminosas necesitan pilas o electricidad para poder brillar en la oscuridad.',
       ans: false,
-      icon: 'bolt',
+      img: '/images/semana4/lumi.png',
       msg: '¡Correcto! Brilla solo gracias a una reacción química, sin usar electricidad ni generar calor.',
     },
     {
       text: 'La levadura es un ser vivo microscópico que ayuda a fermentar los alimentos.',
       ans: true,
-      icon: 'biotech',
+      img: '/images/semana4/fermentacion.png',
       msg: '¡Excelente! La levadura es un hongo unicelular vivo que ayuda a fermentar los alimentos.',
     },
   ];
@@ -234,8 +232,8 @@ export default function Semana4QuizPage() {
             <div className="relative min-h-[400px]">
               {/* Active Question Card */}
               <div className="quiz-card bg-white rounded-[24px] p-8 md:p-12 shadow-[0_15px_30px_rgba(74,101,73,0.12)] border-2 border-surface-container-high flex flex-col items-center text-center space-y-6">
-                <div className="w-24 h-24 bg-primary-container/10 rounded-full flex items-center justify-center floating">
-                  <span className="material-symbols-outlined text-primary text-[48px]">{currentQ.icon}</span>
+                <div className="w-44 h-44 rounded-3xl overflow-hidden bg-[#f7f4ee] border-2 border-[#e4e0d8] flex items-center justify-center">
+                  <img src={currentQ.img} alt="" className="w-full h-full object-contain" />
                 </div>
                 <h2 className="font-headline-md text-on-surface px-4 min-h-[72px] flex items-center justify-center quicksand-text">
                   {currentQ.text}
