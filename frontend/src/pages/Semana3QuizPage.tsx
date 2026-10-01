@@ -17,51 +17,130 @@ const QUESTIONS = [
     topic: '¿De qué están hechos?',
     topicIcon: 'category',
     img: IMG_Q1,
-    imgAlt: 'Objetos del jardín y el mercado hechos de diferentes materiales',
-    text: '¿De qué material está hecha una silla de madera?',
+    imgAlt: 'Objetos hechos de diferentes materiales',
+    text: '¿Por qué se elige madera para las cajas de cosecha?',
     options: [
-      'A) Plástico',
-      'B) Metal',
-      'C) Madera',
-      'D) Vidrio',
+      'A) Porque es transparente',
+      'B) Porque se oxida rápido',
+      'C) Porque es resistente y ligera',
+      'D) Porque es líquida',
     ],
     correctIdx: 2,
-    summaryText: 'Materiales: La silla de madera está hecha de madera',
+    summaryText: 'La madera se usa en las cajas porque es resistente y ligera.',
+  },
+  {
+    topic: '¿De qué están hechos?',
+    topicIcon: 'water_drop',
+    img: IMG_Q1,
+    imgAlt: 'Regadera de metal',
+    text: '¿De qué material es una regadera?',
+    options: ['A) Tela', 'B) Metal', 'C) Papel', 'D) Vidrio'],
+    correctIdx: 1,
+    summaryText: 'La regadera es de metal porque dura mucho.',
+  },
+  {
+    topic: '¿Para qué sirve?',
+    topicIcon: 'visibility',
+    img: IMG_Q1,
+    imgAlt: 'Botella de vidrio transparente',
+    text: '¿Por qué las botellas se hacen de vidrio?',
+    options: [
+      'A) Para ver lo que hay dentro',
+      'B) Porque no se rompen al caer',
+      'C) Porque son elásticas',
+      'D) Porque son de tela',
+    ],
+    correctIdx: 0,
+    summaryText: 'El vidrio es transparente: se ve lo que hay dentro.',
+  },
+  {
+    topic: '¿Para qué sirve?',
+    topicIcon: 'checkroom',
+    img: IMG_Q1,
+    imgAlt: 'Ropa de tela',
+    text: '¿Por qué la ropa se hace de tela?',
+    options: [
+      'A) Porque es transparente',
+      'B) Porque es muy pesada',
+      'C) Porque es suave y flexible',
+      'D) Porque es de metal',
+    ],
+    correctIdx: 2,
+    summaryText: 'La tela es suave y flexible para poder movernos.',
+  },
+  {
+    topic: '¡A reparar!',
+    topicIcon: 'table_restaurant',
+    img: IMG_Q2,
+    imgAlt: 'Mesa rota de madera',
+    text: 'Una mesa rota se repara con…',
+    options: ['A) Vidrio', 'B) Metal', 'C) Tela', 'D) Madera'],
+    correctIdx: 3,
+    summaryText: 'La mesa se repara con madera.',
+  },
+  {
+    topic: '¡A reparar!',
+    topicIcon: 'window',
+    img: IMG_Q2,
+    imgAlt: 'Ventana con un vidrio roto',
+    text: 'Una ventana rota necesita…',
+    options: ['A) Vidrio', 'B) Madera', 'C) Tela', 'D) Papel'],
+    correctIdx: 0,
+    summaryText: 'La ventana se repara con vidrio.',
   },
   {
     topic: '¡A reparar!',
     topicIcon: 'build',
     img: IMG_Q2,
-    imgAlt: 'Niño reparando objetos en un taller de inventos',
-    text: '¿Por qué es importante reparar los objetos en vez de tirarlos?',
+    imgAlt: 'Caja de herramientas rota',
+    text: '¿Por qué reparamos los objetos en vez de tirarlos?',
     options: [
-      'A) Para que se vean más bonitos',
-      'B) Para cuidar el planeta y reducir basura',
-      'C) Porque es más fácil que comprar uno nuevo',
+      'A) Solo para que se vean bonitos',
+      'B) Para cuidar el planeta y hacer menos basura',
+      'C) Porque nunca se pueden usar otra vez',
       'D) Solo para ahorrar dinero',
     ],
     correctIdx: 1,
-    summaryText: 'Reparar: Ayuda a cuidar el planeta y reduce basura',
+    summaryText: 'Reparar cuida el planeta y reduce la basura.',
   },
   {
-    topic: 'Reflexión y Reciclaje',
+    topic: 'Se recicla',
     topicIcon: 'recycling',
     img: IMG_Q3,
-    imgAlt: 'Contenedores de reciclaje con papel, vidrio y plástico',
-    text: '¿Cuáles de estos objetos podemos reciclar?',
-    options: [
-      'A) Solo la ropa vieja',
-      'B) Solo la comida',
-      'C) Ningún objeto se puede reciclar',
-      'D) Papel, vidrio y plástico',
-    ],
-    correctIdx: 3,
-    summaryText: 'Reciclaje: Papel, vidrio y plástico se pueden reciclar',
+    imgAlt: 'Papel, vidrio y plástico para reciclar',
+    text: '¿Cuál de estos objetos se recicla?',
+    options: ['A) Cáscara de plátano', 'B) Lata de metal', 'C) Hojas secas', 'D) Zapato viejo'],
+    correctIdx: 1,
+    summaryText: 'La lata de metal se recicla. La cáscara, las hojas y el zapato se botan.',
+  },
+  {
+    topic: 'Se bota',
+    topicIcon: 'delete',
+    img: IMG_Q3,
+    imgAlt: 'Restos de comida que se botan',
+    text: '¿Qué hacemos con la cáscara de plátano?',
+    options: ['A) Se recicla', 'B) Se reutiliza como ventana', 'C) Se bota', 'D) Se convierte en metal'],
+    correctIdx: 2,
+    summaryText: 'La cáscara de plátano se bota.',
+  },
+  {
+    topic: 'Se reutiliza',
+    topicIcon: 'auto_fix',
+    img: IMG_Q3,
+    imgAlt: 'Frasco vacío que se puede usar otra vez',
+    text: 'Un frasco vacío de vidrio se puede…',
+    options: ['A) Reutilizar', 'B) Tirar siempre', 'C) Comer', 'D) Convertir en tela'],
+    correctIdx: 0,
+    summaryText: 'Un frasco vacío se reutiliza.',
   },
 ];
 
-type Screen = 0 | 1 | 2 | 3 | 4;
+const MAX_SCORE = QUESTIONS.length * 10;
 type OptionState = 'idle' | 'correct' | 'wrong' | 'highlight';
+
+function freshOptionStates(): OptionState[][] {
+  return QUESTIONS.map((q) => q.options.map(() => 'idle'));
+}
 
 // ── Confetti ───────────────────────────────────────────────────────────────
 function useConfetti() {
@@ -87,36 +166,32 @@ export default function Semana3QuizPage() {
   const navigate = useNavigate();
   const fireConfetti = useConfetti();
 
-  const [screen, setScreen] = useState<Screen>(0);
+  const [screen, setScreen] = useState(0);
   const [score, setScore]   = useState(0);
   const hasSaved = useRef(false);
 
   useEffect(() => {
-    if (screen === 4 && !hasSaved.current) {
+    if (screen === QUESTIONS.length + 1 && !hasSaved.current) {
       hasSaved.current = true;
       const stored = localStorage.getItem('plataforma_user');
       if (stored) {
         const user = JSON.parse(stored) as { id: string };
-        const percentage = Math.round((score / 30) * 100);
+        const percentage = Math.round((score / MAX_SCORE) * 100);
         saveQuizScoreForSemanaNumber({ userId: user.id, semanaNumber: 3, score: percentage }).catch(err => {
           console.error('Error guardando quiz Semana 3:', err);
           showKidMessage('No se pudo guardar tu nota. Intenta otra vez.', 'soon');
         });
       }
-    } else if (screen !== 4) {
+    } else if (screen !== QUESTIONS.length + 1) {
       hasSaved.current = false;
     }
   }, [screen, score]);
 
   const [choices, setChoices] = useState<Record<number, boolean>>({});
-  const [optStates, setOptStates] = useState<OptionState[][]>([
-    ['idle', 'idle', 'idle', 'idle'],
-    ['idle', 'idle', 'idle', 'idle'],
-    ['idle', 'idle', 'idle', 'idle'],
-  ]);
-  const [locked, setLocked] = useState([false, false, false]);
+  const [optStates, setOptStates] = useState<OptionState[][]>(freshOptionStates);
+  const [locked, setLocked] = useState<boolean[]>(() => QUESTIONS.map(() => false));
 
-  const goTo = (next: number) => { setScreen(next as Screen); };
+  const goTo = (next: number) => { setScreen(next); };
 
   const handleAnswer = (qi: number, oi: number) => {
     if (locked[qi]) return;
@@ -137,8 +212,8 @@ export default function Semana3QuizPage() {
 
   const restart = () => {
     setScreen(0); setScore(0); setChoices({});
-    setOptStates([['idle','idle','idle','idle'],['idle','idle','idle','idle'],['idle','idle','idle','idle']]);
-    setLocked([false, false, false]);
+    setOptStates(freshOptionStates());
+    setLocked(QUESTIONS.map(() => false));
   };
 
   const getSlide = (idx: number) =>
@@ -156,10 +231,11 @@ export default function Semana3QuizPage() {
     return `${base} bg-[#f0ece4] hover:bg-[#eae6de] border-transparent`;
   };
 
-  const showProgress = screen >= 1 && screen <= 3;
-  const badgeFilter  = score === 30 ? 'none' : score >= 20 ? 'grayscale(0.5) contrast(1.2)' : 'sepia(0.8) hue-rotate(60deg) saturate(1.5)';
-  const resultTitle  = score === 30 ? '¡Eres un Experto Reciclador!' : score >= 20 ? '¡Muy bien hecho!' : '¡Sigue practicando!';
-  const resultSub    = score === 30 ? '¡Sabes todo sobre los materiales y el reciclaje!' : score >= 20 ? '¡Casi lo dominas! Un poco más de repaso.' : 'Repasa las actividades y vuelve a intentarlo.';
+  const showProgress = screen >= 1 && screen <= QUESTIONS.length;
+  const ratio = score / MAX_SCORE;
+  const badgeFilter  = ratio === 1 ? 'none' : ratio >= 0.7 ? 'grayscale(0.5) contrast(1.2)' : 'sepia(0.8) hue-rotate(60deg) saturate(1.5)';
+  const resultTitle  = ratio === 1 ? '¡Eres un Experto Reciclador!' : ratio >= 0.7 ? '¡Muy bien hecho!' : '¡Sigue practicando!';
+  const resultSub    = ratio === 1 ? '¡Sabes todo sobre los materiales y el reciclaje!' : ratio >= 0.7 ? '¡Casi lo dominas! Un poco más de repaso.' : 'Repasa las actividades y vuelve a intentarlo.';
 
   return (
     <div className="text-[#1b1b1e] min-h-screen overflow-hidden antialiased" style={{ fontFamily: "'Nunito Sans', sans-serif", backgroundColor: '#f8f5f0' }}>
@@ -196,23 +272,23 @@ export default function Semana3QuizPage() {
       </header>
 
       {/* ── Progress steps ───────────────────────────────────────────────── */}
-      <div className={`s3-slide fixed top-16 left-0 w-full py-3 z-50 flex justify-center items-center gap-3 transition-all duration-300 ${showProgress ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}
+      <div className={`s3-slide fixed top-16 left-0 w-full py-3 z-50 flex justify-center items-center gap-1 px-2 flex-wrap transition-all duration-300 ${showProgress ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}
         style={{ backgroundColor: 'rgba(251,248,252,0.8)', backdropFilter: 'blur(8px)' }}>
-        {QUESTIONS.map((q, i) => {
+        {QUESTIONS.map((_, i) => {
           const step = i + 1;
           const done   = screen > step;
           const active = screen === step;
           return (
             <div key={i} className="flex items-center gap-3">
-              <div className={`w-10 h-10 rounded-full flex items-center justify-center border-2 font-bold text-sm transition-all
+              <div className={`w-8 h-8 rounded-full flex items-center justify-center border-2 font-bold text-xs transition-all
                 ${done   ? 'bg-[#4a6549] border-[#4a6549] text-white'
                 : active ? 'border-[#4a6549] text-[#4a6549] bg-[#ccebc7]/40'
                 :          'border-[#c3c8bf] text-[#74796e]'}`}>
                 {done
                   ? <span className="material-symbols-outlined text-sm">check</span>
-                  : <span className="material-symbols-outlined text-base filled-icon">{q.topicIcon}</span>}
+                  : <span>{step}</span>}
               </div>
-              {i < 2 && <div className="w-8 h-0.5 bg-[#c3c8bf]" />}
+              {i < QUESTIONS.length - 1 && <div className="w-2 h-0.5 bg-[#c3c8bf]" />}
             </div>
           );
         })}
@@ -260,8 +336,8 @@ export default function Semana3QuizPage() {
             {/* Stats */}
             <div className="flex justify-center gap-8">
               {[
-                { icon: 'help',         label: '3 preguntas', color: '#4a6549' },
-                { icon: 'stars',        label: '30 puntos',   color: '#705c30' },
+                { icon: 'help',         label: '10 preguntas', color: '#4a6549' },
+                { icon: 'stars',        label: '100 puntos',   color: '#705c30' },
                 { icon: 'emoji_events', label: 'Insignia',    color: '#1a5276' },
               ].map(({ icon, label, color }) => (
                 <div key={label} className="flex flex-col items-center gap-1">
@@ -299,7 +375,7 @@ export default function Semana3QuizPage() {
                   <span className="material-symbols-outlined text-base filled-icon">{q.topicIcon}</span>
                   {q.topic}
                 </span>
-                <span className="text-[#434841] text-sm font-medium">Pregunta {qi + 1} de 3</span>
+                <span className="text-[#434841] text-sm font-medium">Pregunta {qi + 1} de {QUESTIONS.length}</span>
               </div>
 
               {/* Image */}
@@ -330,7 +406,7 @@ export default function Semana3QuizPage() {
         ))}
 
         {/* STATE 4 — RESULTS */}
-        <section className={`s3-slide absolute inset-0 flex flex-col items-center p-6 pt-20 overflow-y-auto ${getSlide(4)}`} style={{ backgroundColor: '#f8f5f0' }}>
+        <section className={`s3-slide absolute inset-0 flex flex-col items-center p-6 pt-20 overflow-y-auto ${getSlide(QUESTIONS.length + 1)}`} style={{ backgroundColor: '#f8f5f0' }}>
           <div className="max-w-lg w-full text-center space-y-6 pb-24 mt-2">
             {/* Badge */}
             <div className="w-56 h-56 mx-auto">
@@ -341,7 +417,7 @@ export default function Semana3QuizPage() {
             <div className="space-y-1">
               <h2 className="text-4xl font-extrabold text-[#4a6549]" style={{ fontFamily: 'Literata, serif' }}>{resultTitle}</h2>
               <div className="text-5xl font-black text-[#705c30]">
-                {score} <span className="text-2xl text-[#434841] font-bold">/ 30 pts</span>
+                {score} <span className="text-2xl text-[#434841] font-bold">/ {MAX_SCORE} pts</span>
               </div>
               <p className="text-[#434841] text-base font-medium">{resultSub}</p>
             </div>
@@ -350,8 +426,8 @@ export default function Semana3QuizPage() {
             <div className="flex justify-center gap-2 text-4xl">
               {[0, 1, 2].map(i => (
                 <span key={i} style={{
-                  filter: i * 10 < score ? 'none' : 'grayscale(1) opacity(0.3)',
-                  transform: i * 10 < score ? 'scale(1.1)' : 'scale(1)',
+                  filter: score >= Math.ceil(((i + 1) / 3) * MAX_SCORE) ? 'none' : 'grayscale(1) opacity(0.3)',
+                  transform: score >= Math.ceil(((i + 1) / 3) * MAX_SCORE) ? 'scale(1.1)' : 'scale(1)',
                   display: 'inline-block',
                   transition: 'all 0.3s',
                 }}>⭐</span>
