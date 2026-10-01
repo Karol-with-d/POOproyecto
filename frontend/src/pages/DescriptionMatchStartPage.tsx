@@ -42,7 +42,7 @@ export default function DescriptionMatchStartPage() {
             <img
               alt="Science character illustration"
               className="w-full h-full object-contain drop-shadow-md"
-              src="https://lh3.googleusercontent.com/aida-public/AB6AXuBvyWn0lrcIvZVy87vAw1K0v7Y2HNYNUD-JbUl4IUobPyi-VuoAQLCg6A2inprUowK94nTDC9KuxIHw06Y4YQ4rbAr4vtMu9izqNgdhJ5vgREatvvzAdbgevUkdXMWYj81E3qvMY6JjhTBDGlZUpw1m1NpWv6UQDcrhKqYA0shZa_9Fsc5MJEgSIOlQN1zceSunytvDWnbZZvsfnuyPpUKLleDJRaPQ-JwTt2f0J7jCNJ5PTibcm3tv4NcNAh0vJuaZc24-nFJRCwVY"
+              src="/images/hosted/e345901e795b.webp"
             />
           </div>
 

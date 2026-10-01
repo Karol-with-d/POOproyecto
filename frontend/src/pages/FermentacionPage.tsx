@@ -181,7 +181,7 @@ export default function FermentacionPage() {
                   <img
                     alt="Fermi the fermentation buddy"
                     className="w-full h-full object-cover"
-                    src="/images/semana4/fermentacion.png"
+                    src="/images/semana4/fermentacion.webp"
                   />
                 </div>
                 {/* Ambient Bubbles Decoration */}

@@ -703,7 +703,7 @@ export default function ColeccionandoObjetos() {
         `}
         style={{
           backgroundImage:
-            "url('https://lh3.googleusercontent.com/aida-public/AB6AXuA003da2WW-A8i8I_KkVAxIN5pjOUYgP-pU6XFwNUMAaQN7DxzQgQV_RM-c9Zv5vtTKc9fhT7i_iOYe_l-TSqFdvOXq6Q8gZlqWykd_zeimsfbo5RUFmln5iZAihXHiWP3aoNOMVhbRnQpEUXKFLjSRVJJ9V-7Q5V1bMTlUgSFbJ-9ozXnVrjvaiKLC4nUPOiqcizx3BZSpiTtjE3N64-pwCQ3pET3Ipm1oebI4G7xMeiFQ00wGnEVwl6aFzr0KW0NyFfTuaXdmrbo')",
+            "url('/images/hosted/d99f9a9740ec.webp')",
         }}
       >
 

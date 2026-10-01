@@ -341,7 +341,7 @@ export default function RescataPulgarcitoGamePage() {
               <img
                 alt="Bosque encantado"
                 className="w-full h-full object-cover opacity-60 mix-blend-multiply"
-                src="https://lh3.googleusercontent.com/aida-public/AB6AXuAIHFf2RojoYUF4yDtohS_ChRwmo-vknyrBLXbWhU16lOoP2HSfioYCsXVWNjbcBPDvcd6HY1LjVHSh-D3uLIabv5sLpH7dbilVU1gg46SyZU7r6T9vlP3sTbfYLoqjaIO1PyY9kde10nQwWx6sN2p_GQsyEAImMSkmrXYL1dqyBtzHOReKH85U67POa8eLzvIeZxKMmcCtShP1DgZ9TkSFm5Ju0ZA0T6GjZx6KHAE0PZ6SDTZaBpVXRX5Pb1eOW5Hdl2Jn8LvuSE5b"
+                src="/images/hosted/b7567ceb2468.webp"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-surface-container-low via-transparent to-transparent z-10" />
             </div>
@@ -355,7 +355,7 @@ export default function RescataPulgarcitoGamePage() {
                   <img
                     alt="Pulgarcito"
                     className={getPulgarcitoClass(pulgarcitoState)}
-                    src="https://lh3.googleusercontent.com/aida-public/AB6AXuDliDzPfDDOQK5wNDh9WW48CLvIGb1FN6cO0JrEPNcK-TjigQRUT550itxooJ5Y-3f72w-pRl2hkPvJeUlQC1ED4cQzz0rLX4PmgWmegZHMCwa4kbSkxF6Bkt56tRPvzkA-oduceGFsQHnJLJpmAbelFSREpiKTMt8-zCIfeF9p3IhnkzvaegavKxESZM91RqbtwKsWxN4ix9G9gs3CHWobQ9viTm74iMDR4shYYJV8IuEK5TJ7cr-uG9Ihg4RLZE87z-I_PTpkvohc"
+                    src="/images/hosted/e7da68100a02.webp"
                   />
                 </div>
                 <div className="w-12 h-64 bg-tertiary rounded-b-xl border-2 border-on-surface-variant mt-[-10px] z-0" />

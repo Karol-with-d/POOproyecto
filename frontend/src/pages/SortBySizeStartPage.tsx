@@ -33,7 +33,7 @@ export default function SortBySizeStartPage() {
             alt="Ilustración de ordenar por tamaño"
             className="w-full h-full object-contain animate-float"
             style={{ filter: 'drop-shadow(rgba(74, 101, 73, 0.15) 0px 10px 15px)' }}
-            src="https://lh3.googleusercontent.com/aida-public/AB6AXuC11AnZnniwWpLXgMxquqkQDzWUf8P8LrCxGofU7Ssj5VZxisW0YLa6mU-gcLbQC02jTsryzDh6GEOv_KcXCg1yTAHa0XfTfjdDMdjG0rZbjhpzV5ak4Ci6wEQduT1nnsVoDCPI4MeeK28OHFqHmZrfqA-gg0K8eR-oUWKFzv-mFIcnBgH4C1ARzS-tXvtC4kcsHjQB9O28uYZzznZ_AUt7DyGuF91Gi8PxzDBCdmfBXTneNKSGCDxHivGELrFrgoeaFc7a2s87CO3l"
+            src="/images/hosted/0f43aa6bae1a.webp"
           />
         </div>
 

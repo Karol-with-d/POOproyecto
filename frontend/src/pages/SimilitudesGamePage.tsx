@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-const IMG_HERO = '/images/semana6/similitudes/hero.png';
+const IMG_HERO = '/images/semana6/similitudes/hero.webp';
 
 interface QuizOption {
   label: string;
@@ -19,7 +19,7 @@ interface QuizQuestion {
 
 const QUESTIONS: QuizQuestion[] = [
   {
-    image: '/images/semana6/similitudes/q1-alimentan.png',
+    image: '/images/semana6/similitudes/q1-alimentan.webp',
     verb: 'Se alimentan',
     options: [
       { label: 'Plantas',  icon: 'eco',      iconBgClass: 'bg-[#8ba888]/20', iconColorClass: 'text-[#4a6549]', correct: false },
@@ -37,7 +37,7 @@ const QUESTIONS: QuizQuestion[] = [
     ],
   },
   {
-    image: '/images/semana6/similitudes/q3-mueven.png',
+    image: '/images/semana6/similitudes/q3-mueven.webp',
     verb: 'Se mueven',
     options: [
       { label: 'Plantas',  icon: 'eco',      iconBgClass: 'bg-[#8ba888]/20', iconColorClass: 'text-[#4a6549]', correct: false },
@@ -46,7 +46,7 @@ const QUESTIONS: QuizQuestion[] = [
     ],
   },
   {
-    image: '/images/semana6/similitudes/q4-fotosintesis.png',
+    image: '/images/semana6/similitudes/q4-fotosintesis.webp',
     verb: 'Hacen fotosíntesis',
     options: [
       { label: 'Plantas',  icon: 'eco',      iconBgClass: 'bg-[#8ba888]/20', iconColorClass: 'text-[#4a6549]', correct: true  },
@@ -55,7 +55,7 @@ const QUESTIONS: QuizQuestion[] = [
     ],
   },
   {
-    image: '/images/semana6/similitudes/q5-respiran.png',
+    image: '/images/semana6/similitudes/q5-respiran.webp',
     verb: 'Respiran',
     options: [
       { label: 'Plantas',  icon: 'eco',      iconBgClass: 'bg-[#8ba888]/20', iconColorClass: 'text-[#4a6549]', correct: false },

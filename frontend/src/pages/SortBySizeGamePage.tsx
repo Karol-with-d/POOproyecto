@@ -13,11 +13,11 @@ interface BasketItem {
 }
 
 const baskets: BasketItem[] = [
-  { id: 'basket-1', value: 1, alt: '1 apple', src: '/images/1manzana.png' },
-  { id: 'basket-2', value: 2, alt: '2 bananas', src: '/images/2bananas.png' },
-  { id: 'basket-3', value: 3, alt: '3 grapes', src: 'https://lh3.googleusercontent.com/aida-public/AB6AXuAiiNcYxd1nggNGmOxgZ2tswSaf9Mgjq1eM71hNNdF-2mSbzBCEpZCckcsQAwJOBG4y1zuXlcl0al8MA4IYvJ82ADtw8c3pVEme4ONLsWIhHwBi8HQKwuihajldyCHjwHUCeEa_cmFh5l-IWv1y1E0MPubh7eFE08UT9N88p0prXLH9RkOAzaofKeUmYRMIeu-aJAqpr8s5e3UzJ_N5NLduR8mX1UI0hpOxqblGi9dknu2f6Gk6cQpxrlFhoR15aN9svDpjEOJe-m8v' },
-  { id: 'basket-4', value: 4, alt: '4 oranges', src: 'https://lh3.googleusercontent.com/aida-public/AB6AXuAjwCOKKdLGFfZcjdTLloyWeH6JbHvpNPOUe8HmAGmEdOuWmwpCVtrvyBJueWl36R0-zMqlzUWn4d4yTndwgkruX1H43zO56Ic8U9N42H5ytKn65PeyT7JBWL7c5oqCvACp16Lnc02e4nuarC8t1YyntW1RF9N1xuy7iFhO6_1pYM8fU1AEJKSUX72CijEA2PktgmQOfFbKKoOJMPFaKpoBfCmfmgJfRa-W4CPQrrrCBY6SQ6B2W_Ky_tj0mcazKnELVjL-SHQnq2mM' },
-  { id: 'basket-5', value: 5, alt: '5 mixed fruits', src: '/images/mixfrutas.png' },
+  { id: 'basket-1', value: 1, alt: '1 apple', src: '/images/1manzana.webp' },
+  { id: 'basket-2', value: 2, alt: '2 bananas', src: '/images/2bananas.webp' },
+  { id: 'basket-3', value: 3, alt: '3 grapes', src: '/images/hosted/692268dc2cd6.webp' },
+  { id: 'basket-4', value: 4, alt: '4 oranges', src: '/images/hosted/9f7d26096919.webp' },
+  { id: 'basket-5', value: 5, alt: '5 mixed fruits', src: '/images/mixfrutas.webp' },
 ];
 
 const dropZonesLevel1 = [

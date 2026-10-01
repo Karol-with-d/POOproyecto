@@ -246,7 +246,7 @@ export default function QuimioluminiscenciaPage() {
               <img
                 alt="Lumi character"
                 className="w-full h-full object-contain drop-shadow-xl rounded-2xl"
-                src="/images/semana4/lumi_character.png"
+                src="/images/semana4/lumi_character.webp"
               />
             </div>
             <div className="speech-bubble relative bg-white rounded-[32px] p-6 shadow-lg border border-surface-container-high max-w-md">

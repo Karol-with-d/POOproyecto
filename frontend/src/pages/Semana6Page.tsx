@@ -1,8 +1,8 @@
 import { useNavigate, Link } from 'react-router-dom';
 
-const IMG_HERO = '/images/semana6/hero-personajes.png';
-const IMG_SIMILITUDES = '/images/semana6/card-similitudes.png';
-const IMG_MOVIMIENTO = '/images/semana6/card-movimiento.png';
+const IMG_HERO = '/images/semana6/hero-personajes.webp';
+const IMG_SIMILITUDES = '/images/semana6/card-similitudes.webp';
+const IMG_MOVIMIENTO = '/images/semana6/card-movimiento.webp';
 
 interface ActivityCard {
   id: string;

@@ -6,13 +6,13 @@ import { showKidMessage } from '../components/KidFrame';
 
 // ── Images used in answer options ──────────────────────────────────────────
 const IMG_NOTEBOOK =
-  'https://lh3.googleusercontent.com/aida-public/AB6AXuDV3uGyXldQ7Byt2koKIV-8ED_Rl3wT9NIR7qPNRzDgA6J8K5CHfnb6ax81nnddPavuHUgwOsVLBppX2-OFpBIyuYWO7VkN6mjLgCSxBwrpRoi9Km5pfQk36MraM7K76ZoslzKBaLgF1pNVOrSUVnWZe3KNTxyVyeYkwyClYfYG2_abwduPcpjWyDpngFLWVV1xzjhcAJTRotiaJGPS0r1xc-JP3qjWcHhTstQ0mwBa_I_KdlbuWCcP7CSVV4mbtH-5UppJowL66yyq';
+  '/images/hosted/5e86d19bcade.webp';
 const IMG_RULER =
-  'https://lh3.googleusercontent.com/aida-public/AB6AXuDTopjy3Gs7VjG2w3yRsiAP2vJxPKN1DNNgCauOgEuzfst1JCXRa-GZjejgtDIEKCxVVTm8HFPfpXk8N4nud7EhBfBtTyPqh1hFY2nvG6l1AP_7Ull10moMrsWa06YdXETV-rXHNSEhaBsb4ojc3oXmzBbSy4PK1h7RE9vwIHn85lf3ud3u1laICFSex5wOt4W0YNBGgGkJZ6uNArbBere_9y_h2Yw8RZx-oK3JSnejTUcvUJFi6wderwz2pppcWkuuCP0C5euOKnU5';
+  '/images/hosted/e0dac4d4a8ee.webp';
 const IMG_SCALE =
-  'https://lh3.googleusercontent.com/aida-public/AB6AXuCAg1AbMQHyMIyxvlIS31K-puWc-iTLeHDsfKAbA3xUJpKeohnFyJGjjhfbYeMBb2oPO_wpGfagXRE7BUcH47WT283zj-L8tdcrVjT4E9Q1PoANjLGEH6CJNhlI2rxijgmOdnzLjaN4VDMH6Bb6bKRbJY71pfCprNZxMh5G2jaN1nZJRcOqjga34w6rrT6nNNRmcgfDLzu-nIeG7IC4shR3tqAilNz5jZnxmnihSJHAtSdZoVkMi4TTE1HWSilq8_O9PFoosPDTuqJX';
+  '/images/hosted/9f39783e8b9a.webp';
 const IMG_FERMI =
-  'https://lh3.googleusercontent.com/aida-public/AB6AXuCCiytwkMkrjDGC9oDEikU8EaXSO8qBhnidmsG6CfVRWA0USs6YHp_sXBCph4EOGcZr43jBZ2DbQBjpTXfDlJ6e2nwqYVZtBepGBXO1CIeK8aHI7bSFcr3EuSveq87xIEQA4pZ8Rr_r68zcav4ZDXodwby_Eg2CYEa8iBPJPjo_K6EowxrCD5O_RPy27lag924QzRtLiTvZngcBJYof1Vj2sYvnw6SMc18mfykXlOD0UmzSDpp6plPf176k5i9FxysN5sAplNYnSHaf';
+  '/images/hosted/f86d0ddd4dc8.webp';
 
 // ── Quiz data ──────────────────────────────────────────────────────────────
 interface QuizQuestion {
