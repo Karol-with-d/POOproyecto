@@ -225,15 +225,15 @@ export default function SimilitudesGamePage() {
           <nav className="flex justify-between items-center w-full px-margin-mobile md:px-margin-desktop py-base max-w-full">
             <button
               onClick={() => navigate('/semana/6')}
-              className="flex items-center gap-2 px-4 py-2 rounded-full border border-outline-variant text-on-surface-variant hover:bg-surface-variant transition-colors font-label-md text-label-md"
+              aria-label="Volver"
+              className="w-10 h-10 flex items-center justify-center rounded-full hover:bg-surface-variant transition-colors text-[#334d33]"
             >
-              <span className="material-symbols-outlined text-[20px]">arrow_back</span>
-              <span>Salir</span>
+              <span className="material-symbols-outlined">arrow_back</span>
             </button>
             <div className="font-headline-md text-headline-md text-primary">
               ¿Qué tenemos en común?
             </div>
-            <div className="w-24" />
+            <div className="w-10" />
           </nav>
         </header>
 

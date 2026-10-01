@@ -154,12 +154,11 @@ export default function SemillasGamePage() {
         <div className="flex items-center justify-between w-full mb-2">
           <button
             onClick={() => navigate('/semana/5')}
-            aria-label="Salir de Germinación Mágica"
-            className="flex items-center gap-1 font-bold text-sm transition-transform active:scale-95"
+            aria-label="Volver"
+            className="w-10 h-10 flex items-center justify-center rounded-full transition-transform active:scale-95"
             style={{ color: 'var(--tc-primary)' }}
           >
-            <span className="material-symbols-outlined text-base">arrow_back</span>
-            <span>Salir</span>
+            <span className="material-symbols-outlined">arrow_back</span>
           </button>
           <h1
             className="text-lg font-tc-headline font-bold"
@@ -167,7 +166,7 @@ export default function SemillasGamePage() {
           >
             Germinación Mágica
           </h1>
-          <div className="w-12" aria-hidden="true" />
+          <div className="w-10" aria-hidden="true" />
         </div>
         <nav className="flex items-center gap-2 md:gap-4">
           {DAYS.map((day, i) => {
