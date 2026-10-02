@@ -1,5 +1,6 @@
 import { useState, useRef, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useResetScrollOn } from '../components/WeekScrollReset';
 import '../styles/terra-ciencia.css';
 
 /**
@@ -21,7 +22,7 @@ const DAYS = [
     id: 1,
     badge: 'Día 1',
     text: 'La semilla está dormida bajo la tierra',
-    img: '/images/semana5/semilla-dia1.png',
+    img: '/images/semana5/semilla-dia1.webp',
     bgClass: 'tc-bg-day-1',
     icon: 'water_drop',
     effect: '💧',
@@ -30,7 +31,7 @@ const DAYS = [
     id: 2,
     badge: 'Día 2',
     text: 'La semilla se abre y aparece una raíz',
-    img: '/images/semana5/semilla-dia2.png',
+    img: '/images/semana5/semilla-dia2.webp',
     bgClass: 'tc-bg-day-2',
     icon: 'wb_sunny',
     effect: '☀️',
@@ -39,7 +40,7 @@ const DAYS = [
     id: 3,
     badge: 'Día 3',
     text: 'Asoma un tallo muy delgadito',
-    img: '/images/semana5/semilla-dia3.png',
+    img: '/images/semana5/semilla-dia3.webp',
     bgClass: 'tc-bg-day-3',
     icon: 'eco',
     effect: '🌿',
@@ -48,7 +49,7 @@ const DAYS = [
     id: 4,
     badge: 'Día 4',
     text: 'Salen las primeras hojitas grandes',
-    img: '/images/semana5/semilla-dia4.png',
+    img: '/images/semana5/semilla-dia4.webp',
     bgClass: 'tc-bg-day-4',
     icon: 'grade',
     effect: '⭐',
@@ -57,21 +58,22 @@ const DAYS = [
     id: 5,
     badge: 'Día 5',
     text: '¡Ya es una plántula! Necesita luz y agua',
-    img: '/images/semana5/semilla-dia5.png',
+    img: '/images/semana5/semilla-dia5.webp',
     bgClass: 'tc-bg-day-5',
     icon: 'filter_vintage',
     effect: '🌸',
   },
 ];
 
-const INTRO_IMG = '/images/semana5/semilla-intro.png';
-const FINAL_IMG = '/images/semana5/semilla-final.png';
+const INTRO_IMG = '/images/semana5/semilla-intro.webp';
+const FINAL_IMG = '/images/semana5/semilla-final.webp';
 
 const TOTAL_SLIDES = 7;
 
 export default function SemillasGamePage() {
   const navigate = useNavigate();
   const [currentStep, setCurrentStep] = useState(0);
+  useResetScrollOn(currentStep);
   const [visitedSteps, setVisitedSteps] = useState<Set<number>>(new Set([0]));
   const [stampedSteps, setStampedSteps] = useState<Set<number>>(new Set());
   const [activeBubbles, setActiveBubbles] = useState<Set<number>>(new Set());
@@ -152,12 +154,11 @@ export default function SemillasGamePage() {
         <div className="flex items-center justify-between w-full mb-2">
           <button
             onClick={() => navigate('/semana/5')}
-            aria-label="Salir de Germinación Mágica"
-            className="flex items-center gap-1 font-bold text-sm transition-transform active:scale-95"
+            aria-label="Volver"
+            className="w-10 h-10 flex items-center justify-center rounded-full transition-transform active:scale-95"
             style={{ color: 'var(--tc-primary)' }}
           >
-            <span className="material-symbols-outlined text-base">arrow_back</span>
-            <span>Salir</span>
+            <span className="material-symbols-outlined">arrow_back</span>
           </button>
           <h1
             className="text-lg font-tc-headline font-bold"
@@ -165,7 +166,7 @@ export default function SemillasGamePage() {
           >
             Germinación Mágica
           </h1>
-          <div className="w-12" aria-hidden="true" />
+          <div className="w-10" aria-hidden="true" />
         </div>
         <nav className="flex items-center gap-2 md:gap-4">
           {DAYS.map((day, i) => {

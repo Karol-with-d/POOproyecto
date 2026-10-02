@@ -1,5 +1,6 @@
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import KidFrame from './components/KidFrame';
+import WeekScrollReset from './components/WeekScrollReset';
 import GameFrame from './components/GameFrame';
 import LoginPage from './pages/LoginPage';
 import HomePage from './pages/HomePage';
@@ -48,6 +49,7 @@ import HabitatsGamePage from './pages/HabitatsGamePage';
 function App() {
   return (
     <BrowserRouter>
+      <WeekScrollReset />
       <KidFrame>
       <Routes>
         <Route path="/login" element={<LoginPage />} />

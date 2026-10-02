@@ -16,27 +16,27 @@ const ZONES: Zone[] = [
   {
     id: 'table',
     name: 'Mesa Rota',
-    image: '/images/semana3/mesa.png',
+    image: '/images/semana3/mesa.webp',
     correct: 'wood',
   },
   {
     id: 'window',
     name: 'Ventana Rota',
-    image: '/images/semana3/ventana.png',
+    image: '/images/semana3/ventana.webp',
     correct: 'glass',
   },
   {
     id: 'toolbox',
     name: 'Caja Rota',
-    image: '/images/semana3/caja.png',
+    image: '/images/semana3/caja.webp',
     correct: 'metal',
   },
 ];
 
 const MATERIALS: { id: Material; label: string; image: string; bgClass: string }[] = [
-  { id: 'wood', label: 'Madera', image: '/images/semana3/madera.png', bgClass: 'bg-tertiary-fixed hover:bg-[#eadeb5] border-[#d5c09e]' },
+  { id: 'wood', label: 'Madera', image: '/images/semana3/madera.webp', bgClass: 'bg-tertiary-fixed hover:bg-[#eadeb5] border-[#d5c09e]' },
   { id: 'glass', label: 'Vidrio', image: '/images/semana3/vidrio.png', bgClass: 'bg-secondary-fixed hover:bg-[#d8efff] border-[#add6f4]' },
-  { id: 'metal', label: 'Metal', image: '/images/semana3/metal.png', bgClass: 'bg-surface-variant hover:bg-surface-container-high border-[#cfced2]' },
+  { id: 'metal', label: 'Metal', image: '/images/semana3/metal.webp', bgClass: 'bg-surface-variant hover:bg-surface-container-high border-[#cfced2]' },
 ];
 
 function triggerConfetti() {

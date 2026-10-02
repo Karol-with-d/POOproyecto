@@ -1,5 +1,6 @@
 import { useState, useRef, useCallback, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useResetScrollOn } from '../components/WeekScrollReset';
 import { saveQuizScoreForSemanaNumber } from '../services/api';
 import { playMiss, playSuccess } from '../services/sounds';
 import { showKidMessage } from '../components/KidFrame';
@@ -68,6 +69,7 @@ export default function Semana5QuizPage() {
   const fireConfetti = useConfetti();
 
   const [screenIdx, setScreenIdx] = useState(0); // 0=intro,1=q1,2=q2,3=q3,4=results
+  useResetScrollOn(screenIdx);
   const [score, setScore]         = useState(0);
   const hasSaved = useRef(false);
 

@@ -24,7 +24,7 @@ export default function Semana5Page() {
       buttonClass: 'bg-[var(--tc-primary)] text-[var(--tc-on-primary)]',
       shadowClass: 'shadow-[var(--tc-shadow-3d-primary)]',
       textClass: 'text-[var(--tc-secondary)]',
-      image: '/images/semana5/card-semillas.png',
+      image: '/images/semana5/card-semillas.webp',
     },
     {
       id: 'superpoderes',
@@ -35,7 +35,7 @@ export default function Semana5Page() {
       buttonClass: 'bg-[var(--tc-tertiary)] text-[var(--tc-on-tertiary)]',
       shadowClass: 'shadow-[var(--tc-shadow-3d-tertiary)]',
       textClass: 'text-[var(--tc-tertiary)]',
-      image: '/images/semana5/card-superpoderes.png',
+      image: '/images/semana5/card-superpoderes.webp',
     },
     {
       id: 'busqueda',
@@ -46,7 +46,7 @@ export default function Semana5Page() {
       buttonClass: 'bg-[var(--tc-primary-container)] text-[var(--tc-on-primary-container)]',
       shadowClass: 'shadow-[var(--tc-shadow-3d-primary)]',
       textClass: 'text-[var(--tc-on-primary-fixed-variant)]',
-      image: '/images/semana5/card-busqueda.png',
+      image: '/images/semana5/card-busqueda.webp',
     },
   ];
 
@@ -124,7 +124,7 @@ export default function Semana5Page() {
             <img
               alt="Escritorio de Explorador"
               className="h-32 md:h-44 w-auto rounded-lg"
-              src="https://lh3.googleusercontent.com/aida-public/AB6AXuAUnQOF91l6z8uf0-uAa_zSox4zBLQeHMMYuD4JKsfIOSbpKh9-bkxkprysRAPfJdZg7JuYU8wjWabge92dIn0iDi1i58_Ygw2T9lXm3dau52edvh0rchpu3dSp-hQ6LRqtt1CGFK1Q7na3V-jp70tahVdiKzjHd3bgE3c2zQizg4oB2gEXyLB4sV1jt0L6eTYrx38utXA5DIZbv7gp0-VWoaomXKwk81zGQfV9m7a8NYgWm8atF9VxMfqYcmW1UuLet4QPz_BZBAIG"
+              src="/images/hosted/3516f415c28c.webp"
             />
           </div>
           <p
