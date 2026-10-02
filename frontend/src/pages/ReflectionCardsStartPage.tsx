@@ -36,7 +36,7 @@ export default function ReflectionCardsStartPage() {
 
           {/* Illustration Container — large recycling icon */}
           <div className="w-full aspect-square max-w-[280px] bg-white rounded-2xl overflow-hidden border-4 border-white relative z-10 shadow-md grid grid-cols-3 gap-2 p-3">
-            {['/images/semana3/reflexion/lata.png', '/images/semana3/reflexion/platano.png', '/images/semana3/reflexion/frasco.png'].map((src) => (
+            {['/images/semana3/reflexion/lata.webp', '/images/semana3/reflexion/platano.webp', '/images/semana3/reflexion/frasco.webp'].map((src) => (
               <img key={src} alt="" className="w-full h-full object-contain" src={src} />
             ))}
           </div>

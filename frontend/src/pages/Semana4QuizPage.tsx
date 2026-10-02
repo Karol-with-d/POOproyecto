@@ -53,7 +53,7 @@ export default function Semana4QuizPage() {
     {
       text: 'La fermentación es el proceso químico que hace que la masa del pan crezca.',
       ans: true,
-      img: '/images/semana4/fermentacion.png',
+      img: '/images/semana4/fermentacion.webp',
       msg: '¡Exacto! Las levaduras liberan CO₂ que hace que la masa se infle.',
     },
     {
@@ -65,13 +65,13 @@ export default function Semana4QuizPage() {
     {
       text: 'La combustión es una reacción química que libera energía en forma de luz y calor.',
       ans: true,
-      img: '/images/semana4/combus.png',
+      img: '/images/semana4/combus.webp',
       msg: '¡Así es! Es una reacción rápida con el oxígeno.',
     },
     {
       text: 'La quimioluminiscencia permite a seres vivos como las luciérnagas producir su propia luz.',
       ans: true,
-      img: '/images/semana4/lumi_character.png',
+      img: '/images/semana4/lumi_character.webp',
       msg: '¡Increíble! Como las luciérnagas o algunas medusas.',
     },
     {
@@ -93,13 +93,13 @@ export default function Semana4QuizPage() {
     {
       text: 'Las barras luminosas necesitan pilas o electricidad para poder brillar en la oscuridad.',
       ans: false,
-      img: '/images/semana4/lumi.png',
+      img: '/images/semana4/lumi.webp',
       msg: '¡Correcto! Brilla solo gracias a una reacción química, sin usar electricidad ni generar calor.',
     },
     {
       text: 'La levadura es un ser vivo microscópico que ayuda a fermentar los alimentos.',
       ans: true,
-      img: '/images/semana4/fermentacion.png',
+      img: '/images/semana4/fermentacion.webp',
       msg: '¡Excelente! La levadura es un hongo unicelular vivo que ayuda a fermentar los alimentos.',
     },
   ];

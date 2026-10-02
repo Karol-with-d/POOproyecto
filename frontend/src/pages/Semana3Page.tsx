@@ -37,8 +37,8 @@ export default function Semana3Page() {
       desc: '¿Se bota, se recicla o se reutiliza? Tú decides.',
       color: 'bg-[#fbf3e4]',
       border: 'border-[#e0c48a]',
-      image: '/images/semana3/reflexion/lata.png',
-      extras: ['/images/semana3/reflexion/platano.png', '/images/semana3/reflexion/frasco.png'],
+      image: '/images/semana3/reflexion/lata.webp',
+      extras: ['/images/semana3/reflexion/platano.webp', '/images/semana3/reflexion/frasco.webp'],
       link: '/semana/3/reflection-cards',
     },
   ];
