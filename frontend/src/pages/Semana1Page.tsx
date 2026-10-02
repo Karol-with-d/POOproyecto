@@ -58,7 +58,7 @@ export default function Semana1Page() {
       color: 'bg-[#c4b5a0]',
       borderColor: 'border-[#a89880]',
       textColor: 'text-[#3a3228]',
-      image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuBUh9ZUpEiJCxXjDW0BptNAMSojyZgEl5cxqnTBCws5JCbAH9B1RI6-BwjiRs9YHD4LwwwMrvPyzxNqu2x7Ai5WDiwP7vBhxNmyXtMe9pgrERiQLrnSYPdPalV8OoIuuyqs9cfi3AYmFwNqTh7lnv7dmPsRJeWHAXE8u0HQNRLDPULid0CNeB8h_k5Ld4J3U1wVHuGN3FXDacHnDa0URjEjiBdxtXM8eP8SWTcnaJVgAgjik2xFI9WvhhXTEAqz_V5tPAlEWSmjnmkg',
+      image: '/images/hosted/0e74ae8b6d84.webp',
       link: '/semana/1/description-match',
     },
     {
@@ -68,7 +68,7 @@ export default function Semana1Page() {
       color: 'bg-[#b8d4f0]',
       borderColor: 'border-[#9ab8d8]',
       textColor: 'text-[#2a3a4a]',
-      image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuAbRWh9PWGY4o2FaTuAcATF6q7Hyiic8udl8WNMrZ1s87iZKZAgcDOVVxRyqDyMcbQMZdWm-EoAe4cKnD9TgbKj-0qo0smwnzD7BlLVkzGdyzfKgR4rbYKsrZTjS2KJgbUGw-UmQD0yWyD_0sqniJ7-4NsQrIWliY72bUXroQ9ixfHlLLggQ0Hron9mqTBMJW-rqgZwc1n531-dFs3WqWHXeeLO8pJtcL9yWJufbsYWTMfQnKSeS9DkM5HlaF3cFHZbT9BdxZA_9uJP',
+      image: '/images/hosted/81f22c2b9f6f.webp',
       link: '/semana/1/rescata-pulgarcito',
     },
     {
@@ -78,7 +78,7 @@ export default function Semana1Page() {
       color: 'bg-[#c4b5a0]',
       borderColor: 'border-[#a89880]',
       textColor: 'text-[#3a3228]',
-      image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuCa6VnhV7WOI8gDWhwuCXcMFAmtTv5Dxgm-5hWpXe6SkyP2x0gVAlY9h4TfEUiE94LfzZBOkDqxIG3m0v-9Rr9RlhSBBmuEYbxqKdkUzWqDExWS7k97tP3IWcOMQO2GQD0ee6I5DV2VH6Xzy7fWB3ag8VgnCw0l6fFxXcQx8RNkEVQZdCuRz81CkhrfvuNikB_FRFyoorGfpiRi7oxvu9RGGxhOjc35OYkokZG8p9YOb_BJ99LMCFoeodLVmGoezhWDXIBegdXnDlkt',
+      image: '/images/hosted/b377b1c6f2ce.webp',
       link: '/semana/1/sort-by-size',
     },
     {
@@ -88,7 +88,7 @@ export default function Semana1Page() {
       color: 'bg-[#c4b5a0]',
       borderColor: 'border-[#a89880]',
       textColor: 'text-[#3a3228]',
-      image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuB5iLzQhBmpvdhN880h1nFnbhV7A07HKfSX7Z2KM-8FAGfko7Imk5NV8Ie0MVSMpj-jNS8OLfyGjmLBXiwTbStvWkjsb4yB1xJHDqYkVOJ1VDZk4cZehc6N_Dy6i9KcP5z2Le9rlNNXYJYs3IVWuH4v6VMA85VfrunOrrt84KOaXE2o2DhAbCruSzZgvCeOQoYFIpQl2JZ_E5dTu79e1NU1SHYNpZhBIIkk3PToJpOKnrMxQWmpvUC2dIa4fRCDQN9kLJx_N3X31IZX',
+      image: '/images/hosted/352b4b18487a.webp',
       link: '/semana/1/quiz',
     },
   ];

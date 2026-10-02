@@ -196,7 +196,7 @@ export default function SuperpoderesGamePage() {
                     <img
                       alt="Broti - semilla con cara sonriente brotando"
                       className="w-full h-full object-cover"
-                      src="/images/semana5/broti.png"
+                      src="/images/semana5/broti.webp"
                     />
                   </div>
                   <p
@@ -229,7 +229,7 @@ export default function SuperpoderesGamePage() {
                     <img
                       alt="Un niño y una planta que crecieron"
                       className="w-full h-full object-contain"
-                      src="/images/semana5/broti-crecer.png"
+                      src="/images/semana5/broti-crecer.webp"
                     />
                   </div>
                 </div>
@@ -270,7 +270,7 @@ export default function SuperpoderesGamePage() {
                     <img
                       alt="Veloz - guepardo corriendo feliz"
                       className="w-full h-full object-cover"
-                      src="/images/semana5/veloz.png"
+                      src="/images/semana5/veloz.webp"
                     />
                   </div>
                   <p
@@ -303,7 +303,7 @@ export default function SuperpoderesGamePage() {
                     <img
                       alt="Veloz el guepardo corriendo feliz por la sabana"
                       className="w-full h-full object-contain"
-                      src="/images/semana5/veloz-correr.png"
+                      src="/images/semana5/veloz-correr.webp"
                     />
                   </div>
                 </div>
@@ -344,7 +344,7 @@ export default function SuperpoderesGamePage() {
                     <img
                       alt="Mamá Rana - una mamá con sus crías"
                       className="w-full h-full object-cover"
-                      src="/images/semana5/rana.png"
+                      src="/images/semana5/rana.webp"
                     />
                   </div>
                   <p
@@ -377,7 +377,7 @@ export default function SuperpoderesGamePage() {
                     <img
                       alt="Mamá rana con sus renacuajos"
                       className="w-full h-full object-contain"
-                      src="/images/semana5/rana-familia.png"
+                      src="/images/semana5/rana-familia.webp"
                     />
                   </div>
                 </div>
@@ -418,7 +418,7 @@ export default function SuperpoderesGamePage() {
                     <img
                       alt="Comi - oruga feliz comiendo una hoja verde"
                       className="w-full h-full object-cover"
-                      src="/images/semana5/comi.png"
+                      src="/images/semana5/comi.webp"
                     />
                   </div>
                   <p
@@ -451,7 +451,7 @@ export default function SuperpoderesGamePage() {
                     <img
                       alt="Oruga comiendo y oruga con hambre"
                       className="w-full h-full object-contain"
-                      src="/images/semana5/comi-comer.png"
+                      src="/images/semana5/comi-comer.webp"
                     />
                   </div>
                 </div>
@@ -554,7 +554,7 @@ export default function SuperpoderesGamePage() {
                 <img
                   alt="Personaje Broti"
                   className="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-500"
-                  src="/images/semana5/broti.png"
+                  src="/images/semana5/broti.webp"
                 />
               </div>
               <h3
@@ -587,7 +587,7 @@ export default function SuperpoderesGamePage() {
                 <img
                   alt="Personaje Veloz"
                   className="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-500"
-                  src="/images/semana5/veloz.png"
+                  src="/images/semana5/veloz.webp"
                 />
               </div>
               <h3
@@ -620,7 +620,7 @@ export default function SuperpoderesGamePage() {
                 <img
                   alt="Personaje Mamá Rana"
                   className="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-500"
-                  src="/images/semana5/rana.png"
+                  src="/images/semana5/rana.webp"
                 />
               </div>
               <h3
@@ -653,7 +653,7 @@ export default function SuperpoderesGamePage() {
                 <img
                   alt="Personaje Comi"
                   className="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-500"
-                  src="/images/semana5/comi.png"
+                  src="/images/semana5/comi.webp"
                 />
               </div>
               <h3

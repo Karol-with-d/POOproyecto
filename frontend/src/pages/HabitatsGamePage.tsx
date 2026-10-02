@@ -8,7 +8,7 @@ type Screen = 'start' | 'game' | 'results';
 
 const HABITAT_SPRITE = '/images/semana6/habitats/habitat-sprite.png';
 const ANIMAL_SPRITE1 = '/images/semana6/habitats/animals-sprite1.png';
-const ANIMAL_SPRITE2 = '/images/semana6/habitats/animals-sprite2.png';
+const ANIMAL_SPRITE2 = '/images/semana6/habitats/animals-sprite2.webp';
 
 const HABITATS: { id: Habitat; label: string; bgPos: string; bgTint: string; icon: string }[] = [
   { id: 'ocean',  label: 'Océano',   bgPos: '0% 0%',     bgTint: 'bg-[#a6cce4]/30', icon: 'waves'        },

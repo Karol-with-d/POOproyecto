@@ -28,7 +28,7 @@ const OBJECTS: GameObject[] = [
     title: 'Regadera de Metal',
     shortName: 'Regadera',
     icon: 'water_drop',
-    image: '/images/semana3/regadera.png',
+    image: '/images/semana3/regadera.webp',
     bgClass: 'bg-surface-variant',
     iconColor: 'text-on-surface-variant',
     q1: {
@@ -54,7 +54,7 @@ const OBJECTS: GameObject[] = [
     title: 'Caja',
     shortName: 'Caja',
     icon: 'inventory_2',
-    image: '/images/semana3/caja-madera.png',
+    image: '/images/semana3/caja-madera.webp',
     bgClass: 'bg-tertiary-fixed',
     iconColor: 'text-on-tertiary-fixed',
     q1: {
@@ -80,7 +80,7 @@ const OBJECTS: GameObject[] = [
     title: 'Botella',
     shortName: 'Botella',
     icon: 'liquor',
-    image: '/images/semana3/botella.png',
+    image: '/images/semana3/botella.webp',
     bgClass: 'bg-secondary-fixed',
     iconColor: 'text-on-secondary-fixed',
     q1: {
@@ -106,7 +106,7 @@ const OBJECTS: GameObject[] = [
     title: 'Ropa del Granjero',
     shortName: 'Ropa',
     icon: 'checkroom',
-    image: '/images/semana3/ropa.png',
+    image: '/images/semana3/ropa.webp',
     bgClass: 'bg-primary-container',
     iconColor: 'text-on-primary-container',
     q1: {
@@ -132,7 +132,7 @@ const OBJECTS: GameObject[] = [
     title: 'Estructura del Molino',
     shortName: 'Molino',
     icon: 'wind_power',
-    image: '/images/semana3/molino.png',
+    image: '/images/semana3/molino.webp',
     bgClass: 'bg-surface-variant',
     iconColor: 'text-on-surface-variant',
     q1: {
@@ -158,7 +158,7 @@ const OBJECTS: GameObject[] = [
     title: 'Caja con calabazas',
     shortName: 'Caja con calabazas',
     icon: 'bakery_dining',
-    image: '/images/semana3/calabazas.png',
+    image: '/images/semana3/calabazas.webp',
     bgClass: 'bg-tertiary-fixed',
     iconColor: 'text-on-tertiary-fixed',
     q1: {

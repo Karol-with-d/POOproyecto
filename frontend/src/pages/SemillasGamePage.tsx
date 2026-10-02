@@ -22,7 +22,7 @@ const DAYS = [
     id: 1,
     badge: 'Día 1',
     text: 'La semilla está dormida bajo la tierra',
-    img: '/images/semana5/semilla-dia1.png',
+    img: '/images/semana5/semilla-dia1.webp',
     bgClass: 'tc-bg-day-1',
     icon: 'water_drop',
     effect: '💧',
@@ -31,7 +31,7 @@ const DAYS = [
     id: 2,
     badge: 'Día 2',
     text: 'La semilla se abre y aparece una raíz',
-    img: '/images/semana5/semilla-dia2.png',
+    img: '/images/semana5/semilla-dia2.webp',
     bgClass: 'tc-bg-day-2',
     icon: 'wb_sunny',
     effect: '☀️',
@@ -40,7 +40,7 @@ const DAYS = [
     id: 3,
     badge: 'Día 3',
     text: 'Asoma un tallo muy delgadito',
-    img: '/images/semana5/semilla-dia3.png',
+    img: '/images/semana5/semilla-dia3.webp',
     bgClass: 'tc-bg-day-3',
     icon: 'eco',
     effect: '🌿',
@@ -49,7 +49,7 @@ const DAYS = [
     id: 4,
     badge: 'Día 4',
     text: 'Salen las primeras hojitas grandes',
-    img: '/images/semana5/semilla-dia4.png',
+    img: '/images/semana5/semilla-dia4.webp',
     bgClass: 'tc-bg-day-4',
     icon: 'grade',
     effect: '⭐',
@@ -58,15 +58,15 @@ const DAYS = [
     id: 5,
     badge: 'Día 5',
     text: '¡Ya es una plántula! Necesita luz y agua',
-    img: '/images/semana5/semilla-dia5.png',
+    img: '/images/semana5/semilla-dia5.webp',
     bgClass: 'tc-bg-day-5',
     icon: 'filter_vintage',
     effect: '🌸',
   },
 ];
 
-const INTRO_IMG = '/images/semana5/semilla-intro.png';
-const FINAL_IMG = '/images/semana5/semilla-final.png';
+const INTRO_IMG = '/images/semana5/semilla-intro.webp';
+const FINAL_IMG = '/images/semana5/semilla-final.webp';
 
 const TOTAL_SLIDES = 7;
 
