@@ -52,58 +52,54 @@ export default function SuperpoderesGamePage() {
     >
       {/* TopAppBar */}
       <header
-        className="w-full top-0 sticky z-40 flex justify-between items-center border-b-4"
+        className="w-full top-0 sticky z-40 border-b-4"
         style={{
           backgroundColor: 'var(--tc-surface)',
           borderColor: 'var(--tc-outline)',
           boxShadow: '4px 4px 0px 0px rgba(0,0,0,1)',
         }}
       >
-        <div className="flex justify-between items-center px-[var(--tc-margin-mobile)] md:px-[var(--tc-margin-desktop)] py-[var(--tc-sm)] max-w-7xl mx-auto w-full">
-          <div className="flex flex-col items-center">
+        <div className="flex items-center gap-2 sm:gap-4 px-3 sm:px-[var(--tc-margin-mobile)] md:px-[var(--tc-margin-desktop)] py-2 sm:py-[var(--tc-sm)] max-w-7xl mx-auto w-full min-w-0">
+          <button
+            onClick={handleBack}
+            aria-label="Volver"
+            className="w-10 h-10 shrink-0 rounded-full flex items-center justify-center border-2 active:scale-95 transition-transform"
+            style={{
+              backgroundColor: 'var(--tc-surface-container-highest)',
+              borderColor: 'var(--tc-outline)',
+              color: 'var(--tc-tertiary)',
+            }}
+          >
+            <span className="material-symbols-outlined">arrow_back</span>
+          </button>
+          <span
+            className="font-tc-headline text-lg sm:text-2xl md:text-3xl font-bold tracking-tight leading-tight text-center flex-1 min-w-0 tc-text-shadow-sm"
+            style={{ color: 'var(--tc-primary)' }}
+          >
+            Exploradores de la Naturaleza
+          </span>
+          <div
+            className={`flex items-center shrink-0 rounded-full px-2 py-1 sm:px-4 sm:py-2 text-sm sm:text-base font-bold transition-transform ${
+              popCounter ? 'scale-110' : 'scale-100'
+            }`}
+            style={{
+              backgroundColor: 'var(--tc-surface-container-highest)',
+              color: 'var(--tc-tertiary)',
+            }}
+          >
             <span
-              className="font-tc-headline text-2xl md:text-3xl font-bold tracking-tight tc-text-shadow-sm"
-              style={{ color: 'var(--tc-primary)' }}
+              className="material-symbols-outlined mr-1 sm:mr-2 text-base sm:text-2xl"
+              style={{ fontVariationSettings: "'FILL' 1" }}
             >
-              Exploradores de la Naturaleza
+              star
             </span>
-          </div>
-          <div className="flex items-center gap-4">
-            <button
-              onClick={handleBack}
-              aria-label="Volver"
-              className="w-10 h-10 rounded-full flex items-center justify-center border-2 active:scale-95 transition-transform"
-              style={{
-                backgroundColor: 'var(--tc-surface-container-highest)',
-                borderColor: 'var(--tc-outline)',
-                color: 'var(--tc-tertiary)',
-              }}
-            >
-              <span className="material-symbols-outlined">arrow_back</span>
-            </button>
-            <div
-              className={`flex items-center rounded-full px-4 py-2 font-bold transition-transform ${
-                popCounter ? 'scale-110' : 'scale-100'
-              }`}
-              style={{
-                backgroundColor: 'var(--tc-surface-container-highest)',
-                color: 'var(--tc-tertiary)',
-              }}
-            >
-              <span
-                className="material-symbols-outlined mr-2"
-                style={{ fontVariationSettings: "'FILL' 1" }}
-              >
-                star
-              </span>
-              <span id="star-counter">{flippedCards.size}</span> / {totalCards}
-            </div>
+            <span id="star-counter">{flippedCards.size}</span> / {totalCards}
           </div>
         </div>
       </header>
 
       {/* Main Content */}
-      <main className="flex-grow flex flex-col items-center justify-center p-6 md:p-12 pb-32">
+      <main className="scroll-board flex-grow flex flex-col items-center p-4 sm:p-6 md:p-12 pb-28 md:pb-12">
         {/* Decorative floating SVGs */}
         <div className="fixed inset-0 pointer-events-none z-0 overflow-hidden opacity-30" aria-hidden="true">
           <svg
@@ -144,7 +140,7 @@ export default function SuperpoderesGamePage() {
         <div className="z-10 max-w-5xl w-full flex flex-col items-center">
           {/* Instruction banner */}
           <div
-            className="border-4 rounded-2xl p-4 md:p-6 mb-12 inline-block"
+            className="border-4 rounded-2xl p-3 sm:p-4 md:p-6 mb-4 sm:mb-8 md:mb-12 w-full"
             style={{
               backgroundColor: 'color-mix(in srgb, var(--tc-surface-bright) 90%, transparent)',
               borderColor: 'color-mix(in srgb, var(--tc-primary) 20%, transparent)',
@@ -153,7 +149,7 @@ export default function SuperpoderesGamePage() {
             }}
           >
             <p
-              className="text-center text-xl md:text-2xl mb-0 font-bold tc-text-shadow-sm"
+              className="text-center text-base sm:text-xl md:text-2xl leading-snug mb-0 font-bold tc-text-shadow-sm"
               style={{ color: 'var(--tc-on-surface)' }}
             >
               ¡Toca cada tarjeta para descubrir los increíbles superpoderes de la naturaleza!
@@ -161,10 +157,10 @@ export default function SuperpoderesGamePage() {
           </div>
 
           {/* Cards Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12 w-full">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-8 lg:gap-12 w-full">
             {/* Card 1: Broti - Crecer */}
             <div
-              className={`tc-flip-card cursor-pointer group h-[400px] ${
+              className={`tc-flip-card cursor-pointer group h-[360px] sm:h-[400px] ${
                 flippedCards.has(1) ? 'tc-flipped' : ''
               }`}
               onClick={() => handleFlip(1)}
@@ -174,20 +170,20 @@ export default function SuperpoderesGamePage() {
             >
               <div className="tc-flip-card-inner relative w-full h-full">
                 <div
-                  className="tc-flip-card-face tc-flip-card-front rounded-xl border-4 p-6 flex flex-col items-center justify-center tc-paper-shadow group-hover:-translate-y-1 transition-transform duration-300"
+                  className="tc-flip-card-face tc-flip-card-front rounded-xl border-4 p-4 sm:p-6 flex flex-col items-center justify-center min-h-0 tc-paper-shadow group-hover:-translate-y-1 transition-transform duration-300"
                   style={{
                     backgroundColor: 'var(--tc-surface-bright)',
                     borderColor: 'var(--tc-primary)',
                   }}
                 >
                   <h3
-                    className="font-tc-headline text-3xl font-bold mb-6 text-center"
+                    className="font-tc-headline text-2xl sm:text-3xl font-bold mb-3 sm:mb-6 text-center leading-tight"
                     style={{ color: 'var(--tc-primary)' }}
                   >
                     Broti
                   </h3>
                   <div
-                    className="w-48 h-48 rounded-full overflow-hidden border-4"
+                    className="w-[8rem] h-[8rem] sm:w-[12rem] sm:h-[12rem] shrink-0 rounded-full overflow-hidden border-4"
                     style={{
                       borderColor: 'var(--tc-primary-container)',
                       backgroundColor: 'var(--tc-surface-container)',
@@ -200,27 +196,27 @@ export default function SuperpoderesGamePage() {
                     />
                   </div>
                   <p
-                    className="mt-6 text-xl font-semibold text-center"
+                    className="mt-3 sm:mt-6 text-lg sm:text-2xl leading-snug font-semibold text-center"
                     style={{ color: 'var(--tc-on-surface)' }}
                   >
                     ¡El superpoder de CRECER!
                   </p>
                 </div>
                 <div
-                  className="tc-flip-card-face tc-flip-card-back rounded-xl border-4 p-6 flex flex-col items-center justify-center tc-paper-shadow"
+                  className="tc-flip-card-face tc-flip-card-back rounded-xl border-4 p-4 sm:p-6 flex flex-col items-center justify-center min-h-0 tc-paper-shadow"
                   style={{
                     backgroundColor: 'var(--tc-primary-container)',
                     borderColor: 'var(--tc-primary)',
                   }}
                 >
                   <h3
-                    className="font-tc-headline text-2xl font-bold mb-4 text-center"
+                    className="font-tc-headline text-lg sm:text-2xl font-bold mb-2 sm:mb-4 text-center leading-tight"
                     style={{ color: 'var(--tc-on-primary-container)' }}
                   >
                     Como tú, las plantas crecen.
                   </h3>
                   <div
-                    className="w-full flex-grow rounded-lg overflow-hidden border-2 p-2"
+                    className="w-full flex-1 min-h-0 rounded-lg overflow-hidden border-2 p-2"
                     style={{
                       borderColor: 'var(--tc-primary)',
                       backgroundColor: 'var(--tc-surface-bright)',
@@ -238,7 +234,7 @@ export default function SuperpoderesGamePage() {
 
             {/* Card 2: Veloz - Moverse */}
             <div
-              className={`tc-flip-card cursor-pointer group h-[400px] ${
+              className={`tc-flip-card cursor-pointer group h-[360px] sm:h-[400px] ${
                 flippedCards.has(2) ? 'tc-flipped' : ''
               }`}
               onClick={() => handleFlip(2)}
@@ -248,20 +244,20 @@ export default function SuperpoderesGamePage() {
             >
               <div className="tc-flip-card-inner relative w-full h-full">
                 <div
-                  className="tc-flip-card-face tc-flip-card-front rounded-xl border-4 p-6 flex flex-col items-center justify-center tc-paper-shadow group-hover:-translate-y-1 transition-transform duration-300"
+                  className="tc-flip-card-face tc-flip-card-front rounded-xl border-4 p-4 sm:p-6 flex flex-col items-center justify-center min-h-0 tc-paper-shadow group-hover:-translate-y-1 transition-transform duration-300"
                   style={{
                     backgroundColor: 'var(--tc-surface-bright)',
                     borderColor: 'var(--tc-tertiary)',
                   }}
                 >
                   <h3
-                    className="font-tc-headline text-3xl font-bold mb-6 text-center"
+                    className="font-tc-headline text-2xl sm:text-3xl font-bold mb-3 sm:mb-6 text-center leading-tight"
                     style={{ color: 'var(--tc-tertiary)' }}
                   >
                     Veloz
                   </h3>
                   <div
-                    className="w-48 h-48 rounded-full overflow-hidden border-4"
+                    className="w-[8rem] h-[8rem] sm:w-[12rem] sm:h-[12rem] shrink-0 rounded-full overflow-hidden border-4"
                     style={{
                       borderColor: 'var(--tc-tertiary-container)',
                       backgroundColor: 'var(--tc-surface-container)',
@@ -274,27 +270,27 @@ export default function SuperpoderesGamePage() {
                     />
                   </div>
                   <p
-                    className="mt-6 text-xl font-semibold text-center"
+                    className="mt-3 sm:mt-6 text-lg sm:text-2xl leading-snug font-semibold text-center"
                     style={{ color: 'var(--tc-on-surface)' }}
                   >
                     ¡El superpoder de MOVERSE!
                   </p>
                 </div>
                 <div
-                  className="tc-flip-card-face tc-flip-card-back rounded-xl border-4 p-6 flex flex-col items-center justify-center tc-paper-shadow"
+                  className="tc-flip-card-face tc-flip-card-back rounded-xl border-4 p-4 sm:p-6 flex flex-col items-center justify-center min-h-0 tc-paper-shadow"
                   style={{
                     backgroundColor: 'var(--tc-tertiary-container)',
                     borderColor: 'var(--tc-tertiary)',
                   }}
                 >
                   <h3
-                    className="font-tc-headline text-2xl font-bold mb-4 text-center"
+                    className="font-tc-headline text-lg sm:text-2xl font-bold mb-2 sm:mb-4 text-center leading-tight"
                     style={{ color: 'var(--tc-on-tertiary-container)' }}
                   >
                     Los seres vivos se mueven, las rocas no.
                   </h3>
                   <div
-                    className="w-full flex-grow rounded-lg overflow-hidden border-2 p-2"
+                    className="w-full flex-1 min-h-0 rounded-lg overflow-hidden border-2 p-2"
                     style={{
                       borderColor: 'var(--tc-tertiary)',
                       backgroundColor: 'var(--tc-surface-bright)',
@@ -312,7 +308,7 @@ export default function SuperpoderesGamePage() {
 
             {/* Card 3: Mamá Rana - Tener Familia */}
             <div
-              className={`tc-flip-card cursor-pointer group h-[400px] ${
+              className={`tc-flip-card cursor-pointer group h-[360px] sm:h-[400px] ${
                 flippedCards.has(3) ? 'tc-flipped' : ''
               }`}
               onClick={() => handleFlip(3)}
@@ -322,20 +318,20 @@ export default function SuperpoderesGamePage() {
             >
               <div className="tc-flip-card-inner relative w-full h-full">
                 <div
-                  className="tc-flip-card-face tc-flip-card-front rounded-xl border-4 p-6 flex flex-col items-center justify-center tc-paper-shadow group-hover:-translate-y-1 transition-transform duration-300"
+                  className="tc-flip-card-face tc-flip-card-front rounded-xl border-4 p-4 sm:p-6 flex flex-col items-center justify-center min-h-0 tc-paper-shadow group-hover:-translate-y-1 transition-transform duration-300"
                   style={{
                     backgroundColor: 'var(--tc-surface-bright)',
                     borderColor: 'var(--tc-secondary)',
                   }}
                 >
                   <h3
-                    className="font-tc-headline text-3xl font-bold mb-6 text-center"
+                    className="font-tc-headline text-2xl sm:text-3xl font-bold mb-3 sm:mb-6 text-center leading-tight"
                     style={{ color: 'var(--tc-secondary)' }}
                   >
                     Mamá Rana
                   </h3>
                   <div
-                    className="w-48 h-48 rounded-full overflow-hidden border-4"
+                    className="w-[8rem] h-[8rem] sm:w-[12rem] sm:h-[12rem] shrink-0 rounded-full overflow-hidden border-4"
                     style={{
                       borderColor: 'var(--tc-secondary-container)',
                       backgroundColor: 'var(--tc-surface-container)',
@@ -348,27 +344,27 @@ export default function SuperpoderesGamePage() {
                     />
                   </div>
                   <p
-                    className="mt-6 text-xl font-semibold text-center"
+                    className="mt-3 sm:mt-6 text-lg sm:text-2xl leading-snug font-semibold text-center"
                     style={{ color: 'var(--tc-on-surface)' }}
                   >
                     ¡El superpoder de TENER FAMILIA!
                   </p>
                 </div>
                 <div
-                  className="tc-flip-card-face tc-flip-card-back rounded-xl border-4 p-6 flex flex-col items-center justify-center tc-paper-shadow"
+                  className="tc-flip-card-face tc-flip-card-back rounded-xl border-4 p-4 sm:p-6 flex flex-col items-center justify-center min-h-0 tc-paper-shadow"
                   style={{
                     backgroundColor: 'var(--tc-secondary-container)',
                     borderColor: 'var(--tc-secondary)',
                   }}
                 >
                   <h3
-                    className="font-tc-headline text-2xl font-bold mb-4 text-center"
+                    className="font-tc-headline text-lg sm:text-2xl font-bold mb-2 sm:mb-4 text-center leading-tight"
                     style={{ color: 'var(--tc-on-secondary-container)' }}
                   >
                     ¡Las ranas tienen renacuajos!
                   </h3>
                   <div
-                    className="w-full flex-grow rounded-lg overflow-hidden border-2 p-2"
+                    className="w-full flex-1 min-h-0 rounded-lg overflow-hidden border-2 p-2"
                     style={{
                       borderColor: 'var(--tc-secondary)',
                       backgroundColor: 'var(--tc-surface-bright)',
@@ -386,7 +382,7 @@ export default function SuperpoderesGamePage() {
 
             {/* Card 4: Comi - Comer */}
             <div
-              className={`tc-flip-card cursor-pointer group h-[400px] ${
+              className={`tc-flip-card cursor-pointer group h-[360px] sm:h-[400px] ${
                 flippedCards.has(4) ? 'tc-flipped' : ''
               }`}
               onClick={() => handleFlip(4)}
@@ -396,20 +392,20 @@ export default function SuperpoderesGamePage() {
             >
               <div className="tc-flip-card-inner relative w-full h-full">
                 <div
-                  className="tc-flip-card-face tc-flip-card-front rounded-xl border-4 p-6 flex flex-col items-center justify-center tc-paper-shadow group-hover:-translate-y-1 transition-transform duration-300"
+                  className="tc-flip-card-face tc-flip-card-front rounded-xl border-4 p-4 sm:p-6 flex flex-col items-center justify-center min-h-0 tc-paper-shadow group-hover:-translate-y-1 transition-transform duration-300"
                   style={{
                     backgroundColor: 'var(--tc-surface-bright)',
                     borderColor: 'var(--tc-primary)',
                   }}
                 >
                   <h3
-                    className="font-tc-headline text-3xl font-bold mb-6 text-center"
+                    className="font-tc-headline text-2xl sm:text-3xl font-bold mb-3 sm:mb-6 text-center leading-tight"
                     style={{ color: 'var(--tc-primary)' }}
                   >
                     Comi
                   </h3>
                   <div
-                    className="w-48 h-48 rounded-full overflow-hidden border-4"
+                    className="w-[8rem] h-[8rem] sm:w-[12rem] sm:h-[12rem] shrink-0 rounded-full overflow-hidden border-4"
                     style={{
                       borderColor: 'var(--tc-primary-container)',
                       backgroundColor: 'var(--tc-surface-container)',
@@ -422,27 +418,27 @@ export default function SuperpoderesGamePage() {
                     />
                   </div>
                   <p
-                    className="mt-6 text-xl font-semibold text-center"
+                    className="mt-3 sm:mt-6 text-lg sm:text-2xl leading-snug font-semibold text-center"
                     style={{ color: 'var(--tc-on-surface)' }}
                   >
                     ¡El superpoder de COMER!
                   </p>
                 </div>
                 <div
-                  className="tc-flip-card-face tc-flip-card-back rounded-xl border-4 p-6 flex flex-col items-center justify-center tc-paper-shadow"
+                  className="tc-flip-card-face tc-flip-card-back rounded-xl border-4 p-4 sm:p-6 flex flex-col items-center justify-center min-h-0 tc-paper-shadow"
                   style={{
                     backgroundColor: 'var(--tc-primary-fixed)',
                     borderColor: 'var(--tc-primary)',
                   }}
                 >
                   <h3
-                    className="font-tc-headline text-2xl font-bold mb-4 text-center"
+                    className="font-tc-headline text-lg sm:text-2xl font-bold mb-2 sm:mb-4 text-center leading-tight"
                     style={{ color: 'var(--tc-on-primary-fixed)' }}
                   >
                     Sin comida, no hay energía.
                   </h3>
                   <div
-                    className="w-full flex-grow rounded-lg overflow-hidden border-2 p-2"
+                    className="w-full flex-1 min-h-0 rounded-lg overflow-hidden border-2 p-2"
                     style={{
                       borderColor: 'var(--tc-primary)',
                       backgroundColor: 'var(--tc-surface-bright)',
@@ -485,16 +481,16 @@ export default function SuperpoderesGamePage() {
         </div>
 
         <main
-          className="relative z-10 w-full max-w-6xl mx-auto px-4 py-12 md:py-20 flex flex-col items-center text-center min-h-screen justify-center"
+          className="relative z-10 w-[92vw] max-w-4xl mx-auto p-4 sm:p-8 flex flex-col items-center text-center justify-center !min-h-[100dvh]"
         >
           {/* Badge Element */}
-          <div className="relative mb-8 tc-float-anim">
+          <div className="relative mb-6 sm:mb-8 tc-float-anim">
             <div
               className="absolute inset-0 rounded-full blur-xl opacity-30 tc-glow"
               style={{ backgroundColor: 'var(--tc-tertiary)' }}
             />
             <div
-              className="relative w-28 h-28 rounded-full flex flex-col items-center justify-center border-4"
+              className="relative w-20 h-20 sm:w-28 sm:h-28 rounded-full flex flex-col items-center justify-center border-4"
               style={{
                 backgroundImage: 'linear-gradient(to bottom right, var(--tc-tertiary-container), var(--tc-tertiary))',
                 color: 'var(--tc-on-tertiary-container)',
@@ -503,7 +499,7 @@ export default function SuperpoderesGamePage() {
               }}
             >
               <span
-                className="material-symbols-outlined text-5xl mb-1"
+                className="material-symbols-outlined text-4xl sm:text-5xl mb-1"
                 style={{ fontVariationSettings: "'FILL' 1" }}
               >
                 star
@@ -524,23 +520,23 @@ export default function SuperpoderesGamePage() {
 
           {/* Typography */}
           <h1
-            className="font-tc-headline text-4xl md:text-6xl font-bold mb-4 tracking-tight"
+            className="font-tc-headline text-2xl sm:text-4xl md:text-6xl font-bold mb-3 sm:mb-4 tracking-tight leading-tight"
             style={{ color: 'var(--tc-primary)' }}
           >
             ¡Misión Cumplida, Explorador!
           </h1>
           <p
-            className="font-tc-body text-xl md:text-2xl max-w-2xl mx-auto mb-16 leading-relaxed"
+            className="font-tc-body text-base sm:text-xl md:text-2xl max-w-2xl mx-auto mb-6 sm:mb-10 md:mb-16 leading-relaxed"
             style={{ color: 'var(--tc-on-surface-variant)' }}
           >
             Has descubierto los 4 superpoderes de los seres vivos.
           </p>
 
           {/* Bento Grid Recap */}
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-8 w-full max-w-5xl mb-16">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-2 sm:gap-4 md:gap-8 w-full max-w-5xl mb-8 sm:mb-16">
             {/* Card 1: Crecer (Broti) */}
             <div
-              className="rounded-3xl p-4 border transition-transform duration-300 hover:-translate-y-2 group"
+              className="rounded-2xl sm:rounded-3xl p-3 sm:p-4 border transition-transform duration-300 hover:-translate-y-2 group"
               style={{
                 backgroundColor: 'var(--tc-surface)',
                 boxShadow: '0 4px 20px rgba(46, 50, 48, 0.06)',
@@ -548,8 +544,8 @@ export default function SuperpoderesGamePage() {
               }}
             >
               <div
-                className="aspect-square rounded-2xl overflow-hidden mb-4 relative"
-                style={{ backgroundColor: 'var(--tc-surface-container)' }}
+                className="w-full rounded-xl sm:rounded-2xl overflow-hidden mb-2 sm:mb-4 relative"
+                style={{ backgroundColor: 'var(--tc-surface-container)', aspectRatio: '1 / 1' }}
               >
                 <img
                   alt="Personaje Broti"
@@ -558,13 +554,13 @@ export default function SuperpoderesGamePage() {
                 />
               </div>
               <h3
-                className="font-tc-headline font-bold text-xl mb-1"
+                className="font-tc-headline font-bold text-base sm:text-xl mb-1 leading-tight"
                 style={{ color: 'var(--tc-primary)' }}
               >
                 Crecer
               </h3>
               <p
-                className="font-tc-body text-sm"
+                className="font-tc-body text-xs sm:text-sm leading-snug"
                 style={{ color: 'var(--tc-on-surface-variant)' }}
               >
                 Con Broti
@@ -573,7 +569,7 @@ export default function SuperpoderesGamePage() {
 
             {/* Card 2: Moverse (Veloz) */}
             <div
-              className="rounded-3xl p-4 border transition-transform duration-300 hover:-translate-y-2 group md:mt-8"
+              className="rounded-2xl sm:rounded-3xl p-3 sm:p-4 border transition-transform duration-300 hover:-translate-y-2 group md:mt-8"
               style={{
                 backgroundColor: 'var(--tc-surface)',
                 boxShadow: '0 4px 20px rgba(46, 50, 48, 0.06)',
@@ -581,8 +577,8 @@ export default function SuperpoderesGamePage() {
               }}
             >
               <div
-                className="aspect-square rounded-2xl overflow-hidden mb-4 relative"
-                style={{ backgroundColor: 'var(--tc-surface-container)' }}
+                className="w-full rounded-xl sm:rounded-2xl overflow-hidden mb-2 sm:mb-4 relative"
+                style={{ backgroundColor: 'var(--tc-surface-container)', aspectRatio: '1 / 1' }}
               >
                 <img
                   alt="Personaje Veloz"
@@ -591,13 +587,13 @@ export default function SuperpoderesGamePage() {
                 />
               </div>
               <h3
-                className="font-tc-headline font-bold text-xl mb-1"
+                className="font-tc-headline font-bold text-base sm:text-xl mb-1 leading-tight"
                 style={{ color: 'var(--tc-primary)' }}
               >
                 Moverse
               </h3>
               <p
-                className="font-tc-body text-sm"
+                className="font-tc-body text-xs sm:text-sm leading-snug"
                 style={{ color: 'var(--tc-on-surface-variant)' }}
               >
                 Con Veloz
@@ -606,7 +602,7 @@ export default function SuperpoderesGamePage() {
 
             {/* Card 3: Familia (Mamá Rana) */}
             <div
-              className="rounded-3xl p-4 border transition-transform duration-300 hover:-translate-y-2 group"
+              className="rounded-2xl sm:rounded-3xl p-3 sm:p-4 border transition-transform duration-300 hover:-translate-y-2 group"
               style={{
                 backgroundColor: 'var(--tc-surface)',
                 boxShadow: '0 4px 20px rgba(46, 50, 48, 0.06)',
@@ -614,8 +610,8 @@ export default function SuperpoderesGamePage() {
               }}
             >
               <div
-                className="aspect-square rounded-2xl overflow-hidden mb-4 relative"
-                style={{ backgroundColor: 'var(--tc-surface-container)' }}
+                className="w-full rounded-xl sm:rounded-2xl overflow-hidden mb-2 sm:mb-4 relative"
+                style={{ backgroundColor: 'var(--tc-surface-container)', aspectRatio: '1 / 1' }}
               >
                 <img
                   alt="Personaje Mamá Rana"
@@ -624,13 +620,13 @@ export default function SuperpoderesGamePage() {
                 />
               </div>
               <h3
-                className="font-tc-headline font-bold text-xl mb-1"
+                className="font-tc-headline font-bold text-base sm:text-xl mb-1 leading-tight"
                 style={{ color: 'var(--tc-primary)' }}
               >
                 Familia
               </h3>
               <p
-                className="font-tc-body text-sm"
+                className="font-tc-body text-xs sm:text-sm leading-snug"
                 style={{ color: 'var(--tc-on-surface-variant)' }}
               >
                 Con Mamá Rana
@@ -639,7 +635,7 @@ export default function SuperpoderesGamePage() {
 
             {/* Card 4: Comer (Comi) */}
             <div
-              className="rounded-3xl p-4 border transition-transform duration-300 hover:-translate-y-2 group md:mt-8"
+              className="rounded-2xl sm:rounded-3xl p-3 sm:p-4 border transition-transform duration-300 hover:-translate-y-2 group md:mt-8"
               style={{
                 backgroundColor: 'var(--tc-surface)',
                 boxShadow: '0 4px 20px rgba(46, 50, 48, 0.06)',
@@ -647,8 +643,8 @@ export default function SuperpoderesGamePage() {
               }}
             >
               <div
-                className="aspect-square rounded-2xl overflow-hidden mb-4 relative"
-                style={{ backgroundColor: 'var(--tc-surface-container)' }}
+                className="w-full rounded-xl sm:rounded-2xl overflow-hidden mb-2 sm:mb-4 relative"
+                style={{ backgroundColor: 'var(--tc-surface-container)', aspectRatio: '1 / 1' }}
               >
                 <img
                   alt="Personaje Comi"
@@ -657,13 +653,13 @@ export default function SuperpoderesGamePage() {
                 />
               </div>
               <h3
-                className="font-tc-headline font-bold text-xl mb-1"
+                className="font-tc-headline font-bold text-base sm:text-xl mb-1 leading-tight"
                 style={{ color: 'var(--tc-primary)' }}
               >
                 Comer
               </h3>
               <p
-                className="font-tc-body text-sm"
+                className="font-tc-body text-xs sm:text-sm leading-snug"
                 style={{ color: 'var(--tc-on-surface-variant)' }}
               >
                 Con Comi
@@ -674,7 +670,7 @@ export default function SuperpoderesGamePage() {
           {/* Main Action Button */}
           <button
             onClick={handleSiguienteLeccion}
-            className="group relative inline-flex items-center justify-center gap-3 font-bold font-tc-label text-xl md:text-2xl py-5 px-12 rounded-full hover:-translate-y-1 active:translate-y-0 transition-all duration-300 tc-bounce-subtle overflow-hidden"
+            className="group relative inline-flex items-center justify-center gap-2 sm:gap-3 font-bold font-tc-label text-base sm:text-xl md:text-2xl py-4 px-6 sm:py-5 sm:px-12 rounded-full hover:-translate-y-1 active:translate-y-0 transition-all duration-300 tc-bounce-subtle overflow-hidden w-full max-w-xs sm:w-auto"
             style={{
               backgroundColor: 'var(--tc-primary)',
               color: 'var(--tc-on-primary)',
@@ -712,10 +708,10 @@ export default function SuperpoderesGamePage() {
           boxShadow: '0px -4px 0px 0px rgba(0,0,0,1)',
         }}
       >
-        <div className="flex justify-around items-center h-20 px-2" style={{ paddingBottom: 'env(safe-area-inset-bottom)' }}>
+        <div className="flex justify-around items-stretch h-16 sm:h-20 px-1 sm:px-2 gap-1" style={{ paddingBottom: 'env(safe-area-inset-bottom)' }}>
           <Link
             to="/home"
-            className="flex flex-col items-center justify-center rounded-lg p-2 border-2 active:scale-95 transition-all duration-150 w-20"
+            className="flex flex-1 min-w-0 flex-col items-center justify-center rounded-lg px-1 py-2 border-2 active:scale-95 transition-all duration-150"
             style={{
               backgroundColor: 'var(--tc-primary-container)',
               color: 'var(--tc-on-primary-container)',
@@ -732,7 +728,7 @@ export default function SuperpoderesGamePage() {
           </Link>
           <Link
             to="/home"
-            className="flex flex-col items-center justify-center p-2 active:scale-95 transition-all duration-150 w-20 rounded-lg"
+            className="flex flex-1 min-w-0 flex-col items-center justify-center px-1 py-2 active:scale-95 transition-all duration-150 rounded-lg"
             style={{ color: 'var(--tc-on-surface-variant)' }}
           >
             <span className="material-symbols-outlined mb-1">map</span>
@@ -740,7 +736,7 @@ export default function SuperpoderesGamePage() {
           </Link>
           <Link
             to="/perfil"
-            className="flex flex-col items-center justify-center p-2 active:scale-95 transition-all duration-150 w-20 rounded-lg"
+            className="flex flex-1 min-w-0 flex-col items-center justify-center px-1 py-2 active:scale-95 transition-all duration-150 rounded-lg"
             style={{ color: 'var(--tc-on-surface-variant)' }}
           >
             <span className="material-symbols-outlined mb-1">workspace_premium</span>
@@ -748,7 +744,7 @@ export default function SuperpoderesGamePage() {
           </Link>
           <Link
             to="/semana/5/superpoderes"
-            className="flex flex-col items-center justify-center p-2 active:scale-95 transition-all duration-150 w-20 rounded-lg"
+            className="flex flex-1 min-w-0 flex-col items-center justify-center px-1 py-2 active:scale-95 transition-all duration-150 rounded-lg"
             style={{ color: 'var(--tc-on-surface-variant)' }}
           >
             <span className="material-symbols-outlined mb-1">help</span>

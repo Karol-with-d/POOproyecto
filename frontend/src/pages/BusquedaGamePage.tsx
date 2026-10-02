@@ -142,7 +142,7 @@ export default function BusquedaGamePage() {
 
   return (
     <div
-      className={`h-screen overflow-hidden tc-clay-texture ${useCustomCursor ? 'tc-cursor-none' : ''}`}
+      className={`min-h-[100dvh] w-full overflow-y-auto tc-clay-texture ${useCustomCursor ? 'tc-cursor-none' : ''}`}
       style={{ color: 'var(--tc-on-surface)' }}
     >
       {/* Custom Magnifier Cursor (desktop only) */}
@@ -182,23 +182,23 @@ export default function BusquedaGamePage() {
       {/* Intro Screen */}
       {view === 'intro' && (
         <main
-          className="relative z-10 flex items-center justify-center h-full p-6"
+          className="relative z-10 flex items-center justify-center min-h-[100dvh] p-4 sm:p-6"
           key="intro"
         >
           <div
-            className="bg-surface rounded-xl p-12 text-center max-w-xl tc-card-shadow tc-fade-in"
+            className="bg-surface rounded-xl p-6 sm:p-12 text-center max-w-xl w-full tc-card-shadow tc-fade-in"
             style={{ border: '4px solid var(--tc-primary-container)' }}
           >
-            <div className="mb-8 flex justify-center">
+            <div className="mb-6 sm:mb-8 flex justify-center">
               <div
-                className="w-32 h-32 rounded-full flex items-center justify-center"
+                className="w-20 h-20 sm:w-32 sm:h-32 rounded-full flex items-center justify-center"
                 style={{
                   backgroundColor: 'var(--tc-primary-container)',
                   color: 'var(--tc-primary)',
                 }}
               >
                 <span
-                  className="material-symbols-outlined text-7xl"
+                  className="material-symbols-outlined text-5xl sm:text-7xl"
                   style={{ fontVariationSettings: "'FILL' 1" }}
                 >
                   biotech
@@ -206,13 +206,13 @@ export default function BusquedaGamePage() {
               </div>
             </div>
             <h1
-              className="text-5xl font-tc-headline font-black mb-4 leading-tight"
+              className="text-3xl sm:text-5xl font-tc-headline font-black mb-4 leading-tight"
               style={{ color: 'var(--tc-primary)' }}
             >
               ¡La Lupa de Detective!
             </h1>
             <p
-              className="text-xl font-tc-body mb-10"
+              className="text-base sm:text-xl font-tc-body mb-6 sm:mb-10"
               style={{ color: 'var(--tc-on-surface-variant)' }}
             >
               ¿Eres capaz de distinguir qué cosas tienen vida y cuáles no? ¡Únete a la misión
@@ -220,7 +220,7 @@ export default function BusquedaGamePage() {
             </p>
             <button
               onClick={startGame}
-              className="text-2xl font-bold py-6 px-12 rounded-xl transition-all duration-300 transform hover:scale-105 active:scale-95 shadow-lg flex items-center gap-4 mx-auto"
+              className="text-lg sm:text-2xl font-bold py-4 px-6 sm:py-6 sm:px-12 rounded-xl transition-all duration-300 transform hover:scale-105 active:scale-95 shadow-lg flex items-center justify-center gap-3 sm:gap-4 mx-auto w-full sm:w-auto"
               style={{
                 backgroundColor: 'var(--tc-primary)',
                 color: 'var(--tc-on-primary)',
@@ -244,11 +244,11 @@ export default function BusquedaGamePage() {
       {/* Game Screen */}
       {view === 'game' && (
         <main
-          className="relative z-10 h-full flex flex-col p-6 overflow-y-auto"
+          className="relative z-10 flex flex-col p-3 sm:p-6 w-full scroll-board"
           key="game"
         >
           {/* Header */}
-          <div className="flex justify-between items-center mb-8 max-w-7xl mx-auto w-full">
+          <div className="flex flex-col sm:flex-row sm:justify-between gap-3 items-center mb-4 sm:mb-8 max-w-7xl mx-auto w-full">
             <button
               onClick={goToIntro}
               className="flex items-center gap-2 font-bold py-3 px-6 rounded-xl transition-colors duration-200 tc-card-shadow active:scale-95"
@@ -268,17 +268,17 @@ export default function BusquedaGamePage() {
               <span>Volver</span>
             </button>
             <div
-              className="px-8 py-4 rounded-full flex items-center gap-4 tc-card-shadow"
+              className="px-4 py-2 sm:px-8 sm:py-4 rounded-full flex flex-wrap items-center justify-center gap-2 sm:gap-4 tc-card-shadow max-w-full text-center"
               style={{ backgroundColor: 'var(--tc-surface-container-highest)' }}
             >
               <span
-                className="font-tc-label font-black text-xl uppercase tracking-wider"
+                className="font-tc-label font-black text-sm sm:text-xl uppercase tracking-wider"
                 style={{ color: 'var(--tc-primary)' }}
               >
                 Seres vivos encontrados:
               </span>
               <div
-                className="px-6 py-2 rounded-full font-tc-headline font-black text-3xl"
+                className="px-3 py-1 sm:px-6 sm:py-2 rounded-full font-tc-headline font-black text-xl sm:text-3xl"
                 style={{
                   backgroundColor: 'var(--tc-primary-container)',
                   color: 'var(--tc-on-primary-container)',
@@ -299,7 +299,7 @@ export default function BusquedaGamePage() {
 
           {/* Grid */}
           <div
-            className="grid grid-cols-2 md:grid-cols-4 gap-6 max-w-7xl mx-auto w-full pb-12"
+            className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-6 max-w-7xl mx-auto w-full pb-6 sm:pb-12"
             key={`grid-${view}`}
           >
             {ASSETS.map((asset, index) => {
@@ -308,7 +308,7 @@ export default function BusquedaGamePage() {
               return (
                 <div
                   key={`${asset.name}-${index}`}
-                  className={`bg-white rounded-xl p-4 flex flex-col items-center tc-card-shadow relative overflow-hidden transition-all duration-300 ${
+                  className={`bg-white rounded-xl p-3 sm:p-4 flex flex-col items-center tc-card-shadow relative overflow-hidden transition-all duration-300 ${
                     isSolved
                       ? 'border-4'
                       : 'border border-outline-variant hover:-translate-y-1'
@@ -324,8 +324,11 @@ export default function BusquedaGamePage() {
                   }
                 >
                   <div
-                    className="w-full aspect-square rounded-lg mb-4 flex items-center justify-center p-4"
-                    style={{ backgroundColor: 'var(--tc-surface-container-low)' }}
+                    className="w-full rounded-lg mb-2 sm:mb-4 flex items-center justify-center p-2 sm:p-4"
+                    style={{
+                      backgroundColor: 'var(--tc-surface-container-low)',
+                      aspectRatio: '1 / 1',
+                    }}
                   >
                     <img
                       src={asset.id}
@@ -337,7 +340,7 @@ export default function BusquedaGamePage() {
                     <button
                       onClick={() => handleAnswer(index, true)}
                       disabled={isSolved}
-                      className="w-full py-3 rounded-lg font-tc-label font-black text-sm uppercase flex items-center justify-center gap-2 transition-all active:scale-95 disabled:opacity-50"
+                      className="w-full py-2 sm:py-3 px-1 rounded-lg font-tc-label font-black text-xs sm:text-sm uppercase leading-tight flex items-center justify-center gap-1 sm:gap-2 transition-all active:scale-95 disabled:opacity-50"
                       style={{
                         backgroundColor: 'var(--tc-primary-fixed)',
                         color: 'var(--tc-primary)',
@@ -356,7 +359,7 @@ export default function BusquedaGamePage() {
                     <button
                       onClick={() => handleAnswer(index, false)}
                       disabled={isSolved}
-                      className="w-full py-3 rounded-lg font-tc-label font-black text-sm uppercase flex items-center justify-center gap-2 transition-all active:scale-95 disabled:opacity-50"
+                      className="w-full py-2 sm:py-3 px-1 rounded-lg font-tc-label font-black text-xs sm:text-sm uppercase leading-tight flex items-center justify-center gap-1 sm:gap-2 transition-all active:scale-95 disabled:opacity-50"
                       style={{
                         backgroundColor: 'var(--tc-secondary-container)',
                         color: 'var(--tc-secondary)',
@@ -421,16 +424,15 @@ export default function BusquedaGamePage() {
           aria-labelledby="finish-title"
         >
           <div
-            className="rounded-xl p-16 text-center tc-card-shadow"
+            className="rounded-xl p-6 sm:p-12 text-center tc-card-shadow max-w-lg w-[92vw] max-h-[90vh] overflow-y-auto"
             style={{
               backgroundColor: 'var(--tc-surface)',
               border: '8px solid var(--tc-primary-container)',
-              transform: 'scale(1.1)',
             }}
           >
-            <div className="mb-6 flex justify-center">
+            <div className="mb-4 sm:mb-6 flex justify-center">
               <div
-                className="w-40 h-40 rounded-full flex items-center justify-center"
+                className="w-24 h-24 sm:w-40 sm:h-40 rounded-full flex items-center justify-center"
                 style={{
                   backgroundColor: 'var(--tc-primary-container)',
                   color: 'var(--tc-primary)',
@@ -438,7 +440,7 @@ export default function BusquedaGamePage() {
                 }}
               >
                 <span
-                  className="material-symbols-outlined text-8xl"
+                  className="material-symbols-outlined text-5xl sm:text-8xl"
                   style={{ fontVariationSettings: "'FILL' 1" }}
                 >
                   star
@@ -447,21 +449,21 @@ export default function BusquedaGamePage() {
             </div>
             <h2
               id="finish-title"
-              className="text-7xl font-tc-headline font-black mb-4"
+              className="text-4xl sm:text-7xl font-tc-headline font-black mb-4 leading-tight"
               style={{ color: 'var(--tc-primary)' }}
             >
               ¡Bien hecho!
             </h2>
             <p
-              className="text-2xl font-tc-body font-bold mb-8"
+              className="text-lg sm:text-2xl font-tc-body font-bold mb-6 sm:mb-8"
               style={{ color: 'var(--tc-on-surface-variant)' }}
             >
               ¡Has completado la misión con éxito!
             </p>
-            <div className="flex justify-center gap-4">
+            <div className="flex flex-col sm:flex-row justify-center gap-3 sm:gap-4">
               <button
                 onClick={startGame}
-                className="text-xl font-bold py-4 px-8 rounded-xl transition-all active:scale-95 tc-card-shadow flex items-center gap-2"
+                className="text-base sm:text-xl font-bold py-3 px-4 sm:py-4 sm:px-8 rounded-xl transition-all active:scale-95 tc-card-shadow flex items-center justify-center gap-2 w-full sm:w-auto"
                 style={{
                   backgroundColor: 'var(--tc-primary)',
                   color: 'var(--tc-on-primary)',
@@ -472,7 +474,7 @@ export default function BusquedaGamePage() {
               </button>
               <button
                 onClick={() => navigate('/semana/5')}
-                className="text-xl font-bold py-4 px-8 rounded-xl transition-all active:scale-95 tc-card-shadow flex items-center gap-2"
+                className="text-base sm:text-xl font-bold py-3 px-4 sm:py-4 sm:px-8 rounded-xl transition-all active:scale-95 tc-card-shadow flex items-center justify-center gap-2 w-full sm:w-auto"
                 style={{
                   backgroundColor: 'var(--tc-tertiary-container)',
                   color: 'var(--tc-on-tertiary-container)',
