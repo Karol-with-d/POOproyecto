@@ -186,8 +186,13 @@ export default function Semana1QuizPage() {
         semanaNumber: 1,
         score: percentage,
       });
-    } catch {
-      setSaveError('No se pudo guardar el puntaje. Revisa tu conexión.');
+    } catch (error) {
+      const message = error instanceof Error ? error.message : '';
+      if (message.includes('no existe')) {
+        setSaveError('No se pudo guardar: faltan las semanas en la base de datos.');
+      } else {
+        setSaveError('No se pudo guardar el puntaje. Revisa tu conexión.');
+      }
     }
   };
 
