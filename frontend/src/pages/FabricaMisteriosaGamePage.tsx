@@ -30,7 +30,7 @@ const binTypes =[
 
 function ArrowLeftIcon(){
   return(
-    <svg className= "w-5 h-5" viewBox="0 0 24 24" fill = "none" stroke = "currentColor" strokeWidth = "2.6" strokeLinecap = "round" strokeLinejoin = "round">
+    <svg className= "w-4 h-4 sm:w-5 sm:h-5" viewBox="0 0 24 24" fill = "none" stroke = "currentColor" strokeWidth = "2.6" strokeLinecap = "round" strokeLinejoin = "round">
     <path d="M19 12H5" />
     <polyline points="12 19 5 12 12 5" />
     </svg>
@@ -42,7 +42,7 @@ function ArrowLeftIcon(){
 function SoundIcon({ muted }: { muted: boolean }) {
   return (
     <svg
-      className="w-5 h-5"
+      className="w-4 h-4 sm:w-5 sm:h-5 min-[1440px]:w-6 min-[1440px]:h-6"
       viewBox="0 0 24 24"
       fill="none"
       stroke="currentColor"
@@ -71,7 +71,7 @@ function SoundIcon({ muted }: { muted: boolean }) {
 
 function LaunchIcon() { 
   return ( 
-  <svg className="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" >
+  <svg className="w-5 h-5 sm:w-6 sm:h-6 min-[1440px]:w-7 min-[1440px]:h-7 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" >
      <path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z" />
      <path d="m12 15-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z" /> 
      <path d="M9 12H4s.55-3.03 2-4.5c1.47-1.47 4.5-2 4.5-2" /> 
@@ -184,7 +184,7 @@ function ObjectIllustration({ objectId, className = 'w-full h-full',
  function BinIcon({ type }: { type: string }) { 
   if (type === 'Plástico') { 
     return ( 
-    <svg className="w-9 h-9" fill="none" viewBox="0 0 64 64"> 
+    <svg className="w-8 h-8 sm:w-9 sm:h-9 min-[1440px]:w-11 min-[1440px]:h-11" fill="none" viewBox="0 0 64 64"> 
      <rect fill="#F59E0B" height="8" rx="3" width="20" x="22" y="6" /> 
      <path d="M20 14h24l4 10v32a6 6 0 0 1-6 6H22a6 6 0 0 1-6-6V24l4-10z" fill="#FDE68A" stroke="#D97706" strokeLinejoin="round" strokeWidth="3" /> 
      <circle cx="32" cy="38" fill="none" r="8" stroke="#D97706" strokeDasharray="10 6" strokeWidth="2.5" /> 
@@ -196,7 +196,7 @@ function ObjectIllustration({ objectId, className = 'w-full h-full',
 
  if (type === 'Papel'){
   return ( 
-   <svg className="w-9 h-9" fill="none" viewBox="0 0 64 64">
+   <svg className="w-8 h-8 sm:w-9 sm:h-9 min-[1440px]:w-11 min-[1440px]:h-11" fill="none" viewBox="0 0 64 64">
      <path d="M12 20h30a4 4 0 0 1 4 4v32a4 4 0 0 1-4 4H12a4 4 0 0 1-4-4V24a4 4 0 0 1 4-4z" fill="#BAE6FD" stroke="#0284C7" strokeWidth="3" /> 
      <path d="M22 10h28a4 4 0 0 1 4 4v34a4 4 0 0 1-4 4H22V10z" fill="#FFFFFF" stroke="#0284C7" strokeWidth="3" /> 
      <line stroke="#38BDF8" strokeLinecap="round" strokeWidth="2.5" x1="28" x2="44" y1="20" y2="20" /> 
@@ -208,7 +208,7 @@ function ObjectIllustration({ objectId, className = 'w-full h-full',
 
   if (type === 'Vidrio') { 
     return ( 
-     <svg className="w-9 h-9" fill="none" viewBox="0 0 64 64"> 
+     <svg className="w-8 h-8 sm:w-9 sm:h-9 min-[1440px]:w-11 min-[1440px]:h-11" fill="none" viewBox="0 0 64 64"> 
       <rect fill="#047857" height="6" rx="2" width="8" x="28" y="6" /> 
       <path d="M27 12h10v10l7 8v24a4 4 0 0 1-4 4H24a4 4 0 0 1-4-4V30l7-8V12z" fill="#A7F3D0" stroke="#047857" strokeWidth="3" /> 
       <line stroke="#FFFFFF" strokeLinecap="round" strokeWidth="2.5" x1="26" x2="26" y1="36" y2="48" /> 
@@ -218,7 +218,7 @@ function ObjectIllustration({ objectId, className = 'w-full h-full',
 
    if (type === 'Metal') { 
     return ( 
-    <svg className="w-9 h-9" fill="none" viewBox="0 0 64 64"> 
+    <svg className="w-8 h-8 sm:w-9 sm:h-9 min-[1440px]:w-11 min-[1440px]:h-11" fill="none" viewBox="0 0 64 64"> 
      <ellipse cx="32" cy="16" fill="#CBD5E1" rx="16" ry="6" stroke="#475569" strokeWidth="3" /> 
      <circle cx="32" cy="16" fill="#94A3B8" r="3" /> 
      <path d="M16 16v32c0 3.3 7.16 6 16 6s16-2.7 16-6V16" fill="#E2E8F0" stroke="#475569" strokeWidth="3" /> 
@@ -228,7 +228,7 @@ function ObjectIllustration({ objectId, className = 'w-full h-full',
   }
 
   return ( 
-    <svg className="w-9 h-9" fill="none" viewBox="0 0 64 64"> 
+    <svg className="w-8 h-8 sm:w-9 sm:h-9 min-[1440px]:w-11 min-[1440px]:h-11" fill="none" viewBox="0 0 64 64"> 
       <path d="M32 14c-1-5 2-8 2-8" stroke="#78350F" strokeLinecap="round" strokeWidth="3" /> 
       <path d="M33 10c4-3 8-1 9 3-4 1-7-1-9-3z" fill="#4ADE80" stroke="#15803D" strokeWidth="1.5" /> 
       <path d="M32 20c-4-6-16-6-20 2-4 8-1 20 6 26 5 4 10 6 14 6s9-2 14-6c7-6 10-18 6-26-4-8-16-8-20-2z" fill="#FB923C" stroke="#C2410C" strokeLinejoin="round" strokeWidth="3" /> 
@@ -240,7 +240,7 @@ function ObjectIllustration({ objectId, className = 'w-full h-full',
 
 function SearchIcon() { 
   return ( 
-    <svg className="w-4 h-4 text-emerald-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"> 
+    <svg className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-emerald-600 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"> 
       <circle cx="11" cy="11" r="8" /> 
       <line x1="21" y1="21" x2="16.65" y2="16.65" /> 
     </svg>
@@ -249,7 +249,7 @@ function SearchIcon() {
 
 function CheckIcon() { 
   return ( 
-    <svg className="w-4 h-4 text-emerald-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3"> 
+    <svg className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-emerald-600 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3"> 
        <polyline points="20 6 9 17 4 12" /> 
     </svg>
    );
@@ -257,7 +257,7 @@ function CheckIcon() {
 
 function WarningIcon() { 
   return ( 
-    <svg className="w-4 h-4 text-amber-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"> 
+    <svg className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-amber-600 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"> 
        <circle cx="12" cy="12" r="10" /> 
        <line x1="12" y1="8" x2="12" y2="12" /> 
        <line x1="12" y1="16" x2="12.01" y2="16" /> 
@@ -735,7 +735,8 @@ const createCelebrationStars = useCallback(
     
     feedbackTimerRef.current = 
       setTimeout(() => { 
-        setErrorBin(null); 
+        setErrorBin(null);
+        setSelectedBin(null); 
         setInstruction('object'); 
       }, 2000);
     }, 
@@ -814,54 +815,82 @@ const createCelebrationStars = useCallback(
   //RENDER PRINCIPAL 
 
    return ( 
-     <div className="min-h-screen bg-[#EEFBF7] text-[#0F172A] flex flex-col items-center justify-center p-3 sm:p-5 overflow-x-hidden">
+     <div className="fabrica-root min-h-screen w-full bg-[#EEFBF7] text-[#0F172A] flex flex-col overflow-hidden">
        <div
          ref={gameContainerRef} 
-         className="relative w-full max-w-5xl min-h-[700px] bg-gradient-to-b from-[#DDF7F0] via-[#EAFBF5] to-[#D5F3EB] rounded-[2rem] shadow-2xl overflow-hidden flex flex-col" 
+         className="responsive-stage relative flex h-full min-h-0 w-full flex-1 flex-col overflow-hidden bg-gradient-to-b from-[#DDF7F0] via-[#EAFBF5] to-[#D5F3EB]" 
          > 
          {/* === FONDO DECORATIVO === */}
          
-        <div className="absolute inset-0 pointer-events-none">
-          <div className="absolute top-20 left-1/4 w-72 h-72 rounded-full bg-teal-200/30 blur-3xl" /> 
-          <div className="absolute top-24 right-1/4 w-80 h-80 rounded-full bg-purple-200/30 blur-3xl" /> 
-          <div className="absolute top-48 left-1/2 -translate-x-1/2 w-[32rem] h-60 rounded-full bg-emerald-200/30 blur-3xl" /> 
+        <div className="absolute inset-0 pointer-events-none overflow-hidden">
+          <div className="absolute top-16 sm:top-20 left-1/4 w-40 h-40 sm:w-72 sm:h-72 rounded-full bg-teal-200/30 blur-3xl" /> 
+          <div className="absolute top-20 sm:top-24 right-1/4 w-44 h-44 sm:w-80 sm:h-80 rounded-full bg-purple-200/30 blur-3xl" /> 
+          <div className="absolute top-36 sm:top-48 left-1/2 -translate-x-1/2 w-[20rem] sm:w-[32rem] h-40 sm:h-60 rounded-full bg-emerald-200/30 blur-3xl" /> 
           {/* Engranajes decorativos */}
 
-           <div className="absolute top-40 left-5 opacity-30 text-teal-400"> 
-             <div className="w-24 h-24 rounded-full border-[14px] border-dashed animate-spin-slow" /> 
+           <div className="absolute top-32 sm:top-40 min-[1440px]:top-48 left-0 sm:left-5 min-[1440px]:left-10 opacity-30 text-teal-400"> 
+             <div className="w-16 h-16 sm:w-24 sm:h-24 min-[1440px]:w-32 min-[1440px]:h-32 rounded-full border-[8px] sm:border-[14px] border-dashed animate-spin-slow" /> 
            </div> 
            
-           <div className="absolute top-48 right-5 opacity-30 text-purple-400"> 
-             <div className="w-28 h-28 rounded-full border-[14px] border-dashed animate-spin-reverse-slow" /> 
+           <div className="absolute top-40 sm:top-48 min-[1440px]:top-56 right-0 sm:right-5 min-[1440px]:right-10 opacity-30 text-purple-400"> 
+             <div className="w-20 h-20 sm:w-28 sm:h-28 min-[1440px]:w-36 min-[1440px]:h-36 rounded-full border-[8px] sm:border-[14px] border-dashed animate-spin-reverse-slow" /> 
            </div> 
            
            {/* Suelo */} 
-           <div className="absolute bottom-0 left-0 right-0 h-[32%] bg-gradient-to-b from-[#CBEFE3] via-[#BFEAE0] to-[#B3E5DA] border-t-4 border-emerald-300" /> 
+           <div className="absolute bottom-0 left-0 right-0 h-[27%] sm:h-[32%] bg-gradient-to-b from-[#CBEFE3] via-[#BFEAE0] to-[#B3E5DA] border-t-2 sm:border-t-4 border-emerald-300" /> 
            
            {/* Cinta transportadora */} 
-           <div className="absolute bottom-[27%] left-0 right-0 h-10 bg-gradient-to-r from-emerald-300/40 via-teal-200/50 to-sky-300/40 border-y-2 border-emerald-400/60 overflow-hidden"> 
-             <div className="w-[200%] h-full flex items-center gap-8 animate-conveyor opacity-60"> 
-               <span className="w-8 h-2 bg-emerald-500/50 rounded-full" /> 
-               <span className="w-3 h-3 rounded-full border-2 border-emerald-600/60" /> 
-               <span className="w-8 h-2 bg-teal-500/50 rounded-full" /> 
-               <span className="w-3 h-3 rounded-full border-2 border-teal-600/60" /> 
-               <span className="w-8 h-2 bg-sky-500/50 rounded-full" /> 
-               <span className="w-3 h-3 rounded-full border-2 border-sky-600/60" /> 
-               <span className="w-8 h-2 bg-purple-500/50 rounded-full" /> 
+           <div className="absolute bottom-[23%] sm:bottom-[27%] left-0 right-0 h-7 sm:h-10 bg-gradient-to-r from-emerald-300/40 via-teal-200/50 to-sky-300/40 border-y-2 border-emerald-400/60 overflow-hidden"> 
+             <div className="w-[200%] h-full flex items-center gap-4 sm:gap-8 animate-conveyor opacity-60"> 
+               <span className="w-6 sm:w-8 h-2 bg-emerald-500/50 rounded-full" /> 
+               <span className="w-2.5 sm:w-3 h-2.5 sm:h-3 rounded-full border-2 border-emerald-600/60" /> 
+               <span className="w-6 sm:w-8 h-2 bg-teal-500/50 rounded-full" /> 
+               <span className="w-2.5 sm:w-3 h-2.5 sm:h-3 rounded-full border-2 border-teal-600/60" /> 
+               <span className="w-6 sm:w-8 h-2 bg-sky-500/50 rounded-full" /> 
+               <span className="w-2.5 sm:w-3 h-2.5 sm:h-3 rounded-full border-2 border-sky-600/60" /> 
+               <span className="w-6 sm:w-8 h-2 bg-purple-500/50 rounded-full" /> 
              </div> 
           </div>
         </div>
         
          {/* === TUBERÍAS DECORATIVAS === */} 
          
-         <div className="absolute top-36 -left-10 w-72 h-6 bg-[#A7F3D0] rounded-full border-4 border-[#34D399] z-[1]" /> 
-         <div className="absolute top-44 -right-10 w-72 h-6 bg-[#BAE6FD] rounded-full border-4 border-[#38BDF8] z-[1]" /> 
+         <div className="absolute top-28 sm:top-36 min-[1440px]:top-40 -left-16 sm:-left-10 w-52 sm:w-72 min-[1440px]:w-[32rem] h-4 sm:h-6 min-[1440px]:h-7 bg-[#A7F3D0] rounded-full border-2 sm:border-4 border-[#34D399] z-[1]" /> 
+         <div className="absolute top-36 sm:top-44 min-[1440px]:top-52 -right-16 sm:-right-10 w-52 sm:w-72 min-[1440px]:w-[32rem] h-4 sm:h-6 min-[1440px]:h-7 bg-[#BAE6FD] rounded-full border-2 sm:border-4 border-[#38BDF8] z-[1]" /> 
          
          {/* === ENCABEZADO ==== */} 
          
-         <header className="relative z-30 w-full bg-white/90 backdrop-blur-md border-b-2 border-emerald-200/90 px-4 sm:px-6 py-3 flex items-center justify-between gap-3"> 
+         <header className="relative z-50 w-full shrink-0 bg-white/95 backdrop-blur-md border-b-2 border-emerald-200/90 px-3 sm:px-5 lg:px-8 py-2 sm:py-3 flex items-center justify-between gap-2 sm:gap-4"> 
          {/* Botón volver */} 
-         <button type="button" onClick={handleExit} title="Volver a la Semana 2" aria-label="Volver a la Semana 2" className="group flex items-center gap-2 px-3.5 py-2 rounded-2xl bg-gradient-to-b from-white to-[#ECFDF5] border-2 border-emerald-200 text-emerald-800 hover:border-emerald-400 hover:bg-emerald-50 active:scale-95 transition-all shadow-sm" > 
+         <button  type="button"
+            onClick={handleExit}
+            title="Volver a la Semana 2"
+            aria-label="Volver a la Semana 2"
+            className="
+              group
+              flex
+              items-center
+              gap-1
+              sm:gap-2
+              px-2
+              sm:px-3.5
+              py-1.5
+              sm:py-2
+              rounded-xl
+              sm:rounded-2xl
+              bg-gradient-to-b
+              from-white
+              to-[#ECFDF5]
+              border-2
+              border-emerald-200
+              text-emerald-800
+              hover:border-emerald-400
+              hover:bg-emerald-50
+              active:scale-95
+              transition-all
+              shadow-sm
+              shrink-0
+            " > 
           <span className="group-hover:-translate-x-1 transition-transform"> 
               <ArrowLeftIcon /> 
           </span> 
@@ -870,16 +899,16 @@ const createCelebrationStars = useCallback(
           </button> 
           
           {/* Título */} 
-          <div className="flex items-center gap-2"> 
+          <div className="flex items-center justify-center min-w-0 flex-1"> 
             
-            <span className="font-bold text-base sm:text-xl text-[#54624d]"> Máquina de Reciclaje </span> 
+            <span className="font-bold text-[11px] xs:text-xs sm:text-lg md:text-xl xl:text-2xl text-[#54624d] text-center leading-tight"> Máquina de Reciclaje </span> 
           </div> 
           
           {/* Progreso y sonido */} 
-          <div className="flex items-center gap-2"> 
-            <div className="bg-gradient-to-r from-cyan-100/70 to-emerald-100/70 border border-teal-200 px-3 py-1.5 rounded-2xl shadow-sm"> 
-              <span className="text-xs sm:text-sm font-bold text-teal-950"> 
-                Objeto {currentRound + 1} de {gameSequence.length} 
+          <div className="flex items-center gap-1 sm:gap-2 shrink-0"> 
+            <div className="bg-gradient-to-r from-cyan-100/70 to-emerald-100/70 border border-teal-200 px-1.5 sm:px-3 py-1 sm:py-1.5 rounded-xl sm:rounded-2xl shadow-sm whitespace-nowrap"> 
+              <span className="text-[9px] sm:text-xs md:text-sm min-[1440px]:text-base font-bold text-teal-950"> 
+                Objeto {currentRound + 1} de{' '} {gameSequence.length} 
               </span> 
             </div> 
             
@@ -892,7 +921,7 @@ const createCelebrationStars = useCallback(
                                ? 'Desactivar sonido' 
                                : 'Activar sonido'
                     }
-                    className={`w-10 h-10 rounded-2xl border-2 flex items-center justify-center transition-all ${ 
+                    className={`w-8 h-8 sm:w-10 sm:h-10 min-[1440px]:w-12 min-[1440px]:h-12 rounded-xl sm:rounded-2xl border-2 flex items-center justify-center transition-all shrink-0 ${ 
                       soundEnabled 
                                ? 'bg-[#FEF08A]/80 border-amber-300 text-amber-800 hover:bg-[#FEF08A]' 
                                : 'bg-slate-100 border-slate-300 text-slate-500' 
@@ -905,23 +934,23 @@ const createCelebrationStars = useCallback(
 
                 {/* === ÁREA PRINCIPAL === */} 
                 
-                <main className="relative z-20 flex-1 flex flex-col items-center px-4 pt-5 pb-4">
+                <main className="relative z-20 flex min-h-0 w-full flex-1 flex-col overflow-hidden px-3 sm:px-5 lg:px-8">
                 {/* Instrucción */} 
-                <div className="bg-white/95 border-2 border-teal-200/90 px-5 py-2.5 rounded-full shadow-sm text-center mb-4 max-w-xl min-h-[3rem] flex items-center justify-center">
-                   <p className="text-xs sm:text-sm md:text-base font-bold text-teal-900 flex items-center justify-center gap-2 text-center"> 
+                <div className="mx-auto mt-2 sm:mt-3 mb-2 w-full max-w-3xl xl:max-w-4xl shrink-0 bg-white/95 border-2 border-teal-200/90 px-3 sm:px-6 xl:px-8 py-2 sm:py-2.5 rounded-2xl sm:rounded-full shadow-sm text-center flex items-center justify-center">
+                   <p className="w-full text-[11px] sm:text-sm md:text-base xl:text-lg font-bold text-teal-900 flex flex-wrap items-center justify-center gap-1.5 sm:gap-2 text-center leading-snug"> 
                       {renderInstruction()}
                    </p>
                 </div>
                 {/* === MÁQUINA === */} 
-                
-                <div className="relative w-full max-w-sm flex flex-col items-center"> 
+                <div className="flex min-h-0 w-full flex-1 items-center justify-center py-1 sm:py-2">
+                <div className="responsive-machine relative flex h-full max-h-full min-h-0 w-full max-w-[18rem] xs:max-w-[19rem] sm:max-w-sm md:max-w-md lg:max-w-xl xl:max-w-2xl flex-col items-center justify-center"> 
                   {/* Conectores laterales */} 
-                <div className="absolute top-28 -left-4 w-6 h-12 bg-gradient-to-r from-emerald-300 to-emerald-200 border-2 border-emerald-400 rounded-l-xl z-0" />
+                <div className="absolute top-24 sm:top-28 -left-3 sm:-left-4 w-4 sm:w-6 h-9 sm:h-12 bg-gradient-to-r from-emerald-300 to-emerald-200 border-2 border-emerald-400 rounded-l-xl z-0" />
                 
-                <div className="absolute top-28 -right-4 w-6 h-12 bg-gradient-to-l from-purple-300 to-purple-200 border-2 border-purple-400 rounded-r-xl z-0" />
+                <div className="absolute top-24 sm:top-28 -right-3 sm:-right-4 w-4 sm:w-6 h-9 sm:h-12 bg-gradient-to-l from-purple-300 to-purple-200 border-2 border-purple-400 rounded-r-xl z-0" />
                   {/* Cuerpo */} 
                   <div 
-                    className={`w-full bg-white rounded-t-[5.5rem] rounded-b-[2.5rem] border-4 border-emerald-300 shadow-[0_14px_28px_-4px_rgba(167,243,208,0.45),0_6px_12px_-2px_rgba(56,189,248,0.15),inset_0_2px_4px_rgba(255,255,255,0.95)] flex flex-col items-center relative overflow-hidden z-10 transition-transform ${ 
+                    className={`flex h-full max-h-full min-h-0 w-full flex-col items-center relative z-10 overflow-hidden bg-white rounded-t-[3.5rem] sm:rounded-t-[5.5rem] xl:rounded-t-[6.5rem] rounded-b-[1.75rem] sm:rounded-b-[2.5rem] xl:rounded-b-[2.75rem] border-2 sm:border-4 border-emerald-300 shadow-[0_14px_28px_-4px_rgba(167,243,208,0.45),0_6px_12px_-2px_rgba(56,189,248,0.15),inset_0_2px_4px_rgba(255,255,255,0.95)] transition-transform ${ 
                       machineVibrating
                        ? 'animate-vibrate' 
                        : '' 
@@ -929,47 +958,68 @@ const createCelebrationStars = useCallback(
                   > 
                    {/* Parte superior */} 
                    
-                   <div className="w-full pt-5 pb-3 px-6 flex flex-col items-center bg-gradient-to-b from-[#F0FDF9] to-white"> 
+                   <div className="w-full shrink min-h-0 max-h-[38%] overflow-hidden pt-3 sm:pt-4 pb-1 sm:pb-1.5 px-3 sm:px-6 flex flex-col items-center bg-gradient-to-b from-[#F0FDF9] to-white"> 
                    {/* Chimenea */} 
-                   <div className="w-14 h-4 bg-gradient-to-r from-[#FDE68A] via-[#FEF08A] to-[#FDE68A] border-2 border-amber-300 rounded-t-lg -mt-5" /> 
+                   <div className="w-10 sm:w-14 h-3 sm:h-4 bg-gradient-to-r from-[#FDE68A] via-[#FEF08A] to-[#FDE68A] border-2 border-amber-300 rounded-t-lg -mt-4 sm:-mt-5" /> 
                    
-                   <div className="w-20 h-2 bg-emerald-200/80 rounded-full mb-3" /> 
+                   <div className="-1.5 sm:h-2 bg-emerald-200/80 rounded-full mb-2 sm:mb-3" /> 
                    
                    {/* Pantalla */} 
-                   <div className="w-full max-w-[16rem] bg-[#E0F7F1]/85 border-4 border-emerald-300/90 rounded-[2.2rem] px-5 py-5 flex flex-col items-center justify-center shadow-inner relative overflow-hidden"> 
+                   <div className=" w-[90%]
+                    max-w-[13rem]
+                    sm:max-w-[16rem]
+                    min-[1440px]:max-w-[20rem]
+                    responsive-screen
+                    bg-[#E0F7F1]/85
+                    border-2
+                    sm:border-4
+                    border-emerald-300/90
+                    rounded-[1.5rem]
+                    sm:rounded-[2.2rem]
+                    px-3
+                    sm:px-5
+                    py-2
+                    sm:py-3
+                    flex
+                    flex-col
+                    items-center
+                    justify-center
+                    shadow-inner
+                    relative
+                    overflow-hidden"> 
                      <div className="absolute -top-7 -left-7 w-28 h-20 bg-white/60 rotate-12 rounded-full" /> 
                    
                    {/* Ojos robóticos */} 
-                   <div className="flex items-center justify-center gap-10 my-2 relative z-10"> 
+                   <div className="flex items-center justify-center gap-6 sm:gap-10 my-1.5 sm:my-2 relative z-10"> 
                      <div className="robot-eye animate-blink-robot" /> 
                      <div className="robot-eye animate-blink-robot" /> 
                    </div> 
                    
-                   <div className="text-[10px] font-extrabold text-teal-950 mt-1 uppercase tracking-widest bg-white/90 px-3 py-1 rounded-full border border-teal-200/80 shadow-sm"> 
-                      <span className="inline-block w-1.5 h-1.5 rounded-full bg-teal-500 animate-pulse mr-1.5" /> DISPENSADOR MISTERIOSO 
+                   <div className="text-[7px] xs:text-[8px] sm:text-[10px] min-[1440px]:text-xs font-extrabold text-teal-950 mt-1 uppercase tracking-wider sm:tracking-widest bg-white/90 px-2 sm:px-3 min-[1440px]:px-4 py-0.5 sm:py-1 rounded-full border border-teal-200/80 shadow-sm whitespace-nowrap"> 
+                      <span className="inline-block w-1 h-1 sm:w-1.5 sm:h-1.5 rounded-full bg-teal-500 animate-pulse mr-1 sm:mr-1.5" /> DISPENSADOR MISTERIOSO 
                     </div> 
                   </div> 
                 </div>
                 
                  {/* Detalles */} 
-                 <div className="w-full px-7 py-2 flex items-center justify-between text-teal-600/70"> 
+                 <div className="w-full shrink-0 px-4 sm:px-7 py-1 sm:py-1.5 flex items-center justify-between text-teal-600/70"> 
                    <div className="flex items-center gap-1.5"> 
-                     <span className="w-3.5 h-3.5 rounded-full bg-purple-200 border-2 border-purple-400" /> 
-                     <span className="w-3 h-3 rounded-full bg-emerald-200 border-2 border-emerald-400" /> 
+                     <span className="w-3 h-3 sm:w-3.5 sm:h-3.5 rounded-full bg-purple-200 border-2 border-purple-400" /> 
+                     <span className="w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full bg-emerald-200 border-2 border-emerald-400" /> 
                     </div> 
                     
-                    <div className="w-6 h-6 rounded-full border-2 border-emerald-400/60 border-dashed flex items-center justify-center text-xs animate-spin-slow">
+                    <div className="w-5 h-5 sm:w-6 sm:h-6 rounded-full border-2 border-emerald-400/60 border-dashed flex items-center justify-center text-[10px] sm:text-xs animate-spin-slow">
                      ↻
                     </div> 
                   </div> 
 
                   {/* Bandeja */} 
-                  <div className="w-full px-5 pb-3"> 
-                    <div className="w-full h-48 bg-gradient-to-b from-[#DCFCE7]/70 via-[#ECFDF5]/50 to-[#D1FAE5]/60 rounded-3xl border-4 border-emerald-300/80 shadow-inner flex items-center justify-center relative overflow-visible">
+                  <div className="flex min-h-0 w-full flex-1 flex-col px-3 sm:px-5 pb-2"> 
+                    <div className="responsive-tray h-full min-h-[6.5rem] w-full bg-gradient-to-b from-[#DCFCE7]/70 via-[#ECFDF5]/50 to-[#D1FAE5]/60 rounded-2xl sm:rounded-3xl border-2 sm:border-4 border-emerald-300/80 shadow-inner flex items-center justify-center relative">
                      {/* Aura */} 
-                     <div className="w-36 h-10 rounded-full bg-emerald-200/40 blur-sm absolute bottom-3" /> 
-                     <div className="w-28 h-6 rounded-full bg-purple-300/30 blur-sm absolute bottom-4 animate-chamber-aura" /> 
-                     <div className="absolute w-32 h-32 rounded-full bg-purple-200/25 blur-xl animate-chamber-aura" /> 
+                     <div className="w-24 sm:w-36 h-7 sm:h-10 rounded-full bg-emerald-200/40 blur-sm absolute bottom-2 sm:bottom-3" /> 
+                     <div className="w-20 sm:w-28 h-5 sm:h-6 rounded-full bg-purple-300/30 blur-sm absolute bottom-3 sm:bottom-4 animate-chamber-aura" /> 
+                     <div className="absolute w-24 h-24 sm:w-32 sm:h-32 min-[1440px]:w-40 min-[1440px]:h-40 rounded-full bg-purple-200/25 blur-xl animate-chamber-aura" /> 
                      
                      {/* Objeto */} 
                      {showObject && currentObject && ( 
@@ -986,14 +1036,14 @@ const createCelebrationStars = useCallback(
                             }`}
                           > 
                           
-                           <div className="relative w-28 h-28 sm:w-32 sm:h-32 rounded-3xl bg-white/95 border-2 border-emerald-300 shadow-lg flex items-center justify-center backdrop-blur-md p-3"> 
+                          <div className="responsive-object relative w-20 h-20 xs:w-22 xs:h-22 sm:w-28 sm:h-28 md:w-36 md:h-36 lg:w-44 lg:h-44 xl:w-52 xl:h-52 rounded-2xl sm:rounded-3xl bg-white/95 border-2 border-emerald-300 shadow-lg flex items-center justify-center backdrop-blur-md p-2 sm:p-3 min-[1440px]:p-4"> 
                            <ObjectIllustration 
                              objectId={ currentObject.id } 
                              /> 
                              </div> 
                              
-                             <div className="mt-2 bg-white/95 border-2 border-teal-300 px-3.5 py-1.5 rounded-2xl shadow-md text-center backdrop-blur-sm"> 
-                               <h3 className="text-xs sm:text-sm font-extrabold text-slate-900 leading-tight"> 
+                             <div className="mt-1.5 sm:mt-2 max-w-full bg-white/95 border-2 border-teal-300 px-2 sm:px-3.5 py-1 sm:py-1.5 rounded-xl sm:rounded-2xl shadow-md text-center backdrop-blur-sm"> 
+                               <h3 className="text-[10px] sm:text-xs md:text-sm xl:text-base font-extrabold text-slate-900 leading-tight text-center"> 
                                 {currentObject.name} 
                                </h3> 
                             </div> 
@@ -1003,12 +1053,12 @@ const createCelebrationStars = useCallback(
                     </div> 
                     
                     {/* Parte inferior */} 
-                    <div className="w-full bg-gradient-to-b from-[#A7F3D0] to-[#6EE7B7] border-t-4 border-emerald-300/80 p-4 sm:p-5 flex flex-col items-center"> 
-                      <div className="w-24 h-1.5 bg-emerald-700/20 rounded-full mb-3" />
+                    <div className="w-full shrink-0 bg-gradient-to-b from-[#A7F3D0] to-[#6EE7B7] border-t-2 sm:border-t-4 border-emerald-300/80 p-2.5 sm:p-3.5 lg:p-4 flex flex-col items-center"> 
+                      <div className="w-16 sm:w-24 h-1 sm:h-1.5 bg-emerald-700/20 rounded-full mb-2 sm:mb-3" />
                       
                        {/* Botón de lanzamiento */} 
                        <button type="button" onClick={handleLaunch} disabled={ gameState !== 'IDLE' } 
-                       className="w-full py-3.5 px-6 rounded-2xl bg-gradient-to-r from-white via-[#F0FDF4] to-white hover:bg-emerald-50 border-b-[5px] border-emerald-700 active:border-b-2 active:translate-y-1 text-emerald-950 font-black text-base sm:text-lg flex items-center justify-center gap-2.5 shadow-md transition-all disabled:opacity-50 disabled:cursor-not-allowed" 
+                       className="w-full py-2.5 sm:py-3.5 min-[1440px]:py-4 px-3 sm:px-6 min-[1440px]:px-8 rounded-xl sm:rounded-2xl min-[1440px]:rounded-3xl bg-gradient-to-r from-white via-[#F0FDF4] to-white hover:bg-emerald-50 border-b-[3px] sm:border-b-[5px] border-emerald-700 active:border-b-2 active:translate-y-1 text-emerald-950 font-black text-[11px] xs:text-xs sm:text-base md:text-lg min-[1440px]:text-xl flex items-center justify-center gap-1.5 sm:gap-2.5 min-[1440px]:gap-3 shadow-md transition-all disabled:opacity-50 disabled:cursor-not-allowed leading-tight text-center" 
                        > 
                         <LaunchIcon />
                         
@@ -1021,83 +1071,87 @@ const createCelebrationStars = useCallback(
                        </div> 
                       </div> 
                     </div>
+                </div>
               {/* === CONTENEDORES === */} 
-              <section className={`w-full max-w-5xl mt-5 transition-all duration-700 ${ showBins ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8 pointer-events-none' }`} >
-                 <div className="text-center mb-3">
-                   <span className="text-xs sm:text-sm font-extrabold text-teal-950 bg-white/95 px-4 py-1.5 rounded-full border border-emerald-200 shadow-sm inline-flex items-center gap-1.5"> 
+              <section className={`responsive-bins w-full shrink-0 pb-3 sm:pb-4 lg:pb-5 transition-all duration-700 ${ showBins ? 'opacity-100 translate-y-0' : 'opacity-0 pointer-events-none' }`} >
+                 <div className="text-center mb-2 sm:mb-3 px-1">
+                   <span className="text-[9px] xs:text-[10px] sm:text-xs md:text-sm min-[1440px]:text-base font-extrabold text-teal-950 bg-white/95 px-2 sm:px-4 min-[1440px]:px-5 py-1 sm:py-1.5 rounded-xl sm:rounded-full border border-emerald-200 shadow-sm inline-flex items-center justify-center gap-1 sm:gap-1.5 text-center leading-tight"> 
                      <SearchIcon /> 
                        <span> ¿A qué contenedor pertenece este residuo? </span> 
                     </span> 
                   </div> 
 
-                  <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-2.5 sm:gap-3"> 
-                     {binTypes.map((type) => { 
-                        const isSelected = selectedBin === type; 
-                        const isError = errorBin === type; 
-                        const styles: Record< string, string 
-                        > = { 
-                          Plástico: 'bg-[#FEF9C3] hover:bg-[#FEF08A] border-[#FDE047] text-amber-950', 
-                          Papel: 'bg-[#E0F2FE] hover:bg-[#BAE6FD] border-[#7DD3FC] text-sky-950', 
-                          Vidrio: 'bg-[#D1FAE5] hover:bg-[#A7F3D0] border-[#6EE7B7] text-emerald-950', 
-                          Metal: 'bg-[#F1F5F9] hover:bg-[#E2E8F0] border-[#CBD5E1] text-slate-800', 
-                          Orgánico: 'bg-[#FFEDD5] hover:bg-[#FED7AA] border-[#FDBA74] text-orange-950', 
-                        }; 
-                        
-                        return ( 
-                          <button key={type} type="button" onClick={() => handleBinClick(type) } 
-                                  disabled={ gameState !== 'SELECTING' || gameEnded } 
-                                  className={`group flex flex-col items-center p-3 sm:p-3.5 rounded-3xl border-4 shadow-[0_10px_25px_-4px_rgba(148,163,184,0.18)] hover:-translate-y-1 active:translate-y-0 transition-all cursor-pointer disabled:opacity-60 disabled:cursor-not-allowed 
-                                  ${styles[type]} ${ isSelected ? 'ring-4 ring-emerald-400' : '' } 
-                                  ${ isError ? 'ring-4 ring-amber-400' : ''
-                                   }`} 
-                                > 
-                                
-                                
-                                 <div className="w-13 h-13 sm:w-14 sm:h-14 rounded-2xl bg-white/90 border border-white/80 flex items-center justify-center p-1.5 mb-1.5 shadow-sm group-hover:scale-110 transition-transform"> 
-                                   <BinIcon type={type} /> 
-                                 </div> 
-                                 <span className="font-bold text-sm sm:text-base tracking-wide">
-                                   {type === 'Papel' ? 'Papel y Cartón' : type} </span> 
-                                   
-                                  <span className="text-[10px] sm:text-xs font-medium opacity-80"> 
-                                   {type === 'Plástico' && 'Envases, botellas'} 
-                                   {type === 'Papel' && 'Libretas, cajas'} 
-                                   {type === 'Vidrio' && 'Botellas, frascos'} 
-                                   {type === 'Metal' && 'Latas, chapas'} 
-                                   {type === 'Orgánico' && 'Frutas, restos'} 
-                                   </span> 
-                                  </button>
-                                 ); 
-                               })}
-                            </div>
-                           </section>
-                         </main>
+                  <div className="grid w-full grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-2 sm:gap-3 lg:gap-4 xl:gap-5"> 
+                   {binTypes.map((type, index) => { 
+                     const isSelected = selectedBin === type; 
+                     const isError = errorBin === type; 
+                     const styles: Record<string, string> = { 
+                     Plástico: 'bg-[#FEF9C3] hover:bg-[#FEF08A] border-[#FDE047] text-amber-950', 
+                     Papel: 'bg-[#E0F2FE] hover:bg-[#BAE6FD] border-[#7DD3FC] text-sky-950', 
+                     Vidrio: 'bg-[#D1FAE5] hover:bg-[#A7F3D0] border-[#6EE7B7] text-emerald-950', 
+                     Metal: 'bg-[#F1F5F9] hover:bg-[#E2E8F0] border-[#CBD5E1] text-slate-800', 
+                     Orgánico: 'bg-[#FFEDD5] hover:bg-[#FED7AA] border-[#FDBA74] text-orange-950', 
+                   }; 
+      
+                 {/* Si es el 5º elemento (Orgánico) en pantallas móviles, hace que ocupe las 2 columnas */}
+                 const isLastOddItem = index === binTypes.length - 1;
+
+                 return ( 
+              <button key={type} type="button" onClick={() => handleBinClick(type) } 
+                    disabled={ gameState !== 'SELECTING' || gameEnded } 
+                    className={`group flex flex-col items-center justify-center p-1.5 xs:p-2 sm:p-3 md:p-3.5 min-[1440px]:p-4 rounded-xl sm:rounded-3xl border-2 sm:border-4 shadow-[0_10px_25px_-4px_rgba(148,163,184,0.18)] hover:-translate-y-1 active:translate-y-0 transition-all cursor-pointer disabled:opacity-60 disabled:cursor-not-allowed min-w-0
+                      ${styles[type]} 
+                      ${isSelected ? 'ring-2 sm:ring-4 ring-emerald-400' : ''} 
+                      ${isError ? 'ring-2 sm:ring-4 ring-amber-400' : ''}
+                      ${isLastOddItem ? 'col-span-2 sm:col-span-1 max-w-[280px] sm:max-w-none justify-self-center w-full' : ''}`} 
+              > 
+              
+              <div className="w-9 h-9 xs:w-10 xs:h-10 sm:w-12 sm:h-12 md:w-14 md:h-14 min-[1440px]:w-16 min-[1440px]:h-16 rounded-xl sm:rounded-2xl bg-white/90 border border-white/80 flex items-center justify-center p-1 sm:p-1.5 mb-1 sm:mb-1.5 shadow-sm group-hover:scale-110 transition-transform shrink-0"> 
+                 <BinIcon type={type} /> 
+               </div> 
+               <span className="font-bold text-[10px] xs:text-[11px] sm:text-sm md:text-base min-[1440px]:text-lg tracking-wide text-center leading-tight">
+                 {type === 'Papel' ? 'Papel y Cartón' : type} 
+               </span> 
+                 
+                <span className="text-[8px] xs:text-[9px] sm:text-[10px] md:text-xs min-[1440px]:text-sm font-medium opacity-80 text-center leading-tight mt-0.5"> 
+                 {type === 'Plástico' && 'Envases, botellas'} 
+                 {type === 'Papel' && 'Libretas, cajas'} 
+                 {type === 'Vidrio' && 'Botellas, frascos'} 
+                 {type === 'Metal' && 'Latas, chapas'} 
+                 {type === 'Orgánico' && 'Frutas, restos'} 
+                </span> 
+            </button>
+           ); 
+        })}
+     </div>
+   </section>
+</main>
 
                         {/* === PANTALLA FINAL === */} 
                         {gameEnded && ( 
-                          <div className="absolute inset-0 bg-[#0F172A]/40 backdrop-blur-md z-[100] flex items-center justify-center p-4"> 
-                             <div className="bg-[#F8FAFC] w-full max-w-lg rounded-[2.5rem] border-4 border-[#A7F3D0] shadow-2xl p-6 sm:p-8 text-center relative overflow-hidden animate-modal-in">
+                          <div className="absolute inset-0 bg-[#0F172A]/40 backdrop-blur-md z-[100] flex items-center justify-center  p-2 sm:p-4 overflow-y-auto"> 
+                             <div className="bg-[#F8FAFC] w-full max-w-lg min-[1440px]:max-w-3xl max-h-[96dvh] overflow-y-auto rounded-[1.5rem] sm:rounded-[2.5rem] border-2 sm:border-4 border-[#A7F3D0] shadow-2xl p-4 sm:p-6 md:p-8 min-[1440px]:p-10 text-center relative animate-modal-in">
                                {/* Medalla */} 
-                               <div className="w-20 h-20 mx-auto rounded-3xl bg-gradient-to-tr from-[#A7F3D0] to-[#A5F3FC] border-4 border-white flex items-center justify-center text-teal-800 mb-3 shadow-md relative"> 
-                                 <div className="absolute inset-0 rounded-3xl bg-teal-400/20 animate-ping" /> 
-                                 <svg className="w-11 h-11 relative z-10" fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.2" viewBox="0 0 24 24" > 
+                               <div className="w-16 h-16 sm:w-20 sm:h-20 min-[1440px]:w-24 min-[1440px]:h-24 mx-auto rounded-2xl sm:rounded-3xl bg-gradient-to-tr from-[#A7F3D0] to-[#A5F3FC] border-4 border-white flex items-center justify-center text-teal-800 mb-2 sm:mb-3 shadow-md relative"> 
+                                 <div className="absolute inset-0 rounded-2xl sm:rounded-3xl bg-teal-400/20 animate-ping" /> 
+                                 <svg className="w-9 h-9 sm:w-11 sm:h-11 min-[1440px]:w-14 min-[1440px]:h-14 relative z-10" fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.2" viewBox="0 0 24 24" > 
                                   <circle cx="12" cy="8" r="6" /> 
                                   <path d="M15.477 12.89 17 22l-5-3-5 3 1.523-9.11" /> 
                                  </svg> 
                                 </div> 
                                 
-                                <span className="text-xs font-bold text-teal-900 uppercase tracking-widest bg-emerald-100 px-3.5 py-1 rounded-full border border-teal-200"> ¡Misión Científica Completada! </span> 
-                                <h2 className="text-2xl sm:text-3xl font-extrabold text-slate-900 mt-3 mb-1"> ¡Gran Pequeño Científico! </h2> 
-                                <p className="text-sm sm:text-base text-slate-600 font-medium mb-5"> ¡Descubriste y clasificaste todos los objetos del laboratorio correctamente! </p> 
+                                <span className="text-[9px] sm:text-xs min-[1440px]:text-sm font-bold text-teal-900 uppercase tracking-widest bg-emerald-100 px-2.5 sm:px-3.5 py-1 rounded-full border border-teal-200"> ¡Misión Científica Completada! </span> 
+                                <h2 className="text-xl sm:text-2xl md:text-3xl min-[1440px]:text-4xl font-extrabold text-slate-900 mt-2 sm:mt-3 mb-1"> ¡Gran Pequeño Científico! </h2> 
+                                <p className="text-xs sm:text-sm md:text-base min-[1440px]:text-lg text-slate-600 font-medium mb-4 sm:mb-5 min-[1440px]:mb-6"> ¡Descubriste y clasificaste todos los objetos del laboratorio correctamente! </p> 
                                 
                                 {/* Resultados */} 
-                                <div className="bg-white rounded-2xl p-3 border border-emerald-100 mb-6 shadow-sm"> 
-                                  <p className="text-[11px] font-bold text-slate-500 uppercase tracking-wider mb-3"> Materiales analizados con éxito: </p> 
+                                <div className="bg-white rounded-xl sm:rounded-2xl p-2.5 sm:p-3 border border-emerald-100 mb-4 sm:mb-6 shadow-sm"> 
+                                  <p className="text-[9px] sm:text-[11px] font-bold text-slate-500 uppercase tracking-wider mb-2 sm:mb-3"> Materiales analizados con éxito: </p> 
                                   
-                                  <div className="flex justify-center items-center gap-2 sm:gap-3 flex-wrap"> 
+                                  <div className="flex justify-center items-center gap-1.5 sm:gap-3 flex-wrap"> 
                                     {collectedResults.map( (object) => ( 
                                       <div key={object.id} title={`${object.name} (${object.type})`} 
-                                       className="w-14 h-14 rounded-2xl bg-emerald-50 border border-emerald-200 p-2 flex items-center justify-center shadow-sm animate-bounce" > 
+                                       className="w-11 h-11 sm:w-14 sm:h-14 min-[1440px]:w-16 min-[1440px]:h-16 rounded-xl sm:rounded-2xl bg-emerald-50 border border-emerald-200 p-1.5 sm:p-2 flex items-center justify-center shadow-sm animate-bounce" > 
                                       <ObjectIllustration objectId={object.id} /> 
                                       </div> 
                                     ) 
@@ -1106,11 +1160,11 @@ const createCelebrationStars = useCallback(
                             </div> 
                             
                             {/* Botones */} 
-                            <div className="flex flex-col sm:flex-row gap-3 justify-center items-center"> 
+                            <div className="flex flex-col sm:flex-row gap-2.5 sm:gap-3 justify-center items-center"> 
                               <button type="button" onClick={handleReplay} 
-                                      className="w-full sm:flex-1 py-3.5 px-5 rounded-2xl bg-gradient-to-r from-[#A7F3D0] to-[#6EE7B7] hover:from-[#6EE7B7] hover:to-[#A7F3D0] border-b-4 border-emerald-600 font-black text-emerald-950 text-base shadow-md active:translate-y-1 transition-all" > Intentar otra vez </button> 
+                                      className="w-full sm:flex-1 py-3.5 min-[1440px]:py-4 px-5 min-[1440px]:px-6 rounded-2xl bg-gradient-to-r from-[#A7F3D0] to-[#6EE7B7] hover:from-[#6EE7B7] hover:to-[#A7F3D0] border-b-4 border-emerald-600 font-black text-emerald-950 text-base min-[1440px]:text-lg shadow-md active:translate-y-1 transition-all" > Intentar otra vez </button> 
                                       <button type="button" onClick={handleExit} 
-                                      className="w-full sm:w-auto py-3.5 px-6 rounded-2xl bg-white hover:bg-slate-50 border-2 border-slate-300 font-bold text-slate-700 text-base shadow-sm active:translate-y-0.5 transition-colors" > Salir </button> 
+                                      className="w-full sm:flex-1 py-3 sm:py-3.5 min-[1440px]:py-4 px-4 sm:px-5 min-[1440px]:px-6 rounded-xl sm:rounded-2xl bg-gradient-to-r from-[#A7F3D0] to-[#6EE7B7] hover:from-[#6EE7B7] hover:to-[#A7F3D0] border-b-4 border-emerald-600 font-black text-emerald-950 text-sm sm:text-base min-[1440px]:text-lg shadow-md active:translate-y-1 transition-all"> Salir </button> 
                                     </div> 
                                   </div> 
                                 </div>
@@ -1217,7 +1271,6 @@ const createCelebrationStars = useCallback(
                             50% { 
                              transform: translate(var(--tx), var(--ty)) scale(1.2) rotate(90deg); 
                              opacity: 0.95; 
-                            } 
                           } 
                           100% { 
                              transform: translate(var(--tx), var(--ty)) scale(0.2) rotate(180deg); 
@@ -1281,7 +1334,36 @@ const createCelebrationStars = useCallback(
                             background-color: #1e293b; 
                             border-radius: 9999px; 
                             transition: all 0.25s ease-in-out;
+                          }
+
+                          .responsive-tray {
+                            container-type: size;
+                          }
+
+                          .responsive-object {
+                            width: min(12rem, 65cqh);
+                            height: min(12rem, 65cqh);
                           } 
+
+                          /* === PANTALLAS GRANDES === */
+
+                          @media (min-width: 1024px) {
+                            .responsive-object {
+                             width: min(11rem, 60cqh);
+                             height: min(11rem, 60cqh); 
+                            }
+                          
+                          }
+
+                          @media (min-width: 1280px) {
+                            .responsive-object {
+                             width: min(13rem, 65cqh);
+                             height: min(13rem, 65cqh); 
+                            }
+                          
+                          }
+
+
                             
                           @media (min-width: 640px) { 
                             .robot-eye { 
@@ -1289,6 +1371,120 @@ const createCelebrationStars = useCallback(
                               height: 2.6rem;
                             } 
                           } 
+
+                          /* === PANTALLAS PEQUEÑAS EN ALTURA === */
+
+                          @media (min-width: 768px) and (max-height: 760px) {
+                             .responsive-machine {
+                              transform: scale(0.88);
+                              transform-origin: top center;
+                              margin-bottom: -6%;
+                              }
+                           }
+
+                          @media (min-width: 1024px) and (max-height: 700px) {
+                             .responsive-machine {
+                              transform: scale(0.78);
+                              transform-origin: top center;
+                              margin-bottom: -10%;
+                              }
+                           }
+
+                          /* === MÓVILES MUY PEQUEÑOS === */
+
+                          @media (max-width: 380px) {
+                             .responsive-machine {
+                              max-width: 17rem;
+                              }
+                           }
+
+                          /* === MÓVIL HORIZONTAL === */
+
+                          @media (max-width: 767px) and (orientation: landscape) {
+                             .responsive-machine {
+                              transform: scale(0.72);
+                              transform-origin: top center;
+                              margin-bottom: -18%;
+                              }
+                           }
+
+                          /* === ESCRITORIO GRANDE CON ALTURA SUFICIENTE === */
+
+                          @media (min-width: 1440px) and (min-height: 800px) {
+                             .responsive-stage {
+                              max-width: none;
+                              width: 100%;
+                             }
+
+                             .responsive-machine {
+                              max-width: min(40rem, 46vw);
+                             }
+                           }
+
+                          @media (min-width: 1440px) and (min-height: 960px) {
+                             .responsive-stage {
+                              max-width: none;
+                              width: 100%;
+                             }
+
+                             .responsive-machine {
+                              max-width: min(42rem, 48vw);
+                             }
+
+                             .responsive-screen {
+                              max-width: 24rem;
+                             }
+
+                             .responsive-tray {
+                              height: 100%;
+                              min-height: clamp(8rem, 16vh, 12rem);
+                             }
+
+                             .responsive-object {
+                              width: clamp(11rem, 18vh, 15rem);
+                              height: clamp(11rem, 18vh, 15rem);
+                             }
+
+                             .robot-eye {
+                              width: 2.15rem;
+                              height: 3.15rem;
+                             }
+                           }
+
+                          /* El marco global del juego fuerza scroll y centra el main.
+                             Estas reglas lo anulan solo en esta pantalla. */
+                          .game-screen > .fabrica-root {
+                            overflow: hidden;
+                          }
+
+                          .game-screen .fabrica-root main {
+                            overflow: hidden;
+                            justify-content: flex-start;
+                          }
+
+                          .game-screen .fabrica-root main > section {
+                            max-height: none;
+                            overflow: visible;
+                          }
+
+                           /* === REDUCIR ANIMACIONES SI EL USUARIO LO PREFIERE === */
+
+                           @media (prefers-reduced-motion: reduce) {
+                             .animate-vibrate,
+                             .animate-gentle-bob,
+                             .animate-object-launch,
+                             .animate-blink-robot,
+                             .animate-spin-slow,
+                             .animate-spin-reverse-slow,
+                             .animate-conveyor,
+                             .animate-chamber-aura,
+                             .celebration-sparkle,
+                             .animate-modal-in {
+                               animation-duration: 0.01ms !important;
+                               animation-iteration-count: 1 !important;
+                            }
+                          }
+
                         `}</style> 
                     </div> 
                   ); 
