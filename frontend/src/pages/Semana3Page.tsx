@@ -1,5 +1,4 @@
 import { useNavigate, Link } from 'react-router-dom';
-import { showKidMessage } from '../components/KidFrame';
 
 /**
  * Semana3Page — Hub de actividades de la Semana 3: Utilidad y Reciclaje.
@@ -17,25 +16,29 @@ export default function Semana3Page() {
     {
       id: 'de-que-estan-hechos',
       title: '¿De qué están hechos?',
-      desc: 'Explora el jardín y el mercado para descubrir de qué materiales están hechos los objetos que nos rodean.',
-      color: 'bg-[#ccebc7]',
-      image: '/images/semana3/card-hechos.svg',
+      desc: 'Mira la regadera, la caja y la botella. ¿De qué material es cada una?',
+      color: 'bg-[#e7f6e4]',
+      border: 'border-[#8ba888]',
+      image: '/images/semana3/card-hechos.png',
       link: '/semana/3/hecho-de',
     },
     {
       id: 'a-reparar',
       title: '¡A reparar!',
-      desc: '¡Manos a la obra! Ayuda a reparar los objetos rotos en el taller de inventos.',
-      color: 'bg-[#bfe5fe]',
-      image: '/images/semana3/card-reparar.svg',
+      desc: 'La mesa, la ventana y la caja están rotas. Elige el material correcto.',
+      color: 'bg-[#e5f4fc]',
+      border: 'border-[#7eb6d4]',
+      image: '/images/semana3/card-reparar.png',
       link: '/semana/3/build-it',
     },
     {
       id: 'tarjetas-reflexion',
       title: 'Tarjetas de Reflexión',
-      desc: 'Piensa y reflexiona sobre lo que has aprendido hoy sobre el cuidado de nuestro planeta.',
-      color: 'bg-[#f3e0c2]',
-      image: '/images/semana3/card-reflexion.svg',
+      desc: '¿Se bota, se recicla o se reutiliza? Tú decides.',
+      color: 'bg-[#fbf3e4]',
+      border: 'border-[#e0c48a]',
+      image: '/images/semana3/reflexion/lata.webp',
+      extras: ['/images/semana3/reflexion/platano.webp', '/images/semana3/reflexion/frasco.webp'],
       link: '/semana/3/reflection-cards',
     },
   ];
@@ -57,44 +60,41 @@ export default function Semana3Page() {
       </header>
 
       {/* ===== Main Content ===== */}
-      <main className="flex-1 w-full max-w-[1400px] mx-auto px-5 md:px-[120px] py-8 pb-[120px] md:pb-8 flex flex-col gap-8">
-        {/* Hero Section */}
-        <section className="text-left">
+      <main className="flex-1 w-full max-w-[1100px] mx-auto px-5 md:px-10 py-8 pb-[120px] md:pb-10 flex flex-col gap-8">
+        <section className="text-center">
           <p className="font-body-lg text-body-lg text-[#434841]">
-            Descubre cómo los materiales se transforman y cómo podemos darles una nueva vida.
+            Descubre de qué están hechas las cosas y cómo darles una nueva vida.
+          </p>
+          <p className="font-body-lg text-body-lg text-[#4a6549] font-bold mt-1">
+            ¡Toca una tarjeta para jugar!
           </p>
         </section>
 
-        {/* Activity Cards Grid — 3 columns on desktop, 1 on mobile */}
         <section className="grid grid-cols-1 md:grid-cols-3 gap-6">
           {activities.map((activity) => (
             <article
               key={activity.id}
-              className="bg-[#ffffff] rounded-xl overflow-hidden card-shadow flex flex-col transition-transform hover:-translate-y-2 duration-300"
+              className={`${activity.color} border-4 ${activity.border} rounded-3xl p-4 flex flex-col gap-4 shadow-[0_10px_0_rgba(74,101,73,0.08)] hover:-translate-y-1 transition-transform duration-300`}
             >
-              <div className="relative h-64 overflow-hidden">
-                <img
-                  alt={activity.title}
-                  className="w-full h-full object-cover opacity-90"
-                  src={activity.image}
-                  loading="lazy"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent" />
+              <div className="w-full h-44 rounded-2xl overflow-hidden border-4 border-white bg-white relative">
+                {activity.extras ? (
+                  <div className="grid grid-cols-3 h-full gap-1 p-2">
+                    {[activity.image, ...activity.extras].map((src) => (
+                      <img key={src} alt="" src={src} className="w-full h-full object-contain" />
+                    ))}
+                  </div>
+                ) : (
+                  <img alt={activity.title} className="w-full h-full object-cover" src={activity.image} />
+                )}
               </div>
-              <div className="p-md flex flex-col flex-grow gap-base">
-                <h3 className="font-headline-md text-headline-md text-[#4a6549]">
-                  {activity.title}
-                </h3>
-                <p className="font-body-md text-body-md text-[#434841] flex-grow">
-                  {activity.desc}
-                </p>
+              <div className="flex-1 flex flex-col">
+                <h3 className="font-headline-md text-headline-md text-[#4a6549]">{activity.title}</h3>
+                <p className="font-body-md text-body-md text-[#434841] mt-1 flex-grow">{activity.desc}</p>
                 <button
-                  onClick={() => activity.link ? navigate(activity.link) : showKidMessage('Muy pronto podrás jugar esta actividad.', 'soon')}
-                  className="squishy-button w-full mt-4 py-3 px-6 bg-[#4a6549] text-white font-label-lg text-label-lg rounded-xl flex items-center justify-center gap-2"
+                  onClick={() => navigate(activity.link)}
+                  className="mt-4 w-full bg-[#4a6549] text-white font-label-lg py-3 px-6 rounded-full border-b-4 border-[#334d33] active:translate-y-0.5 active:border-b-2 flex items-center justify-center gap-2"
                 >
-                  <span className="material-symbols-outlined" style={{ fontVariationSettings: '"FILL" 1' }}>
-                    play_arrow
-                  </span>
+                  <span className="material-symbols-outlined" style={{ fontVariationSettings: '"FILL" 1' }}>play_arrow</span>
                   Jugar
                 </button>
               </div>
@@ -102,27 +102,22 @@ export default function Semana3Page() {
           ))}
         </section>
 
-        {/* Quiz Final Banner */}
-        <section className="mt-xl p-md md:p-lg bg-[#e9e7eb] rounded-xl card-shadow flex flex-col md:flex-row items-center justify-between gap-md">
-          <div className="flex flex-col gap-xs">
-            <h2 className="font-headline-md text-headline-md text-[#4a6549]">
-              Quiz Final: Pon a prueba tu conocimiento
-            </h2>
-            <p className="font-body-md text-body-md text-[#434841]">
-              ¡Demuestra todo lo que has aprendido sobre el reciclaje!
-            </p>
+        <section className="p-5 md:p-6 bg-[#ccebc7] border-4 border-[#8ba888] rounded-3xl flex flex-col md:flex-row items-center justify-between gap-4">
+          <div className="flex items-center gap-4">
+            <img src="/images/semana3/quiz/badge-medal.png" alt="" className="w-16 h-16 object-contain hidden sm:block" />
+            <div>
+              <h2 className="font-headline-md text-headline-md text-[#243d24]">Quiz: 10 preguntas</h2>
+              <p className="font-body-md text-[#334d33]">Pon a prueba lo que aprendiste sobre materiales y reciclaje.</p>
+            </div>
           </div>
           <button
             onClick={() => navigate('/semana/3/quiz')}
-            className="squishy-button whitespace-nowrap py-3 px-lg bg-[#4a6549] text-white font-label-lg text-label-lg rounded-xl flex items-center justify-center gap-2"
+            className="whitespace-nowrap py-3 px-8 bg-[#4a6549] text-white font-label-lg rounded-full border-b-4 border-[#334d33] active:translate-y-0.5 active:border-b-2 flex items-center gap-2"
           >
-            <span className="material-symbols-outlined">play_circle</span>
+            <span className="material-symbols-outlined">emoji_events</span>
             Empezar
           </button>
         </section>
-
-        {/* Decorative gradient divider */}
-        <div className="mt-xl h-2 w-full bg-gradient-to-r from-transparent via-[#c3c8bf]/30 to-transparent rounded-full" />
       </main>
 
       {/* ===== BottomNavBar (Mobile Only) ===== */}

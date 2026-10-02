@@ -231,7 +231,7 @@ export default function Semana4QuizPage() {
             </div>
 
             {/* Quiz Container */}
-            <div className="relative min-h-[400px]">
+            <div className="relative min-h-[25rem]">
               {/* Active Question Card */}
               <div className="quiz-card bg-white rounded-[24px] p-8 md:p-12 shadow-[0_15px_30px_rgba(74,101,73,0.12)] border-2 border-surface-container-high flex flex-col items-center text-center space-y-6">
                 <div className="w-24 h-24 bg-primary-container/10 rounded-full flex items-center justify-center floating">
