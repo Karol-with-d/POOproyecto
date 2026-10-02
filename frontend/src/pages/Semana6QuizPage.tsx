@@ -182,6 +182,7 @@ export default function Semana6QuizPage() {
         .s6-shake { animation: s6Shake 0.5s cubic-bezier(.36,.07,.19,.97) both; }
         .s6-slide { transition: transform 0.4s cubic-bezier(0.4,0,0.2,1), opacity 0.4s; }
         .filled-icon { font-variation-settings:'FILL' 1; }
+        .game-screen { overflow-x: hidden; }
       `}</style>
 
       {/* ── Header ───────────────────────────────────────────────────────── */}
@@ -224,7 +225,7 @@ export default function Semana6QuizPage() {
       <main className="relative h-screen pt-16 w-full overflow-hidden">
 
         {/* STATE 0 — INTRO */}
-        <section className={`s6-slide absolute inset-0 flex flex-col items-center justify-center p-8 bg-surface overflow-y-auto ${getSlide(0)}`}>
+        <div className={`s6-slide absolute inset-0 flex flex-col items-center justify-center p-8 bg-surface overflow-y-auto ${getSlide(0)}`}>
           <div className="max-w-lg w-full text-center space-y-7 mt-4 pb-24">
             <div className="w-52 h-52 mx-auto animate-bounce">
               <img src={IMG_HERO} alt="Mascota del quiz" className="w-full h-full object-contain drop-shadow-lg" />
@@ -283,11 +284,11 @@ export default function Semana6QuizPage() {
               Volver a las actividades
             </button>
           </div>
-        </section>
+        </div>
 
         {/* STATES 1-3 — QUESTIONS */}
         {QUESTIONS.map((q, qi) => (
-          <section
+          <div
             key={qi}
             className={`s6-slide absolute inset-0 flex flex-col p-5 pt-32 bg-surface overflow-y-auto ${getSlide(qi + 1)}`}
           >
@@ -325,11 +326,11 @@ export default function Semana6QuizPage() {
                 ))}
               </div>
             </div>
-          </section>
+          </div>
         ))}
 
         {/* STATE 4 — RESULTS */}
-        <section className={`s6-slide absolute inset-0 flex flex-col items-center p-6 pt-20 bg-surface overflow-y-auto ${getSlide(4)}`}>
+        <div className={`s6-slide absolute inset-0 flex flex-col items-center p-6 pt-20 bg-surface overflow-y-auto ${getSlide(4)}`}>
           <div className="max-w-lg w-full text-center space-y-6 pb-24 mt-2">
             {/* Badge */}
             <div className="relative w-56 h-56 mx-auto">
@@ -387,7 +388,7 @@ export default function Semana6QuizPage() {
               </button>
             </div>
           </div>
-        </section>
+        </div>
 
       </main>
     </div>
