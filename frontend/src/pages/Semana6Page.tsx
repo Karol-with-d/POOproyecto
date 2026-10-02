@@ -1,8 +1,8 @@
 import { useNavigate, Link } from 'react-router-dom';
 
-const IMG_HERO = '/images/semana6/hero-personajes.png';
-const IMG_SIMILITUDES = '/images/semana6/card-similitudes.png';
-const IMG_MOVIMIENTO = '/images/semana6/card-movimiento.png';
+const IMG_HERO = '/images/semana6/hero-personajes.webp';
+const IMG_SIMILITUDES = '/images/semana6/card-similitudes.webp';
+const IMG_MOVIMIENTO = '/images/semana6/card-movimiento.webp';
 
 interface ActivityCard {
   id: string;
@@ -101,10 +101,10 @@ export default function Semana6Page() {
                 <div className="flex justify-between items-start mb-4">
                   <button
                     onClick={handleBack}
-                    className="flex items-center gap-2 px-4 py-2 rounded-full border border-outline-variant text-on-surface-variant hover:bg-surface-variant transition-colors font-label-md text-label-md"
+                    aria-label="Volver"
+                    className="w-10 h-10 flex items-center justify-center rounded-full hover:bg-surface-variant transition-colors text-[#334d33]"
                   >
-                    <span className="material-symbols-outlined text-[20px]">close</span>
-                    <span>Salir</span>
+                    <span className="material-symbols-outlined">arrow_back</span>
                   </button>
                 </div>
                 <h1 className="font-headline-lg text-headline-lg text-primary mb-2">
