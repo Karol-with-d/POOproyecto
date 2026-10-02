@@ -57,7 +57,7 @@ export default function RescataPulgarcitoStartPage() {
               <img
                 alt="Rescata a Pulgarcito Illustration"
                 className="w-full h-full object-cover"
-                src="/images/Pulgarcito.png"
+                src="/images/Pulgarcito.webp"
               />
             </div>
 

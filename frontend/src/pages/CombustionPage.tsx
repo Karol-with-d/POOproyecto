@@ -179,7 +179,7 @@ export default function CombustionPage() {
                 <img
                   alt="Combus"
                   className="w-48 h-48 md:w-64 md:h-64 object-contain rounded-xl"
-                  src="/images/semana4/combus.png"
+                  src="/images/semana4/combus.webp"
                 />
                 {/* Speech Bubble */}
                 <div className="absolute -top-12 -right-4 md:-top-16 md:-right-4 bg-primary-container text-white p-4 rounded-2xl rounded-bl-none shadow-lg max-w-[200px] z-10">

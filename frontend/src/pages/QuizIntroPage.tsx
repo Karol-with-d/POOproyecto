@@ -21,9 +21,9 @@ const THEME_CARDS = [
 ] as const;
 
 const BG_IMG =
-  'https://lh3.googleusercontent.com/aida-public/AB6AXuDdj7moStYm82MxIKHzmZ--K5n5RLBBhvZEzOipyVuG4QwRRQAtrr4ObZ2Ck86xEC0ciTzmYbrQ0RW1BcNoubyicHBo2fq4J0CMqHf6orRa0evP-DS_qPiJjuVGxNti7FnWLD0vM61-gZjtYmBbZmo1DD_IM-XA-NaGLjbvg1dCSpugFJiQPSLoU_2sloVWBL-BJOzzmqf7r6sMMWOT7H4r4MWFVt8wJ8_JdkVsvkO4mHi_i-fYXppb4MVLLSS-_EBlZdZQt7C304CD';
+  '/images/hosted/e6931d2ace6c.webp';
 const SABIO_IMG =
-  'https://lh3.googleusercontent.com/aida-public/AB6AXuAyRt4JmvNNGfiEG1Xky_d0PD7hEQ5voJ_L2cI1whXmL5k8xwZV7I5ZVRoWcvUM8Bb4DB3235HTdxBidR3vuXcc1hBVJNbX8t_b1RSUV3J59q6yvlc8ggcU0me7sawD3_wlkGqkfka1PFVmjcJ_q2KNOXrMXY6sjBTrGMjOo69K_sRxZ2psuB9G2nmk0aeF3u8VGipENt7tPcwEMSIcDX0F4j28R30JrhsYUvMqhJNhdD-_6AeC7_oVuWVxjkvr9wekZqlEHAPLQju1';
+  '/images/hosted/0e78e2744f05.webp';
 
 export default function QuizIntroPage() {
   const navigate = useNavigate();

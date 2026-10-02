@@ -114,7 +114,7 @@ export default function ProfilePage() {
               <img
                 alt="Avatar de usuario"
                 className="w-full h-full object-cover"
-                src="/images/LoginImage.png"
+                src="/images/LoginImage.webp"
                 onError={(e) => { (e.target as HTMLImageElement).style.display = 'none'; }}
               />
             </div>
@@ -141,7 +141,7 @@ export default function ProfilePage() {
                   <img
                     alt="Avatar de usuario"
                     className="w-full h-full object-cover"
-                    src="/images/LoginImage.png"
+                    src="/images/LoginImage.webp"
                     onError={(e) => { (e.target as HTMLImageElement).style.display = 'none'; }}
                   />
                 </div>

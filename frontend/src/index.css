@@ -457,7 +457,7 @@ body * {
     100% { box-shadow: 0 0 40px 20px rgba(139, 168, 136, 0); }
   }
   .background-canvas {
-    background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCSxO1qjbLxev1fLUSL1AjQ1VtRSKJnnXkpkGyr6duoT7Kx6R7ahxyCBHAgfblqVihv32L4Ga5v3hheVSeN94UgECaO-CSh2iMTOwdf1DVfBZfMYM_zrDhTTHUmnF47Af56_HUm1FObG9rZr_GZwccbGe6PWivZNyw7OvukCMPlnHLcRw2QmOMSqj9DLb6PWapOm2Jn5tg3iAW63hoAB2_hpU_u9K0zGiReeqvPryzeC0GIm3TsgWLgG0yTdSM2laY2V9Uga5RntqA');
+    background-image: url('/images/hosted/55cda8c2e2f8.webp');
     background-size: cover;
     background-position: center;
   }

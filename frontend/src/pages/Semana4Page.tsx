@@ -136,7 +136,7 @@ export default function Semana4Page() {
               <img
                 alt="Fermentación"
                 className="w-full h-full object-contain group-hover:scale-110 transition-transform duration-500"
-                src="/images/semana4/fermentacion.png"
+                src="/images/semana4/fermentacion.webp"
               />
             </div>
             <h3 className="font-headline-md text-headline-md text-[#334d33] quicksand-text mb-2">
@@ -198,7 +198,7 @@ export default function Semana4Page() {
               <img
                 alt="Lumi"
                 className="w-4/5 h-4/5 object-contain floating"
-                src="/images/semana4/lumi.png"
+                src="/images/semana4/lumi.webp"
               />
             </div>
             <h3 className="font-headline-md text-headline-md text-[#334d33] quicksand-text mb-2">
@@ -224,7 +224,7 @@ export default function Semana4Page() {
               <img
                 alt="Combus"
                 className="w-full h-full object-contain group-hover:scale-110 transition-transform duration-500"
-                src="/images/semana4/combustion.png"
+                src="/images/semana4/combustion.webp"
               />
             </div>
             <h3 className="font-headline-md text-headline-md text-[#334d33] quicksand-text mb-2">

@@ -3,11 +3,11 @@ import { useNavigate } from 'react-router-dom';
 
 
 const SENSOR_IMAGES = {
-  eye: '/images/semana2/ojos.png',
-  nose: '/images/semana2/nariz.png',
+  eye: '/images/semana2/ojos.webp',
+  nose: '/images/semana2/nariz.webp',
   hand: '/images/semana2/mano.png',
   mouth: '/images/semana2/boca.png',
-  ear: '/images/semana2/oreja.png',
+  ear: '/images/semana2/oreja.webp',
 } as const;
 
 
@@ -458,7 +458,7 @@ export default function MartaDialogoPage() {
       {/* ───────────────────────── Fondo ───────────────────────── */}
       <div className="absolute inset-0 z-0 pointer-events-none">
         <img
-          src="/images/semana2/salon_clases.png"
+          src="/images/semana2/salon_clases.webp"
           alt="Aula de clases"
           className="w-full h-full object-cover opacity-90"
         />

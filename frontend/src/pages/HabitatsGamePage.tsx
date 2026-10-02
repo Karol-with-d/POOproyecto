@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useResetScrollOn } from '../components/WeekScrollReset';
 
 // ── Data ─────────────────────────────────────────────────────────────────────
 type Habitat = 'ocean' | 'forest' | 'desert' | 'field';
@@ -7,7 +8,7 @@ type Screen = 'start' | 'game' | 'results';
 
 const HABITAT_SPRITE = '/images/semana6/habitats/habitat-sprite.png';
 const ANIMAL_SPRITE1 = '/images/semana6/habitats/animals-sprite1.png';
-const ANIMAL_SPRITE2 = '/images/semana6/habitats/animals-sprite2.png';
+const ANIMAL_SPRITE2 = '/images/semana6/habitats/animals-sprite2.webp';
 
 const HABITATS: { id: Habitat; label: string; bgPos: string; bgTint: string; icon: string }[] = [
   { id: 'ocean',  label: 'Océano',   bgPos: '0% 0%',     bgTint: 'bg-[#a6cce4]/30', icon: 'waves'        },
@@ -101,6 +102,7 @@ function AnimalCard({ animal, onDragStart }: { animal: AnimalData; onDragStart: 
 export default function HabitatsGamePage() {
   const navigate = useNavigate();
   const [screen, setScreen] = useState<Screen>('start');
+  useResetScrollOn(screen);
   const [placedAnimals, setPlacedAnimals] = useState<Set<string>>(new Set());
   const [draggingId, setDraggingId] = useState<string | null>(null);
   const [dragOverHabitat, setDragOverHabitat] = useState<string | null>(null);
