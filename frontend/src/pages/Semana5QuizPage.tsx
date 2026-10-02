@@ -183,6 +183,7 @@ export default function Semana5QuizPage() {
         .quiz5-shake { animation: quiz5Shake 0.5s cubic-bezier(.36,.07,.19,.97) both; }
         .material-symbols-outlined { font-variation-settings: 'FILL' 0,'wght' 400,'GRAD' 0,'opsz' 24; }
         .filled-icon { font-variation-settings: 'FILL' 1; }
+        .game-screen { overflow-x: hidden; }
       `}</style>
 
       {/* ── Header ───────────────────────────────────────────────────────── */}
@@ -234,7 +235,7 @@ export default function Semana5QuizPage() {
       <main className="relative h-screen pt-16 w-full overflow-hidden">
 
         {/* STATE 0 — INTRO */}
-        <section className={`absolute inset-0 flex flex-col items-center justify-center p-8 bg-surface overflow-y-auto transition-all duration-400 ${getSlideClass(0)}`}>
+        <div className={`absolute inset-0 flex flex-col items-center justify-center p-8 bg-surface overflow-y-auto transition-all duration-400 ${getSlideClass(0)}`}>
           <div className="max-w-lg w-full text-center space-y-8 mt-8 pb-24">
             <div className="relative w-56 h-56 mx-auto animate-bounce">
               <img src={IMG_BRAIN} alt="Cerebro con birrete" className="w-full h-full object-contain" />
@@ -268,11 +269,11 @@ export default function Semana5QuizPage() {
               ¡Empezar Quiz!
             </button>
           </div>
-        </section>
+        </div>
 
         {/* STATES 1-3 — QUESTIONS */}
         {QUESTIONS.map((q, qi) => (
-          <section
+          <div
             key={qi}
             className={`absolute inset-0 flex flex-col p-6 pt-32 bg-surface overflow-y-auto transition-all duration-400 ${getSlideClass(qi + 1)}`}
           >
@@ -296,11 +297,11 @@ export default function Semana5QuizPage() {
                 ))}
               </div>
             </div>
-          </section>
+          </div>
         ))}
 
         {/* STATE 4 — RESULTS */}
-        <section className={`absolute inset-0 flex flex-col items-center justify-start p-8 pt-20 bg-surface-bright overflow-y-auto transition-all duration-400 ${getSlideClass(4)}`}>
+        <div className={`absolute inset-0 flex flex-col items-center justify-start p-8 pt-20 bg-surface-bright overflow-y-auto transition-all duration-400 ${getSlideClass(4)}`}>
           <div className="max-w-lg w-full text-center space-y-6 pb-24 mt-4">
             <div className="relative w-64 h-64 mx-auto">
               <img src={IMG_BADGE} alt="Medalla" className="w-full h-full object-contain" style={{ filter: badgeFilter }} />
@@ -341,7 +342,7 @@ export default function Semana5QuizPage() {
               </button>
             </div>
           </div>
-        </section>
+        </div>
 
       </main>
     </div>
