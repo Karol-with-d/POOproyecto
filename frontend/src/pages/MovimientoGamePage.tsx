@@ -1,15 +1,16 @@
 import { useState, useEffect, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useResetScrollOn } from '../components/WeekScrollReset';
 
 // ── Images ──────────────────────────────────────────────────────────────────
-const IMG_HERO       = '/images/semana6/moverse/hero.png';
-const IMG_FEELINGS   = '/images/semana6/moverse/feelings.png';
-const IMG_FINAL      = '/images/semana6/moverse/final.png';
+const IMG_HERO       = '/images/semana6/moverse/hero.webp';
+const IMG_FEELINGS   = '/images/semana6/moverse/feelings.webp';
+const IMG_FINAL      = '/images/semana6/moverse/final.webp';
 
 const ACTIVITIES = [
-  { title: '¡Salta 10 veces!',              image: '/images/semana6/moverse/act1-salta.png',       duration: 10 },
-  { title: '¡Corre en tu lugar 15 segundos!', image: '/images/semana6/moverse/act2-corre.png',     duration: 15 },
-  { title: '¡15 sentadillas!',               image: '/images/semana6/moverse/act3-sentadillas.png', duration: 30 },
+  { title: '¡Salta 10 veces!',              image: '/images/semana6/moverse/act1-salta.webp',       duration: 10 },
+  { title: '¡Corre en tu lugar 15 segundos!', image: '/images/semana6/moverse/act2-corre.webp',     duration: 15 },
+  { title: '¡15 sentadillas!',               image: '/images/semana6/moverse/act3-sentadillas.webp', duration: 30 },
 ];
 
 const FEELINGS = [
@@ -55,6 +56,7 @@ export default function MovimientoGamePage() {
 
   const [screen, setScreen]       = useState<Screen>('start');
   const [actIdx, setActIdx]       = useState(0);
+  useResetScrollOn(`${screen}-${actIdx}`);
   const [timeLeft, setTimeLeft]   = useState(ACTIVITIES[0].duration);
   const [timerRunning, setTimerRunning] = useState(false);
 

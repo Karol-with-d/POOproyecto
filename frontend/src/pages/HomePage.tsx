@@ -71,7 +71,7 @@ export default function HomePage() {
                 <img
                   alt="Avatar de usuario"
                   className="w-full h-full object-cover"
-                  src="/images/LoginImage.png"
+                  src="/images/LoginImage.webp"
                   onError={(e) => {
                     const target = e.target as HTMLImageElement;
                     target.style.display = 'none';
@@ -97,7 +97,7 @@ export default function HomePage() {
             <img
               alt="Guia de aventura"
               className="w-full h-full object-cover"
-              src="/images/LoginImage.png"
+              src="/images/LoginImage.webp"
               onError={(e) => {
                 // Fallback si la imagen no existe aun
                 (e.target as HTMLImageElement).style.display = 'none';

@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useResetScrollOn } from '../components/WeekScrollReset';
 import '../styles/terra-ciencia.css';
 import { playFromFeedback } from '../services/sounds';
 
@@ -65,6 +66,7 @@ type View = 'intro' | 'game' | 'finish';
 export default function BusquedaGamePage() {
   const navigate = useNavigate();
   const [view, setView] = useState<View>('intro');
+  useResetScrollOn(view);
   const [score, setScore] = useState(0);
   const [solved, setSolved] = useState<Set<number>>(new Set());
   const [shakingIndex, setShakingIndex] = useState<number | null>(null);
@@ -287,16 +289,11 @@ export default function BusquedaGamePage() {
             </div>
             <button
               onClick={() => navigate('/semana/5')}
-              aria-label="Salir de Búsqueda"
-              className="flex items-center gap-2 font-bold py-3 px-4 rounded-xl transition-colors tc-card-shadow active:scale-95"
-              style={{
-                backgroundColor: 'var(--tc-surface)',
-                color: 'var(--tc-on-surface-variant)',
-                border: '1px solid var(--tc-outline-variant)',
-              }}
+              aria-label="Volver"
+              className="w-10 h-10 flex items-center justify-center rounded-full transition-transform active:scale-95"
+              style={{ color: 'var(--tc-primary)' }}
             >
-              <span className="material-symbols-outlined">logout</span>
-              <span className="hidden md:inline">Salir</span>
+              <span className="material-symbols-outlined">arrow_back</span>
             </button>
           </div>
 
