@@ -1,5 +1,6 @@
 import { useState, useRef, useCallback, useEffect, type MouseEvent } from 'react';
 import { useNavigate } from 'react-router-dom';
+import KidBackButton from '../components/KidBackButton';
 
 interface GameItem {
   id: string;
@@ -549,7 +550,11 @@ export default function ColeccionandoObjetos() {
     >
       <ClassroomBackdrop />
 
-      <div className="pointer-events-none absolute inset-x-0 top-[1%] z-40 flex flex-col items-center gap-1 px-3 sm:top-[1.5%] sm:flex-row sm:justify-center sm:gap-3">
+      <div className="absolute left-3 top-3 z-50 sm:left-4 sm:top-4">
+        <KidBackButton onClick={handleExit} label="Volver a la Semana 2" />
+      </div>
+
+      <div className="pointer-events-none absolute inset-x-0 top-[1%] z-40 flex flex-col items-center gap-1 px-16 sm:top-[1.5%] sm:flex-row sm:justify-center sm:gap-3">
         <h1 className="rounded-full border-4 border-[#c4b5fd] bg-white/95 px-4 py-1 text-center font-extrabold text-[#6d28d9] shadow-[0_4px_0_#c4b5fd] sm:px-6">
           Coleccionando objetos
         </h1>
