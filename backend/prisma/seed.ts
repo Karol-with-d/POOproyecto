@@ -1,3 +1,4 @@
+import 'dotenv/config';
 import { prisma } from '../src/config/prisma';
 
 /**
@@ -9,16 +10,14 @@ class SeedService {
   async run(): Promise<void> {
     console.log('🌱 Iniciando seed de datos...');
 
-    // Limpieza idempotente (borrar en orden para respetar FKs)
-    await this.cleanDatabase();
+    // Solo borra usuarios y puntajes si se pide explícitamente.
+    // El default rellena semanas vacías sin tocar a los niños ya registrados.
+    if (process.env.SEED_RESET === 'true') {
+      await this.cleanDatabase();
+    }
 
-    // Crear las 6 semanas
     const semanas = await this.createSemanas();
-
-    // Crear actividades para cada semana
     await this.createActivities(semanas);
-
-    // Crear preguntas de quiz para cada semana
     await this.createQuizQuestions(semanas);
 
     console.log('✅ Seed completado exitosamente.');
@@ -48,7 +47,11 @@ class SeedService {
 
     const created = [];
     for (const data of semanasData) {
-      const semana = await prisma.semana.create({ data });
+      const semana = await prisma.semana.upsert({
+        where: { number: data.number },
+        update: { title: data.title, topic: data.topic, description: data.description },
+        create: data,
+      });
       created.push(semana);
       console.log(`  ✓ Semana ${semana.number}: ${semana.title}`);
     }
@@ -112,6 +115,11 @@ class SeedService {
     };
 
     for (const semana of semanas) {
+      const existing = await prisma.activity.count({ where: { semanaId: semana.id } });
+      if (existing > 0) {
+        console.log(`  ↷ Semana ${semana.number}: ya tiene ${existing} actividades`);
+        continue;
+      }
       const acts = activitiesConfig[semana.number] || [];
       for (let i = 0; i < acts.length; i++) {
         await prisma.activity.create({
@@ -177,6 +185,11 @@ class SeedService {
     };
 
     for (const semana of semanas) {
+      const existing = await prisma.quizQuestion.count({ where: { semanaId: semana.id } });
+      if (existing > 0) {
+        console.log(`  ↷ Semana ${semana.number}: ya tiene ${existing} preguntas de quiz`);
+        continue;
+      }
       const questions = quizData[semana.number] || [];
       for (let i = 0; i < questions.length; i++) {
         const q = questions[i];
@@ -208,12 +221,10 @@ class SeedService {
 // Ejecutar seed
 // ============================================
 async function main(): Promise<void> {
-  if (process.env.SEED_IF_EMPTY === 'true') {
-    const existing = await prisma.semana.count();
-    if (existing > 0) {
-      console.log(`Seed omitido: ya hay ${existing} semanas.`);
-      return;
-    }
+  const existing = await prisma.semana.count();
+  if (existing > 0 && process.env.SEED_RESET !== 'true') {
+    console.log(`Seed omitido: ya hay ${existing} semanas.`);
+    return;
   }
 
   const seedService = new SeedService();

@@ -1,7 +1,8 @@
 import { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useResetScrollOn } from '../components/WeekScrollReset';
 
-const IMG_HERO = '/images/semana6/similitudes/hero.png';
+const IMG_HERO = '/images/semana6/similitudes/hero.webp';
 
 interface QuizOption {
   label: string;
@@ -19,7 +20,7 @@ interface QuizQuestion {
 
 const QUESTIONS: QuizQuestion[] = [
   {
-    image: '/images/semana6/similitudes/q1-alimentan.png',
+    image: '/images/semana6/similitudes/q1-alimentan.webp',
     verb: 'Se alimentan',
     options: [
       { label: 'Plantas',  icon: 'eco',      iconBgClass: 'bg-[#8ba888]/20', iconColorClass: 'text-[#4a6549]', correct: false },
@@ -37,7 +38,7 @@ const QUESTIONS: QuizQuestion[] = [
     ],
   },
   {
-    image: '/images/semana6/similitudes/q3-mueven.png',
+    image: '/images/semana6/similitudes/q3-mueven.webp',
     verb: 'Se mueven',
     options: [
       { label: 'Plantas',  icon: 'eco',      iconBgClass: 'bg-[#8ba888]/20', iconColorClass: 'text-[#4a6549]', correct: false },
@@ -46,7 +47,7 @@ const QUESTIONS: QuizQuestion[] = [
     ],
   },
   {
-    image: '/images/semana6/similitudes/q4-fotosintesis.png',
+    image: '/images/semana6/similitudes/q4-fotosintesis.webp',
     verb: 'Hacen fotosíntesis',
     options: [
       { label: 'Plantas',  icon: 'eco',      iconBgClass: 'bg-[#8ba888]/20', iconColorClass: 'text-[#4a6549]', correct: true  },
@@ -55,7 +56,7 @@ const QUESTIONS: QuizQuestion[] = [
     ],
   },
   {
-    image: '/images/semana6/similitudes/q5-respiran.png',
+    image: '/images/semana6/similitudes/q5-respiran.webp',
     verb: 'Respiran',
     options: [
       { label: 'Plantas',  icon: 'eco',      iconBgClass: 'bg-[#8ba888]/20', iconColorClass: 'text-[#4a6549]', correct: false },
@@ -132,6 +133,7 @@ export default function SimilitudesGamePage() {
   const navigate = useNavigate();
   const [screen, setScreen] = useState<Screen>('start');
   const [qIdx, setQIdx] = useState(0);
+  useResetScrollOn(`${screen}-${qIdx}`);
   const [optStates, setOptStates] = useState<OptionState[]>(['idle', 'idle', 'idle']);
   const [checked, setChecked] = useState(false);
   const [score, setScore] = useState(0);
@@ -220,23 +222,23 @@ export default function SimilitudesGamePage() {
     return (
       <div className="bg-surface text-on-surface font-body-md min-h-screen flex flex-col">
         <header className="w-full top-0 bg-surface z-50 sticky">
-          <nav className="flex justify-between items-center w-full px-margin-mobile md:px-margin-desktop py-base max-w-full">
+          <nav className="flex justify-between items-center gap-2 w-full px-3 sm:px-margin-mobile md:px-margin-desktop py-2 sm:py-base max-w-full">
             <button
               onClick={() => navigate('/semana/6')}
-              className="flex items-center gap-2 px-4 py-2 rounded-full border border-outline-variant text-on-surface-variant hover:bg-surface-variant transition-colors font-label-md text-label-md"
+              aria-label="Volver"
+              className="w-10 h-10 shrink-0 flex items-center justify-center rounded-full hover:bg-surface-variant transition-colors text-[#334d33]"
             >
-              <span className="material-symbols-outlined text-[20px]">arrow_back</span>
-              <span>Salir</span>
+              <span className="material-symbols-outlined">arrow_back</span>
             </button>
-            <div className="font-headline-md text-headline-md text-primary">
+            <div className="font-headline-md text-sm sm:text-lg md:text-headline-md leading-tight text-center text-primary flex-1 min-w-0">
               ¿Qué tenemos en común?
             </div>
-            <div className="w-24" />
+            <div className="w-10 shrink-0" />
           </nav>
         </header>
 
-        <main className="flex-1 flex flex-col items-center text-center px-margin-mobile md:px-margin-desktop pt-lg pb-xl">
-          <div className="relative w-full max-w-md mb-lg">
+        <main className="scroll-board flex-1 min-h-0 overflow-y-auto flex flex-col items-center text-center px-4 sm:px-margin-mobile md:px-margin-desktop py-4 sm:py-8">
+          <div className="relative w-full max-w-[220px] sm:max-w-xs md:max-w-md mb-4 sm:mb-8">
             <div className="absolute inset-0 bg-primary-fixed opacity-20 rounded-full blur-3xl -z-10" />
             <img
               src={IMG_HERO}
@@ -246,15 +248,15 @@ export default function SimilitudesGamePage() {
           </div>
 
           <div className="max-w-2xl">
-            <h1 className="font-headline-lg-mobile md:font-headline-lg text-headline-lg-mobile md:text-headline-lg text-primary mb-sm leading-tight">
+            <h1 className="font-headline-lg-mobile md:font-headline-lg text-2xl sm:text-headline-lg-mobile md:text-headline-lg text-primary mb-2 sm:mb-3 leading-tight">
               ¿Qué tenemos en común?
             </h1>
-            <p className="font-body-lg text-body-lg text-on-surface-variant mb-lg">
+            <p className="font-body-lg text-base sm:text-body-lg text-on-surface-variant mb-4 sm:mb-8">
               ¡Adivina qué une a las plantas y los animales!
             </p>
             <button
               onClick={() => setScreen('question')}
-              className="bg-primary-container text-on-primary-container px-xl py-md rounded-xl font-label-lg text-label-lg flex items-center justify-center gap-sm mx-auto hover:scale-105 transition-transform active:translate-y-1"
+              className="bg-primary-container text-on-primary-container px-6 py-3 sm:px-8 sm:py-4 rounded-xl font-label-lg text-base sm:text-label-lg flex items-center justify-center gap-2 mx-auto w-full max-w-xs hover:scale-105 transition-transform active:translate-y-1"
               style={{ boxShadow: '0 4px 0 0 #334d33' }}
             >
               <span className="material-symbols-outlined">rocket_launch</span>
@@ -269,32 +271,32 @@ export default function SimilitudesGamePage() {
   // ── RESULTS SCREEN ──────────────────────────────────────────────────────────
   if (screen === 'results') {
     return (
-      <div className="bg-background text-on-background font-body-md min-h-screen flex flex-col items-center justify-center p-margin-mobile md:p-margin-desktop relative overflow-hidden">
+      <div className="bg-background text-on-background font-body-md min-h-screen flex flex-col relative overflow-y-auto">
         <ConfettiCanvas />
 
-        <div className="z-20 w-full max-w-4xl flex flex-col items-center">
-          <div className="text-center mb-md px-sm">
-            <h2 className="font-headline-lg text-headline-lg-mobile md:text-headline-lg text-primary mb-base">
+        <div className="z-20 m-auto w-full max-w-4xl flex flex-col items-center px-4 sm:px-6 py-4 sm:py-8">
+          <div className="text-center mb-3 sm:mb-6 px-2">
+            <h2 className="font-headline-lg text-xl sm:text-2xl md:text-headline-lg text-primary mb-2 leading-tight">
               ¡Excelente trabajo, Científico!
             </h2>
-            <p className="font-body-lg text-body-lg text-on-surface-variant max-w-xl mx-auto">
+            <p className="font-body-lg text-base sm:text-body-lg text-on-surface-variant max-w-xl mx-auto">
               ¡Has completado el quiz con éxito!
             </p>
           </div>
 
-          <div className="w-full max-w-lg grid grid-cols-1 gap-gutter mb-lg">
-            <div className="bg-surface-container-lowest border-2 border-outline-variant p-lg rounded-xl shadow-sm text-center relative overflow-hidden">
-              <p className="font-label-lg text-label-lg text-on-surface-variant uppercase tracking-widest mb-base">
+          <div className="w-full max-w-lg grid grid-cols-1 mb-4 sm:mb-8">
+            <div className="bg-surface-container-lowest border-2 border-outline-variant p-4 sm:p-6 rounded-xl shadow-sm text-center relative overflow-hidden">
+              <p className="font-label-lg text-xs sm:text-label-lg text-on-surface-variant uppercase tracking-widest mb-2">
                 Puntuación Final
               </p>
-              <div className="text-6xl md:text-8xl font-headline-lg text-primary mb-md">
-                {score}<span className="text-3xl text-outline">/{QUESTIONS.length}</span>
+              <div className="text-4xl sm:text-6xl md:text-8xl font-headline-lg text-primary mb-2 sm:mb-4 leading-none">
+                {score}<span className="text-xl sm:text-3xl text-outline">/{QUESTIONS.length}</span>
               </div>
-              <div className="flex justify-center gap-md">
+              <div className="flex justify-center gap-2 sm:gap-4">
                 {[0, 1, 2].map((i) => (
                   <span
                     key={i}
-                    className={`material-symbols-outlined similitudes-star-pop ${i === 1 ? 'text-6xl' : 'text-5xl'} ${i < stars ? 'text-[#6a5d45]' : 'text-outline-variant'}`}
+                    className={`material-symbols-outlined similitudes-star-pop ${i === 1 ? 'text-4xl sm:text-6xl' : 'text-3xl sm:text-5xl'} ${i < stars ? 'text-[#6a5d45]' : 'text-outline-variant'}`}
                     style={{ fontVariationSettings: "'FILL' 1" }}
                   >
                     star
@@ -304,10 +306,10 @@ export default function SimilitudesGamePage() {
             </div>
           </div>
 
-          <div className="flex flex-col md:flex-row gap-md w-full max-w-lg">
+          <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 w-full max-w-lg">
             <button
               onClick={() => navigate('/semana/6')}
-              className="flex-1 bg-primary text-on-primary font-label-lg text-label-lg py-md px-lg rounded-xl flex items-center justify-center gap-sm hover:bg-primary/90 transition-colors active:translate-y-0.5"
+              className="flex-1 bg-primary text-on-primary font-label-lg text-base sm:text-label-lg py-3 px-4 sm:py-4 sm:px-6 rounded-xl flex items-center justify-center gap-2 hover:bg-primary/90 transition-colors active:translate-y-0.5"
               style={{ boxShadow: '0 4px 0 0 #334d33', borderBottom: '4px solid #334d33' }}
             >
               <span className="material-symbols-outlined">sports_esports</span>
@@ -315,7 +317,7 @@ export default function SimilitudesGamePage() {
             </button>
             <button
               onClick={resetQuiz}
-              className="flex-1 bg-surface-container-high text-on-surface-variant font-label-lg text-label-lg py-md px-lg rounded-xl flex items-center justify-center gap-sm hover:bg-surface-variant transition-colors active:translate-y-0.5"
+              className="flex-1 bg-surface-container-high text-on-surface-variant font-label-lg text-base sm:text-label-lg py-3 px-4 sm:py-4 sm:px-6 rounded-xl flex items-center justify-center gap-2 hover:bg-surface-variant transition-colors active:translate-y-0.5"
               style={{ borderBottom: '4px solid #c3c8bf' }}
             >
               <span className="material-symbols-outlined">replay</span>
@@ -330,34 +332,34 @@ export default function SimilitudesGamePage() {
   // ── QUESTION SCREEN ─────────────────────────────────────────────────────────
   return (
     <div className="bg-background text-on-background min-h-screen flex flex-col font-body-md overflow-x-hidden">
-      <header className="w-full flex justify-between items-center px-margin-mobile md:px-margin-desktop h-20 bg-surface shadow-sm z-10 fixed top-0">
+      <header className="w-full shrink-0 sticky top-0 flex justify-between items-center px-3 sm:px-margin-mobile md:px-margin-desktop h-14 sm:h-16 md:h-20 bg-surface shadow-sm z-10">
         <button
           onClick={() => navigate('/semana/6')}
-          className="w-12 h-12 rounded-full flex items-center justify-center bg-surface-container-low hover:bg-surface-variant transition-colors text-on-surface"
+          className="w-10 h-10 sm:w-12 sm:h-12 shrink-0 rounded-full flex items-center justify-center bg-surface-container-low hover:bg-surface-variant transition-colors text-on-surface"
         >
           <span className="material-symbols-outlined">close</span>
         </button>
 
-        <div className="flex-1 max-w-xl mx-8 flex items-center gap-4">
-          <div className="h-4 flex-1 bg-surface-container-high rounded-full overflow-hidden border-2 border-surface-container-highest">
+        <div className="flex-1 min-w-0 max-w-xl mx-2 sm:mx-6 flex items-center gap-2 sm:gap-4">
+          <div className="h-3 sm:h-4 flex-1 bg-surface-container-high rounded-full overflow-hidden border-2 border-surface-container-highest">
             <div
               className="h-full bg-primary rounded-full transition-[width] duration-500"
               style={{ width: `${progressPct}%` }}
             />
           </div>
-          <span className="font-headline-md text-headline-md text-primary font-bold min-w-[3rem] text-right">
+          <span className="font-headline-md text-sm sm:text-headline-md text-primary font-bold shrink-0 tabular-nums">
             {qIdx + 1}/{QUESTIONS.length}
           </span>
         </div>
 
-        <div className="w-12 h-12" />
+        <div className="w-10 h-10 sm:w-12 sm:h-12 shrink-0" />
       </header>
 
-      <main className="flex-1 mt-20 px-margin-mobile md:px-margin-desktop py-lg flex flex-col items-center justify-center gap-lg">
-        <div className="w-full max-w-2xl flex flex-col items-center text-center gap-md">
-          <h2 className="font-headline-md text-headline-md text-secondary mb-2">¿Quién lo hace?</h2>
+      <main className="scroll-board flex-1 min-h-0 overflow-y-auto px-4 sm:px-margin-mobile md:px-margin-desktop py-3 sm:py-6 flex flex-col items-center gap-3 sm:gap-6">
+        <div className="w-full max-w-2xl flex flex-col items-center text-center gap-2 sm:gap-4">
+          <h2 className="font-headline-md text-lg sm:text-headline-md text-secondary">¿Quién lo hace?</h2>
 
-          <div className="w-64 h-64 md:w-80 md:h-80 relative bg-surface-container-low rounded-[2rem] border-4 border-surface-container-high flex items-center justify-center p-sm shadow-[0_8px_30px_rgba(74,101,73,0.15)] overflow-hidden">
+          <div className="w-40 h-40 sm:w-56 sm:h-56 md:w-80 md:h-80 max-w-[34dvh] max-h-[34dvh] relative bg-surface-container-low rounded-[2rem] border-4 border-surface-container-high flex items-center justify-center p-2 sm:p-3 shadow-[0_8px_30px_rgba(74,101,73,0.15)] overflow-hidden">
             <img
               src={currentQ.image}
               alt={currentQ.verb}
@@ -365,12 +367,12 @@ export default function SimilitudesGamePage() {
             />
           </div>
 
-          <h1 className="font-headline-lg-mobile text-headline-lg-mobile md:font-headline-lg md:text-headline-lg text-on-surface">
+          <h1 className="font-headline-lg-mobile text-xl sm:text-headline-lg-mobile md:font-headline-lg md:text-headline-lg text-on-surface leading-tight">
             {currentQ.verb}
           </h1>
         </div>
 
-        <div className="w-full max-w-lg flex flex-col gap-sm mt-md">
+        <div className="w-full max-w-lg flex flex-col gap-2 sm:gap-3">
           {currentQ.options.map((opt, i) => {
             const state = optStates[i];
             return (
@@ -378,17 +380,17 @@ export default function SimilitudesGamePage() {
                 key={opt.label}
                 onClick={() => handleOptionClick(i)}
                 disabled={advancing || (checked && state === 'correct')}
-                className={`w-full p-md border-2 rounded-xl flex items-center gap-md transition-all duration-100 active:translate-y-1 ${getOptionClass(state)}`}
+                className={`w-full p-3 sm:p-4 border-2 rounded-xl flex items-center gap-3 sm:gap-4 transition-all duration-100 active:translate-y-1 ${getOptionClass(state)}`}
               >
-                <div className={`w-12 h-12 rounded-full flex items-center justify-center transition-transform ${state === 'idle' ? opt.iconBgClass : 'bg-white/20'} group-hover:scale-110`}>
+                <div className={`w-10 h-10 sm:w-12 sm:h-12 shrink-0 rounded-full flex items-center justify-center transition-transform ${state === 'idle' ? opt.iconBgClass : 'bg-white/20'} group-hover:scale-110`}>
                   <span
-                    className={`material-symbols-outlined text-[32px] ${state === 'idle' ? opt.iconColorClass : 'text-white'}`}
+                    className={`material-symbols-outlined text-[22px] sm:text-[28px] ${state === 'idle' ? opt.iconColorClass : 'text-white'}`}
                     style={{ fontVariationSettings: "'FILL' 1" }}
                   >
                     {getOptionIcon(state, opt.icon)}
                   </span>
                 </div>
-                <span className={`font-headline-md text-headline-md flex-1 text-left ${getOptionTextClass(state)}`}>
+                <span className={`font-headline-md text-lg sm:text-headline-md flex-1 text-left leading-tight ${getOptionTextClass(state)}`}>
                   {opt.label}
                 </span>
               </button>
@@ -397,12 +399,12 @@ export default function SimilitudesGamePage() {
         </div>
       </main>
 
-      <div className="w-full max-w-lg mx-auto px-margin-mobile md:px-margin-desktop pb-lg">
+      <div className="w-full shrink-0 max-w-lg mx-auto px-4 sm:px-margin-mobile md:px-margin-desktop pt-2 pb-3 sm:pb-6">
         {!checked ? (
           <button
             onClick={handleCheck}
             disabled={!canCheck}
-            className={`w-full py-md font-headline-md rounded-xl transition-colors ${
+            className={`w-full py-3 sm:py-4 font-headline-md text-lg sm:text-headline-md rounded-xl transition-colors ${
               canCheck
                 ? 'bg-primary text-on-primary shadow-[0_4px_0_0_#334d33] active:translate-y-1 active:shadow-none'
                 : 'bg-surface-container-high text-on-surface-variant cursor-not-allowed'
@@ -414,7 +416,7 @@ export default function SimilitudesGamePage() {
           optStates.some((s) => s === 'incorrect') && !advancing ? (
             <button
               onClick={() => { setChecked(false); setOptStates(['idle', 'idle', 'idle']); }}
-              className="w-full py-md bg-surface-container-high text-on-surface-variant font-headline-md rounded-xl hover:bg-surface-variant transition-colors"
+              className="w-full py-3 sm:py-4 bg-surface-container-high text-on-surface-variant font-headline-md text-lg sm:text-headline-md rounded-xl hover:bg-surface-variant transition-colors"
             >
               Intentar de nuevo
             </button>
@@ -423,7 +425,7 @@ export default function SimilitudesGamePage() {
               <button
                 onClick={handleNext}
                 disabled={advancing}
-                className="w-full py-md bg-primary text-on-primary font-headline-md rounded-xl shadow-[0_4px_0_0_#334d33] active:translate-y-1 active:shadow-none transition-all"
+                className="w-full py-3 sm:py-4 bg-primary text-on-primary font-headline-md text-lg sm:text-headline-md rounded-xl shadow-[0_4px_0_0_#334d33] active:translate-y-1 active:shadow-none transition-all"
               >
                 Siguiente →
               </button>

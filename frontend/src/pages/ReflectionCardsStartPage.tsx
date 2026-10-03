@@ -28,19 +28,17 @@ export default function ReflectionCardsStartPage() {
       <main className="w-full max-w-3xl flex-1 flex flex-col items-center justify-center mt-20 relative z-20 px-5">
         {/* Central Focus Card */}
         <div
-          className="bg-[#efedf1] rounded-3xl p-12 md:p-16 flex flex-col items-center gap-12 shadow-[0_10px_40px_-10px_rgba(74,101,73,0.15)] w-full max-w-md border-2 border-[#dbd9dd] relative overflow-hidden"
+          className="bg-[#fbf3e4] rounded-3xl p-8 md:p-10 flex flex-col items-center gap-6 w-full max-w-md border-4 border-[#e0c48a] relative overflow-hidden"
           style={{ boxShadow: '0 0 80px 20px rgba(139, 168, 136, 0.2), 0 10px 40px -10px rgba(74, 101, 73, 0.15)' }}
         >
           <div className="absolute -top-24 -right-24 w-48 h-48 bg-[#ccebc7] opacity-50 rounded-full blur-3xl pointer-events-none"></div>
           <div className="absolute -bottom-24 -left-24 w-64 h-64 bg-[#bfe5fe] opacity-40 rounded-full blur-3xl pointer-events-none"></div>
 
           {/* Illustration Container — large recycling icon */}
-          <div className="w-full aspect-square max-w-[280px] bg-[#ffffff] rounded-2xl flex items-center justify-center p-6 border-2 border-[#c3c8bf] relative z-10">
-            <img
-              alt="Tarjetas para pensar"
-              className="w-full h-full object-contain"
-              src="/images/semana3/card-reflexion.svg"
-            />
+          <div className="w-full aspect-square max-w-[280px] bg-white rounded-2xl overflow-hidden border-4 border-white relative z-10 shadow-md grid grid-cols-3 gap-2 p-3">
+            {['/images/semana3/reflexion/lata.webp', '/images/semana3/reflexion/platano.webp', '/images/semana3/reflexion/frasco.webp'].map((src) => (
+              <img key={src} alt="" className="w-full h-full object-contain" src={src} />
+            ))}
           </div>
 
           {/* Instruction Text */}

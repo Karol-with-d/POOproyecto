@@ -1,193 +1,241 @@
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { showKidMessage } from '../components/KidFrame';
+import { playLevelUp, playMiss, playPop, playSuccess, playWhoosh } from '../services/sounds';
+import { S4Clear, S4Confetti, S4Image, S4Levels, S4Page, S4Welcome } from '../components/Semana4Ui';
 
-/**
- * OpuestosPage — Actividad de la Semana 4: Conoce a los Opuestos.
- *
- * Muestra las tarjetas de los personajes Señor Ácido y Don Básico,
- * con explicaciones interactivas sobre ácidos y bases.
- */
+type Side = 'acido' | 'basico';
+
+const ALL_ITEMS: { id: string; name: string; side: Side; filename: string; hint: string; src: string; icon?: string }[] = [
+  { id: 'limon', name: 'Limón', side: 'acido', filename: 'ejemplo-limon.jpg', hint: 'Limón cortado', src: '/images/semana4/ejemplo-limon.jpg' },
+  { id: 'vinagre', name: 'Vinagre', side: 'acido', filename: 'ejemplo-vinagre.jpg', hint: 'Botella de vinagre', src: '/images/semana4/ejemplo-vinagre.jpg' },
+  { id: 'naranja', name: 'Naranja', side: 'acido', filename: 'ejemplo-naranja.jpg', hint: 'Naranja agria', src: '/images/semana4/ejemplo-naranja.jpg' },
+  { id: 'jabon', name: 'Jabón', side: 'basico', filename: 'ejemplo-jabon.jpg', hint: 'Jabón suave', src: '/images/semana4/ejemplo-jabon.jpg' },
+  { id: 'pasta', name: 'Pasta dental', side: 'basico', filename: 'ejemplo-pasta.jpg', hint: 'Pasta dental', src: '/images/semana4/ejemplo-pasta.jpg' },
+  { id: 'bicarbonato', name: 'Bicarbonato', side: 'basico', filename: 'ejemplo-bicarbonato.jpg', hint: 'Polvo blanco de bicarbonato', src: '/images/semana4/ejemplo-bicarbonato.jpg' },
+];
+
 export default function OpuestosPage() {
   const navigate = useNavigate();
+  const [screen, setScreen] = useState<'welcome' | 'play'>('welcome');
+  const [level, setLevel] = useState(1);
+  const [picked, setPicked] = useState<string | null>(null);
+  const [sorted, setSorted] = useState<Record<string, Side>>({});
+  const [shake, setShake] = useState<Side | null>(null);
+  const [clear, setClear] = useState(false);
+  const [tf, setTf] = useState(0);
+
+  const itemsForLevel = () => {
+    if (level === 1) return ALL_ITEMS.filter((item) => item.id === 'limon' || item.id === 'jabon');
+    if (level === 2) return ALL_ITEMS.filter((item) => ['limon', 'vinagre', 'jabon', 'pasta'].includes(item.id));
+    return ALL_ITEMS;
+  };
+
+  const resetLevel = () => {
+    setPicked(null);
+    setSorted({});
+    setShake(null);
+    setClear(false);
+    setTf(0);
+  };
 
   const handleBack = () => {
-    navigate('/semana/4');
+    if (screen === 'play') {
+      setScreen('welcome');
+      setLevel(1);
+      resetLevel();
+    } else navigate('/semana/4');
   };
 
-  const handleFinish = () => {
-    showKidMessage('¡Lección de ácidos y bases completada!');
-    navigate('/semana/4');
+  const win = () => {
+    playSuccess();
+    playLevelUp();
+    setClear(true);
   };
+
+  const next = () => {
+    playWhoosh();
+    if (level >= 5) {
+      showKidMessage('¡Completaste los 5 niveles de ácidos y bases!');
+      navigate('/semana/4');
+      return;
+    }
+    setLevel((n) => n + 1);
+    resetLevel();
+  };
+
+  const dropOn = (side: Side) => {
+    if (!picked || clear) return;
+    const item = ALL_ITEMS.find((entry) => entry.id === picked);
+    if (!item) return;
+    if (item.side === side) {
+      playPop();
+      const nextSorted = { ...sorted, [item.id]: side };
+      setSorted(nextSorted);
+      setPicked(null);
+      const needed = itemsForLevel();
+      if (needed.every((entry) => nextSorted[entry.id])) win();
+    } else {
+      playMiss();
+      setShake(side);
+      window.setTimeout(() => setShake(null), 450);
+    }
+  };
+
+  const remaining = itemsForLevel().filter((item) => !sorted[item.id]);
 
   return (
-    <div className="bg-[#faf9f5] text-[#1a1c1a] antialiased min-h-screen flex flex-col font-body-md relative overflow-x-hidden">
-      {/* Custom Styles */}
-      <style dangerouslySetInnerHTML={{ __html: `
-        .quicksand-text {
-          font-family: 'Quicksand', sans-serif;
-        }
-        .scale-down-on-press:active {
-          transform: scale(0.98);
-        }
-        .bento-card {
-          border-radius: 24px;
-          background: #ffffff;
-          transition: all 0.2s ease;
-        }
-        .card-hover:hover {
-          transform: translateY(-4px);
-          box-shadow: 0 10px 25px rgba(51, 77, 51, 0.12);
-        }
-      `}} />
+    <S4Page
+      title="Semana 4 · Ácidos y bases"
+      onBack={handleBack}
+      badge={screen === 'play' ? <span className="rounded-full bg-[#d9f99d] px-3 py-1 text-xs font-black text-[#115e59]">Tubo {level}/5</span> : undefined}
+    >
+      {screen === 'welcome' ? (
+        <S4Welcome
+          badge="Misión 3"
+          title="¡Conoce a los Opuestos!"
+          text="5 niveles: clasifica ácidos y bases, y encuentra el 7 del agua."
+          src="/images/semana4/senor-acido.jpg"
+          filename="senor-acido.jpg"
+          hint="Señor Ácido amarillo"
+          cta="¡Nivel 1!"
+          accent="#d4a017"
+          onStart={() => {
+            playWhoosh();
+            setScreen('play');
+            setLevel(1);
+            resetLevel();
+          }}
+        />
+      ) : (
+        <div className="relative space-y-5">
+          {clear && <S4Confetti />}
+          <S4Levels current={level} />
 
-      {/* TopAppBar */}
-      <header className="bg-[#faf9f5] shadow-sm w-full top-0 sticky z-50 h-16 flex justify-between items-center px-margin-mobile md:px-margin-desktop">
-        <div className="flex items-center gap-4">
-          <button
-            onClick={handleBack}
-            className="flex items-center justify-center w-10 h-10 rounded-full hover:bg-surface-container-low transition-colors duration-200 active:scale-[0.98]"
-          >
-            <span className="material-symbols-outlined text-[#334d33]">arrow_back</span>
-          </button>
-          <h1 className="font-headline-md text-[20px] md:text-headline-md text-[#334d33] truncate quicksand-text">
-            Semana 4: Propiedades Químicas
-          </h1>
+          {clear ? (
+            <S4Clear
+              last={level === 5}
+              color="#d4a017"
+              title={level === 5 ? '¡Los opuestos son amigos!' : `¡Nivel ${level} superado!`}
+              text={
+                level === 1
+                  ? 'Limón ácido, jabón básico.'
+                  : level === 2
+                    ? 'Vinagre también es ácido.'
+                    : level === 3
+                      ? 'Naranja agria, bicarbonato suave.'
+                      : level === 4
+                        ? 'El jabón no es ácido.'
+                        : 'El agua pura está en el 7.'
+              }
+              onNext={next}
+            />
+          ) : level <= 3 ? (
+            <section className="s4-pop space-y-4">
+              <div className="grid grid-cols-1 gap-3 md:grid-cols-2">
+                <article className="rounded-[1.5rem] border-[3px] border-[#d4a017] bg-[#fff8d9] p-3 text-center">
+                  <S4Image src="/images/semana4/senor-acido.jpg" alt="Señor Ácido" filename="senor-acido.jpg" hint="Cara de limón" className="mx-auto h-32 w-32 rounded-2xl bg-white" />
+                  <p className="mt-1 font-black text-[#8a6a0a]">Casa de Ácido</p>
+                </article>
+                <article className="rounded-[1.5rem] border-[3px] border-[#3e6378] bg-[#e6f4ff] p-3 text-center">
+                  <S4Image src="/images/semana4/don-basico.jpg" alt="Don Básico" filename="don-basico.jpg" hint="Suave como jabón" className="mx-auto h-32 w-32 rounded-2xl bg-white" />
+                  <p className="mt-1 font-black text-[#3e6378]">Casa de Básico</p>
+                </article>
+              </div>
+              <h2 className="text-center font-headline-md text-xl font-extrabold text-[#8a6a0a]">Toca un objeto y luego su casa</h2>
+              <div className="flex flex-wrap justify-center gap-3">
+                {remaining.map((item) => (
+                  <button
+                    key={item.id}
+                    type="button"
+                    onClick={() => setPicked(item.id)}
+                    className={`s4-choice w-32 rounded-2xl border-[3px] bg-[#fff8ee] p-2 ${picked === item.id ? 's4-pulse border-[#d4a017]' : 'border-[#d8c7aa]'}`}
+                  >
+                    <S4Image src={item.src} alt={item.name} filename={item.filename} hint={item.hint} className="h-24 w-full rounded-xl bg-white" />
+                    <span className="mt-1 block text-sm font-bold">{item.name}</span>
+                  </button>
+                ))}
+              </div>
+              <div className="grid grid-cols-1 gap-3 md:grid-cols-2">
+                <button type="button" onClick={() => dropOn('acido')} className={`s4-choice rounded-[1.5rem] border-[3px] border-[#d4a017] bg-[#fff8d9] p-4 text-left ${shake === 'acido' ? 's4-shake' : ''}`}>
+                  <p className="font-black uppercase text-[#8a6a0a]">Dejar en Ácido</p>
+                  <p className="text-sm">{itemsForLevel().filter((item) => sorted[item.id] === 'acido').map((item) => item.name).join(', ') || 'Vacía'}</p>
+                </button>
+                <button type="button" onClick={() => dropOn('basico')} className={`s4-choice rounded-[1.5rem] border-[3px] border-[#3e6378] bg-[#e6f4ff] p-4 text-left ${shake === 'basico' ? 's4-shake' : ''}`}>
+                  <p className="font-black uppercase text-[#3e6378]">Dejar en Básico</p>
+                  <p className="text-sm">{itemsForLevel().filter((item) => sorted[item.id] === 'basico').map((item) => item.name).join(', ') || 'Vacía'}</p>
+                </button>
+              </div>
+            </section>
+          ) : level === 4 ? (
+            <section className="s4-pop space-y-4 text-center">
+              <h2 className="font-headline-md text-2xl font-extrabold text-[#8a6a0a]">
+                {tf === 0 ? '¿El jabón es ácido?' : '¿El limón es ácido?'}
+              </h2>
+              <div className="grid grid-cols-2 gap-3">
+                <button
+                  type="button"
+                  onClick={() => {
+                    if (tf === 0) {
+                      playMiss();
+                      setShake('acido');
+                      window.setTimeout(() => setShake(null), 450);
+                    } else win();
+                  }}
+                  className={`s4-choice rounded-3xl border-[3px] bg-white py-6 text-xl font-black ${shake === 'acido' ? 's4-shake border-[#d64545]' : 'border-[#d8c7aa]'}`}
+                >
+                  Sí
+                </button>
+                <button
+                  type="button"
+                  onClick={() => {
+                    if (tf === 0) {
+                      playPop();
+                      setTf(1);
+                    } else {
+                      playMiss();
+                      setShake('basico');
+                      window.setTimeout(() => setShake(null), 450);
+                    }
+                  }}
+                  className="s4-choice rounded-3xl border-[3px] border-[#d8c7aa] bg-white py-6 text-xl font-black"
+                >
+                  No
+                </button>
+              </div>
+              {tf === 1 && <p className="font-bold text-[#4a6549]">¡Bien! El jabón es básico. Ahora el limón…</p>}
+            </section>
+          ) : (
+            <section className="s4-pop space-y-4 text-center">
+              <h2 className="font-headline-md text-2xl font-extrabold text-[#8a6a0a]">El agua pura está en el…</h2>
+              <p className="text-sm font-bold text-[#5a4630]">Escala de pH: 0 es muy ácido, 14 es muy básico</p>
+              <div className="grid grid-cols-3 gap-3">
+                {[
+                  { id: '0', label: '0 · muy ácido', ok: false },
+                  { id: '7', label: '7 · en el medio', ok: true },
+                  { id: '14', label: '14 · muy básico', ok: false },
+                ].map((item) => (
+                  <button
+                    key={item.id}
+                    type="button"
+                    onClick={() => {
+                      if (item.ok) win();
+                      else {
+                        playMiss();
+                        setShake('acido');
+                        window.setTimeout(() => setShake(null), 450);
+                      }
+                    }}
+                    className={`s4-choice rounded-3xl border-[3px] bg-white py-6 font-black ${shake && !item.ok ? 's4-shake' : 'border-[#d8c7aa]'}`}
+                  >
+                    {item.label}
+                  </button>
+                ))}
+              </div>
+            </section>
+          )}
         </div>
-      </header>
-
-      <main className="max-w-7xl mx-auto px-margin-mobile md:px-margin-desktop py-8 mb-24 relative z-10 flex-1 w-full">
-        {/* Welcome Hero Section */}
-        <section className="mb-8">
-          <h2 className="font-headline-lg-mobile md:font-headline-lg text-headline-lg-mobile md:text-headline-lg text-[#334d33] mb-2 quicksand-text">
-            ¡Conoce a los Opuestos!
-          </h2>
-          <p className="text-on-surface-variant font-body-lg">
-            En el laboratorio hoy descubriremos por qué algunas cosas nos hacen arrugar la nariz y otras son tan suaves.
-          </p>
-        </section>
-
-        {/* Character Comparison Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
-          {/* Card 1: Acid */}
-          <div className="bento-card p-6 shadow-sm border border-outline-variant/30 flex flex-col items-center text-center hover:-translate-y-1 transition-transform duration-200">
-            <div className="relative w-48 h-48 mb-6 mt-6">
-              <img
-                alt="Ácido Character"
-                className="w-full h-full object-contain rounded-2xl scale-110"
-                src="/images/semana4/acido.png"
-              />
-              <div className="absolute -right-8 bg-[#4a6549] text-white p-4 rounded-2xl rounded-bl-none shadow-md font-label-lg max-w-[200px] -top-10 quicksand-text text-left">
-                ¡Yo soy lo que hace tu cara así, como el limón!
-              </div>
-            </div>
-            <div className="mt-4">
-              <span className="inline-block px-4 py-1 bg-yellow-100 text-yellow-800 rounded-full font-label-sm uppercase tracking-wider mb-2 quicksand-text">
-                ÁCIDO
-              </span>
-              <h3 className="font-headline-md text-on-surface mb-2 quicksand-text">
-                Señor Ácido
-              </h3>
-              <p className="text-on-surface-variant">
-                Es amarillo brillante y siempre tiene una cara graciosa porque todo lo que prueba es ¡super ácido!
-              </p>
-            </div>
-          </div>
-
-          {/* Card 2: Base */}
-          <div className="bento-card p-6 shadow-sm border border-outline-variant/30 flex flex-col items-center text-center hover:-translate-y-1 transition-transform duration-200">
-            <div className="relative w-48 h-48 mb-6 mt-6">
-              <img
-                alt="Básico Character"
-                className="w-full h-full object-contain rounded-2xl scale-110"
-                src="/images/semana4/basico.svg"
-              />
-              <div className="absolute -left-8 bg-[#bfe5fe] text-[#42677c] p-4 rounded-2xl rounded-br-none shadow-md font-label-lg max-w-[200px] -top-10 quicksand-text text-left">
-                ¡Yo soy suavecito como el jabón!
-              </div>
-            </div>
-            <div className="mt-4">
-              <span className="inline-block px-4 py-1 bg-blue-100 text-blue-800 rounded-full font-label-sm uppercase tracking-wider mb-2 quicksand-text">
-                BÁSICO
-              </span>
-              <h3 className="font-headline-md text-on-surface mb-2 quicksand-text">
-                Don Básico
-              </h3>
-              <p className="text-on-surface-variant">
-                Es como una nube azul y esponjosa. Todo en él es suave, resbaladizo y muy tranquilo.
-              </p>
-            </div>
-          </div>
-        </div>
-
-        {/* Main Content Section: Explanation */}
-        <section className="mb-8 grid grid-cols-1 md:grid-cols-2 gap-6">
-          <div className="bento-card p-6 border border-outline-variant/30 flex flex-col gap-4">
-            <div className="flex items-center gap-3">
-              <div className="w-12 h-12 bg-yellow-100 rounded-full flex items-center justify-center">
-                <span className="material-symbols-outlined text-yellow-600">
-                  nutrition
-                </span>
-              </div>
-              <h3 className="font-headline-md text-[#334d33] quicksand-text">
-                Ácidos
-              </h3>
-            </div>
-            <p className="text-on-surface-variant font-body-md">
-              Sustancias inquietas y agrias. <br />
-              <b>Ejemplos:</b> Limón, Vinagre.
-            </p>
-          </div>
-
-          <div className="bento-card p-6 border border-outline-variant/30 flex flex-col gap-4">
-            <div className="flex items-center gap-3">
-              <div className="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center">
-                <span className="material-symbols-outlined text-blue-600">
-                  soap
-                </span>
-              </div>
-              <h3 className="font-headline-md text-[#3e6378] quicksand-text">
-                Bases
-              </h3>
-            </div>
-            <p className="text-on-surface-variant font-body-md">
-              Sustancias tranquilas y resbaladizas. <br />
-              <b>Ejemplos:</b> Jabón, Pasta dental.
-            </p>
-          </div>
-        </section>
-
-        {/* Progress/Fun Fact Section */}
-        <section className="bg-[#e3e3de] rounded-[32px] p-8 border border-outline-variant/20 flex flex-col md:flex-row items-center gap-8 shadow-sm">
-          <div className="flex-grow space-y-4">
-            <p className="font-body-lg text-on-surface">
-              <span className="font-label-lg text-label-lg text-[#3e6378] uppercase tracking-widest block mb-2 quicksand-text">
-                Dato Curioso
-              </span>
-              Científicos usan la <b>escala de pH</b> (0 al 14) para medir qué tan ácido o básico es algo. ¡El agua pura es un 7 perfecto!
-            </p>
-          </div>
-        </section>
-      </main>
-
-      {/* Navigation Controls / Footer */}
-      <footer className="bg-[#faf9f5] py-4 border-t border-outline-variant/20 z-10">
-        <div className="max-w-7xl mx-auto px-margin-mobile md:px-margin-desktop flex justify-between items-center">
-          <button
-            onClick={handleBack}
-            className="flex flex-row items-center justify-center text-on-surface-variant px-6 py-2 gap-2 hover:bg-primary-container/10 transition-colors active:scale-[0.98] duration-200 quicksand-text font-label-lg text-label-lg"
-          >
-            <span className="material-symbols-outlined">arrow_back</span>
-            <span>Anterior</span>
-          </button>
-          <button
-            onClick={handleFinish}
-            className="flex flex-row items-center justify-center bg-[#4a6549] text-white rounded-full px-8 py-3 gap-2 hover:bg-[#334d33] transition-all active:scale-[0.98] duration-200 shadow-md quicksand-text font-label-lg text-label-lg"
-          >
-            <span>Siguiente</span>
-            <span className="material-symbols-outlined text-white">arrow_forward</span>
-          </button>
-        </div>
-      </footer>
-    </div>
+      )}
+    </S4Page>
   );
 }

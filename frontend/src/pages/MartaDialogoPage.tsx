@@ -1,13 +1,14 @@
 import { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
+import KidBackButton from '../components/KidBackButton';
 
 
 const SENSOR_IMAGES = {
-  eye: '/images/semana2/ojos.png',
-  nose: '/images/semana2/nariz.png',
+  eye: '/images/semana2/ojos.webp',
+  nose: '/images/semana2/nariz.webp',
   hand: '/images/semana2/mano.png',
   mouth: '/images/semana2/boca.png',
-  ear: '/images/semana2/oreja.png',
+  ear: '/images/semana2/oreja.webp',
 } as const;
 
 
@@ -449,18 +450,18 @@ export default function MartaDialogoPage() {
 
   return (
     <div
-      className="relative w-full min-h-screen flex flex-col overflow-hidden"
+      className="relative flex h-full min-h-screen w-full max-w-full flex-col overflow-x-hidden"
       style={{
         fontFamily: 'Nunito Sans, Nunito, sans-serif',
         backgroundColor: '#FAF6F0',
       }}
     >
       {/* ───────────────────────── Fondo ───────────────────────── */}
-      <div className="absolute inset-0 z-0 pointer-events-none">
+      <div className="pointer-events-none absolute inset-0 z-0 min-h-screen">
         <img
-          src="/images/semana2/salon_clases.png"
+          src="/images/semana2/salon_clases.webp"
           alt="Aula de clases"
-          className="w-full h-full object-cover opacity-90"
+          className="h-full min-h-screen w-full object-cover opacity-90"
         />
         <div
           className="absolute inset-0"
@@ -472,31 +473,40 @@ export default function MartaDialogoPage() {
       </div>
 
       {/* ───────────────────────── Header ──────────────────────── */}
-      <header className="relative z-40 flex justify-center items-center px-8 py-5 w-full bg-[#FAF6F0]/95 backdrop-blur shadow-sm border-b border-[#C4C8BC]/30">
-        <div className="font-extrabold text-2xl md:text-3xl text-[#4A7C59] tracking-wide text-center flex items-center gap-3">
-          <span className="w-3 h-3 rounded-full bg-[#F8E0A8] border border-[#705C30]" />
-          Aprende con Marta
-          <span className="w-3 h-3 rounded-full bg-[#C8E8D0] border border-[#4A7C59]" />
+      <header className="relative z-40 flex w-full shrink-0 items-center justify-between gap-3 border-b border-[#C4C8BC]/30 bg-[#FAF6F0]/95 px-4 py-4 shadow-sm backdrop-blur sm:px-8">
+        <KidBackButton onClick={() => navigate('/semana/2')} label="Volver a la Semana 2" />
+        <div className="flex min-w-0 flex-1 items-center justify-center gap-3 text-center text-xl font-extrabold tracking-wide text-[#4A7C59] sm:text-2xl md:text-3xl">
+          <span className="h-3 w-3 shrink-0 rounded-full border border-[#705C30] bg-[#F8E0A8]" />
+          <span className="truncate">Aprende con Marta</span>
+          <span className="h-3 w-3 shrink-0 rounded-full border border-[#4A7C59] bg-[#C8E8D0]" />
         </div>
+        <div className="w-12 shrink-0" aria-hidden="true" />
       </header>
 
       {/* ───────────────────────── Escenario ───────────────────── */}
-      <main className="relative w-full h-screen flex flex-col justify-end pb-4 md:pb-8 px-4 md:px-10 pt-4 md:pt-[72px]">
-        <div className="relative w-full max-w-5xl mx-auto z-20">
+      <main
+        className="relative z-10 flex min-h-0 w-full flex-1 flex-col overflow-x-hidden overflow-y-auto px-4 pb-4 pt-2 md:px-10 md:pb-8"
+        style={{ justifyContent: 'flex-start' }}
+      >
+        <div className="relative z-20 mx-auto mt-auto flex w-full max-w-5xl flex-col">
 
-          {/* Marta */}
-          <div className="absolute -top-[210px] md:-top-[270px] left-4 md:left-12 w-[210px] md:w-[275px] pointer-events-none z-30 transition-all duration-300">
-            <MartaCharacter talking={talking} />
+          {/* Marta y su nombre quedan en el flujo: el alto se reserva y no se recorta */}
+          <div className="relative z-30 flex max-w-full items-end pl-1 sm:pl-4 md:pl-8">
+            <div
+              className="pointer-events-none shrink-0 transition-all duration-300"
+              style={{ width: 'clamp(7.75rem, min(42%, 26vw, 32dvh), 17.2rem)' }}
+            >
+              <MartaCharacter talking={talking} />
+            </div>
+
+            <div className="relative z-40 mb-2 ml-2 flex shrink-0 translate-y-1/2 items-center gap-2 whitespace-nowrap rounded-xl border border-white/25 bg-[#705C30] px-4 py-2 text-sm font-bold text-white shadow-md md:ml-3 md:px-5 md:text-base">
+              <span className="h-2.5 w-2.5 animate-pulse rounded-full bg-[#F8E0A8]" />
+              MARTA
+            </div>
           </div>
 
           {/* ───────────────────── Caja de diálogo ───────────────────── */}
-          <div className="relative w-full bg-[#FAF6F0]/98 backdrop-blur-xl rounded-2xl md:rounded-3xl shadow-[0_16px_45px_rgba(46,50,48,0.2)] border-2 border-[#C4C8BC]/60 p-5 md:p-8 pt-8 md:pt-9 transition-all">
-
-            {/* Nombre de Marta */}
-            <div className="absolute -top-5 left-[225px] md:left-[305px] bg-[#705C30] text-white font-bold text-sm md:text-base px-5 py-2 rounded-xl shadow-md border border-white/25 flex items-center gap-2">
-              <span className="w-2.5 h-2.5 rounded-full bg-[#F8E0A8] animate-pulse" />
-              MARTA
-            </div>
+          <div className="relative z-20 w-full rounded-2xl border-2 border-[#C4C8BC]/60 bg-[#FAF6F0]/98 p-5 pt-8 shadow-[0_16px_45px_rgba(46,50,48,0.2)] backdrop-blur-xl transition-all md:rounded-3xl md:p-8 md:pt-9">
 
             {/* Encabezado de cada paso */}
             <div className="flex items-center justify-between pb-3 mb-3 border-b border-[#C99582a]/30">

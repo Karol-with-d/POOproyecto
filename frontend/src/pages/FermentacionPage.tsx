@@ -1,289 +1,275 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { showKidMessage } from '../components/KidFrame';
+import { playBubble, playLevelUp, playMiss, playSuccess, playWhoosh } from '../services/sounds';
+import { S4Button, S4Clear, S4Confetti, S4Image, S4Levels, S4Page, S4Welcome } from '../components/Semana4Ui';
 
-/**
- * FermentacionPage — Actividad de la Semana 4: La Magia de la Fermentación.
- *
- * Administra dos pantallas:
- * 1. Bienvenida y contextualización.
- * 2. Laboratorio virtual con Fermi, el secreto de las burbujas y efecto de burbujas ascendentes.
- */
+const FOODS = [
+  { id: 'pan', label: 'Pan', icon: 'bakery_dining', ok: true },
+  { id: 'yogurt', label: 'Yogurt', icon: 'icecream', ok: true },
+  { id: 'queso', label: 'Queso', icon: 'lunch_dining', ok: true },
+  { id: 'galleta', label: 'Galleta', icon: 'cookie', ok: false },
+  { id: 'agua', label: 'Agua', icon: 'water_drop', ok: false },
+];
+
+const STEPS = [
+  { id: 'festin', label: 'El festín', hint: 'Fermi come azúcar' },
+  { id: 'burbujas', label: 'Burbujas', hint: 'Sale gas CO₂' },
+  { id: 'magia', label: 'Magia', hint: 'El pan crece' },
+];
+
 export default function FermentacionPage() {
   const navigate = useNavigate();
-  const [screen, setScreen] = useState<'welcome' | 'lab'>('welcome');
+  const [screen, setScreen] = useState<'welcome' | 'play'>('welcome');
+  const [level, setLevel] = useState(1);
+  const [feeds, setFeeds] = useState(0);
+  const [picked, setPicked] = useState<string | null>(null);
+  const [wrong, setWrong] = useState(false);
+  const [clear, setClear] = useState(false);
+  const [order, setOrder] = useState<string[]>([]);
+  const [foods, setFoods] = useState<string[]>([]);
+
+  const resetLevel = () => {
+    setFeeds(0);
+    setPicked(null);
+    setWrong(false);
+    setClear(false);
+    setOrder([]);
+    setFoods([]);
+  };
 
   const handleBack = () => {
-    if (screen === 'lab') {
+    if (screen === 'play') {
       setScreen('welcome');
-    } else {
+      setLevel(1);
+      resetLevel();
+    } else navigate('/semana/4');
+  };
+
+  const win = () => {
+    playSuccess();
+    playLevelUp();
+    setClear(true);
+  };
+
+  const fail = () => {
+    playMiss();
+    setWrong(true);
+    window.setTimeout(() => setWrong(false), 450);
+  };
+
+  const next = () => {
+    playWhoosh();
+    if (level >= 5) {
+      showKidMessage('¡Completaste los 5 niveles de fermentación!');
       navigate('/semana/4');
+      return;
     }
+    setLevel((n) => n + 1);
+    resetLevel();
   };
 
-  const handleFinish = () => {
-    showKidMessage('¡Lección de fermentación completada!');
-    navigate('/semana/4');
+  const feed = (need: number) => {
+    playBubble();
+    setFeeds((prev) => {
+      const nextFeeds = Math.min(need, prev + 1);
+      if (nextFeeds >= need && prev < need) {
+        window.setTimeout(win, 0);
+      }
+      return nextFeeds;
+    });
   };
-
-  // Ambient bubbles generation
-  useEffect(() => {
-    if (screen !== 'lab') return;
-
-    const interval = setInterval(() => {
-      const bubble = document.createElement('div');
-      // Use standard custom bubble-anim class and background color
-      bubble.className = 'fixed rounded-full bg-[#ccebc7]/30 pointer-events-none bubble-anim';
-      bubble.style.zIndex = '0';
-      const size = `${Math.random() * 20 + 10}px`;
-      bubble.style.width = size;
-      bubble.style.height = size;
-      bubble.style.left = `${Math.random() * 100}vw`;
-      bubble.style.bottom = '-50px';
-      bubble.style.animationDuration = `${Math.random() * 4 + 3}s`;
-      document.body.appendChild(bubble);
-
-      setTimeout(() => {
-        bubble.remove();
-      }, 7000);
-    }, 1200);
-
-    return () => {
-      clearInterval(interval);
-      // Clean up bubbles from body
-      document.querySelectorAll('.bubble-anim').forEach((el) => {
-        if (el.parentElement === document.body) {
-          el.remove();
-        }
-      });
-    };
-  }, [screen]);
 
   return (
-    <div className="bg-[#faf9f5] text-[#1a1c1a] antialiased min-h-screen flex flex-col font-body-md relative overflow-x-hidden">
-      {/* Custom Styles */}
-      <style dangerouslySetInnerHTML={{ __html: `
-        .quicksand-text {
-          font-family: 'Quicksand', sans-serif;
-        }
-        .scale-down-on-press:active {
-          transform: scale(0.98);
-        }
-        .floating {
-          animation: float 4s ease-in-out infinite;
-        }
-        @keyframes float {
-          0% { transform: translateY(0px); }
-          50% { transform: translateY(-10px); }
-          100% { transform: translateY(0px); }
-        }
-        @keyframes bubble-rise {
-          0% { transform: translateY(0) scale(1); opacity: 0; }
-          20% { opacity: 0.8; }
-          80% { opacity: 0.4; }
-          100% { transform: translateY(-120vh) scale(1.5); opacity: 0; }
-        }
-        .bubble-anim {
-          animation: bubble-rise 6s ease-in infinite;
-        }
-        .speech-bubble {
-          position: relative;
-          background: #ffffff;
-          border: 2px solid #c3c8be;
-          border-radius: 1.5rem;
-          padding: 1.5rem;
-        }
-        .speech-bubble::after {
-          content: '';
-          position: absolute;
-          left: -20px;
-          top: 50%;
-          transform: translateY(-50%);
-          border-width: 10px 20px 10px 0;
-          border-style: solid;
-          border-color: transparent #ffffff transparent transparent;
-        }
-        .speech-bubble::before {
-          content: '';
-          position: absolute;
-          left: -23px;
-          top: 50%;
-          transform: translateY(-50%);
-          border-width: 11px 22px 11px 0;
-          border-style: solid;
-          border-color: transparent #c3c8be transparent transparent;
-        }
-        @media (max-width: 768px) {
-          .speech-bubble::after {
-            left: 50%;
-            top: -20px;
-            transform: translateX(-50%);
-            border-width: 0 10px 20px 10px;
-            border-color: transparent transparent #ffffff transparent;
-          }
-          .speech-bubble::before {
-            left: 50%;
-            top: -23px;
-            transform: translateX(-50%);
-            border-width: 0 11px 22px 11px;
-            border-color: transparent transparent #c3c8be transparent;
-          }
-        }
-      `}} />
-
-      {/* TopAppBar Navigation Shell */}
-      <header className="bg-[#faf9f5] sticky top-0 z-50 shadow-sm flex items-center h-16 px-margin-mobile md:px-margin-desktop">
-        <div className="flex items-center gap-4 w-full">
-          <button
-            onClick={handleBack}
-            aria-label="Volver"
-            className="w-10 h-10 flex items-center justify-center rounded-full hover:bg-surface-container-high transition-colors active:scale-95 transition-transform text-[#334d33]"
-          >
-            <span className="material-symbols-outlined">arrow_back</span>
-          </button>
-          <h1 className="font-headline-md text-headline-md font-bold text-[#334d33] quicksand-text">
-            Semana 4: Propiedades Químicas
-          </h1>
-        </div>
-      </header>
-
+    <S4Page
+      title="Semana 4 · Fermentación"
+      onBack={handleBack}
+      badge={screen === 'play' ? <span className="rounded-full bg-[#d9f99d] px-3 py-1 text-xs font-black text-[#115e59]">Tubo {level}/5</span> : undefined}
+    >
       {screen === 'welcome' ? (
-        /* Screen 1: Welcome */
-        <main className="flex-grow px-margin-mobile md:px-margin-desktop flex flex-col items-center justify-center max-w-7xl mx-auto w-full py-8 relative z-10">
-          <article className="w-full max-w-2xl bg-[#f4f4ef] rounded-[24px] p-8 md:p-12 shadow-[0_8px_32px_rgba(74,101,73,0.08)] border border-outline-variant/30 flex flex-col items-center text-center">
-            <h2 className="font-headline-lg-mobile md:font-headline-lg text-headline-lg-mobile md:text-headline-lg text-[#334d33] leading-tight quicksand-text mb-4">
-              La Magia de la Fermentación
-            </h2>
-            <p className="font-body-lg text-body-lg text-on-surface-variant px-4 mb-8">
-              ¡El secreto de las burbujas! En esta lección aprenderás cómo los microorganismos transforman los alimentos de manera sorprendente a través de procesos biológicos y químicos que puedes ver y sentir.
-            </p>
-            <div className="w-full flex justify-center">
-              <button
-                onClick={() => setScreen('lab')}
-                className="bg-[#4a6549] text-white px-12 py-4 rounded-full font-label-lg text-label-lg active:scale-95 hover:bg-[#334d33] transition-all shadow-lg flex items-center gap-3 group quicksand-text"
-              >
-                <span>Comenzar Lección</span>
-                <span className="material-symbols-outlined group-hover:translate-x-1 transition-transform text-white">
-                  arrow_forward
-                </span>
-              </button>
-            </div>
-          </article>
-        </main>
+        <S4Welcome
+          badge="Misión 2"
+          title="La Magia de la Fermentación"
+          text="5 niveles con Fermi: aliméntalo, adivina el gas y encuentra los alimentos mágicos."
+          src="/images/semana4/fermi-personaje.jpg"
+          filename="fermi-personaje.jpg"
+          hint="Fermi, levadura feliz"
+          cta="¡Nivel 1!"
+          accent="#4a6549"
+          onStart={() => {
+            playWhoosh();
+            setScreen('play');
+            setLevel(1);
+            resetLevel();
+          }}
+        />
       ) : (
-        /* Screen 2: Laboratory virtual */
-        <main className="flex-grow max-w-7xl mx-auto w-full px-margin-mobile md:px-margin-desktop py-8 space-y-8 relative z-10">
-          {/* Hero Section with Fermi */}
-          <section className="mb-8">
-            <div className="flex flex-col md:flex-row items-center gap-8 bg-white rounded-[32px] p-8 shadow-sm border border-outline-variant/30">
-              <div className="relative flex-shrink-0">
-                <div className="w-48 h-48 md:w-64 md:h-64 rounded-full overflow-hidden border-8 border-[#bfe5fe] bg-[#efeeea] floating flex items-center justify-center">
-                  <img
-                    alt="Fermi the fermentation buddy"
-                    className="w-full h-full object-cover"
-                    src="/images/semana4/fermentacion.png"
+        <div className="relative space-y-5">
+          {clear && <S4Confetti />}
+          <S4Levels current={level} />
+
+          {clear ? (
+            <S4Clear
+              last={level === 5}
+              title={level === 5 ? '¡Fermi está feliz!' : `¡Nivel ${level} superado!`}
+              text={
+                level === 1
+                  ? 'El azúcar despierta las burbujas.'
+                  : level === 2
+                    ? 'El gas se llama CO₂.'
+                    : level === 3
+                      ? 'Festín, burbujas y magia.'
+                      : level === 4
+                        ? 'Pan, yogurt y queso fermentan.'
+                        : 'El pan creció gracias a Fermi.'
+              }
+              onNext={next}
+            />
+          ) : (
+            <>
+              {(level === 1 || level === 5) && (
+                <section className="s4-pop relative overflow-hidden rounded-[2rem] border-[3px] border-[#4a6549] bg-white/90 p-5 text-center">
+                  <div className="pointer-events-none absolute inset-0" aria-hidden="true">
+                    {Array.from({ length: feeds }).map((_, i) => (
+                      <span
+                        key={i}
+                        className="absolute bottom-8 rounded-full bg-[#b0cfac]"
+                        style={{
+                          left: `${14 + (i * 13) % 70}%`,
+                          width: 12 + (i % 3) * 6,
+                          height: 12 + (i % 3) * 6,
+                          animation: `s4-bubble ${2 + (i % 3) * 0.3}s ease-in infinite`,
+                        }}
+                      />
+                    ))}
+                  </div>
+                  <S4Image
+                    src="/images/semana4/fermi-personaje.jpg"
+                    alt="Fermi"
+                    filename="fermi-personaje.jpg"
+                    hint="Levadura feliz"
+                    className="s4-float relative z-10 mx-auto h-48 w-48 rounded-full border-8 border-[#ccebc7] bg-[#e8f6e4]"
                   />
-                </div>
-                {/* Ambient Bubbles Decoration */}
-                <div className="absolute -top-4 -right-4 w-12 h-12 rounded-full bg-[#bfe5fe]/40 blur-sm"></div>
-                <div className="absolute -bottom-2 -left-4 w-8 h-8 rounded-full bg-[#ccebc7]/40 blur-sm"></div>
-              </div>
-              <div className="flex-grow space-y-4">
-                <h1 className="font-headline-lg-mobile md:font-headline-lg text-headline-lg-mobile md:text-headline-lg text-[#334d33] quicksand-text">
-                  Fermi y el Secreto de las Burbujas
-                </h1>
-                <div className="speech-bubble border-2 border-[#c3c8be]">
-                  <p className="font-body-lg text-body-lg text-on-surface leading-relaxed italic">
-                    "¡Buurp! perdón, es que como azúcar y levadura y no puedo parar de hacer gases!"
-                  </p>
-                </div>
-              </div>
-            </div>
-          </section>
+                  {level === 5 && (
+                    <S4Image
+                      src="/images/semana4/fermentacion-pan.jpg"
+                      alt="Pan"
+                      filename="fermentacion-pan.jpg"
+                      hint="Pan que crece"
+                      className="relative z-10 mx-auto mt-3 h-36 w-56 rounded-2xl border-[3px] border-white bg-white"
+                    />
+                  )}
+                  <h2 className="relative z-10 mt-3 font-headline-md text-2xl font-extrabold text-[#2f4a2f]">
+                    {level === 1 ? 'Dale 3 azúcares a Fermi' : '¡Infla el pan! Dale 5 azúcares'}
+                  </h2>
+                  <p className="relative z-10 font-bold text-[#4a6549]">{feeds}/{level === 1 ? 3 : 5}</p>
+                  <S4Button className="relative z-10 mt-3" onClick={() => feed(level === 1 ? 3 : 5)}>
+                    <span className="material-symbols-outlined" style={{ fontVariationSettings: "'FILL' 1" }}>bakery_dining</span>
+                    Darle azúcar
+                  </S4Button>
+                </section>
+              )}
 
-          {/* Informative Visual Section (Bento Style) */}
-          <section className="grid grid-cols-1 md:grid-cols-12 gap-6">
-            {/* Process Step 1: The Feast */}
-            <div className="md:col-span-4 bg-[#efeeea] rounded-3xl p-6 flex flex-col items-center text-center space-y-4 border border-outline-variant/20 shadow-sm">
-              <div className="w-24 h-24 bg-[#f3e0c2] rounded-2xl flex items-center justify-center relative overflow-hidden group">
-                <span className="material-symbols-outlined text-[#51452f] text-5xl">
-                  bakery_dining
-                </span>
-              </div>
-              <h3 className="font-headline-md text-headline-md text-[#334d33] quicksand-text">
-                1. El Festín
-              </h3>
-              <p className="text-on-surface-variant font-body-md">
-                ¡La levadura ama el azúcar! Estos microorganismos se alimentan de los dulces que encuentran en las masas y jugos.
-              </p>
-            </div>
+              {level === 2 && (
+                <section className="s4-pop space-y-4 text-center">
+                  <h2 className="font-headline-md text-2xl font-extrabold text-[#2f4a2f]">¿Qué gas suelta Fermi?</h2>
+                  <div className="grid grid-cols-1 gap-3">
+                    {[
+                      { id: 'co2', label: 'CO₂ · dióxido de carbono' },
+                      { id: 'humo', label: 'Humo de fuego' },
+                      { id: 'vapor', label: 'Vapor de agua' },
+                    ].map((item) => (
+                      <button
+                        key={item.id}
+                        type="button"
+                        onClick={() => {
+                          setPicked(item.id);
+                          if (item.id === 'co2') win();
+                          else fail();
+                        }}
+                        className={`s4-choice rounded-3xl border-[3px] bg-white px-4 py-4 text-lg font-bold ${wrong && picked === item.id ? 's4-shake border-[#d64545]' : 'border-[#d8c7aa]'}`}
+                      >
+                        {item.label}
+                      </button>
+                    ))}
+                  </div>
+                </section>
+              )}
 
-            {/* Process Step 2: Transformation */}
-            <div className="md:col-span-4 bg-[#ccebc7] rounded-3xl p-6 flex flex-col items-center text-center space-y-4 border border-outline-variant/20 shadow-sm relative overflow-hidden">
-              <div className="w-24 h-24 bg-[#4a6549] rounded-2xl flex items-center justify-center">
-                <span className="material-symbols-outlined text-white text-5xl">
-                  bubble_chart
-                </span>
-              </div>
-              <h3 className="font-headline-md text-headline-md text-[#334d33] quicksand-text">
-                2. ¡Burbujas!
-              </h3>
-              <p className="text-on-surface font-body-md">
-                Mientras comen, sueltan un gas llamado <b>CO₂</b>. ¡Ese es el gas que hace que el pan se infle y las bebidas tengan gas!
-              </p>
-            </div>
+              {level === 3 && (
+                <section className="s4-pop space-y-4 text-center">
+                  <h2 className="font-headline-md text-2xl font-extrabold text-[#2f4a2f]">Toca los pasos en orden</h2>
+                  <p className="text-sm font-bold text-[#4a6549]">{order.map((id) => STEPS.find((s) => s.id === id)?.label).join(' → ') || 'Empieza por el festín'}</p>
+                  <div className="grid grid-cols-1 gap-3 md:grid-cols-3">
+                    {STEPS.map((step) => {
+                      const used = order.includes(step.id);
+                      return (
+                        <button
+                          key={step.id}
+                          type="button"
+                          disabled={used}
+                          onClick={() => {
+                            const nextOrder = [...order, step.id];
+                            setOrder(nextOrder);
+                            const expected = STEPS[nextOrder.length - 1].id;
+                            if (step.id !== expected) {
+                              fail();
+                              setOrder([]);
+                              return;
+                            }
+                            playBubble();
+                            if (nextOrder.length === 3) win();
+                          }}
+                          className={`s4-choice rounded-3xl border-[3px] p-4 ${used ? 'border-[#4a6549] bg-[#ccebc7]' : 'border-[#d8c7aa] bg-white'}`}
+                        >
+                          <span className="block font-black text-[#2f4a2f]">{step.label}</span>
+                          <span className="text-sm text-[#5a4630]">{step.hint}</span>
+                        </button>
+                      );
+                    })}
+                  </div>
+                </section>
+              )}
 
-            {/* Process Step 3: Result */}
-            <div className="md:col-span-4 bg-[#efeeea] rounded-3xl p-6 flex flex-col items-center text-center space-y-4 border border-outline-variant/20 shadow-sm">
-              <div className="w-24 h-24 bg-[#c4e7ff] rounded-2xl flex items-center justify-center">
-                <span className="material-symbols-outlined text-[#3e6378] text-5xl">
-                  breakfast_dining
-                </span>
-              </div>
-              <h3 className="font-headline-md text-headline-md text-[#334d33] quicksand-text">
-                3. ¡Magia!
-              </h3>
-              <p className="text-on-surface-variant font-body-md">
-                Sin la fermentación, no tendríamos pan esponjoso, queso rico ni yogures deliciosos. ¡Es magia biológica!
-              </p>
-            </div>
-
-            {/* Large Explanation Card */}
-            <div className="bg-[#e3e3de] rounded-3xl p-8 flex flex-col md:flex-row items-center gap-8 border border-outline-variant/20 md:col-span-12 shadow-sm">
-              <div className="flex-grow space-y-4">
-                <h4 className="font-label-lg text-label-lg text-[#3e6378] uppercase tracking-wider quicksand-text">
-                  Dato Curioso
-                </h4>
-                <p className="font-body-lg text-body-lg text-on-surface leading-relaxed">
-                  ¿Sabías que la fermentación ha sido usada por humanos por más de 10,000 años? ¡Es uno de los inventos más antiguos del mundo!
-                </p>
-              </div>
-            </div>
-          </section>
-        </main>
-      )}
-
-      {/* Footer Navigation */}
-      <footer className="bg-[#faf9f5] py-8 mt-auto border-t border-outline-variant/20 z-10">
-        <div className="max-w-7xl mx-auto px-margin-mobile md:px-margin-desktop flex justify-between items-center">
-          <button
-            onClick={handleBack}
-            className="flex items-center gap-2 text-on-surface-variant hover:text-[#334d33] transition-colors font-label-lg text-label-lg quicksand-text"
-          >
-            <span className="material-symbols-outlined">arrow_back</span>
-            Anterior
-          </button>
-          <button
-            onClick={screen === 'welcome' ? () => setScreen('lab') : handleFinish}
-            className="bg-[#334d33] text-white px-8 py-3 rounded-full flex items-center gap-2 hover:bg-[#4a6549] transition-all group scale-down-on-press shadow-md font-label-lg text-label-lg quicksand-text"
-          >
-            <span>Siguiente</span>
-            <span className="material-symbols-outlined group-hover:translate-x-1 transition-transform text-white">
-              arrow_forward
-            </span>
-          </button>
+              {level === 4 && (
+                <section className="s4-pop space-y-4 text-center">
+                  <h2 className="font-headline-md text-2xl font-extrabold text-[#2f4a2f]">Toca los 3 alimentos de Fermi</h2>
+                  <div className="grid grid-cols-2 gap-3 md:grid-cols-5">
+                    {FOODS.map((food) => {
+                      const on = foods.includes(food.id);
+                      return (
+                        <button
+                          key={food.id}
+                          type="button"
+                          onClick={() => {
+                            if (!food.ok) {
+                              setPicked(food.id);
+                              fail();
+                              return;
+                            }
+                            playBubble();
+                            setFoods((prev) => {
+                              const nextFoods = on ? prev.filter((id) => id !== food.id) : prev.includes(food.id) ? prev : [...prev, food.id];
+                              if (FOODS.filter((f) => f.ok).every((f) => nextFoods.includes(f.id))) {
+                                window.setTimeout(win, 0);
+                              }
+                              return nextFoods;
+                            });
+                          }}
+                          className={`s4-choice rounded-3xl border-[3px] p-3 ${on ? 'border-[#4a6549] bg-[#ccebc7]' : wrong && picked === food.id ? 's4-shake border-[#d64545] bg-white' : 'border-[#d8c7aa] bg-white'}`}
+                        >
+                          <span className="material-symbols-outlined text-3xl text-[#4a6549]" style={{ fontVariationSettings: "'FILL' 1" }}>{food.icon}</span>
+                          <span className="mt-1 block text-sm font-black">{food.label}</span>
+                        </button>
+                      );
+                    })}
+                  </div>
+                </section>
+              )}
+            </>
+          )}
         </div>
-      </footer>
-    </div>
+      )}
+    </S4Page>
   );
 }
