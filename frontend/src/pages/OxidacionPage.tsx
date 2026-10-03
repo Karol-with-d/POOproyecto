@@ -1,410 +1,236 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { showKidMessage } from '../components/KidFrame';
+import { playLevelUp, playMiss, playSuccess, playWhoosh } from '../services/sounds';
+import { S4Clear, S4Confetti, S4Image, S4Levels, S4Page, S4Welcome } from '../components/Semana4Ui';
 
-function ChoiceButtons({
-  value,
-  options,
-  onChange,
-}: {
-  value: string;
-  options: string[];
-  onChange: (next: string) => void;
-}) {
-  return (
-    <div className="flex flex-wrap gap-2 p-3 bg-white rounded-xl">
-      {options.map((option) => (
-        <button
-          key={option}
-          type="button"
-          className={`kid-choice ${value === option ? 'kid-choice-on' : ''}`}
-          onClick={() => onChange(option)}
-        >
-          {option}
-        </button>
-      ))}
-    </div>
-  );
-}
+type AnswerState = 'idle' | 'wrong' | 'clear';
 
-/**
- * OxidacionPage — Actividad de la Semana 4: El Misterio de la Oxidación.
- *
- * Administra dos pantallas:
- * 1. Bienvenida y contextualización.
- * 2. Laboratorio virtual con tabla de observación y la familia química (Óxido).
- */
 export default function OxidacionPage() {
   const navigate = useNavigate();
-  const [screen, setScreen] = useState<'welcome' | 'lab'>('welcome');
+  const [screen, setScreen] = useState<'welcome' | 'play'>('welcome');
+  const [level, setLevel] = useState(1);
+  const [state, setState] = useState<AnswerState>('idle');
+  const [color, setColor] = useState('');
+  const [edible, setEdible] = useState<boolean | null>(null);
+  const [picked, setPicked] = useState<string | null>(null);
 
-  // Form State
-  const [freshColor, setFreshColor] = useState('');
-  const [oxidizedColor, setOxidizedColor] = useState('');
-  const [freshOdor, setFreshOdor] = useState('');
-  const [oxidizedOdor, setOxidizedOdor] = useState('');
-  const [freshTexture, setFreshTexture] = useState('');
-  const [oxidizedTexture, setOxidizedTexture] = useState('');
-  const [freshEdible, setFreshEdible] = useState<boolean | null>(null);
-  const [oxidizedEdible, setOxidizedEdible] = useState<boolean | null>(null);
+  const resetLevel = () => {
+    setState('idle');
+    setColor('');
+    setEdible(null);
+    setPicked(null);
+  };
 
   const handleBack = () => {
-    if (screen === 'lab') {
+    if (screen === 'play') {
       setScreen('welcome');
+      setLevel(1);
+      resetLevel();
     } else {
       navigate('/semana/4');
     }
   };
 
-  const handleFinish = () => {
-    showKidMessage('¡Observación guardada!');
-    navigate('/semana/4');
+  const win = () => {
+    playSuccess();
+    playLevelUp();
+    setState('clear');
+  };
+
+  const fail = () => {
+    playMiss();
+    setState('wrong');
+    window.setTimeout(() => setState('idle'), 500);
+  };
+
+  const next = () => {
+    playWhoosh();
+    if (level >= 5) {
+      showKidMessage('¡Completaste los 5 niveles de oxidación!');
+      navigate('/semana/4');
+      return;
+    }
+    setLevel((n) => n + 1);
+    resetLevel();
+  };
+
+  const tryPick = (id: string, correct: string) => {
+    if (state === 'clear') return;
+    setPicked(id);
+    if (id === correct) win();
+    else fail();
   };
 
   return (
-    <div className="bg-[#faf9f5] text-[#1a1c1a] antialiased min-h-screen flex flex-col font-body-md relative overflow-x-hidden">
-      {/* Custom Styles */}
-      <style dangerouslySetInnerHTML={{ __html: `
-        .quicksand-text {
-          font-family: 'Quicksand', sans-serif;
-        }
-        .scale-down-on-press:active {
-          transform: scale(0.98);
-        }
-        .speech-bubble {
-          position: relative;
-          background: #ffffff;
-          border-radius: 24px;
-          filter: drop-shadow(0px 10px 15px rgba(51, 77, 51, 0.05));
-        }
-        .speech-bubble:after {
-          content: '';
-          position: absolute;
-          left: 0;
-          top: 50%;
-          width: 0;
-          height: 0;
-          border: 20px solid transparent;
-          border-right-color: #ffffff;
-          border-left: 0;
-          margin-top: -20px;
-          margin-left: -20px;
-        }
-        @media (max-width: 768px) {
-          .speech-bubble:after {
-            top: 0;
-            left: 50%;
-            border: 20px solid transparent;
-            border-bottom-color: #ffffff;
-            border-top: 0;
-            margin-left: -20px;
-            margin-top: -20px;
-          }
-        }
-      `}} />
-
-      {/* TopAppBar */}
-      <nav className="docked full-width top-0 sticky z-50 bg-[#faf9f5] shadow-sm h-16 flex items-center w-full px-margin-mobile md:px-margin-desktop">
-        <div className="flex items-center gap-4 w-full">
-          <button
-            onClick={handleBack}
-            aria-label="Volver"
-            className="material-symbols-outlined text-[#334d33] hover:bg-surface-container-high transition-colors p-2 rounded-full active:scale-95 transition-transform"
-          >
-            arrow_back
-          </button>
-          <h1 className="font-headline-md text-headline-md font-bold text-[#334d33] truncate">
-            Semana 4: Propiedades Químicas
-          </h1>
-        </div>
-      </nav>
-
+    <S4Page
+      title="Semana 4 · Oxidación"
+      onBack={handleBack}
+      badge={screen === 'play' ? <span className="rounded-full bg-[#d9f99d] px-3 py-1 text-xs font-black text-[#115e59]">Tubo {level}/5</span> : undefined}
+    >
       {screen === 'welcome' ? (
-        /* Screen 1: Welcome */
-        <main className="flex-1 flex flex-col items-center py-8 px-margin-mobile md:px-margin-desktop justify-center relative z-10">
-          <div className="max-w-2xl w-full bg-[#f4f4ef] p-8 md:p-12 shadow-[0_8px_32px_rgba(74,101,73,0.08)] border border-outline-variant/30 flex flex-col items-center text-center rounded-[32px]">
-            <div className="space-y-4 mb-8">
-              <h2 className="font-headline-lg text-headline-lg-mobile md:text-headline-lg text-[#334d33] leading-tight quicksand-text">
-                El Misterio de la Oxidación
-              </h2>
-              <p className="font-body-lg text-body-lg text-on-surface-variant">
-                En esta lección, exploraremos cómo el oxígeno interactúa con diferentes materiales de nuestro entorno. Aprenderás a identificar las señales químicas de la oxidación y descubrirás por qué este proceso es fundamental tanto en la naturaleza como en nuestra vida diaria.
-              </p>
-            </div>
-            <div className="w-full flex flex-col items-center">
-              <button
-                onClick={() => setScreen('lab')}
-                className="bg-[#4a6549] text-white px-10 py-4 rounded-full font-label-lg text-label-lg active:scale-95 hover:opacity-90 transition-all shadow-md flex items-center gap-3 group quicksand-text"
-              >
-                <span>Comenzar Lección</span>
-                <span className="material-symbols-outlined group-hover:translate-x-1 transition-transform text-white">
-                  arrow_forward
-                </span>
-              </button>
-            </div>
-          </div>
-        </main>
+        <S4Welcome
+          badge="Misión 1"
+          title="El Misterio de la Oxidación"
+          text="5 niveles: busca la fruta café, descubre al oxígeno y aprende a frenarlo."
+          src="/images/semana4/oxido-personaje.jpg"
+          filename="oxido-personaje.jpg"
+          hint="Personaje Óxido, café y travieso"
+          cta="¡Nivel 1!"
+          accent="#e07a2f"
+          onStart={() => {
+            playWhoosh();
+            setScreen('play');
+            setLevel(1);
+            resetLevel();
+          }}
+        />
       ) : (
-        /* Screen 2: Laboratory virtual */
-        <main className="flex-1 pt-8 pb-16 px-margin-mobile md:px-margin-desktop max-w-7xl mx-auto space-y-8 relative z-10">
-          {/* Activity Title Section */}
-          <div className="text-center md:text-left">
-            <h2 className="font-headline-lg-mobile md:font-headline-lg text-headline-lg-mobile md:text-headline-lg text-[#334d33] mb-2 quicksand-text">
-              El Secreto de la Fruta Café
-            </h2>
-            <p className="font-body-lg text-body-lg text-on-surface-variant">
-              ¡Investiguemos por qué las frutas cambian de color!
-            </p>
-          </div>
+        <div className="relative space-y-5">
+          {state === 'clear' && <S4Confetti />}
+          <S4Levels current={level} />
 
-          {/* Character Intro Row */}
-          <section className="flex flex-col md:flex-row items-center gap-8 bg-[#f4f4ef] rounded-[24px] p-6 md:p-10 shadow-sm border border-outline-variant/20">
-            <div className="w-48 h-48 md:w-64 md:h-64 flex-shrink-0 relative">
-              <img
-                alt="Óxido el personaje"
-                className="w-full h-full object-contain rounded-full"
-                src="/images/semana4/oxidacion.png"
-              />
-              <div className="absolute -bottom-2 -right-2 bg-[#334d33] text-white p-2 rounded-full shadow-lg flex items-center justify-center">
-                <span className="material-symbols-outlined text-white" style={{ fontVariationSettings: '"FILL" 1' }}>
-                  science
-                </span>
-              </div>
-            </div>
-            <div className="speech-bubble p-8 border-2 border-[#b0cfac] flex-1">
-              <p className="font-headline-md text-headline-md-mobile md:text-headline-md text-[#334d33] leading-tight quicksand-text">
-                "¡Yo aparezco cuando dejas tu comida al aire y la pongo café sin permiso!"
-              </p>
-              <p className="mt-4 font-body-md text-on-surface-variant">
-                Me llamo <strong>Óxido</strong>, y soy el resultado de una reacción química entre el oxígeno y las frutas.
-              </p>
-            </div>
-          </section>
+          {state === 'clear' ? (
+            <S4Clear
+              last={level === 5}
+              color="#e07a2f"
+              title={level === 5 ? '¡Laboratorio listo!' : `¡Nivel ${level} superado!`}
+              text={
+                level === 1
+                  ? 'La fruta café ya se oxidó.'
+                  : level === 2
+                    ? 'El oxígeno es el travieso.'
+                    : level === 3
+                      ? 'Si está cortada, el aire la toca más.'
+                      : level === 4
+                        ? 'Café y mejor no comerla.'
+                        : 'Limón o taparla frena a Óxido.'
+              }
+              onNext={next}
+            />
+          ) : (
+            <>
+              {level === 1 && (
+                <section className="s4-pop space-y-4 text-center">
+                  <h2 className="font-headline-md text-2xl font-extrabold text-[#9a4b12]">¿Cuál se puso café?</h2>
+                  <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+                    <button type="button" onClick={() => tryPick('fresh', 'oxi')} className={`s4-choice rounded-[1.75rem] border-[3px] bg-[#e8f6e4] p-4 ${state === 'wrong' && picked === 'fresh' ? 's4-shake' : ''}`}>
+                      <S4Image src="/images/semana4/pera-fresca.jpg" alt="Pera fresca" filename="pera-fresca.jpg" hint="Pera jugosa" className="mx-auto aspect-square h-auto w-full max-w-[16rem] rounded-2xl bg-white" />
+                      <span className="mt-2 block font-black text-[#2f4a2f]">Pera fresca</span>
+                    </button>
+                    <button type="button" onClick={() => tryPick('oxi', 'oxi')} className="s4-choice rounded-[1.75rem] border-[3px] border-[#e07a2f] bg-[#fff4e6] p-4">
+                      <S4Image src="/images/semana4/pera-oxidada.jpg" alt="Pera oxidada" filename="pera-oxidada.jpg" hint="Pera café" className="mx-auto aspect-square h-auto w-full max-w-[16rem] rounded-2xl bg-white" />
+                      <span className="mt-2 block font-black text-[#9a4b12]">Pera café</span>
+                    </button>
+                  </div>
+                </section>
+              )}
 
-          {/* Visual Reference */}
-          <section className="flex justify-center py-4">
-            <div className="bg-white rounded-[24px] p-4 md:p-8 shadow-[0px_15px_30px_rgba(51,77,51,0.08)] max-w-4xl w-full border-b-4 border-[#334d33] border-x border-t border-outline-variant/30">
-              <img
-                alt="Comparación de peras"
-                className="w-full h-auto rounded-xl object-cover aspect-[16/9]"
-                src="/images/semana4/peras_comparacion.png"
-              />
-              <div className="mt-6 flex justify-around items-center">
-                <div className="flex items-center gap-2 px-4 py-2 bg-[#ccebc7] rounded-full text-[#334d33]">
-                  <span className="material-symbols-outlined text-[#334d33]" style={{ fontVariationSettings: '"FILL" 1' }}>
-                    sentiment_satisfied
-                  </span>
-                  <span className="font-label-lg text-label-lg uppercase tracking-widest quicksand-text">
-                    FRESCA
-                  </span>
-                </div>
-                <div className="flex items-center gap-2 px-4 py-2 bg-[#f3e0c2] rounded-full text-[#51452f]">
-                  <span className="material-symbols-outlined text-[#51452f]" style={{ fontVariationSettings: '"FILL" 1' }}>
-                    eco
-                  </span>
-                  <span className="font-label-lg text-label-lg uppercase tracking-widest quicksand-text">
-                    OXIDADA
-                  </span>
-                </div>
-              </div>
-            </div>
-          </section>
+              {level === 2 && (
+                <section className="s4-pop space-y-4 text-center">
+                  <h2 className="font-headline-md text-2xl font-extrabold text-[#9a4b12]">¿Quién pone café a la fruta?</h2>
+                  <div className="grid grid-cols-2 gap-3">
+                    {[
+                      { id: 'oxigeno', label: 'Oxígeno', icon: 'air' },
+                      { id: 'azucar', label: 'Azúcar', icon: 'icecream' },
+                      { id: 'fuego', label: 'Fuego', icon: 'local_fire_department' },
+                      { id: 'jabon', label: 'Jabón', icon: 'soap' },
+                    ].map((item) => (
+                      <button
+                        key={item.id}
+                        type="button"
+                        onClick={() => tryPick(item.id, 'oxigeno')}
+                        className={`s4-choice rounded-3xl border-[3px] bg-white p-4 font-bold ${state === 'wrong' && picked === item.id ? 's4-shake border-[#d64545]' : 'border-[#d8c7aa]'}`}
+                      >
+                        <span className="material-symbols-outlined text-4xl text-[#e07a2f]" style={{ fontVariationSettings: "'FILL' 1" }}>{item.icon}</span>
+                        <span className="mt-1 block">{item.label}</span>
+                      </button>
+                    ))}
+                  </div>
+                </section>
+              )}
 
-          {/* Activity Table (Bento Grid Style) */}
-          <section className="bg-[#efeeea] rounded-[24px] p-6 md:p-10 shadow-sm border border-outline-variant/20 overflow-hidden">
-            <div className="mb-8 flex items-center gap-4">
-              <div className="bg-[#4a6549] p-3 rounded-xl text-white">
-                <span className="material-symbols-outlined text-white">
-                  edit_note
-                </span>
-              </div>
-              <div>
-                <h3 className="font-headline-md text-headline-md text-[#334d33] quicksand-text">
-                  Tabla de Observación
-                </h3>
-                <p className="text-on-surface-variant font-body-md">
-                  Registra lo que ves en el microscopio virtual
-                </p>
-              </div>
-            </div>
+              {level === 3 && (
+                <section className="s4-pop space-y-4 text-center">
+                  <h2 className="font-headline-md text-2xl font-extrabold text-[#9a4b12]">Una manzana cortada se pone café más rápido. ¿Por qué?</h2>
+                  <div className="flex flex-col gap-3">
+                    {[
+                      { id: 'aire', label: 'Porque el aire la toca más' },
+                      { id: 'dulce', label: 'Porque es más dulce' },
+                      { id: 'fria', label: 'Porque está fría' },
+                    ].map((item) => (
+                      <button
+                        key={item.id}
+                        type="button"
+                        onClick={() => tryPick(item.id, 'aire')}
+                        className={`s4-choice rounded-3xl border-[3px] bg-white px-4 py-4 text-lg font-bold ${state === 'wrong' && picked === item.id ? 's4-shake border-[#d64545]' : 'border-[#d8c7aa]'}`}
+                      >
+                        {item.label}
+                      </button>
+                    ))}
+                  </div>
+                </section>
+              )}
 
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-              {/* Column Headers (Mobile Hidden) */}
-              <div className="hidden md:block"></div>
-              <div className="hidden md:flex flex-col items-center justify-center p-4 bg-[#4a6549] text-white rounded-xl font-label-lg quicksand-text">
-                <span className="material-symbols-outlined mb-1 text-white">
-                  restaurant
-                </span>
-                Pera Fresca
-              </div>
-              <div className="hidden md:flex flex-col items-center justify-center p-4 bg-[#6a5d45] text-white rounded-xl font-label-lg quicksand-text">
-                <span className="material-symbols-outlined mb-1 text-white">
-                  science
-                </span>
-                Pera Oxidada
-              </div>
+              {level === 4 && (
+                <section className="s4-pop space-y-4">
+                  <h2 className="text-center font-headline-md text-2xl font-extrabold text-[#9a4b12]">Observa la pera oxidada</h2>
+                  <S4Image src="/images/semana4/pera-oxidada.jpg" alt="Pera oxidada" filename="pera-oxidada.jpg" hint="Pera café" className="mx-auto h-48 w-64 rounded-3xl border-[3px] border-[#e07a2f] bg-white" />
+                  <div className="rounded-3xl bg-[#fff4e6] p-4">
+                    <p className="mb-2 font-bold text-[#9a4b12]">Su color es…</p>
+                    <div className="flex flex-wrap gap-2">
+                      {['Amarillo', 'Verde', 'Café'].map((option) => (
+                        <button key={option} type="button" onClick={() => setColor(option)} className={`s4-choice rounded-full border-2 px-4 py-2 font-bold ${color === option ? 'border-[#e07a2f] bg-[#e07a2f] text-white' : 'border-[#d8c7aa] bg-white'}`}>
+                          {option}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+                  <div className="rounded-3xl bg-[#fff4e6] p-4">
+                    <p className="mb-2 font-bold text-[#9a4b12]">¿Se ve rica para comer?</p>
+                    <div className="grid grid-cols-2 gap-2">
+                      <button type="button" onClick={() => setEdible(true)} className={`s4-choice rounded-2xl border-[3px] py-3 font-bold ${edible === true ? 'border-[#4a6549] bg-[#ccebc7]' : 'border-[#d8c7aa] bg-white'}`}>Sí</button>
+                      <button type="button" onClick={() => setEdible(false)} className={`s4-choice rounded-2xl border-[3px] py-3 font-bold ${edible === false ? 'border-[#d64545] bg-[#ffe8e8]' : 'border-[#d8c7aa] bg-white'}`}>No</button>
+                    </div>
+                  </div>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      if (color === 'Café' && edible === false) win();
+                      else fail();
+                    }}
+                    className="s4-btn-lab w-full rounded-full bg-[#e07a2f] py-3 font-black text-white shadow-[4px_4px_0_#9a3412]"
+                  >
+                    Comprobar
+                  </button>
+                </section>
+              )}
 
-              {/* Row: Color */}
-              <div className="flex items-center gap-3 p-4 bg-white rounded-xl md:bg-transparent md:p-0">
-                <span className="material-symbols-outlined text-[#334d33] md:hidden">palette</span>
-                <span className="font-label-lg text-[#334d33] quicksand-text">Color</span>
-              </div>
-              <ChoiceButtons
-                value={freshColor}
-                options={['Amarillo', 'Verde', 'Café']}
-                onChange={setFreshColor}
-              />
-              <ChoiceButtons
-                value={oxidizedColor}
-                options={['Café', 'Oscuro', 'Marrón']}
-                onChange={setOxidizedColor}
-              />
-
-              {/* Row: Olor */}
-              <div className="flex items-center gap-3 p-4 bg-white rounded-xl md:bg-transparent md:p-0">
-                <span className="material-symbols-outlined text-[#334d33] md:hidden">air</span>
-                <span className="font-label-lg text-[#334d33] quicksand-text">Olor</span>
-              </div>
-              <div className="bg-white rounded-xl shadow-sm border border-outline-variant/30 overflow-hidden focus-within:border-[#b0cfac] focus-within:border-2 transition-all">
-                <select
-                  className="w-full p-4 border-none focus:ring-0 font-body-md bg-transparent text-on-surface-variant appearance-none cursor-pointer outline-none"
-                  value={freshOdor}
-                  onChange={(e) => setFreshOdor(e.target.value)}
-                >
-                  <option disabled value="">
-                    Elige un olor...
-                  </option>
-                  <option>Dulce</option>
-                  <option>Fresco</option>
-                  <option>Ácido</option>
-                  <option>Sin olor</option>
-                </select>
-              </div>
-              <div className="bg-white rounded-xl shadow-sm border border-outline-variant/30 overflow-hidden focus-within:border-[#b0cfac] focus-within:border-2 transition-all">
-                <select
-                  className="w-full p-4 border-none focus:ring-0 font-body-md bg-transparent text-on-surface-variant appearance-none cursor-pointer outline-none"
-                  value={oxidizedOdor}
-                  onChange={(e) => setOxidizedOdor(e.target.value)}
-                >
-                  <option disabled value="">
-                    Elige un olor...
-                  </option>
-                  <option>Fuerte</option>
-                  <option>A vinagre</option>
-                  <option>Diferente</option>
-                  <option>Desagradable</option>
-                </select>
-              </div>
-
-              {/* Row: Textura */}
-              <div className="flex items-center gap-3 p-4 bg-white rounded-xl md:bg-transparent md:p-0">
-                <span className="material-symbols-outlined text-[#334d33] md:hidden">texture</span>
-                <span className="font-label-lg text-[#334d33] quicksand-text">Textura</span>
-              </div>
-              <ChoiceButtons
-                value={freshTexture}
-                options={['Suave', 'Lisa', 'Jugosa']}
-                onChange={setFreshTexture}
-              />
-              <ChoiceButtons
-                value={oxidizedTexture}
-                options={['Rugosa', 'Dura', 'Pegajosa']}
-                onChange={setOxidizedTexture}
-              />
-
-              {/* Row: Es Comestible */}
-              <div className="flex items-center gap-3 p-4 bg-white rounded-xl md:bg-transparent md:p-0">
-                <span className="material-symbols-outlined text-[#334d33] md:hidden">nutrition</span>
-                <span className="font-label-lg text-[#334d33] quicksand-text">¿Es comestible?</span>
-              </div>
-              <div className="grid grid-cols-2 gap-2">
-                <button
-                  type="button"
-                  onClick={() => setFreshEdible(true)}
-                  className={`p-3 rounded-lg flex items-center justify-center gap-2 border-2 transition-all active:scale-95 ${
-                    freshEdible === true
-                      ? 'bg-[#ccebc7] border-[#334d33]'
-                      : 'bg-white border-transparent hover:border-primary'
-                  }`}
-                >
-                  <span className="material-symbols-outlined text-[#334d33]" style={{ fontVariationSettings: freshEdible === true ? '"FILL" 1' : undefined }}>check_circle</span>
-                  <span className="font-label-sm quicksand-text">Sí</span>
-                </button>
-                <button
-                  type="button"
-                  onClick={() => setFreshEdible(false)}
-                  className={`p-3 rounded-lg flex items-center justify-center gap-2 border-2 transition-all active:scale-95 ${
-                    freshEdible === false
-                      ? 'bg-[#ccebc7] border-[#334d33]'
-                      : 'bg-white border-transparent hover:border-primary'
-                  }`}
-                >
-                  <span className="material-symbols-outlined text-[#737970]" style={{ fontVariationSettings: freshEdible === false ? '"FILL" 1' : undefined }}>cancel</span>
-                  <span className="font-label-sm quicksand-text">No</span>
-                </button>
-              </div>
-              <div className="grid grid-cols-2 gap-2">
-                <button
-                  type="button"
-                  onClick={() => setOxidizedEdible(true)}
-                  className={`p-3 rounded-lg flex items-center justify-center gap-2 border-2 transition-all active:scale-95 ${
-                    oxidizedEdible === true
-                      ? 'bg-[#ccebc7] border-[#334d33]'
-                      : 'bg-white border-transparent hover:border-primary'
-                  }`}
-                >
-                  <span className="material-symbols-outlined text-[#737970]" style={{ fontVariationSettings: oxidizedEdible === true ? '"FILL" 1' : undefined }}>check_circle</span>
-                  <span className="font-label-sm quicksand-text">Sí</span>
-                </button>
-                <button
-                  type="button"
-                  onClick={() => setOxidizedEdible(false)}
-                  className={`p-3 rounded-lg flex items-center justify-center gap-2 border-2 transition-all active:scale-95 ${
-                    oxidizedEdible === false
-                      ? 'bg-[#ccebc7] border-[#334d33]'
-                      : 'bg-white border-transparent hover:border-primary'
-                  }`}
-                >
-                  <span className="material-symbols-outlined text-[#ba1a1a]" style={{ fontVariationSettings: oxidizedEdible === false ? '"FILL" 1' : undefined }}>cancel</span>
-                  <span className="font-label-sm quicksand-text">No</span>
-                </button>
-              </div>
-            </div>
-          </section>
-
-          {/* Final Footer CTA */}
-          <footer className="flex flex-col items-center justify-center py-8 gap-4">
-            <p className="font-body-md text-on-surface-variant text-center max-w-md">
-              Recuerda que la oxidación ocurre por el contacto con el oxígeno. ¡Tus notas ayudan a entender la química!
-            </p>
-            <button
-              onClick={handleFinish}
-              className="flex items-center gap-4 bg-[#334d33] text-white px-10 py-5 rounded-full font-headline-md text-headline-md scale-down-on-press shadow-lg hover:shadow-xl hover:bg-opacity-95 transition-all duration-300 quicksand-text"
-            >
-              <span>Finalizar Observación</span>
-              <span className="material-symbols-outlined text-white">save</span>
-            </button>
-          </footer>
-
-          {/* Navigation controls (Bottom Bar) */}
-          <nav className="flex items-center justify-between py-6 border-t border-outline-variant mt-8">
-            <button
-              onClick={() => setScreen('welcome')}
-              className="flex items-center gap-2 text-on-surface-variant font-label-lg scale-down-on-press transition-all duration-200 quicksand-text"
-            >
-              <span className="material-symbols-outlined">arrow_back</span>
-              <span>Anterior</span>
-            </button>
-            <button
-              onClick={handleFinish}
-              className="flex items-center gap-2 bg-[#334d33] text-white px-6 py-3 rounded-full font-label-lg scale-down-on-press shadow-sm hover:shadow-md hover:bg-opacity-95 transition-all duration-200 quicksand-text"
-            >
-              <span>Siguiente</span>
-              <span className="material-symbols-outlined text-white">arrow_forward</span>
-            </button>
-          </nav>
-        </main>
+              {level === 5 && (
+                <section className="s4-pop space-y-4 text-center">
+                  <h2 className="font-headline-md text-2xl font-extrabold text-[#9a4b12]">¿Cómo frenas a Óxido?</h2>
+                  <div className="flex flex-col gap-3">
+                    {[
+                      { id: 'limon', label: 'Limón o taparla' },
+                      { id: 'sol', label: 'Dejarla al sol' },
+                      { id: 'soplar', label: 'Soplarle aire' },
+                    ].map((item) => (
+                      <button
+                        key={item.id}
+                        type="button"
+                        onClick={() => tryPick(item.id, 'limon')}
+                        className={`s4-choice rounded-3xl border-[3px] bg-white px-4 py-4 text-lg font-bold ${state === 'wrong' && picked === item.id ? 's4-shake border-[#d64545]' : 'border-[#d8c7aa]'}`}
+                      >
+                        {item.label}
+                      </button>
+                    ))}
+                  </div>
+                </section>
+              )}
+            </>
+          )}
+        </div>
       )}
-    </div>
+    </S4Page>
   );
 }

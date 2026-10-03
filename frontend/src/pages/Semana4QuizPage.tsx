@@ -1,15 +1,73 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { saveQuizScoreForSemanaNumber } from '../services/api';
-import { playMiss, playSuccess } from '../services/sounds';
+import { playFanfare, playMiss, playSuccess, playWhoosh } from '../services/sounds';
 import { showKidMessage } from '../components/KidFrame';
+import { S4Button, S4Confetti, S4Image, S4Page } from '../components/Semana4Ui';
 
-/**
- * Semana4QuizPage — Desafío Final de la Semana 4: Propiedades Químicas.
- *
- * Presenta un quiz interactivo de 10 preguntas verdadero/falso (las 5 originales + 5 nuevas),
- * con retroalimentación inmediata, barra de progreso y tarjeta de resultados finales.
- */
+const QUESTIONS = [
+  {
+    text: 'El oxígeno puede poner café a una fruta cortada.',
+    ans: true,
+    icon: 'apple',
+    msg: 'Sí. El aire toca la fruta y la oxida.',
+  },
+  {
+    text: 'Para frenar a Óxido, sirve el limón o tapar la fruta.',
+    ans: true,
+    icon: 'eco',
+    msg: 'Correcto. Menos aire, menos oxidación.',
+  },
+  {
+    text: 'Fermi suelta humo de fuego cuando come azúcar.',
+    ans: false,
+    icon: 'bakery_dining',
+    msg: 'Falso. Suelta un gas llamado CO₂, no humo.',
+  },
+  {
+    text: 'El pan, el yogurt y el queso pueden nacer con fermentación.',
+    ans: true,
+    icon: 'lunch_dining',
+    msg: '¡Exacto! Fermi ayuda a crear esos alimentos.',
+  },
+  {
+    text: 'El jabón es un ácido como el limón.',
+    ans: false,
+    icon: 'soap',
+    msg: 'Falso. El jabón es básico. El limón sí es ácido.',
+  },
+  {
+    text: 'El agua pura está en el 7 de la escala de pH.',
+    ans: true,
+    icon: 'water_drop',
+    msg: 'Sí. Ni muy ácido ni muy básico: justo en el medio.',
+  },
+  {
+    text: 'Una barra luminosa necesita pilas para brillar.',
+    ans: false,
+    icon: 'bolt',
+    msg: 'No. Brilla por una reacción química, sin calor ni electricidad.',
+  },
+  {
+    text: 'Las luciérnagas también hacen luz fría, como Lumi.',
+    ans: true,
+    icon: 'emoji_nature',
+    msg: '¡Así es! Se llama quimioluminiscencia.',
+  },
+  {
+    text: 'Después de quemar un papel, las cenizas pueden volver a ser papel.',
+    ans: false,
+    icon: 'delete_forever',
+    msg: 'No. La combustión no se puede deshacer.',
+  },
+  {
+    text: 'Para que haya fuego hacen falta combustible, oxígeno y calor.',
+    ans: true,
+    icon: 'local_fire_department',
+    msg: '¡El triángulo del fuego! Si falta uno, no hay llama.',
+  },
+];
+
 export default function Semana4QuizPage() {
   const navigate = useNavigate();
   const [currentIdx, setCurrentIdx] = useState(0);
@@ -17,8 +75,12 @@ export default function Semana4QuizPage() {
   const [showFeedback, setShowFeedback] = useState(false);
   const [score, setScore] = useState(0);
   const [quizFinished, setQuizFinished] = useState(false);
+  const [started, setStarted] = useState(false);
   const [saveStatus, setSaveStatus] = useState<'idle' | 'saving' | 'saved' | 'error'>('idle');
   const [saveError, setSaveError] = useState('');
+
+  const totalQuestions = QUESTIONS.length;
+  const currentQ = QUESTIONS[currentIdx];
 
   const persistQuizScore = async (finalScore: number) => {
     const stored = localStorage.getItem('plataforma_user');
@@ -43,71 +105,6 @@ export default function Semana4QuizPage() {
       showKidMessage('No se pudo guardar tu nota. Intenta otra vez.', 'soon');
     }
   };
-  const questions = [
-    {
-      text: 'La oxidación es un cambio químico que puede cambiar el color de las frutas.',
-      ans: true,
-      icon: 'apple',
-      msg: '¡Correcto! El oxígeno reacciona con las enzimas de la fruta.',
-    },
-    {
-      text: 'La fermentación es el proceso químico que hace que la masa del pan crezca.',
-      ans: true,
-      icon: 'bakery_dining',
-      msg: '¡Exacto! Las levaduras liberan CO₂ que hace que la masa se infle.',
-    },
-    {
-      text: 'Los ácidos son suaves y resbaladizos al tacto como el jabón.',
-      ans: false,
-      icon: 'soap',
-      msg: '¡Falso! Esas son las Bases. Los ácidos suelen ser agrios y punzantes.',
-    },
-    {
-      text: 'La combustión es una reacción química que libera energía en forma de luz y calor.',
-      ans: true,
-      icon: 'local_fire_department',
-      msg: '¡Así es! Es una reacción rápida con el oxígeno.',
-    },
-    {
-      text: 'La quimioluminiscencia permite a seres vivos como las luciérnagas producir su propia luz.',
-      ans: true,
-      icon: 'auto_awesome',
-      msg: '¡Increíble! Como las luciérnagas o algunas medusas.',
-    },
-    {
-      text: 'Los metales como el hierro se pueden oxidar si se mojan y se dejan al aire libre.',
-      ans: true,
-      icon: 'construction',
-      msg: '¡Correcto! El metal reacciona con el oxígeno y el agua, formando óxido rojizo.',
-    },
-    {
-      text: 'El vinagre y el jugo de limón son ejemplos de sustancias básicas.',
-      ans: false,
-      icon: 'nutrition',
-      msg: '¡Falso! El vinagre y el limón son ácidos, por eso tienen ese sabor tan agrio.',
-    },
-    {
-      text: 'Al quemar un papel en la combustión, podemos volver a convertir las cenizas resultantes en papel.',
-      ans: false,
-      icon: 'delete_forever',
-      msg: '¡Muy bien! La combustión es un cambio irreversible: las cenizas no pueden volver a ser papel.',
-    },
-    {
-      text: 'Las barras luminosas necesitan pilas o electricidad para poder brillar en la oscuridad.',
-      ans: false,
-      icon: 'bolt',
-      msg: '¡Correcto! Brilla solo gracias a una reacción química, sin usar electricidad ni generar calor.',
-    },
-    {
-      text: 'La levadura es un ser vivo microscópico que ayuda a fermentar los alimentos.',
-      ans: true,
-      icon: 'biotech',
-      msg: '¡Excelente! La levadura es un hongo unicelular vivo que ayuda a fermentar los alimentos.',
-    },
-  ];
-
-  const totalQuestions = questions.length;
-  const currentQ = questions[currentIdx];
 
   const handleAnswer = (choice: boolean) => {
     if (showFeedback) return;
@@ -122,254 +119,141 @@ export default function Semana4QuizPage() {
   };
 
   const nextQuestion = () => {
+    playWhoosh();
     setShowFeedback(false);
     setSelectedAnswer(null);
     if (currentIdx < totalQuestions - 1) {
       setCurrentIdx((prev) => prev + 1);
     } else {
       persistQuizScore(score);
+      playFanfare();
       setQuizFinished(true);
     }
   };
 
-  const handleFinish = () => {
-    navigate('/semana/4');
-  };
-
   return (
-    <div className="bg-[#faf9f5] text-[#1a1c1a] min-h-screen flex flex-col items-center font-body-md relative overflow-x-hidden selection:bg-primary-fixed selection:text-on-primary-fixed">
-      {/* Custom Styles */}
-      <style dangerouslySetInnerHTML={{ __html: `
-        .quicksand-text {
-          font-family: 'Quicksand', sans-serif;
-        }
-        .material-symbols-outlined {
-          font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
-        }
-        .lab-bg-icon {
-          opacity: 0.04;
-          pointer-events: none;
-          position: absolute;
-          z-index: 0;
-          color: #4a6549;
-        }
-        .quiz-card {
-          transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
-        }
-        .button-press:active {
-          transform: scale(0.95);
-        }
-        .liquid-progress {
-          position: relative;
-          overflow: hidden;
-        }
-        .liquid-progress::after {
-          content: '';
-          position: absolute;
-          top: 0;
-          left: -100%;
-          width: 100%;
-          height: 100%;
-          background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
-          animation: wave 2s infinite;
-        }
-        @keyframes wave {
-          100% { left: 100%; }
-        }
-        .floating {
-          animation: float 6s ease-in-out infinite;
-        }
-        @keyframes float {
-          0% { transform: translateY(0px); }
-          50% { transform: translateY(-10px); }
-          100% { transform: translateY(0px); }
-        }
-      `}} />
-
-      {/* Background Decorations */}
-      <div className="fixed inset-0 overflow-hidden pointer-events-none">
-        <span className="material-symbols-outlined lab-bg-icon text-[120px] top-20 left-10 rotate-12">science</span>
-        <span className="material-symbols-outlined lab-bg-icon text-[150px] bottom-40 right-10 -rotate-12">eco</span>
-        <span className="material-symbols-outlined lab-bg-icon text-[80px] top-1/2 left-[15%]">experiment</span>
-        <span className="material-symbols-outlined lab-bg-icon text-[100px] top-1/3 right-[20%] rotate-45">biotech</span>
-        <span className="material-symbols-outlined lab-bg-icon text-[90px] bottom-20 left-1/4">opacity</span>
-      </div>
-
-      {/* TopAppBar */}
-      <header className="sticky top-0 w-full z-50 flex justify-between items-center px-margin-mobile md:px-margin-desktop py-4 bg-[#faf9f5] shadow-[0_4px_15px_rgba(74,101,73,0.08)]">
-        <div className="flex items-center gap-4">
-          <button
-            onClick={() => navigate('/semana/4')}
-            className="w-10 h-10 flex items-center justify-center rounded-full hover:bg-surface-container-high transition-colors active:scale-[0.98] text-primary"
+    <S4Page
+      title="Semana 4 · Quiz"
+      onBack={() => navigate('/semana/4')}
+      badge={
+        started && !quizFinished ? (
+          <span className="rounded-full bg-[#d9f99d] px-3 py-1 text-xs font-black text-[#115e59]">
+            {currentIdx + 1}/{totalQuestions}
+          </span>
+        ) : undefined
+      }
+    >
+      {!started ? (
+        <article className="s4-card-live relative mx-auto flex w-full max-w-xl flex-col items-center gap-5 rounded-[2rem] border-2 border-[#0f766e] bg-[#ecfeff] p-6 text-center shadow-[10px_10px_0_#99f6e4] md:p-10">
+          <span className="s4-card-shine" aria-hidden="true" />
+          <span className="s4-pulse rounded-full bg-[#0f766e] px-4 py-1 text-[11px] font-black uppercase tracking-[0.2em] text-[#d9f99d]">
+            Reto final
+          </span>
+          <S4Image
+            src="/images/semana4/quiz-hero.jpg"
+            alt="Héroe del quiz"
+            filename="quiz-hero.jpg"
+            hint="Científico niño o medalla"
+            className="s4-float h-52 w-52 rounded-[2rem] border-4 border-white bg-white shadow-[6px_6px_0_#99f6e4]"
+          />
+          <h2 className="font-headline-lg text-3xl font-black text-[#12263a]">¡Quiz de los 5 tubos!</h2>
+          <p className="font-body-lg text-[#1f3a40]">
+            10 preguntas de verdadero o falso. Cada acierto suma para tu nota final.
+          </p>
+          <S4Button
+            className="s4-pulse w-full max-w-xs"
+            onClick={() => {
+              playWhoosh();
+              setStarted(true);
+            }}
           >
-            <span className="material-symbols-outlined">arrow_back</span>
-          </button>
-          <h1 className="font-headline-md text-headline-md font-bold text-primary quicksand-text">
-            Semana 4: Propiedades Químicas
-          </h1>
-        </div>
-      </header>
-
-      {/* Main Content Canvas */}
-      <main className="flex-grow w-full max-w-[800px] px-margin-mobile md:px-0 pt-12 pb-40 relative z-10">
-        {!quizFinished ? (
-          <>
-            {/* Progress Indicator */}
-            <div className="mb-stack-lg space-y-2">
-              <div className="flex justify-between items-end">
-                <span className="font-label-lg text-primary uppercase tracking-wider quicksand-text">Desafío Final</span>
-                <span className="font-headline-md text-primary quicksand-text">
-                  Pregunta {currentIdx + 1} de {totalQuestions}
-                </span>
-              </div>
-              <div className="h-4 w-full bg-surface-container rounded-full overflow-hidden shadow-inner">
-                <div
-                  className="h-full bg-primary liquid-progress transition-all duration-500 rounded-full"
-                  style={{ width: `${((currentIdx + 1) / totalQuestions) * 100}%` }}
-                ></div>
-              </div>
+            ¡Empezar quiz!
+            <span className="material-symbols-outlined" style={{ fontVariationSettings: "'FILL' 1" }}>play_arrow</span>
+          </S4Button>
+        </article>
+      ) : !quizFinished ? (
+        <div className="mx-auto max-w-2xl space-y-5">
+          <div>
+            <div className="mb-2 flex items-center justify-between text-sm font-black text-[#0f766e]">
+              <span>Pregunta {currentIdx + 1} de {totalQuestions}</span>
+              <span>{score} aciertos</span>
             </div>
-
-            {/* Quiz Container */}
-            <div className="relative min-h-[25rem]">
-              {/* Active Question Card */}
-              <div className="quiz-card bg-white rounded-[24px] p-8 md:p-12 shadow-[0_15px_30px_rgba(74,101,73,0.12)] border-2 border-surface-container-high flex flex-col items-center text-center space-y-6">
-                <div className="w-24 h-24 bg-primary-container/10 rounded-full flex items-center justify-center floating">
-                  <span className="material-symbols-outlined text-primary text-[48px]">{currentQ.icon}</span>
-                </div>
-                <h2 className="font-headline-md text-on-surface px-4 min-h-[72px] flex items-center justify-center quicksand-text">
-                  {currentQ.text}
-                </h2>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6 w-full mt-6">
-                  <button
-                    onClick={() => handleAnswer(true)}
-                    className="group relative overflow-hidden bg-primary text-white rounded-[24px] py-6 px-8 flex flex-col items-center gap-2 shadow-[0_8px_0_#2a3f29] active:shadow-none active:translate-y-2 transition-all duration-100 button-press"
-                  >
-                    <span
-                      className="material-symbols-outlined text-[32px] group-hover:scale-110 transition-transform"
-                      style={{ fontVariationSettings: '"FILL" 1' }}
-                    >
-                      check_circle
-                    </span>
-                    <span className="font-headline-md quicksand-text">Verdadero</span>
-                  </button>
-                  <button
-                    onClick={() => handleAnswer(false)}
-                    className="group relative overflow-hidden bg-surface-container-high text-on-surface-variant rounded-[24px] py-6 px-8 flex flex-col items-center gap-2 border-2 border-outline-variant shadow-[0_8px_0_#c3c8be] active:shadow-none active:translate-y-2 transition-all duration-100 button-press"
-                  >
-                    <span className="material-symbols-outlined text-[32px] group-hover:scale-110 transition-transform">
-                      cancel
-                    </span>
-                    <span className="font-headline-md quicksand-text">Falso</span>
-                  </button>
-                </div>
-              </div>
-
-              {/* Feedback Overlay */}
-              {showFeedback && (
-                <div className="absolute inset-0 bg-white/95 backdrop-blur-sm z-20 flex flex-col items-center justify-center p-8 text-center rounded-[24px]">
-                  <div
-                    className={`w-32 h-32 rounded-full mb-6 flex items-center justify-center text-[64px] ${
-                      selectedAnswer === currentQ.ans
-                        ? 'bg-primary/20 text-primary'
-                        : 'bg-error/20 text-error'
-                    }`}
-                  >
-                    <span
-                      className="material-symbols-outlined text-[64px]"
-                      style={{ fontVariationSettings: selectedAnswer === currentQ.ans ? '"FILL" 1' : undefined }}
-                    >
-                      {selectedAnswer === currentQ.ans ? 'verified' : 'sentiment_dissatisfied'}
-                    </span>
-                  </div>
-                  <h3
-                    className={`font-headline-lg mb-2 quicksand-text ${
-                      selectedAnswer === currentQ.ans ? 'text-primary' : 'text-error'
-                    }`}
-                  >
-                    {selectedAnswer === currentQ.ans ? '¡Excelente!' : '¡Casi!'}
-                  </h3>
-                  <p className="font-body-lg text-on-surface-variant max-w-md mb-8">
-                    {selectedAnswer === currentQ.ans
-                      ? currentQ.msg
-                      : `No te preocupes, ¡aprender es parte del proceso! ${currentQ.msg}`}
-                  </p>
-                  <button
-                    className="bg-primary text-white font-label-lg px-8 py-4 rounded-full shadow-lg hover:brightness-110 active:scale-95 transition-all quicksand-text"
-                    onClick={nextQuestion}
-                  >
-                    Continuar
-                  </button>
-                </div>
-              )}
+            <div className="h-3 overflow-hidden rounded-full bg-[#99f6e4]">
+              <div className="h-full bg-[#0f766e] transition-all duration-500" style={{ width: `${((currentIdx + 1) / totalQuestions) * 100}%` }} />
             </div>
-          </>
-        ) : (
-          /* Results Card */
-          <div className="quiz-card bg-white rounded-[24px] p-8 md:p-12 shadow-[0_15px_30px_rgba(74,101,73,0.12)] border-2 border-surface-container-high flex flex-col items-center text-center space-y-6">
-            <div className="w-24 h-24 bg-primary-container/10 rounded-full flex items-center justify-center floating">
-              <span className="material-symbols-outlined text-primary text-[48px]">workspace_premium</span>
-            </div>
-            <div className="space-y-2">
-              <h2 className="font-headline-lg text-primary quicksand-text">¡Felicidades, joven científico!</h2>
-              <p className="font-body-lg text-on-surface-variant">
-                Has completado el desafío de Propiedades Químicas.
-              </p>
-            </div>
-            <div className="bg-surface-container rounded-xl p-6 w-full max-w-xs">
-              <span className="font-label-lg uppercase tracking-widest text-on-surface-variant quicksand-text">
-                Tu calificación
-              </span>
-              <div className="text-[48px] font-bold text-primary quicksand-text">
-                {score}/{totalQuestions}
-              </div>
-            </div>
-            {saveStatus === 'saving' || saveStatus === 'idle' ? (
-              <p className="font-body-md text-secondary animate-pulse flex items-center gap-2">
-                <span className="material-symbols-outlined text-sm animate-spin">sync</span>
-                Guardando tu resultado...
-              </p>
-            ) : saveStatus === 'saved' ? (
-              <p className="font-body-md text-primary flex items-center gap-2">
-                <span className="material-symbols-outlined text-sm" style={{ fontVariationSettings: '"FILL" 1' }}>check_circle</span>
-                Tu resultado se ha guardado con éxito
-              </p>
-            ) : (
-              <p className="font-body-md text-error flex items-center gap-2">
-                <span className="material-symbols-outlined text-sm">error</span>
-                {saveError}
-              </p>
-            )}
-            <button
-              onClick={handleFinish}
-              className="w-full bg-primary text-white font-label-lg py-4 rounded-full shadow-[0_8px_0_#2a3f29] active:shadow-none active:translate-y-2 transition-all duration-100 button-press quicksand-text"
-            >
-              Finalizar Laboratorio
-            </button>
           </div>
-        )}
-      </main>
 
-      {/* BottomNavBar */}
-      <nav className="fixed bottom-0 left-0 w-full z-50 flex justify-between items-center px-margin-mobile py-4 md:px-margin-desktop bg-[#efeeea] dark:bg-surface-container-high shadow-[0_-4px_15px_rgba(74,101,73,0.08)] rounded-t-xl">
-        <button
-          onClick={() => navigate('/semana/4')}
-          className="flex flex-row items-center justify-center text-on-surface-variant dark:text-outline-variant px-6 py-2 hover:bg-surface-variant dark:hover:bg-tertiary-container rounded-full transition-all active:scale-[0.95]"
-        >
-          <span className="material-symbols-outlined">arrow_back</span>
-          <span className="font-label-lg text-label-lg quicksand-text">Volver</span>
-        </button>
-        {/* Siguiente fallback button (only visible when not finished and feedback is shown) */}
-        {showFeedback && (
-          <button
-            onClick={nextQuestion}
-            className="flex flex-row items-center justify-center bg-primary text-white rounded-full px-6 py-2 hover:opacity-90 transition-all active:scale-[0.95] shadow-md"
-          >
-            <span className="font-label-lg text-label-lg quicksand-text">Siguiente</span>
-            <span className="material-symbols-outlined">arrow_forward</span>
-          </button>
-        )}
-      </nav>
-    </div>
+          <article className="s4-pop relative min-h-[22rem] rounded-[2rem] border-2 border-[#0f766e] bg-[#ecfeff] p-6 text-center shadow-[8px_8px_0_#99f6e4] md:p-8">
+            <div className="s4-float mx-auto mb-4 flex h-20 w-20 items-center justify-center bg-[#d9f99d] text-[#115e59]" style={{ clipPath: 'polygon(25% 0, 75% 0, 100% 50%, 75% 100%, 25% 100%, 0 50%)' }}>
+              <span className="material-symbols-outlined text-4xl" style={{ fontVariationSettings: "'FILL' 1" }}>
+                {currentQ.icon}
+              </span>
+            </div>
+            <h2 className="font-headline-md text-2xl font-black leading-snug text-[#12263a]">{currentQ.text}</h2>
+            <div className="mt-6 grid grid-cols-1 gap-3 md:grid-cols-2">
+              <S4Button onClick={() => handleAnswer(true)} color="#0f766e" dark="#115e59" className="w-full py-5">
+                <span className="material-symbols-outlined" style={{ fontVariationSettings: "'FILL' 1" }}>check_circle</span>
+                Verdadero
+              </S4Button>
+              <S4Button onClick={() => handleAnswer(false)} color="#d64545" dark="#8f1f1f" className="w-full py-5">
+                <span className="material-symbols-outlined" style={{ fontVariationSettings: "'FILL' 1" }}>cancel</span>
+                Falso
+              </S4Button>
+            </div>
+
+            {showFeedback && (
+              <div className={`absolute inset-3 z-20 flex flex-col items-center justify-center rounded-[1.5rem] border-2 border-[#0f766e] bg-[#ecfeff] p-6 text-center ${selectedAnswer === currentQ.ans ? '' : 's4-shake'}`}>
+                <div className={`mb-3 flex h-20 w-20 items-center justify-center ${selectedAnswer === currentQ.ans ? 's4-stamp bg-[#d9f99d] text-[#115e59]' : 'bg-[#ffe4e6] text-[#9f1239]'}`}>
+                  <span className="material-symbols-outlined text-5xl" style={{ fontVariationSettings: "'FILL' 1" }}>
+                    {selectedAnswer === currentQ.ans ? 'verified' : 'sentiment_dissatisfied'}
+                  </span>
+                </div>
+                <h3 className={`text-2xl font-black ${selectedAnswer === currentQ.ans ? 'text-[#0f766e]' : 'text-[#9f1239]'}`}>
+                  {selectedAnswer === currentQ.ans ? '¡Excelente!' : '¡Casi!'}
+                </h3>
+                <p className="mt-2 max-w-md font-body-md text-[#434841]">{currentQ.msg}</p>
+                <S4Button onClick={nextQuestion} className="mt-5">Continuar</S4Button>
+              </div>
+            )}
+          </article>
+        </div>
+      ) : (
+        <article className="s4-pop relative mx-auto flex w-full max-w-xl flex-col items-center gap-5 rounded-[2rem] border-2 border-[#0f766e] bg-[#ecfeff] p-6 text-center shadow-[10px_10px_0_#99f6e4] md:p-10">
+          <S4Confetti />
+          <S4Image
+            src="/images/semana4/quiz-badge.jpg"
+            alt="Medalla"
+            filename="quiz-badge.jpg"
+            hint="Medalla o copa"
+            className="s4-stamp h-40 w-40 rounded-[2rem] border-4 border-white bg-white shadow-[6px_6px_0_#99f6e4]"
+          />
+          <h2 className="font-headline-lg text-3xl font-black text-[#12263a]">¡Felicidades, joven científico!</h2>
+          <p className="font-body-lg text-[#1f3a40]">Completaste el laboratorio de Propiedades Químicas.</p>
+          <div className="w-full max-w-xs rounded-3xl border-2 border-[#0f766e] bg-white p-5">
+            <p className="text-xs font-black uppercase tracking-[0.18em] text-[#0f766e]">Tu calificación</p>
+            <p className="text-5xl font-black text-[#12263a]">{score}/{totalQuestions}</p>
+          </div>
+          {saveStatus === 'saving' || saveStatus === 'idle' ? (
+            <p className="flex items-center gap-2 font-bold text-[#0f766e]">
+              <span className="material-symbols-outlined animate-spin text-sm">sync</span>
+              Guardando tu resultado...
+            </p>
+          ) : saveStatus === 'saved' ? (
+            <p className="flex items-center gap-2 font-bold text-[#2f4a2f]">
+              <span className="material-symbols-outlined text-sm" style={{ fontVariationSettings: "'FILL' 1" }}>check_circle</span>
+              Tu resultado se ha guardado con éxito
+            </p>
+          ) : (
+            <p className="flex items-center gap-2 font-bold text-[#8f1f1f]">
+              <span className="material-symbols-outlined text-sm">error</span>
+              {saveError}
+            </p>
+          )}
+          <S4Button onClick={() => navigate('/semana/4')} className="w-full max-w-xs">
+            Volver al laboratorio
+          </S4Button>
+        </article>
+      )}
+    </S4Page>
   );
 }
