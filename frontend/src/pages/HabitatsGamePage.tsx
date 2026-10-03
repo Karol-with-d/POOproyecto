@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useResetScrollOn } from '../components/WeekScrollReset';
+import KidBackButton from '../components/KidBackButton';
 
 // ── Data ─────────────────────────────────────────────────────────────────────
 type Habitat = 'ocean' | 'forest' | 'desert' | 'field';
@@ -153,6 +154,10 @@ export default function HabitatsGamePage() {
   if (screen === 'start') {
     return (
       <div className="bg-surface text-on-surface min-h-screen flex flex-col items-center justify-center font-body-md">
+        <header className="w-full flex items-center justify-between px-margin-mobile md:px-margin-desktop py-4 sticky top-0 z-40">
+          <KidBackButton onClick={() => navigate('/semana/6')} label="Volver a la Semana 6" />
+          <div className="w-12" aria-hidden="true" />
+        </header>
         <main className="w-full max-w-2xl mx-auto px-margin-mobile md:px-margin-desktop flex flex-col items-center gap-lg py-xl text-center">
           <div className="w-20 h-20 rounded-full bg-primary-fixed flex items-center justify-center shadow-lg">
             <span className="material-symbols-outlined text-5xl text-primary" style={{ fontVariationSettings: "'FILL' 1" }}>travel_explore</span>
@@ -206,10 +211,9 @@ export default function HabitatsGamePage() {
         <ConfettiCanvas />
 
         <header className="flex justify-between items-center w-full px-margin-mobile md:px-margin-desktop h-20 bg-surface shadow-sm sticky top-0 z-40">
+          <KidBackButton onClick={() => navigate('/semana/6')} label="Volver a la Semana 6" />
           <div className="font-headline-md text-headline-md font-bold text-primary">¿Dónde vivo yo?</div>
-          <button onClick={() => navigate('/semana/6')} className="w-12 h-12 flex items-center justify-center rounded-full hover:bg-surface-container-high transition-colors text-on-surface-variant">
-            <span className="material-symbols-outlined text-3xl">close</span>
-          </button>
+          <div className="w-12" aria-hidden="true" />
         </header>
 
         <main className="flex-grow flex flex-col items-center justify-center px-margin-mobile md:px-margin-desktop py-lg relative z-20">
@@ -278,16 +282,9 @@ export default function HabitatsGamePage() {
     <div className="h-screen flex flex-col font-body-md overflow-hidden bg-surface-container-lowest">
       {/* Header */}
       <header className="bg-surface text-primary shadow-sm flex justify-between items-center w-full px-margin-mobile md:px-margin-desktop h-20 shrink-0 relative z-20">
+        <KidBackButton onClick={() => navigate('/semana/6')} label="Volver a la Semana 6" />
         <h1 className="font-headline-md text-headline-md font-bold text-primary">¿Dónde vivo yo?</h1>
-        <div className="flex items-center gap-4">
-          <span className="font-label-md text-label-md text-on-surface-variant">{ANIMALS.length - remaining.length}/{ANIMALS.length}</span>
-          <button
-            onClick={() => navigate('/semana/6')}
-            className="w-12 h-12 rounded-full flex items-center justify-center bg-surface-container hover:bg-surface-container-high transition-colors text-on-surface-variant"
-          >
-            <span className="material-symbols-outlined text-3xl" style={{ fontVariationSettings: "'FILL' 1" }}>close</span>
-          </button>
-        </div>
+        <span className="font-label-md text-label-md text-on-surface-variant min-w-12 text-right">{ANIMALS.length - remaining.length}/{ANIMALS.length}</span>
       </header>
 
       {/* Progress bar (mobile) */}
