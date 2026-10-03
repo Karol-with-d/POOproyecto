@@ -1,5 +1,6 @@
 import { useState, useCallback, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import KidBackButton from '../components/KidBackButton';
 import { playFromFeedback } from '../services/sounds';
 
 const CONFETTI_COLORS = ['#4a6549', '#3e6378', '#6a5d45', '#ba1a1a', '#8ba888', '#bfe5fe'];
@@ -284,13 +285,7 @@ export default function RescataPulgarcitoGamePage() {
     <div className="min-h-screen flex flex-col font-body-md text-body-md relative overflow-x-hidden bg-surface">
       {/* TopAppBar */}
       <header className="bg-surface-container-low w-full top-0 z-40 flex justify-between items-center px-margin-mobile md:px-margin-desktop py-base">
-        <button
-          onClick={handleBack}
-          aria-label="Atrás"
-          className="text-primary hover:scale-105 transition-transform duration-200 active:scale-95 flex items-center justify-center p-2 rounded-full"
-        >
-          <span className="material-symbols-outlined fill" style={{ fontSize: '28px' }}>arrow_back</span>
-        </button>
+        <KidBackButton onClick={handleBack} label="Volver" />
         <h1 className="font-headline-md text-headline-md font-bold text-primary text-center flex-1">
           Semana 1: Medidas
         </h1>
