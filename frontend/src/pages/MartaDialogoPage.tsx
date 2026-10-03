@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
+import KidBackButton from '../components/KidBackButton';
 
 
 const SENSOR_IMAGES = {
@@ -472,12 +473,14 @@ export default function MartaDialogoPage() {
       </div>
 
       {/* ───────────────────────── Header ──────────────────────── */}
-      <header className="relative z-40 flex w-full shrink-0 items-center justify-center border-b border-[#C4C8BC]/30 bg-[#FAF6F0]/95 px-8 py-5 shadow-sm backdrop-blur">
-        <div className="flex items-center gap-3 text-center text-2xl font-extrabold tracking-wide text-[#4A7C59] md:text-3xl">
-          <span className="h-3 w-3 rounded-full border border-[#705C30] bg-[#F8E0A8]" />
-          Aprende con Marta
-          <span className="h-3 w-3 rounded-full border border-[#4A7C59] bg-[#C8E8D0]" />
+      <header className="relative z-40 flex w-full shrink-0 items-center justify-between gap-3 border-b border-[#C4C8BC]/30 bg-[#FAF6F0]/95 px-4 py-4 shadow-sm backdrop-blur sm:px-8">
+        <KidBackButton onClick={() => navigate('/semana/2')} label="Volver a la Semana 2" />
+        <div className="flex min-w-0 flex-1 items-center justify-center gap-3 text-center text-xl font-extrabold tracking-wide text-[#4A7C59] sm:text-2xl md:text-3xl">
+          <span className="h-3 w-3 shrink-0 rounded-full border border-[#705C30] bg-[#F8E0A8]" />
+          <span className="truncate">Aprende con Marta</span>
+          <span className="h-3 w-3 shrink-0 rounded-full border border-[#4A7C59] bg-[#C8E8D0]" />
         </div>
+        <div className="w-12 shrink-0" aria-hidden="true" />
       </header>
 
       {/* ───────────────────────── Escenario ───────────────────── */}

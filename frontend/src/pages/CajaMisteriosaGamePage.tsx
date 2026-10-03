@@ -1,6 +1,7 @@
 import { useState, useCallback, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { playMiss, playSuccess } from '../services/sounds';
+import KidBackButton from '../components/KidBackButton';
 
 interface Level {
   id: number;
@@ -586,7 +587,10 @@ export default function CajaMisteriosaGamePage() {
 
   if (gameOver) {
     return (
-      <div className="caja-end flex h-full min-h-screen w-full flex-col overflow-auto">
+      <div className="caja-end relative flex h-full min-h-screen w-full flex-col overflow-auto">
+        <div className="absolute left-3 top-3 z-50 sm:left-4 sm:top-4">
+          <KidBackButton onClick={handleExit} label="Volver a la Semana 2" />
+        </div>
         <div ref={victoryRef} className="relative m-auto flex w-full max-w-4xl flex-col items-center gap-4 p-4 md:gap-6 md:p-8">
           <MedalArt />
           <header className="text-center">
@@ -639,7 +643,10 @@ export default function CajaMisteriosaGamePage() {
 
   if (!level) {
     return (
-      <div className="flex h-full min-h-screen w-full items-center justify-center">
+      <div className="relative flex h-full min-h-screen w-full items-center justify-center">
+        <div className="absolute left-3 top-3 z-50 sm:left-4 sm:top-4">
+          <KidBackButton onClick={handleExit} label="Volver a la Semana 2" />
+        </div>
         <p className="font-headline-md text-2xl text-[#3e6378]">Cargando...</p>
       </div>
     );
@@ -654,13 +661,7 @@ export default function CajaMisteriosaGamePage() {
   return (
     <div className="caja-play flex h-full min-h-screen w-full flex-col">
       <header className="flex shrink-0 items-center justify-between gap-3 px-4 py-2 md:px-6 md:py-3">
-        <button
-          type="button"
-          onClick={handleExit}
-          className="rounded-2xl bg-white/90 px-4 py-2 font-headline-md text-base text-[#3e6378] shadow-sm transition-all hover:scale-105 active:scale-95"
-        >
-          Salir
-        </button>
+        <KidBackButton onClick={handleExit} label="Volver a la Semana 2" />
         <div className="text-center">
           <p className="font-headline-md text-sm text-[#3e6378] md:text-base">La caja misteriosa</p>
           <p className="font-headline-md text-base text-[#243d24] md:text-lg">
