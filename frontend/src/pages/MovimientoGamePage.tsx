@@ -1,6 +1,7 @@
 import { useState, useEffect, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useResetScrollOn } from '../components/WeekScrollReset';
+import KidBackButton from '../components/KidBackButton';
 
 // ── Images ──────────────────────────────────────────────────────────────────
 const IMG_HERO       = '/images/semana6/moverse/hero.webp';
@@ -118,6 +119,10 @@ export default function MovimientoGamePage() {
   if (screen === 'start') {
     return (
       <div className="bg-surface text-on-surface min-h-screen flex flex-col items-center justify-center font-body-md overflow-hidden antialiased">
+        <header className="w-full flex items-center justify-between px-margin-mobile md:px-margin-desktop py-4 sticky top-0 z-40">
+          <KidBackButton onClick={() => navigate('/semana/6')} label="Volver a la Semana 6" />
+          <div className="w-12" aria-hidden="true" />
+        </header>
         <main className="w-full max-w-4xl mx-auto px-margin-mobile md:px-margin-desktop flex flex-col items-center justify-center flex-grow gap-xl py-xl">
           <header className="text-center">
             <h1 className="font-headline-lg-mobile md:font-headline-lg text-headline-lg-mobile md:text-headline-lg text-primary tracking-tight">
@@ -161,15 +166,9 @@ export default function MovimientoGamePage() {
     return (
       <div className="bg-surface text-on-surface font-body-md min-h-screen flex flex-col items-center">
         <header className="bg-background w-full flex justify-between items-center px-margin-mobile md:px-margin-desktop py-4 sticky top-0 z-40">
-          <div className="flex items-center gap-3">
-            <h1 className="font-headline-md text-headline-md font-bold text-primary">¡A moverse!</h1>
-          </div>
-          <button
-            onClick={() => navigate('/semana/6')}
-            className="w-10 h-10 rounded-full flex items-center justify-center bg-surface-container-low hover:bg-surface-variant transition-colors text-on-surface-variant"
-          >
-            <span className="material-symbols-outlined text-[20px]">close</span>
-          </button>
+          <KidBackButton onClick={() => navigate('/semana/6')} label="Volver a la Semana 6" />
+          <h1 className="font-headline-md text-headline-md font-bold text-primary">¡A moverse!</h1>
+          <div className="w-12" aria-hidden="true" />
         </header>
 
         <main className="flex-grow w-full max-w-4xl mx-auto px-margin-mobile md:px-gutter pt-xl pb-32 flex flex-col items-center justify-center text-center">
@@ -222,13 +221,9 @@ export default function MovimientoGamePage() {
     return (
       <div className="bg-background text-on-background min-h-screen flex flex-col font-body-lg">
         <header className="bg-background w-full flex justify-between items-center px-margin-mobile md:px-margin-desktop py-4 sticky top-0 z-40">
+          <KidBackButton onClick={() => navigate('/semana/6')} label="Volver a la Semana 6" />
           <span className="font-headline-md text-headline-md font-bold text-primary">¡A moverse!</span>
-          <button
-            onClick={() => navigate('/semana/6')}
-            className="w-10 h-10 rounded-full flex items-center justify-center bg-surface-container-low hover:bg-surface-variant transition-colors text-on-surface-variant"
-          >
-            <span className="material-symbols-outlined text-[20px]">close</span>
-          </button>
+          <div className="w-12" aria-hidden="true" />
         </header>
 
         <main className="flex-grow flex flex-col items-center px-margin-mobile md:px-margin-desktop py-lg pb-32 md:pb-lg w-full max-w-5xl mx-auto">
@@ -300,11 +295,13 @@ export default function MovimientoGamePage() {
   // ══════════════════════════════════════════════════════════════════════════
   return (
     <div className="bg-background min-h-screen flex flex-col font-body-md text-on-surface antialiased overflow-x-hidden">
-      <header className="hidden md:flex justify-between items-center w-full px-margin-desktop py-4 bg-background z-40 sticky top-0">
+      <header className="flex justify-between items-center w-full px-margin-mobile md:px-margin-desktop py-4 bg-background z-40 sticky top-0">
+        <KidBackButton onClick={() => navigate('/semana/6')} label="Volver a la Semana 6" />
         <div className="font-headline-md text-headline-md font-bold text-primary flex items-center gap-sm">
           <span className="material-symbols-outlined text-[28px]" style={{ fontVariationSettings: "'FILL' 1" }}>directions_run</span>
           ¡A moverse!
         </div>
+        <div className="w-12" aria-hidden="true" />
       </header>
 
       <main className="flex-grow flex items-center justify-center p-margin-mobile md:p-margin-desktop relative z-10 w-full max-w-7xl mx-auto pb-32 md:pb-margin-desktop">
