@@ -55,6 +55,56 @@ export function playPop(): void {
   tone(440, 0, 0.1, 'sine', 0.045);
 }
 
+export function playWhoosh(): void {
+  unlockAudio();
+  tone(220, 0, 0.18, 'sine', 0.03);
+  tone(330, 0.06, 0.16, 'triangle', 0.035);
+  tone(494, 0.12, 0.14, 'sine', 0.03);
+}
+
+export function playBubble(): void {
+  unlockAudio();
+  tone(620, 0, 0.08, 'sine', 0.04);
+  tone(820, 0.05, 0.1, 'triangle', 0.03);
+}
+
+export function playSparkle(): void {
+  unlockAudio();
+  tone(880, 0, 0.08, 'sine', 0.035);
+  tone(1174, 0.07, 0.09, 'triangle', 0.03);
+  tone(1568, 0.14, 0.1, 'sine', 0.025);
+}
+
+export function playCrack(): void {
+  unlockAudio();
+  tone(180, 0, 0.06, 'square', 0.04);
+  tone(90, 0.04, 0.1, 'sawtooth', 0.03);
+  tone(720, 0.08, 0.12, 'triangle', 0.035);
+}
+
+export function playSizzle(): void {
+  unlockAudio();
+  tone(140, 0, 0.16, 'sawtooth', 0.03);
+  tone(210, 0.05, 0.18, 'triangle', 0.035);
+  tone(360, 0.12, 0.2, 'sine', 0.03);
+}
+
+export function playLevelUp(): void {
+  unlockAudio();
+  tone(523, 0, 0.1, 'triangle', 0.05);
+  tone(659, 0.08, 0.1, 'sine', 0.05);
+  tone(784, 0.16, 0.12, 'triangle', 0.055);
+  tone(1046, 0.26, 0.22, 'sine', 0.05);
+}
+
+export function playFanfare(): void {
+  unlockAudio();
+  tone(523, 0, 0.12, 'triangle', 0.055);
+  tone(659, 0.1, 0.12, 'sine', 0.055);
+  tone(784, 0.2, 0.14, 'triangle', 0.06);
+  tone(1046, 0.32, 0.28, 'sine', 0.06);
+}
+
 export function playFromFeedback(value: unknown): void {
   if (value == null || value === '') return;
   if (value === 'correct') {

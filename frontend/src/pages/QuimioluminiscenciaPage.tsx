@@ -1,437 +1,310 @@
-import { useState, useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { showKidMessage } from '../components/KidFrame';
+import { playCrack, playLevelUp, playMiss, playSparkle, playSuccess, playWhoosh } from '../services/sounds';
+import { S4Clear, S4Confetti, S4Image, S4Levels, S4Page, S4Welcome } from '../components/Semana4Ui';
 
-/**
- * QuimioluminiscenciaPage — Actividad de la Semana 4: Lumi y la Quimioluminiscencia.
- *
- * Administra dos pantallas:
- * 1. Bienvenida y contextualización con Lumi.
- * 2. Laboratorio interactivo con barra luminosa (glow stick) con física de doblado.
- */
 export default function QuimioluminiscenciaPage() {
   const navigate = useNavigate();
-  const [screen, setScreen] = useState<'welcome' | 'lab'>('welcome');
-  const [mounted, setMounted] = useState(false);
+  const [screen, setScreen] = useState<'welcome' | 'play'>('welcome');
+  const [level, setLevel] = useState(1);
+  const [clear, setClear] = useState(false);
+  const [wrong, setWrong] = useState(false);
+  const [picked, setPicked] = useState<string | null>(null);
+  const [bugs, setBugs] = useState<number[]>([]);
 
-  // Glow stick interactive state
   const [isActivated, setIsActivated] = useState(false);
-  const [isScaling, setIsScaling] = useState(false);
-  const [shouldShake, setShouldShake] = useState(false);
-
-  // Bending progress (0 to 100)
   const [topProgress, setTopProgress] = useState(0);
   const [bottomProgress, setBottomProgress] = useState(0);
-
-  // Drag states
   const [isDraggingTop, setIsDraggingTop] = useState(false);
   const [isDraggingBottom, setIsDraggingBottom] = useState(false);
-
   const containerRef = useRef<HTMLDivElement>(null);
 
-  useEffect(() => {
-    setMounted(true);
-  }, []);
+  const resetStick = () => {
+    setIsActivated(false);
+    setTopProgress(0);
+    setBottomProgress(0);
+  };
 
-  // Check for cracking threshold
-  useEffect(() => {
-    if (isActivated) return;
-    if (topProgress >= 80 && bottomProgress >= 80) {
-      setIsActivated(true);
-      setTopProgress(0);
-      setBottomProgress(0);
-      setIsDraggingTop(false);
-      setIsDraggingBottom(false);
-      setShouldShake(true);
-      setIsScaling(true);
-
-      setTimeout(() => {
-        setShouldShake(false);
-      }, 500);
-
-      setTimeout(() => {
-        setIsScaling(false);
-      }, 200);
-    }
-  }, [topProgress, bottomProgress, isActivated]);
+  const resetLevel = () => {
+    setClear(false);
+    setWrong(false);
+    setPicked(null);
+    setBugs([]);
+    resetStick();
+  };
 
   const handleBack = () => {
-    if (screen === 'lab') {
+    if (screen === 'play') {
       setScreen('welcome');
-      // Reset stick state when going back
-      setIsActivated(false);
-      setTopProgress(0);
-      setBottomProgress(0);
-    } else {
+      setLevel(1);
+      resetLevel();
+    } else navigate('/semana/4');
+  };
+
+  const win = () => {
+    playSuccess();
+    playLevelUp();
+    setClear(true);
+  };
+
+  const fail = (id?: string) => {
+    playMiss();
+    setPicked(id ?? null);
+    setWrong(true);
+    window.setTimeout(() => setWrong(false), 450);
+  };
+
+  const next = () => {
+    playWhoosh();
+    if (level >= 5) {
+      showKidMessage('¡Completaste los 5 niveles de luz mágica!');
       navigate('/semana/4');
+      return;
     }
+    setLevel((n) => n + 1);
+    resetLevel();
   };
 
-  const handleFinish = () => {
-    showKidMessage('¡Lección de quimioluminiscencia completada!');
-    navigate('/semana/4');
-  };
+  useEffect(() => {
+    if (isActivated || level !== 1) return;
+    if (topProgress >= 80 && bottomProgress >= 80) {
+      setIsActivated(true);
+      playCrack();
+      playSparkle();
+      win();
+    }
+  }, [topProgress, bottomProgress, isActivated, level]);
 
-  // Pointer drag event handlers for top end
-  const handleTopPointerDown = (e: React.PointerEvent<HTMLDivElement>) => {
-    if (isActivated) return;
-    e.currentTarget.setPointerCapture(e.pointerId);
-    setIsDraggingTop(true);
-  };
-
-  const handleTopPointerMove = (e: React.PointerEvent<HTMLDivElement>) => {
-    if (!isDraggingTop || isActivated) return;
-    const container = containerRef.current;
-    if (!container) return;
-    const rect = container.getBoundingClientRect();
-    const y = e.clientY - rect.top;
-    const centerY = rect.height / 2;
-    // Calculate progress (from 0 at top to 100 at center)
-    const progress = Math.min(100, Math.max(0, (y / centerY) * 100));
-    setTopProgress(progress);
-  };
-
-  const handleTopPointerUp = (e: React.PointerEvent<HTMLDivElement>) => {
-    e.currentTarget.releasePointerCapture(e.pointerId);
-    setIsDraggingTop(false);
-  };
-
-  // Pointer drag event handlers for bottom end
-  const handleBottomPointerDown = (e: React.PointerEvent<HTMLDivElement>) => {
-    if (isActivated) return;
-    e.currentTarget.setPointerCapture(e.pointerId);
-    setIsDraggingBottom(true);
-  };
-
-  const handleBottomPointerMove = (e: React.PointerEvent<HTMLDivElement>) => {
-    if (!isDraggingBottom || isActivated) return;
-    const container = containerRef.current;
-    if (!container) return;
-    const rect = container.getBoundingClientRect();
-    const y = e.clientY - rect.top;
-    const centerY = rect.height / 2;
-    // Calculate progress (from 0 at bottom to 100 at center)
-    const progress = Math.min(100, Math.max(0, ((rect.height - y) / centerY) * 100));
-    setBottomProgress(progress);
-  };
-
-  const handleBottomPointerUp = (e: React.PointerEvent<HTMLDivElement>) => {
-    e.currentTarget.releasePointerCapture(e.pointerId);
-    setIsDraggingBottom(false);
-  };
-
-  // Tap/click fallback to bend the stick step-by-step
   const handleStickClick = () => {
-    if (isActivated) return;
+    if (isActivated || clear) return;
     setTopProgress((prev) => Math.min(100, prev + 34));
     setBottomProgress((prev) => Math.min(100, prev + 34));
   };
 
+  const dragTop = (e: React.PointerEvent<HTMLDivElement>, moving: boolean) => {
+    if (isActivated) return;
+    if (!moving) {
+      e.currentTarget.setPointerCapture(e.pointerId);
+      setIsDraggingTop(true);
+      return;
+    }
+    if (!isDraggingTop || !containerRef.current) return;
+    const rect = containerRef.current.getBoundingClientRect();
+    setTopProgress(Math.min(100, Math.max(0, ((e.clientY - rect.top) / (rect.height / 2)) * 100)));
+  };
+
+  const dragBottom = (e: React.PointerEvent<HTMLDivElement>, moving: boolean) => {
+    if (isActivated) return;
+    if (!moving) {
+      e.currentTarget.setPointerCapture(e.pointerId);
+      setIsDraggingBottom(true);
+      return;
+    }
+    if (!isDraggingBottom || !containerRef.current) return;
+    const rect = containerRef.current.getBoundingClientRect();
+    setBottomProgress(Math.min(100, Math.max(0, ((rect.height - (e.clientY - rect.top)) / (rect.height / 2)) * 100)));
+  };
+
   return (
-    <div className="bg-[#faf9f5] text-[#1a1c1a] antialiased min-h-screen flex flex-col font-body-md relative overflow-x-hidden selection:bg-primary-fixed selection:text-on-primary-fixed">
-      {/* Custom Styles */}
-      <style dangerouslySetInnerHTML={{ __html: `
-        .quicksand-text {
-          font-family: 'Quicksand', sans-serif;
-        }
-        .material-symbols-outlined {
-          font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
-        }
-        .tap-interaction:active {
-          transform: scale(0.98);
-        }
-        .science-texture {
-          background-image: radial-gradient(#334d33 0.5px, transparent 0.5px);
-          background-size: 24px 24px;
-          opacity: 0.05;
-        }
-        .glow-effect {
-          box-shadow: 0 0 30px rgba(176, 207, 172, 0.2);
-          transition: all 0.5s ease-out;
-        }
-        .glow-active {
-          box-shadow: 0 0 80px rgba(194, 225, 190, 0.9);
-          filter: brightness(1.2);
-        }
-        .glowstick-container {
-          perspective: 1000px;
-        }
-        .glowstick-wrapper {
-          transition: transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
-        }
-        .speech-bubble::after {
-          content: '';
-          position: absolute;
-          bottom: -15px;
-          left: 30px;
-          border-width: 15px 15px 0 0;
-          border-style: solid;
-          border-color: #ffffff transparent transparent transparent;
-        }
-        @keyframes float {
-          0% { transform: translateY(0px); }
-          50% { transform: translateY(-10px); }
-          100% { transform: translateY(0px); }
-        }
-        .animate-float {
-          animation: float 4s ease-in-out infinite;
-        }
-        @keyframes shake {
-          0%, 100% { transform: translateX(0); }
-          25% { transform: translateX(-6px) rotate(-1deg); }
-          75% { transform: translateX(6px) rotate(1deg); }
-        }
-        .shake-anim {
-          animation: shake 0.15s ease-in-out 3;
-        }
-      `}} />
-
-      {/* Top Navigation Bar */}
-      <header className="sticky top-0 z-50 w-full bg-[#faf9f5] shadow-sm py-4 px-margin-mobile md:px-margin-desktop flex justify-between items-center">
-        <div className="flex items-center gap-4 w-full">
-          <button
-            onClick={handleBack}
-            className="text-primary hover:scale-95 transition-transform active:scale-90 p-2 rounded-full hover:bg-surface-container-high flex items-center justify-center"
-          >
-            <span className="material-symbols-outlined text-headline-md">arrow_back</span>
-          </button>
-          <h1 className="font-headline-md text-headline-md font-bold text-primary truncate">
-            Semana 4: Propiedades Químicas
-          </h1>
-        </div>
-      </header>
-
+    <S4Page
+      title="Semana 4 · Luz mágica"
+      onBack={handleBack}
+      badge={screen === 'play' ? <span className="rounded-full bg-[#d9f99d] px-3 py-1 text-xs font-black text-[#115e59]">Tubo {level}/5</span> : undefined}
+    >
       {screen === 'welcome' ? (
-        /* Screen 1: Welcome */
-        <main className="flex-grow flex flex-col relative items-center px-margin-mobile md:px-margin-desktop min-h-[calc(100vh-64px)] justify-center">
-          {/* Atmospheric Texture Overlay */}
-          <div className="absolute inset-0 science-texture pointer-events-none"></div>
-          <div className="max-w-2xl w-full relative z-10" style={{ marginTop: '-5vh' }}>
-            {/* Centered Lesson Card */}
-            <div
-              className="bg-surface-container-low p-8 md:p-12 rounded-[32px] border border-outline-variant/30 shadow-xl flex flex-col items-center text-center gap-stack-md transition-all duration-[800ms] ease-[cubic-bezier(0.2,0.8,0.2,1)]"
-              style={{
-                opacity: mounted ? 1 : 0,
-                transform: mounted ? 'translateY(0px)' : 'translateY(20px)',
-              }}
-            >
-              <h2 className="font-headline-lg-mobile md:font-headline-lg text-headline-lg-mobile md:text-headline-lg text-primary leading-tight quicksand-text">
-                Lumi y la quimioluminiscencia
-              </h2>
-              <p className="font-body-lg text-body-lg text-on-surface-variant leading-relaxed max-w-lg">
-                ¡Brilla en la oscuridad! Descubre cómo algunas reacciones químicas pueden crear luz propia sin generar calor a través de la quimioluminiscencia. Prepárate para un experimento luminoso inolvidable.
-              </p>
-              <div className="mt-stack-md">
-                <button
-                  onClick={() => setScreen('lab')}
-                  className="bg-[#4a6549] text-white font-label-lg text-label-lg px-12 py-5 rounded-full shadow-lg hover:bg-primary transition-all tap-interaction flex items-center gap-3"
-                >
-                  Comenzar Lección
-                  <span className="material-symbols-outlined">arrow_forward</span>
-                </button>
-              </div>
-            </div>
-          </div>
-        </main>
+        <S4Welcome
+          badge="Misión 4"
+          title="Lumi y la luz mágica"
+          text="5 niveles: dobla la barra, compara con las luciérnagas y enciende la noche."
+          src="/images/semana4/lumi-personaje.jpg"
+          filename="lumi-personaje.jpg"
+          hint="Lumi brillante"
+          cta="¡Nivel 1!"
+          accent="#5b6fd6"
+          onStart={() => {
+            playWhoosh();
+            setScreen('play');
+            setLevel(1);
+            resetLevel();
+          }}
+        />
       ) : (
-        /* Screen 2: Interactive Lab */
-        <main className="flex-grow w-full px-margin-mobile md:px-margin-desktop py-stack-lg max-w-7xl mx-auto pb-32">
-          <h1 className="font-headline-lg text-headline-lg text-primary mb-stack-lg text-center quicksand-text">
-            Quimioluminiscencia: Luces en la Oscuridad
-          </h1>
+        <div className="relative space-y-5">
+          {clear && <S4Confetti />}
+          <S4Levels current={level} />
 
-          {/* Narrative Section */}
-          <div className="flex flex-col md:flex-row items-end gap-6 mb-stack-lg animate-float">
-            <div className="relative w-32 h-32 shrink-0">
-              <img
-                alt="Lumi character"
-                className="w-full h-full object-contain drop-shadow-xl rounded-2xl"
-                src="/images/semana4/lumi_character.webp"
-              />
-            </div>
-            <div className="speech-bubble relative bg-white rounded-[32px] p-6 shadow-lg border border-surface-container-high max-w-md">
-              <p className="font-headline-md text-[24px] text-primary leading-tight font-bold quicksand-text">
-                ¡Yo soy la magia de brillar sin necesitar luz!
-              </p>
-            </div>
-          </div>
-
-          {/* Interactive Interaction Card */}
-          <section className={`bg-surface rounded-[24px] shadow-sm border border-surface-container overflow-hidden relative min-h-[500px] flex flex-col items-center justify-center p-stack-lg transition-all ${shouldShake ? 'shake-anim' : ''}`}>
-            {/* Interaction Prompt */}
-            <div className="mb-stack-lg text-center relative z-10">
-              <h2 className="font-headline-md text-headline-md text-on-surface mb-2 quicksand-text">
-                Quimioluminiscencia
-              </h2>
-              <p className="font-body-lg text-on-surface-variant flex items-center justify-center gap-2">
-                <span className="material-symbols-outlined text-primary">touch_app</span>
-                Arrastra los extremos al centro o toca la barra para doblarla
-              </p>
-            </div>
-
-            {/* Central Glow Stick Area */}
-            <div className="glowstick-container relative z-10 flex flex-col items-center justify-center min-h-[340px]">
-              <div
-                ref={containerRef}
-                onClick={handleStickClick}
-                className="w-40 h-[280px] flex items-center justify-center relative select-none touch-none"
-              >
-                {/* Glowstick Wrapper (64px wide, 256px tall) */}
-                <div
-                  className={`glowstick-wrapper w-16 h-64 relative ${
-                    isActivated ? 'scale-105' : 'hover:scale-105 active:scale-95'
-                  }`}
-                  style={{
-                    transform: isScaling ? 'scale(1.15)' : undefined,
-                  }}
-                >
-                  {/* Top Half of Glowstick */}
-                  <div
-                    style={{
-                      transform: `rotate(${isActivated ? 0 : -15 * (topProgress / 100)}deg)`,
-                      transformOrigin: 'bottom center',
-                      transition: isDraggingTop ? 'none' : 'transform 0.3s ease-out',
-                    }}
-                    className="w-16 h-32 absolute top-0 left-0 z-10"
-                  >
-                    <div className={`w-full h-full bg-surface-container-highest border-4 border-b-0 border-white/50 rounded-t-full relative overflow-hidden flex flex-col justify-end items-center ${
-                      isActivated ? 'glow-active' : 'glow-effect'
-                    }`}>
-                      {/* Inner Liquid */}
-                      <div
-                        className={`w-full h-full transition-all duration-1000 ${
-                          isActivated ? 'opacity-100 animate-pulse' : 'opacity-20'
-                        } bg-gradient-to-b from-primary-fixed to-primary`}
-                        style={isActivated ? { background: 'radial-gradient(circle, #c2e1be 0%, #334d33 100%)' } : undefined}
-                      />
-                    </div>
-
-                    {/* Top Drag Handle */}
-                    {!isActivated && (
-                      <div
-                        onPointerDown={handleTopPointerDown}
-                        onPointerMove={handleTopPointerMove}
-                        onPointerUp={handleTopPointerUp}
-                        className="absolute -top-6 left-1/2 -translate-x-1/2 w-12 h-12 bg-primary text-white rounded-full flex items-center justify-center shadow-lg cursor-grab active:cursor-grabbing hover:scale-110 active:scale-95 transition-transform z-30 touch-none select-none"
-                      >
-                        <span className="material-symbols-outlined text-2xl select-none pointer-events-none">
-                          keyboard_double_arrow_down
-                        </span>
+          {clear ? (
+            <S4Clear
+              last={level === 5}
+              color="#5b6fd6"
+              title={level === 5 ? '¡La noche brilla!' : `¡Nivel ${level} superado!`}
+              text={
+                level === 1
+                  ? '¡CRAAACK! Luz fría, sin calor.'
+                  : level === 2
+                    ? 'No necesita fuego ni pilas.'
+                    : level === 3
+                      ? 'Las luciérnagas brillan igual.'
+                      : level === 4
+                        ? 'Dos líquidos se mezclan.'
+                        : 'Tres luciérnagas encendidas.'
+              }
+              onNext={next}
+            />
+          ) : (
+            <>
+              {level === 1 && (
+                <section className="s4-pop rounded-[2rem] border-[3px] border-[#3341a3] bg-[#1b1f4a] p-6 text-center text-white">
+                  <h2 className="font-headline-md text-2xl font-extrabold">Dobla la barra</h2>
+                  <p className="text-sm text-[#dce2ff]">Arrastra los extremos o tócala 3 veces</p>
+                  <div className="mt-6 flex justify-center">
+                    <div ref={containerRef} onClick={handleStickClick} className="relative flex h-[280px] w-44 cursor-pointer items-center justify-center select-none touch-none">
+                      <div className="relative h-64 w-16">
+                        <div
+                          className="absolute left-0 top-0 z-10 h-32 w-16"
+                          style={{
+                            transform: `rotate(${isActivated ? 0 : -15 * (topProgress / 100)}deg)`,
+                            transformOrigin: 'bottom center',
+                            transition: isDraggingTop ? 'none' : 'transform 0.3s ease-out',
+                          }}
+                        >
+                          <div className={`h-full w-full overflow-hidden rounded-t-full border-4 border-b-0 border-white/50 ${isActivated ? 's4-glow' : ''}`} style={{ background: isActivated ? 'radial-gradient(circle, #c2e1be 0%, #5b6fd6 100%)' : '#2a3170' }} />
+                          {!isActivated && (
+                            <div
+                              onPointerDown={(e) => dragTop(e, false)}
+                              onPointerMove={(e) => dragTop(e, true)}
+                              onPointerUp={() => setIsDraggingTop(false)}
+                              onPointerCancel={() => setIsDraggingTop(false)}
+                              className="absolute -top-8 left-1/2 z-30 flex h-14 w-14 -translate-x-1/2 items-center justify-center rounded-full bg-[#5b6fd6]"
+                            >
+                              <span className="material-symbols-outlined pointer-events-none">keyboard_double_arrow_down</span>
+                            </div>
+                          )}
+                        </div>
+                        <div
+                          className="absolute left-0 top-32 z-10 h-32 w-16"
+                          style={{
+                            transform: `rotate(${isActivated ? 0 : 15 * (bottomProgress / 100)}deg)`,
+                            transformOrigin: 'top center',
+                            transition: isDraggingBottom ? 'none' : 'transform 0.3s ease-out',
+                          }}
+                        >
+                          <div className={`h-full w-full overflow-hidden rounded-b-full border-4 border-t-0 border-white/50 ${isActivated ? 's4-glow' : ''}`} style={{ background: isActivated ? 'radial-gradient(circle, #c2e1be 0%, #5b6fd6 100%)' : '#2a3170' }} />
+                          {!isActivated && (
+                            <div
+                              onPointerDown={(e) => dragBottom(e, false)}
+                              onPointerMove={(e) => dragBottom(e, true)}
+                              onPointerUp={() => setIsDraggingBottom(false)}
+                              onPointerCancel={() => setIsDraggingBottom(false)}
+                              className="absolute -bottom-8 left-1/2 z-30 flex h-14 w-14 -translate-x-1/2 items-center justify-center rounded-full bg-[#5b6fd6]"
+                            >
+                              <span className="material-symbols-outlined pointer-events-none">keyboard_double_arrow_up</span>
+                            </div>
+                          )}
+                        </div>
                       </div>
-                    )}
-                  </div>
-
-                  {/* Joint Mask to cover the bending gap */}
-                  <div className="absolute top-[120px] left-1/2 -translate-x-1/2 w-[56px] h-4 bg-[#e3e2e6] border-x-4 border-white/50 z-0" />
-
-                  {/* Bottom Half of Glowstick */}
-                  <div
-                    style={{
-                      transform: `rotate(${isActivated ? 0 : 15 * (bottomProgress / 100)}deg)`,
-                      transformOrigin: 'top center',
-                      transition: isDraggingBottom ? 'none' : 'transform 0.3s ease-out',
-                    }}
-                    className="w-16 h-32 absolute top-32 left-0 z-10"
-                  >
-                    <div className={`w-full h-full bg-surface-container-highest border-4 border-t-0 border-white/50 rounded-b-full relative overflow-hidden flex flex-col justify-start items-center ${
-                      isActivated ? 'glow-active' : 'glow-effect'
-                    }`}>
-                      {/* Inner Liquid */}
-                      <div
-                        className={`w-full h-full transition-all duration-1000 ${
-                          isActivated ? 'opacity-100 animate-pulse' : 'opacity-20'
-                        } bg-gradient-to-b from-primary-fixed to-primary`}
-                        style={isActivated ? { background: 'radial-gradient(circle, #c2e1be 0%, #334d33 100%)' } : undefined}
-                      />
                     </div>
+                  </div>
+                </section>
+              )}
 
-                    {/* Bottom Drag Handle */}
-                    {!isActivated && (
-                      <div
-                        onPointerDown={handleBottomPointerDown}
-                        onPointerMove={handleBottomPointerMove}
-                        onPointerUp={handleBottomPointerUp}
-                        className="absolute -bottom-6 left-1/2 -translate-x-1/2 w-12 h-12 bg-primary text-white rounded-full flex items-center justify-center shadow-lg cursor-grab active:cursor-grabbing hover:scale-110 active:scale-95 transition-transform z-30 touch-none select-none"
+              {level === 2 && (
+                <section className="s4-pop space-y-4 text-center">
+                  <h2 className="font-headline-md text-2xl font-extrabold text-[#3341a3]">¿La barra necesita calor o pilas para brillar?</h2>
+                  <div className="grid grid-cols-2 gap-3">
+                    <button type="button" onClick={() => fail('si')} className={`s4-choice rounded-3xl border-[3px] bg-white py-6 text-xl font-black ${wrong && picked === 'si' ? 's4-shake border-[#d64545]' : 'border-[#d8c7aa]'}`}>Sí</button>
+                    <button type="button" onClick={win} className="s4-choice rounded-3xl border-[3px] border-[#d8c7aa] bg-white py-6 text-xl font-black">No</button>
+                  </div>
+                </section>
+              )}
+
+              {level === 3 && (
+                <section className="s4-pop space-y-4 text-center">
+                  <h2 className="font-headline-md text-2xl font-extrabold text-[#3341a3]">¿Quién brilla como Lumi?</h2>
+                  <div className="grid grid-cols-1 gap-3 md:grid-cols-3">
+                    {[
+                      { id: 'luci', label: 'Luciérnaga', ok: true, filename: 'luciernaga.jpg', hint: 'Luciérnaga de noche', src: '/images/semana4/luciernaga.jpg' },
+                      { id: 'vela', label: 'Vela', ok: false, filename: 'vela.jpg', hint: 'Vela con fuego', src: '/images/semana4/vela.jpg' },
+                      { id: 'lampara', label: 'Lámpara', ok: false, filename: 'lampara.jpg', hint: 'Lámpara con cable', src: '/images/semana4/lampara.jpg' },
+                    ].map((item) => (
+                      <button
+                        key={item.id}
+                        type="button"
+                        onClick={() => (item.ok ? win() : fail(item.id))}
+                        className={`s4-choice rounded-3xl border-[3px] bg-white p-3 ${wrong && picked === item.id ? 's4-shake border-[#d64545]' : 'border-[#d8c7aa]'}`}
                       >
-                        <span className="material-symbols-outlined text-2xl select-none pointer-events-none">
-                          keyboard_double_arrow_up
-                        </span>
-                      </div>
-                    )}
+                        <S4Image src={item.src} alt={item.label} filename={item.filename} hint={item.hint} className="h-36 w-full rounded-2xl bg-[#eef0ff]" />
+                        <span className="mt-2 block font-black">{item.label}</span>
+                      </button>
+                    ))}
                   </div>
+                </section>
+              )}
 
-                  {/* Center Magic Symbols / Icon */}
-                  <div className="absolute inset-0 flex items-center justify-center pointer-events-none z-20">
-                    <span
-                      className={`material-symbols-outlined text-white text-4xl opacity-50 ${
-                        isActivated ? 'animate-pulse opacity-85 text-[#ccebc7]' : ''
-                      }`}
-                    >
-                      {isActivated ? 'auto_awesome' : 'vibration'}
-                    </span>
+              {level === 4 && (
+                <section className="s4-pop space-y-4 text-center">
+                  <h2 className="font-headline-md text-2xl font-extrabold text-[#3341a3]">Dentro de la barra, ¿qué pasa?</h2>
+                  <div className="flex flex-col gap-3">
+                    {[
+                      { id: 'mix', label: 'Se mezclan dos líquidos' },
+                      { id: 'pila', label: 'Se enciende una pila' },
+                      { id: 'fuego', label: 'Se prende un fósforo' },
+                    ].map((item) => (
+                      <button
+                        key={item.id}
+                        type="button"
+                        onClick={() => (item.id === 'mix' ? win() : fail(item.id))}
+                        className={`s4-choice rounded-3xl border-[3px] bg-white px-4 py-4 text-lg font-bold ${wrong && picked === item.id ? 's4-shake border-[#d64545]' : 'border-[#d8c7aa]'}`}
+                      >
+                        {item.label}
+                      </button>
+                    ))}
                   </div>
+                </section>
+              )}
 
-                  {/* Particle Sprinkles */}
-                  <div
-                    className={`absolute inset-0 transition-opacity duration-1000 pointer-events-none z-20 ${
-                      isActivated ? 'opacity-100' : 'opacity-0'
-                    }`}
-                  >
-                    <div className="absolute top-1/4 left-1/4 w-2 h-2 bg-white rounded-full animate-ping"></div>
-                    <div className="absolute bottom-1/3 right-1/4 w-3 h-3 bg-white rounded-full animate-pulse delay-150"></div>
-                    <div className="absolute top-1/2 left-1/2 w-1 h-1 bg-white rounded-full animate-ping delay-500"></div>
+              {level === 5 && (
+                <section className="s4-pop rounded-[2rem] border-[3px] border-[#3341a3] bg-[#12143a] p-5 text-center text-white">
+                  <h2 className="font-headline-md text-2xl font-extrabold">Toca las 3 luciérnagas</h2>
+                  <p className="text-sm text-[#dce2ff]">{bugs.length}/3</p>
+                  <div className="relative mx-auto mt-4 h-56 max-w-lg">
+                    {[
+                      { id: 1, top: '10%', left: '8%' },
+                      { id: 2, top: '52%', left: '38%' },
+                      { id: 3, top: '20%', left: '68%' },
+                    ].map((bug) => {
+                      const on = bugs.includes(bug.id);
+                      return (
+                        <button
+                          key={bug.id}
+                          type="button"
+                          onClick={() => {
+                            if (on) return;
+                            playSparkle();
+                            setBugs((prev) => {
+                              if (prev.includes(bug.id)) return prev;
+                              const nextBugs = [...prev, bug.id];
+                              if (nextBugs.length === 3) window.setTimeout(win, 0);
+                              return nextBugs;
+                            });
+                          }}
+                          className={`s4-choice absolute flex h-14 w-14 items-center justify-center rounded-full ${on ? 's4-glow' : 's4-pulse'}`}
+                          style={{ top: bug.top, left: bug.left }}
+                        >
+                          <span className="material-symbols-outlined text-4xl" style={{ color: on ? '#ccebc7' : '#8a90c8', fontVariationSettings: "'FILL' 1" }}>
+                            emoji_nature
+                          </span>
+                        </button>
+                      );
+                    })}
                   </div>
-                </div>
-              </div>
-
-              {/* Success Message */}
-              <div
-                className={`mt-8 transition-all duration-700 text-center ${
-                  isActivated ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
-                }`}
-              >
-                <p className="font-label-lg text-primary bg-primary-fixed px-6 py-2 rounded-full shadow-sm quicksand-text">
-                  ¡CRAAACK! Has liberado la energía química.
-                </p>
-              </div>
-            </div>
-          </section>
-
-          {/* Informative Details (Post-Interaction) */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-gutter mt-stack-lg">
-            <div className="bg-surface-container-low p-6 rounded-xl border-l-4 border-primary">
-              <h3 className="font-label-lg text-primary mb-2 quicksand-text">¿Cómo funciona?</h3>
-              <p className="font-body-md text-on-surface-variant">
-                Al doblar la barra, rompemos una ampolla de vidrio en su interior, permitiendo que dos líquidos se mezclen y produzcan luz.
-              </p>
-            </div>
-            <div className="bg-surface-container-low p-6 rounded-xl border-l-4 border-secondary">
-              <h3 className="font-label-lg text-secondary mb-2 quicksand-text">Dato Curioso</h3>
-              <p className="font-body-md text-on-surface-variant">
-                Este proceso se llama quimioluminiscencia. ¡Las luciérnagas hacen algo muy similar con su propio cuerpo!
-              </p>
-            </div>
-          </div>
-
-          {/* Bottom Navigation Footer */}
-          <footer className="fixed bottom-0 left-0 w-full z-50 bg-surface-container dark:bg-surface-container-high shadow-[0_-4px_15px_rgba(74,101,73,0.08)] rounded-t-xl py-4 px-margin-mobile md:px-margin-desktop flex justify-between items-center">
-            <button
-              onClick={() => setScreen('welcome')}
-              className="flex items-center gap-2 text-primary border-2 border-primary px-6 py-3 rounded-full hover:brightness-110 active:scale-95 transition-all duration-200"
-            >
-              <span className="material-symbols-outlined">arrow_back</span>
-              <span className="font-label-lg text-label-lg quicksand-text">Anterior</span>
-            </button>
-            <button
-              onClick={handleFinish}
-              className="flex items-center gap-2 bg-primary text-on-primary px-6 py-3 rounded-full hover:brightness-110 active:scale-95 transition-all duration-200"
-            >
-              <span className="font-label-lg text-label-lg quicksand-text">Siguiente</span>
-              <span className="material-symbols-outlined">arrow_forward</span>
-            </button>
-          </footer>
-        </main>
+                </section>
+              )}
+            </>
+          )}
+        </div>
       )}
-    </div>
+    </S4Page>
   );
 }
