@@ -72,9 +72,12 @@ export default function Semana5Page() {
 
   return (
     <div
-      className="tc-cursor-magnifier tc-fredoka h-screen flex flex-col overflow-hidden tc-paper-grid"
+      className="tc-cursor-magnifier tc-fredoka h-screen flex flex-col overflow-hidden tc-paper-grid relative"
       style={{ backgroundColor: 'var(--tc-background)', color: 'var(--tc-on-surface)' }}
     >
+      <div className="tc-life-atmosphere" aria-hidden="true">
+        <span className="tc-life-blob" />
+      </div>
       {/* Top Navigation Shell */}
       <header
         className="flex justify-between items-center w-full px-6 py-4 shadow-sm z-30"
@@ -95,7 +98,7 @@ export default function Semana5Page() {
         </div>
       </header>
 
-      <main className="flex-1 relative flex flex-col items-center justify-start p-6 space-y-6 overflow-y-auto">
+      <main className="flex-1 relative flex flex-col items-center justify-start p-6 space-y-6 overflow-y-auto scroll-pb-32 md:scroll-pb-0">
         {/* Field Notebook Header */}
         <div className="relative w-full max-w-4xl text-center">
           <div
@@ -115,7 +118,7 @@ export default function Semana5Page() {
             </span>
           </div>
           <div
-            className="rounded-xl p-4 inline-block mb-4 shadow-sm border-2 rotate-1"
+            className="rounded-3xl p-4 inline-block mb-4 shadow-sm border-2 rotate-1 tc-soft-float"
             style={{
               backgroundColor: 'var(--tc-surface-container)',
               borderColor: 'color-mix(in srgb, var(--tc-primary) 20%, transparent)',
@@ -123,7 +126,7 @@ export default function Semana5Page() {
           >
             <img
               alt="Escritorio de Explorador"
-              className="h-32 md:h-44 w-auto rounded-lg"
+              className="h-32 md:h-44 w-auto rounded-2xl"
               src="/images/hosted/3516f415c28c.webp"
             />
           </div>
@@ -137,10 +140,10 @@ export default function Semana5Page() {
 
         {/* Stamps/Badges Activities Grid */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 w-full max-w-5xl">
-          {activities.map((activity) => (
+          {activities.map((activity, index) => (
             <div
               key={activity.id}
-              className={`group relative flex flex-col items-center p-6 rounded-xl border-4 border-dashed transition-colors tc-clay-button ${activity.hoverBorderClass}`}
+              className={`group relative flex flex-col items-center p-6 rounded-3xl border-4 border-dashed transition-colors tc-clay-button tc-rise-in tc-rise-delay-${index + 1} ${activity.hoverBorderClass}`}
               style={{
                 backgroundColor: 'var(--tc-surface-container-lowest)',
                 borderColor: 'var(--tc-outline-variant)',
@@ -178,9 +181,9 @@ export default function Semana5Page() {
         </div>
 
         {/* Quiz Section */}
-        <div className="w-full max-w-4xl pt-4 pb-24 md:pb-4">
+        <div className="w-full max-w-4xl pt-4 pb-36 md:pb-4">
           <div
-            className="relative rounded-xl p-6 border-2 flex flex-col md:flex-row items-center gap-6 overflow-hidden"
+            className="relative rounded-3xl p-6 border-2 flex flex-col md:flex-row items-center gap-6 overflow-hidden tc-rise-in tc-rise-delay-4"
             style={{
               backgroundColor: 'var(--tc-surface-container-low)',
               borderColor: 'color-mix(in srgb, var(--tc-tertiary) 20%, transparent)',
@@ -188,7 +191,7 @@ export default function Semana5Page() {
           >
             <div className="absolute inset-x-0 bottom-0 h-2 tc-dot-border opacity-20" aria-hidden="true" />
             <div
-              className="flex-shrink-0 bg-white rounded-lg p-3 shadow-md -rotate-2"
+              className="flex-shrink-0 bg-white rounded-2xl p-3 shadow-md -rotate-2 tc-soft-float"
               style={{ backgroundColor: 'var(--tc-surface-container-lowest)' }}
             >
               <img
@@ -213,7 +216,7 @@ export default function Semana5Page() {
             </div>
             <button
               onClick={handleQuizClick}
-              className="whitespace-nowrap px-8 py-4 rounded-xl font-bold tc-clay-button text-lg flex items-center gap-2"
+              className="whitespace-nowrap px-8 py-4 rounded-xl font-bold tc-clay-button text-lg flex items-center gap-2 scroll-mb-28 md:scroll-mb-0"
               style={{
                 backgroundColor: 'var(--tc-tertiary-container)',
                 color: 'var(--tc-on-tertiary-container)',
@@ -228,7 +231,7 @@ export default function Semana5Page() {
 
       {/* Bottom Nav (Mobile) */}
       <nav
-        className="md:hidden fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-4 pb-4 pt-2 rounded-t-xl"
+        className="md:hidden fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-4 pt-2 rounded-t-xl pb-[max(1rem,env(safe-area-inset-bottom))]"
         style={{
           backgroundColor: 'var(--tc-surface)',
           boxShadow: '0 -4px 20px rgba(46, 50, 48, 0.06)',
@@ -246,7 +249,7 @@ export default function Semana5Page() {
           <span className="text-xs font-semibold tc-nunito">Inicio</span>
         </Link>
         <Link
-          to="/home"
+          to="/semana/5"
           className="flex flex-col items-center justify-center opacity-80 hover:text-[var(--tc-primary)] transition-all"
           style={{ color: 'var(--tc-on-surface-variant)' }}
         >
@@ -254,7 +257,7 @@ export default function Semana5Page() {
           <span className="text-xs font-semibold tc-nunito">Lecciones</span>
         </Link>
         <Link
-          to="/home"
+          to="/semana/5/semillas"
           className="flex flex-col items-center justify-center opacity-80 hover:text-[var(--tc-primary)] transition-all"
           style={{ color: 'var(--tc-on-surface-variant)' }}
         >
@@ -262,7 +265,7 @@ export default function Semana5Page() {
           <span className="text-xs font-semibold tc-nunito">Semillas</span>
         </Link>
         <Link
-          to="/home"
+          to="/semana/5/quiz"
           className="flex flex-col items-center justify-center opacity-80 hover:text-[var(--tc-primary)] transition-all"
           style={{ color: 'var(--tc-on-surface-variant)' }}
         >

@@ -4,6 +4,7 @@ import { useResetScrollOn } from '../components/WeekScrollReset';
 import { saveQuizScoreForSemanaNumber } from '../services/api';
 import { playMiss, playSuccess } from '../services/sounds';
 import { showKidMessage } from '../components/KidFrame';
+import '../styles/terra-ciencia.css';
 
 // ── Images ─────────────────────────────────────────────────────────────────
 const IMG_BRAIN    = '/images/semana5/quiz/intro-brain.png';
@@ -71,6 +72,7 @@ export default function Semana5QuizPage() {
   const [screenIdx, setScreenIdx] = useState(0); // 0=intro,1=q1,2=q2,3=q3,4=results
   useResetScrollOn(screenIdx);
   const [score, setScore]         = useState(0);
+  const [saveNote, setSaveNote] = useState<string | null>(null);
   const hasSaved = useRef(false);
 
   useEffect(() => {
@@ -84,9 +86,13 @@ export default function Semana5QuizPage() {
           console.error('Error guardando quiz Semana 5:', err);
           showKidMessage('No se pudo guardar tu nota. Intenta otra vez.', 'soon');
         });
+        setSaveNote(null);
+      } else {
+        setSaveNote('Inicia sesión para guardar tu nota.');
       }
     } else if (screenIdx !== 4) {
       hasSaved.current = false;
+      setSaveNote(null);
     }
   }, [screenIdx, score]);
 
@@ -151,7 +157,7 @@ export default function Semana5QuizPage() {
   };
 
   const getOptClass = (state: OptionState) => {
-    const base = 'w-full text-left p-5 rounded-2xl border-2 text-lg font-bold min-h-[72px] transition-all duration-200 active:scale-[0.96]';
+    const base = 'w-full text-left p-4 sm:p-5 rounded-2xl border-2 text-base sm:text-lg font-bold min-h-[60px] sm:min-h-[72px] transition-all duration-200 active:scale-[0.96]';
     switch (state) {
       case 'correct':   return `${base} bg-primary-container text-on-primary-container border-primary`;
       case 'wrong':     return `${base} bg-error-container text-on-error-container border-error quiz5-shake`;
@@ -166,9 +172,13 @@ export default function Semana5QuizPage() {
   const badgeFilter = score === 30 ? 'none' : score >= 20 ? 'grayscale(0.5) contrast(1.2)' : 'sepia(0.8) hue-rotate(90deg) saturate(1.5)';
   const resultTitle = score === 30 ? '¡Increíble trabajo!' : score >= 20 ? '¡Muy bien hecho!' : '¡Buen intento!';
   const resultSub   = score === 30 ? '¡Eres todo un Experto Naturalista!' : score >= 20 ? '¡Eres un gran Explorador Naturalista!' : 'Eres un Aprendiz Naturalista. ¡Sigue aprendiendo!';
+  const rankLabel = score === 30 ? 'Experto' : score >= 20 ? 'Explorador' : 'Aprendiz';
 
   return (
-    <div className="bg-surface text-on-surface font-body min-h-screen overflow-hidden antialiased" style={{ fontFamily: "'Nunito Sans', sans-serif" }}>
+    <div className="bg-surface text-on-surface font-body min-h-screen overflow-hidden antialiased relative tc-life-surface" style={{ fontFamily: "'Nunito Sans', sans-serif" }}>
+      <div className="tc-life-atmosphere" aria-hidden="true">
+        <span className="tc-life-blob" />
+      </div>
       <style>{`
         @keyframes confetti5Fall {
           0%   { transform: translateY(0) rotate(0deg);   opacity: 1; }
@@ -187,20 +197,20 @@ export default function Semana5QuizPage() {
       `}</style>
 
       {/* ── Header ───────────────────────────────────────────────────────── */}
-      <header className="bg-surface-container-low fixed top-0 left-0 w-full z-[100] flex justify-between items-center px-6 py-4 shadow-sm h-16">
-        <button onClick={() => navigate('/semana/5')} className="flex items-center gap-2 text-on-surface-variant hover:text-primary transition-colors">
+      <header className="bg-surface-container-low fixed top-0 left-0 w-full z-[100] flex justify-between items-center px-3 sm:px-6 py-3 sm:py-4 shadow-sm h-16 gap-2">
+        <button onClick={() => navigate('/semana/5')} className="flex items-center gap-2 text-on-surface-variant hover:text-primary transition-colors shrink-0" aria-label="Volver">
           <span className="material-symbols-outlined">arrow_back</span>
         </button>
-        <h1 className="font-headline text-2xl font-bold text-primary" style={{ fontFamily: 'Literata, serif' }}>
+        <h1 className="font-headline text-sm sm:text-2xl font-bold text-primary text-center leading-tight min-w-0" style={{ fontFamily: 'Literata, serif' }}>
           ¿Estás vivo o no?
         </h1>
         {showProgress ? (
-          <div className="flex items-center gap-1.5 bg-tertiary-container/20 px-3 py-1.5 rounded-full border border-tertiary/20">
+          <div className="flex items-center gap-1.5 bg-tertiary-container/20 px-2 sm:px-3 py-1.5 rounded-full border border-tertiary/20 shrink-0">
             <span className="material-symbols-outlined text-tertiary text-base filled-icon">stars</span>
-            <span className="font-bold text-sm text-on-surface">{score} pts</span>
+            <span className="font-bold text-sm text-on-surface whitespace-nowrap">{score} pts</span>
           </div>
         ) : (
-          <div className="w-16" />
+          <div className="w-10 sm:w-16 shrink-0" />
         )}
       </header>
 
@@ -235,10 +245,10 @@ export default function Semana5QuizPage() {
       <main className="relative h-screen pt-16 w-full overflow-hidden">
 
         {/* STATE 0 — INTRO */}
-        <div className={`absolute inset-0 flex flex-col items-center justify-center p-8 bg-surface overflow-y-auto transition-all duration-400 ${getSlideClass(0)}`}>
-          <div className="max-w-lg w-full text-center space-y-8 mt-8 pb-24">
-            <div className="relative w-56 h-56 mx-auto animate-bounce">
-              <img src={IMG_BRAIN} alt="Cerebro con birrete" className="w-full h-full object-contain" />
+        <div className={`absolute inset-0 flex flex-col items-center justify-center p-8 overflow-y-auto transition-all duration-400 ${getSlideClass(0)}`}>
+          <div className="max-w-lg w-full text-center space-y-8 mt-8 pb-24 tc-rise-in">
+            <div className="relative w-56 h-56 mx-auto tc-soft-float">
+              <img src={IMG_BRAIN} alt="Cerebro con birrete" className="w-full h-full object-contain rounded-3xl" />
             </div>
             <div className="space-y-3">
               <h2 className="text-4xl font-extrabold text-primary tracking-tight" style={{ fontFamily: 'Literata, serif' }}>
@@ -275,16 +285,16 @@ export default function Semana5QuizPage() {
         {QUESTIONS.map((q, qi) => (
           <div
             key={qi}
-            className={`absolute inset-0 flex flex-col p-6 pt-32 bg-surface overflow-y-auto transition-all duration-400 ${getSlideClass(qi + 1)}`}
+            className={`absolute inset-0 flex flex-col p-4 sm:p-6 pt-28 sm:pt-32 overflow-y-auto scroll-pb-10 transition-all duration-400 ${getSlideClass(qi + 1)}`}
           >
-            <div className="max-w-2xl mx-auto w-full space-y-6 pb-24">
-              <div className="bg-surface-container-low rounded-3xl p-4" style={{ boxShadow: '0 4px 20px rgba(46,50,48,0.06)' }}>
-                <img src={q.img} alt={q.imgAlt} className="w-full h-48 md:h-64 object-contain rounded-2xl" />
+            <div className="max-w-2xl mx-auto w-full space-y-4 sm:space-y-6 pb-12 sm:pb-16">
+              <div className="bg-surface-container-low rounded-3xl p-3 sm:p-4 tc-rise-in" style={{ boxShadow: '0 4px 20px rgba(46,50,48,0.06)' }}>
+                <img src={q.img} alt={q.imgAlt} className="w-full h-36 sm:h-48 md:h-64 object-contain rounded-3xl" />
               </div>
-              <h3 className="text-2xl font-bold text-center text-on-surface" style={{ fontFamily: 'Literata, serif' }}>
+              <h3 className="text-lg sm:text-2xl font-bold text-center text-on-surface" style={{ fontFamily: 'Literata, serif' }}>
                 {q.text}
               </h3>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-2.5 sm:gap-3">
                 {q.options.map((opt, oi) => (
                   <button
                     key={oi}
@@ -301,46 +311,57 @@ export default function Semana5QuizPage() {
         ))}
 
         {/* STATE 4 — RESULTS */}
-        <div className={`absolute inset-0 flex flex-col items-center justify-start p-8 pt-20 bg-surface-bright overflow-y-auto transition-all duration-400 ${getSlideClass(4)}`}>
-          <div className="max-w-lg w-full text-center space-y-6 pb-24 mt-4">
-            <div className="relative w-64 h-64 mx-auto">
-              <img src={IMG_BADGE} alt="Medalla" className="w-full h-full object-contain" style={{ filter: badgeFilter }} />
+        <div className={`absolute inset-0 flex flex-col overflow-hidden transition-all duration-400 ${getSlideClass(4)}`}>
+          <div className="flex-1 min-h-0 overflow-y-auto px-4 sm:px-8 pt-20">
+            <div className="max-w-lg w-full text-center space-y-4 mx-auto">
+              <div className="relative w-36 h-36 sm:w-48 sm:h-48 mx-auto">
+                <img src={IMG_BADGE} alt={`Medalla de ${rankLabel} Naturalista`} className="w-full h-full object-contain" style={{ filter: badgeFilter }} />
+                <div
+                  className="absolute inset-x-4 bottom-5 sm:bottom-6 rounded-full py-1 px-2 text-[11px] sm:text-sm font-black uppercase tracking-wide bg-surface text-tertiary"
+                  style={{ boxShadow: '0 2px 8px rgba(46, 50, 48, 0.16)' }}
+                >
+                  {rankLabel} Naturalista
+                </div>
+              </div>
+              <div className="space-y-1">
+                <h2 className="text-2xl sm:text-4xl font-extrabold text-primary" style={{ fontFamily: 'Literata, serif' }}>{resultTitle}</h2>
+                <div className="text-4xl sm:text-5xl font-black text-tertiary">{score} / 30 puntos</div>
+                <p className="text-on-surface-variant text-base sm:text-lg font-medium">{resultSub}</p>
+                {saveNote && (
+                  <p className="text-sm font-semibold text-tertiary">{saveNote}</p>
+                )}
+              </div>
+              <div className="bg-surface-container rounded-2xl p-4 sm:p-6 text-left space-y-3" style={{ boxShadow: '0 4px 20px rgba(46,50,48,0.06)' }}>
+                <h4 className="font-bold text-sm uppercase tracking-widest text-outline">Resumen del Quiz</h4>
+                <ul className="space-y-3">
+                  {QUESTIONS.map((q, qi) => {
+                    const correct = userChoices[qi];
+                    return (
+                      <li key={qi} className="flex items-center gap-3 font-medium">
+                        <span className={`material-symbols-outlined filled-icon ${correct ? 'text-primary' : 'text-error'}`}>
+                          {correct ? 'check_circle' : 'cancel'}
+                        </span>
+                        <span className={correct ? 'text-on-surface' : 'text-on-surface-variant'}>{q.summaryText}</span>
+                      </li>
+                    );
+                  })}
+                </ul>
+              </div>
             </div>
-            <div className="space-y-1">
-              <h2 className="text-4xl font-extrabold text-primary" style={{ fontFamily: 'Literata, serif' }}>{resultTitle}</h2>
-              <div className="text-5xl font-black text-tertiary">{score} / 30 puntos</div>
-              <p className="text-on-surface-variant text-lg font-medium">{resultSub}</p>
-            </div>
-            <div className="bg-surface-container rounded-2xl p-6 text-left space-y-4" style={{ boxShadow: '0 4px 20px rgba(46,50,48,0.06)' }}>
-              <h4 className="font-bold text-sm uppercase tracking-widest text-outline">Resumen del Quiz</h4>
-              <ul className="space-y-3">
-                {QUESTIONS.map((q, qi) => {
-                  const correct = userChoices[qi];
-                  return (
-                    <li key={qi} className="flex items-center gap-3 font-medium">
-                      <span className={`material-symbols-outlined filled-icon ${correct ? 'text-primary' : 'text-error'}`}>
-                        {correct ? 'check_circle' : 'cancel'}
-                      </span>
-                      <span className={correct ? 'text-on-surface' : 'text-on-surface-variant'}>{q.summaryText}</span>
-                    </li>
-                  );
-                })}
-              </ul>
-            </div>
-            <div className="flex flex-col gap-3">
-              <button
-                onClick={restart}
-                className="w-full bg-primary text-white font-bold text-xl py-4 rounded-xl shadow-lg active:scale-95 transition-transform"
-              >
-                ¡Repetir Quiz!
-              </button>
-              <button
-                onClick={() => navigate('/semana/5')}
-                className="w-full bg-surface-container-highest text-on-surface-variant font-bold text-lg py-4 rounded-xl border border-outline-variant/30"
-              >
-                Volver al inicio
-              </button>
-            </div>
+          </div>
+          <div className="shrink-0 px-4 sm:px-8 py-3 sm:py-4 bg-surface-bright max-w-lg w-full mx-auto flex flex-col gap-3">
+            <button
+              onClick={restart}
+              className="w-full bg-primary text-white font-bold text-lg sm:text-xl py-3 sm:py-4 rounded-xl shadow-lg active:scale-95 transition-transform"
+            >
+              ¡Repetir Quiz!
+            </button>
+            <button
+              onClick={() => navigate('/semana/5')}
+              className="w-full bg-surface-container-highest text-on-surface-variant font-bold text-base sm:text-lg py-3 sm:py-4 rounded-xl border border-outline-variant/30"
+            >
+              Volver al inicio
+            </button>
           </div>
         </div>
 

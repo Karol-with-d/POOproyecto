@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" role="img" aria-label="Pelota">
+  <defs>
+    <radialGradient id="ball" cx="38%" cy="32%" r="68%">
+      <stop offset="0%" stop-color="#ffffff"/>
+      <stop offset="70%" stop-color="#f3f4f6"/>
+      <stop offset="100%" stop-color="#d1d5db"/>
+    </radialGradient>
+  </defs>
+  <circle cx="100" cy="100" r="88" fill="url(#ball)" stroke="#2e3230" stroke-width="6"/>
+  <polygon points="100,66 119,80 112,102 88,102 81,80" fill="#2e3230"/>
+  <path
+    d="M100 16 L119 80
+       M100 16 L81 80
+       M119 80 L168 52
+       M81 80 L32 52
+       M112 102 L154 118 L168 52
+       M88 102 L46 118 L32 52
+       M112 102 L128 168 L100 140 L72 168 L88 102
+       M154 118 L128 168
+       M46 118 L72 168"
+    fill="none"
+    stroke="#2e3230"
+    stroke-width="5"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+  />
+  <polygon points="168,52 184,92 154,118 168,86" fill="#2e3230"/>
+  <polygon points="32,52 16,92 46,118 32,86" fill="#2e3230"/>
+  <polygon points="128,168 100,188 72,168 100,158" fill="#2e3230"/>
+</svg>
