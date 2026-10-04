@@ -53,7 +53,8 @@ export default function Semana3Page() {
       />
 
       {/* ===== Main Content ===== */}
-      <main className="flex-1 w-full max-w-[1100px] mx-auto px-5 md:px-10 py-8 pb-[120px] md:pb-10 flex flex-col gap-8 overflow-y-auto">
+      <main className="min-h-0 flex-1 w-full overflow-y-auto overflow-x-hidden">
+        <div className="mx-auto flex w-full max-w-[1100px] flex-col gap-8 px-5 py-8 pb-[120px] md:px-10 md:pb-10">
         <section className="text-center">
           <p className="font-body-lg text-body-lg text-[#434841]">
             Descubre de qué están hechas las cosas y cómo darles una nueva vida.
@@ -111,6 +112,7 @@ export default function Semana3Page() {
             Empezar
           </button>
         </section>
+        </div>
       </main>
 
       <WeekBottomNav theme={WEEK_NAV_THEMES[3]} />
