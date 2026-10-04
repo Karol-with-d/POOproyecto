@@ -1,5 +1,6 @@
 import { useState } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
+import WeekBottomNav, { WeekHubHeader, WEEK_NAV_THEMES } from '../components/WeekBottomNav';
 import { playWhoosh } from '../services/sounds';
 import { S4_STYLES, S4Sky } from '../components/Semana4Ui';
 
@@ -116,29 +117,17 @@ export default function Semana4Page() {
   const navigate = useNavigate();
 
   return (
-    <div className="relative flex min-h-screen flex-col text-[#12263a] antialiased">
+    <div className="relative flex h-screen flex-col overflow-hidden text-[#12263a] antialiased">
       <style>{S4_STYLES}</style>
       <S4Sky />
 
-      <header className="sticky top-0 z-50 flex items-center justify-between gap-3 border-b-4 border-[#99f6e4] bg-[#0f766e] px-4 py-3 text-white md:px-10">
-        <button
-          type="button"
-          onClick={() => navigate('/home')}
-          className="s4-icon-btn flex h-11 w-11 items-center justify-center rounded-2xl bg-[#d9f99d] text-[#115e59] shadow-[3px_3px_0_#115e59]"
-          aria-label="Volver al inicio"
-        >
-          <span className="material-symbols-outlined">arrow_back</span>
-        </button>
-        <div className="min-w-0 flex-1 text-center">
-          <p className="text-[10px] font-black uppercase tracking-[0.28em] text-[#99f6e4]">Laboratorio 04</p>
-          <h1 className="truncate text-lg font-black md:text-xl">Propiedades Químicas</h1>
-        </div>
-        <span className="hidden rounded-full bg-[#d9f99d] px-2 py-1 text-[10px] font-black uppercase text-[#115e59] sm:inline">
-          5 tubos
-        </span>
-      </header>
+      <WeekHubHeader
+        title="Semana 4: Propiedades Químicas"
+        theme={WEEK_NAV_THEMES[4]}
+        onBack={() => navigate('/home')}
+      />
 
-      <main className="relative z-10 mx-auto flex w-full max-w-4xl flex-1 flex-col gap-5 px-4 py-8 pb-44 md:pb-10 scroll-pb-28" style={{ paddingBottom: 'max(11rem, calc(7.5rem + env(safe-area-inset-bottom)))' }}>
+      <main className="relative z-10 mx-auto flex w-full max-w-4xl flex-1 flex-col gap-5 overflow-y-auto px-4 py-8 pb-44 md:pb-10 scroll-pb-28" style={{ paddingBottom: 'max(11rem, calc(7.5rem + env(safe-area-inset-bottom)))' }}>
         <section className="s4-pop text-center">
           <p className="inline-block rounded-full bg-[#0f766e] px-3 py-1 text-[11px] font-black uppercase tracking-[0.22em] text-[#d9f99d]">
             Estación de experimentos
@@ -218,20 +207,7 @@ export default function Semana4Page() {
         </section>
       </main>
 
-      <nav className="fixed bottom-0 left-0 z-50 flex w-full items-center justify-around rounded-t-3xl border-t-4 border-[#99f6e4] bg-[#0f766e] px-3 py-2 text-white md:hidden" style={{ paddingBottom: 'max(0.5rem, env(safe-area-inset-bottom))' }}>
-        <Link to="/home" className="s4-icon-btn flex flex-col items-center px-3 py-1 text-xs font-bold text-[#ccfbf1]">
-          <span className="material-symbols-outlined">map</span>
-          Mapa
-        </Link>
-        <div className="flex flex-col items-center rounded-2xl bg-[#d9f99d] px-4 py-1 text-xs font-black text-[#115e59]">
-          <span className="material-symbols-outlined" style={{ fontVariationSettings: '"FILL" 1' }}>science</span>
-          Lab
-        </div>
-        <Link to="/perfil" className="s4-icon-btn flex flex-col items-center px-3 py-1 text-xs font-bold text-[#ccfbf1]">
-          <span className="material-symbols-outlined">stars</span>
-          Nota
-        </Link>
-      </nav>
+      <WeekBottomNav theme={WEEK_NAV_THEMES[4]} />
     </div>
   );
 }
