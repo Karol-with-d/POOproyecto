@@ -1,4 +1,5 @@
-import { useNavigate, Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
+import WeekBottomNav, { WeekHubHeader, WEEK_NAV_THEMES } from '../components/WeekBottomNav';
 
 /**
  * Semana3Page — Hub de actividades de la Semana 3: Utilidad y Reciclaje.
@@ -44,23 +45,15 @@ export default function Semana3Page() {
   ];
 
   return (
-    <div className="bg-[#f8f5f0] text-[#1b1b1e] antialiased min-h-screen flex flex-col font-body-md">
-      {/* ===== TopAppBar ===== */}
-      <header className="bg-[#fbf8fc] text-[#4a6549] top-0 sticky z-50 flex justify-between items-center w-full px-5 md:px-[120px] py-2 shadow-sm">
-        <button
-          onClick={handleBack}
-          className="text-[#4a6549] hover:scale-105 transition-transform duration-200 active:scale-95 flex items-center justify-center p-2 rounded-full hover:bg-[#e3e2e6]"
-        >
-          <span className="material-symbols-outlined">arrow_back</span>
-        </button>
-        <h1 className="font-headline-md text-headline-md font-bold text-[#4a6549] text-center flex-1 mx-4 truncate">
-          Semana 3: Utilidad y Reciclaje
-        </h1>
-        <div className="w-10 h-10" aria-hidden="true" />
-      </header>
+    <div className="bg-[#f8f5f0] text-[#1b1b1e] antialiased h-screen flex flex-col overflow-hidden font-body-md">
+      <WeekHubHeader
+        title="Semana 3: Utilidad y Reciclaje"
+        theme={WEEK_NAV_THEMES[3]}
+        onBack={handleBack}
+      />
 
       {/* ===== Main Content ===== */}
-      <main className="flex-1 w-full max-w-[1100px] mx-auto px-5 md:px-10 py-8 pb-[120px] md:pb-10 flex flex-col gap-8">
+      <main className="flex-1 w-full max-w-[1100px] mx-auto px-5 md:px-10 py-8 pb-[120px] md:pb-10 flex flex-col gap-8 overflow-y-auto">
         <section className="text-center">
           <p className="font-body-lg text-body-lg text-[#434841]">
             Descubre de qué están hechas las cosas y cómo darles una nueva vida.
@@ -120,41 +113,7 @@ export default function Semana3Page() {
         </section>
       </main>
 
-      {/* ===== BottomNavBar (Mobile Only) ===== */}
-      <nav className="bg-[#fbf8fc] shadow-[0_-4px_20px_rgba(74,101,73,0.1)] fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-4 pb-4 pt-2 md:hidden rounded-t-xl">
-        <Link
-          to="/home"
-          className="flex flex-col items-center justify-center text-[#434841] px-4 py-2 hover:bg-[#8ba888]/50 hover:scale-105 transition-transform duration-200"
-        >
-          <span className="material-symbols-outlined mb-1">map</span>
-          <span className="font-label-md text-label-md text-xs">Mapa</span>
-        </Link>
-
-        <div className="flex flex-col items-center justify-center bg-[#8ba888] text-[#243d24] rounded-full px-6 py-2 scale-90 transition-all duration-200 ease-out">
-          <span className="material-symbols-outlined mb-1" style={{ fontVariationSettings: '"FILL" 1' }}>
-            experiment
-          </span>
-          <span className="font-label-md text-label-md text-xs">Laboratorio</span>
-        </div>
-
-        <Link
-          to="/perfil"
-          className="flex flex-col items-center justify-center text-[#434841] px-4 py-2 hover:bg-[#8ba888]/50 hover:scale-105 transition-transform duration-200"
-        >
-          <span className="material-symbols-outlined mb-1">groups</span>
-          <span className="font-label-md text-label-md text-xs text-center leading-tight">
-            Amigos
-          </span>
-        </Link>
-
-        <Link
-          to="/perfil"
-          className="flex flex-col items-center justify-center text-[#434841] px-4 py-2 hover:bg-[#8ba888]/50 hover:scale-105 transition-transform duration-200"
-        >
-          <span className="material-symbols-outlined mb-1">stars</span>
-          <span className="font-label-md text-label-md text-xs">Progreso</span>
-        </Link>
-      </nav>
+      <WeekBottomNav theme={WEEK_NAV_THEMES[3]} />
     </div>
   );
 }
