@@ -60,11 +60,13 @@
   background-size: 20px 20px, 100px 100px, 100px 100px;
 }
 
-/* Magnifier cursor (kid-friendly) */
-.tc-cursor-magnifier,
-.tc-cursor-magnifier * {
-  cursor: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='40' height='48' viewport='0 0 100 100' style='fill:black;font-size:24px;'><text y='50%'>🔍</text></svg>"),
-    auto;
+/* Magnifier cursor (kid-friendly, desktop pointer only) */
+@media (hover: hover) and (pointer: fine) {
+  .tc-cursor-magnifier,
+  .tc-cursor-magnifier * {
+    cursor: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 24 24'><circle cx='10.5' cy='10.5' r='6.5' fill='none' stroke='%232e3230' stroke-width='2'/><line x1='15.5' y1='15.5' x2='21' y2='21' stroke='%232e3230' stroke-width='2.4' stroke-linecap='round'/></svg>") 8 8,
+      auto;
+  }
 }
 
 /* Clay-button: squishy 3D effect */
@@ -451,4 +453,163 @@
 }
 .tc-scroll-hide::-webkit-scrollbar {
   display: none;
+}
+
+/* ============================================
+ * Semana 5 — Vida: motion + rounded photos
+ * (same palette; no layout/style rewrite)
+ * ============================================ */
+
+.tc-life-atmosphere {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  overflow: hidden;
+  background-color: #e7f4ea;
+  background-image:
+    radial-gradient(circle at 18% 24%, #9ed4a8 0 16%, transparent 38%),
+    radial-gradient(circle at 84% 16%, #6fb37f 0 14%, transparent 36%),
+    radial-gradient(circle at 78% 82%, #4a7c59 0 13%, transparent 34%),
+    radial-gradient(circle at 22% 78%, #d8f0de 0 18%, transparent 40%),
+    radial-gradient(circle at 52% 48%, #c4d4a0 0 12%, transparent 32%);
+  background-size: 160% 160%, 150% 150%, 170% 170%, 140% 140%, 130% 130%;
+  animation: tc-life-wash 7s ease-in-out infinite;
+}
+
+.tc-life-atmosphere::before,
+.tc-life-atmosphere::after,
+.tc-life-atmosphere .tc-life-blob,
+.tc-life-atmosphere .tc-life-blob::after {
+  content: '';
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(22px);
+  will-change: transform, background-color;
+}
+
+.tc-life-atmosphere::before {
+  width: 38vmin;
+  height: 38vmin;
+  top: 8%;
+  left: 6%;
+  background: #8ecf9e;
+  opacity: 0.75;
+  animation: tc-life-drift-a 6.5s ease-in-out infinite;
+}
+
+.tc-life-atmosphere::after {
+  width: 44vmin;
+  height: 44vmin;
+  bottom: 6%;
+  right: 4%;
+  background: #4a7c59;
+  opacity: 0.32;
+  animation: tc-life-drift-b 8s ease-in-out infinite;
+}
+
+.tc-life-atmosphere .tc-life-blob {
+  width: 34vmin;
+  height: 34vmin;
+  top: 40%;
+  left: 40%;
+  background: #c4d4a0;
+  opacity: 0.62;
+  animation: tc-life-drift-c 7s ease-in-out infinite;
+}
+
+.tc-life-atmosphere .tc-life-blob::after {
+  width: 28vmin;
+  height: 28vmin;
+  top: -30%;
+  right: -40%;
+  background: #78a886;
+  opacity: 0.5;
+  animation: tc-life-drift-a 9s ease-in-out infinite reverse;
+}
+
+@keyframes tc-life-wash {
+  0% {
+    background-position: 0% 10%, 100% 0%, 90% 100%, 0% 90%, 40% 40%;
+  }
+  50% {
+    background-position: 80% 70%, 0% 55%, 15% 15%, 70% 5%, 85% 75%;
+  }
+  100% {
+    background-position: 0% 10%, 100% 0%, 90% 100%, 0% 90%, 40% 40%;
+  }
+}
+
+@keyframes tc-life-drift-a {
+  0% { transform: translate(0, 0) scale(1); background-color: #9ed4a8; }
+  33% { transform: translate(30%, 20%) scale(1.28); background-color: #6fb37f; }
+  66% { transform: translate(-14%, 32%) scale(0.8); background-color: #78a886; }
+  100% { transform: translate(0, 0) scale(1); background-color: #9ed4a8; }
+}
+
+@keyframes tc-life-drift-b {
+  0% { transform: translate(0, 0) scale(1); background-color: #4a7c59; }
+  40% { transform: translate(-28%, -22%) scale(1.24); background-color: #78a886; }
+  75% { transform: translate(18%, -30%) scale(0.84); background-color: #a8d5ba; }
+  100% { transform: translate(0, 0) scale(1); background-color: #4a7c59; }
+}
+
+@keyframes tc-life-drift-c {
+  0% { transform: translate(0, 0) scale(1); background-color: #c4d4a0; }
+  45% { transform: translate(-26%, 22%) scale(1.22); background-color: #d8f0de; }
+  80% { transform: translate(24%, -18%) scale(0.84); background-color: #8ecf9e; }
+  100% { transform: translate(0, 0) scale(1); background-color: #c4d4a0; }
+}
+
+.tc-life-surface {
+  background-color: #e8f3e6;
+}
+
+.tc-round-photo {
+  border-radius: 1.5rem;
+  overflow: hidden;
+}
+
+.tc-round-card {
+  border-radius: 1.5rem;
+}
+
+.tc-soft-float {
+  animation: tc-soft-float 5s ease-in-out infinite;
+}
+
+@keyframes tc-soft-float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+
+.tc-rise-in {
+  animation: tc-rise-in 0.55s ease-out both;
+}
+
+.tc-rise-delay-1 { animation-delay: 0.08s; }
+.tc-rise-delay-2 { animation-delay: 0.16s; }
+.tc-rise-delay-3 { animation-delay: 0.24s; }
+.tc-rise-delay-4 { animation-delay: 0.32s; }
+
+@keyframes tc-rise-in {
+  from { opacity: 0; transform: translateY(14px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tc-life-atmosphere,
+  .tc-life-atmosphere::before,
+  .tc-life-atmosphere::after,
+  .tc-life-atmosphere .tc-life-blob,
+  .tc-life-atmosphere .tc-life-blob::after,
+  .tc-soft-float,
+  .tc-rise-in,
+  .tc-float-anim,
+  .tc-float-anim-delayed,
+  .tc-bounce-slow,
+  .tc-bounce-subtle,
+  .tc-pulse-custom {
+    animation: none !important;
+  }
 }

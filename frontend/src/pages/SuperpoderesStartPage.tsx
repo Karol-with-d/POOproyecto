@@ -4,9 +4,9 @@ import '../styles/terra-ciencia.css';
 /**
  * SuperpoderesStartPage — Pantalla de inicio de "Superpoderes" (Semana 5).
  *
- * Diseño "Exploradores de la Naturaleza" sobre las 4 funciones vitales
- * de los seres vivos (nacer, crecer, reproducirse, morir). 4 personajes:
- * Broti (semilla), Veloz (guepardo), Mamá Rana (rana), Comi (oruga).
+ * Diseño "Exploradores de la Naturaleza" sobre las 4 funciones que
+ * se juegan en las cartas: crecer, moverse, tener familia y comer.
+ * Personajes: Broti, Veloz, Mamá Rana y Comi.
  *
  * Tema visual Terra Ciencia: paleta sage/cream, tipografía Literata +
  * Nunito Sans, fondo jungle con hojas, animaciones float, botón bouncy 3D.
@@ -24,6 +24,9 @@ export default function SuperpoderesStartPage() {
       className="min-h-screen flex flex-col relative tc-jungle-bg tc-body"
       style={{ color: 'var(--tc-on-surface)' }}
     >
+      <div className="tc-life-atmosphere" aria-hidden="true">
+        <span className="tc-life-blob" />
+      </div>
       {/* Top Navigation Bar */}
       <header
         className="w-full top-0 sticky z-50 flex justify-between items-center px-[var(--tc-margin-mobile)] md:px-[var(--tc-margin-desktop)] py-[var(--tc-sm)] border-b-4 transition-all duration-300"
@@ -53,31 +56,18 @@ export default function SuperpoderesStartPage() {
             </span>
           </div>
         </div>
-        <div className="flex items-center gap-4">
-          <button
-            onClick={handleBack}
-            aria-label="Volver a Semana 5"
-            className="w-10 h-10 rounded-full flex items-center justify-center hover:translate-y-0.5 hover:translate-x-0.5 transition-transform active:translate-y-1 active:translate-x-1 border-2"
-            style={{
-              backgroundColor: 'var(--tc-surface-container)',
-              borderColor: 'var(--tc-outline)',
-              color: 'var(--tc-on-surface-variant)',
-            }}
-          >
-            <span className="material-symbols-outlined">arrow_back</span>
-          </button>
-          <button
-            aria-label="Favoritos"
-            className="w-10 h-10 rounded-full flex items-center justify-center hover:translate-y-0.5 hover:translate-x-0.5 transition-transform active:translate-y-1 active:translate-x-1 border-2"
-            style={{
-              backgroundColor: 'var(--tc-surface-container)',
-              borderColor: 'var(--tc-outline)',
-              color: 'var(--tc-on-surface-variant)',
-            }}
-          >
-            <span className="material-symbols-outlined">star</span>
-          </button>
-        </div>
+        <button
+          onClick={handleBack}
+          aria-label="Volver a Semana 5"
+          className="w-10 h-10 rounded-full flex items-center justify-center hover:translate-y-0.5 hover:translate-x-0.5 transition-transform active:translate-y-1 active:translate-x-1 border-2"
+          style={{
+            backgroundColor: 'var(--tc-surface-container)',
+            borderColor: 'var(--tc-outline)',
+            color: 'var(--tc-on-surface-variant)',
+          }}
+        >
+          <span className="material-symbols-outlined">arrow_back</span>
+        </button>
       </header>
 
       {/* Main Content Canvas */}
@@ -90,7 +80,7 @@ export default function SuperpoderesStartPage() {
         <div className="w-full max-w-6xl relative z-10 flex flex-col items-center justify-center min-h-[60vh]">
           {/* Central Hero Content */}
           <div
-            className="relative z-20 text-center flex flex-col items-center space-y-8 backdrop-blur-md p-8 md:p-12 rounded-3xl border-2 max-w-3xl mx-auto mt-12 md:mt-0"
+            className="relative z-20 text-center flex flex-col items-center space-y-8 backdrop-blur-md p-8 md:p-12 rounded-3xl border-2 max-w-3xl mx-auto mt-12 md:mt-0 tc-rise-in"
             style={{
               backgroundColor: 'color-mix(in srgb, var(--tc-surface) 80%, transparent)',
               borderColor: 'color-mix(in srgb, var(--tc-outline-variant) 30%, transparent)',
@@ -123,8 +113,8 @@ export default function SuperpoderesStartPage() {
               className="text-lg md:text-xl max-w-xl mx-auto leading-relaxed"
               style={{ color: 'var(--tc-on-surface-variant)' }}
             >
-              Únete a Broti, Veloz, Mamá Rana y Comi en un viaje mágico para aprender cómo
-              nace, crece, se reproduce y muere la vida a nuestro alrededor.
+              Únete a Broti, Veloz, Mamá Rana y Comi para descubrir cómo los seres vivos
+              crecen, se mueven, tienen familia y comen.
             </p>
 
             {/* Bouncy Action Button */}
@@ -171,7 +161,7 @@ export default function SuperpoderesStartPage() {
         }}
       >
         <Link
-          to="/home"
+          to="/semana/5"
           className="flex flex-col items-center justify-center p-2 hover:bg-[var(--tc-primary-container)]/50 active:scale-95 transition-all duration-150 rounded-lg"
           style={{ color: 'var(--tc-on-surface-variant)' }}
         >
@@ -204,7 +194,7 @@ export default function SuperpoderesStartPage() {
           <span className="text-xs mt-1 font-bold">Jugar</span>
         </Link>
         <Link
-          to="/perfil"
+          to="/semana/5/quiz"
           className="flex flex-col items-center justify-center p-2 hover:bg-[var(--tc-primary-container)]/50 active:scale-95 transition-all duration-150 rounded-lg"
           style={{ color: 'var(--tc-on-surface-variant)' }}
         >

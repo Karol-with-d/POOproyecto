@@ -50,6 +50,9 @@ export default function SuperpoderesGamePage() {
       className="min-h-screen flex flex-col tc-dot-pattern-bg relative overflow-x-hidden"
       style={{ color: 'var(--tc-on-surface)' }}
     >
+      <div className="tc-life-atmosphere" aria-hidden="true">
+        <span className="tc-life-blob" />
+      </div>
       {/* TopAppBar */}
       <header
         className="w-full top-0 sticky z-40 border-b-4"
@@ -140,7 +143,7 @@ export default function SuperpoderesGamePage() {
         <div className="z-10 max-w-5xl w-full flex flex-col items-center">
           {/* Instruction banner */}
           <div
-            className="border-4 rounded-2xl p-3 sm:p-4 md:p-6 mb-4 sm:mb-8 md:mb-12 w-full"
+            className="border-4 rounded-3xl p-3 sm:p-4 md:p-6 mb-4 sm:mb-8 md:mb-12 w-full tc-rise-in"
             style={{
               backgroundColor: 'color-mix(in srgb, var(--tc-surface-bright) 90%, transparent)',
               borderColor: 'color-mix(in srgb, var(--tc-primary) 20%, transparent)',
@@ -170,7 +173,7 @@ export default function SuperpoderesGamePage() {
             >
               <div className="tc-flip-card-inner relative w-full h-full">
                 <div
-                  className="tc-flip-card-face tc-flip-card-front rounded-xl border-4 p-4 sm:p-6 flex flex-col items-center justify-center min-h-0 tc-paper-shadow group-hover:-translate-y-1 transition-transform duration-300"
+                  className="tc-flip-card-face tc-flip-card-front rounded-3xl border-4 p-4 sm:p-6 flex flex-col items-center justify-center min-h-0 tc-paper-shadow group-hover:-translate-y-1 transition-transform duration-300"
                   style={{
                     backgroundColor: 'var(--tc-surface-bright)',
                     borderColor: 'var(--tc-primary)',
@@ -203,7 +206,7 @@ export default function SuperpoderesGamePage() {
                   </p>
                 </div>
                 <div
-                  className="tc-flip-card-face tc-flip-card-back rounded-xl border-4 p-4 sm:p-6 flex flex-col items-center justify-center min-h-0 tc-paper-shadow"
+                  className="tc-flip-card-face tc-flip-card-back rounded-3xl border-4 p-4 sm:p-6 flex flex-col items-center justify-center min-h-0 tc-paper-shadow"
                   style={{
                     backgroundColor: 'var(--tc-primary-container)',
                     borderColor: 'var(--tc-primary)',
@@ -216,7 +219,7 @@ export default function SuperpoderesGamePage() {
                     Como tú, las plantas crecen.
                   </h3>
                   <div
-                    className="w-full flex-1 min-h-0 rounded-lg overflow-hidden border-2 p-2"
+                    className="w-full flex-1 min-h-0 rounded-2xl overflow-hidden border-2 p-2"
                     style={{
                       borderColor: 'var(--tc-primary)',
                       backgroundColor: 'var(--tc-surface-bright)',
@@ -244,7 +247,7 @@ export default function SuperpoderesGamePage() {
             >
               <div className="tc-flip-card-inner relative w-full h-full">
                 <div
-                  className="tc-flip-card-face tc-flip-card-front rounded-xl border-4 p-4 sm:p-6 flex flex-col items-center justify-center min-h-0 tc-paper-shadow group-hover:-translate-y-1 transition-transform duration-300"
+                  className="tc-flip-card-face tc-flip-card-front rounded-3xl border-4 p-4 sm:p-6 flex flex-col items-center justify-center min-h-0 tc-paper-shadow group-hover:-translate-y-1 transition-transform duration-300"
                   style={{
                     backgroundColor: 'var(--tc-surface-bright)',
                     borderColor: 'var(--tc-tertiary)',
@@ -277,7 +280,7 @@ export default function SuperpoderesGamePage() {
                   </p>
                 </div>
                 <div
-                  className="tc-flip-card-face tc-flip-card-back rounded-xl border-4 p-4 sm:p-6 flex flex-col items-center justify-center min-h-0 tc-paper-shadow"
+                  className="tc-flip-card-face tc-flip-card-back rounded-3xl border-4 p-4 sm:p-6 flex flex-col items-center justify-center min-h-0 tc-paper-shadow"
                   style={{
                     backgroundColor: 'var(--tc-tertiary-container)',
                     borderColor: 'var(--tc-tertiary)',
@@ -290,7 +293,7 @@ export default function SuperpoderesGamePage() {
                     Los seres vivos se mueven, las rocas no.
                   </h3>
                   <div
-                    className="w-full flex-1 min-h-0 rounded-lg overflow-hidden border-2 p-2"
+                    className="w-full flex-1 min-h-0 rounded-2xl overflow-hidden border-2 p-2"
                     style={{
                       borderColor: 'var(--tc-tertiary)',
                       backgroundColor: 'var(--tc-surface-bright)',
@@ -318,7 +321,7 @@ export default function SuperpoderesGamePage() {
             >
               <div className="tc-flip-card-inner relative w-full h-full">
                 <div
-                  className="tc-flip-card-face tc-flip-card-front rounded-xl border-4 p-4 sm:p-6 flex flex-col items-center justify-center min-h-0 tc-paper-shadow group-hover:-translate-y-1 transition-transform duration-300"
+                  className="tc-flip-card-face tc-flip-card-front rounded-3xl border-4 p-4 sm:p-6 flex flex-col items-center justify-center min-h-0 tc-paper-shadow group-hover:-translate-y-1 transition-transform duration-300"
                   style={{
                     backgroundColor: 'var(--tc-surface-bright)',
                     borderColor: 'var(--tc-secondary)',
@@ -351,7 +354,7 @@ export default function SuperpoderesGamePage() {
                   </p>
                 </div>
                 <div
-                  className="tc-flip-card-face tc-flip-card-back rounded-xl border-4 p-4 sm:p-6 flex flex-col items-center justify-center min-h-0 tc-paper-shadow"
+                  className="tc-flip-card-face tc-flip-card-back rounded-3xl border-4 p-4 sm:p-6 flex flex-col items-center justify-center min-h-0 tc-paper-shadow"
                   style={{
                     backgroundColor: 'var(--tc-secondary-container)',
                     borderColor: 'var(--tc-secondary)',
@@ -364,7 +367,7 @@ export default function SuperpoderesGamePage() {
                     ¡Las ranas tienen renacuajos!
                   </h3>
                   <div
-                    className="w-full flex-1 min-h-0 rounded-lg overflow-hidden border-2 p-2"
+                    className="w-full flex-1 min-h-0 rounded-2xl overflow-hidden border-2 p-2"
                     style={{
                       borderColor: 'var(--tc-secondary)',
                       backgroundColor: 'var(--tc-surface-bright)',
@@ -392,7 +395,7 @@ export default function SuperpoderesGamePage() {
             >
               <div className="tc-flip-card-inner relative w-full h-full">
                 <div
-                  className="tc-flip-card-face tc-flip-card-front rounded-xl border-4 p-4 sm:p-6 flex flex-col items-center justify-center min-h-0 tc-paper-shadow group-hover:-translate-y-1 transition-transform duration-300"
+                  className="tc-flip-card-face tc-flip-card-front rounded-3xl border-4 p-4 sm:p-6 flex flex-col items-center justify-center min-h-0 tc-paper-shadow group-hover:-translate-y-1 transition-transform duration-300"
                   style={{
                     backgroundColor: 'var(--tc-surface-bright)',
                     borderColor: 'var(--tc-primary)',
@@ -425,7 +428,7 @@ export default function SuperpoderesGamePage() {
                   </p>
                 </div>
                 <div
-                  className="tc-flip-card-face tc-flip-card-back rounded-xl border-4 p-4 sm:p-6 flex flex-col items-center justify-center min-h-0 tc-paper-shadow"
+                  className="tc-flip-card-face tc-flip-card-back rounded-3xl border-4 p-4 sm:p-6 flex flex-col items-center justify-center min-h-0 tc-paper-shadow"
                   style={{
                     backgroundColor: 'var(--tc-primary-fixed)',
                     borderColor: 'var(--tc-primary)',
@@ -438,7 +441,7 @@ export default function SuperpoderesGamePage() {
                     Sin comida, no hay energía.
                   </h3>
                   <div
-                    className="w-full flex-1 min-h-0 rounded-lg overflow-hidden border-2 p-2"
+                    className="w-full flex-1 min-h-0 rounded-2xl overflow-hidden border-2 p-2"
                     style={{
                       borderColor: 'var(--tc-primary)',
                       backgroundColor: 'var(--tc-surface-bright)',
@@ -544,7 +547,7 @@ export default function SuperpoderesGamePage() {
               }}
             >
               <div
-                className="w-full rounded-xl sm:rounded-2xl overflow-hidden mb-2 sm:mb-4 relative"
+                className="w-full rounded-3xl overflow-hidden mb-2 sm:mb-4 relative"
                 style={{ backgroundColor: 'var(--tc-surface-container)', aspectRatio: '1 / 1' }}
               >
                 <img
@@ -577,7 +580,7 @@ export default function SuperpoderesGamePage() {
               }}
             >
               <div
-                className="w-full rounded-xl sm:rounded-2xl overflow-hidden mb-2 sm:mb-4 relative"
+                className="w-full rounded-3xl overflow-hidden mb-2 sm:mb-4 relative"
                 style={{ backgroundColor: 'var(--tc-surface-container)', aspectRatio: '1 / 1' }}
               >
                 <img
@@ -610,7 +613,7 @@ export default function SuperpoderesGamePage() {
               }}
             >
               <div
-                className="w-full rounded-xl sm:rounded-2xl overflow-hidden mb-2 sm:mb-4 relative"
+                className="w-full rounded-3xl overflow-hidden mb-2 sm:mb-4 relative"
                 style={{ backgroundColor: 'var(--tc-surface-container)', aspectRatio: '1 / 1' }}
               >
                 <img
@@ -643,7 +646,7 @@ export default function SuperpoderesGamePage() {
               }}
             >
               <div
-                className="w-full rounded-xl sm:rounded-2xl overflow-hidden mb-2 sm:mb-4 relative"
+                className="w-full rounded-3xl overflow-hidden mb-2 sm:mb-4 relative"
                 style={{ backgroundColor: 'var(--tc-surface-container)', aspectRatio: '1 / 1' }}
               >
                 <img

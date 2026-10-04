@@ -81,15 +81,17 @@ export default function SemillasGamePage() {
   const containerRef = useRef<HTMLDivElement>(null);
 
   const goTo = (step: number) => {
-    if (step === 0) {
-      setStampedSteps(new Set());
-      setActiveBubbles(new Set());
-      setEffects({});
-    } else {
-      setActiveBubbles(new Set());
-    }
+    setActiveBubbles(new Set());
     setCurrentStep(step);
     setVisitedSteps((prev) => new Set([...prev, step]));
+  };
+
+  const restartPlanting = () => {
+    setStampedSteps(new Set());
+    setActiveBubbles(new Set());
+    setEffects({});
+    setVisitedSteps(new Set([0]));
+    setCurrentStep(0);
   };
 
   const goNext = () => {
@@ -140,12 +142,15 @@ export default function SemillasGamePage() {
 
   return (
     <div
-      className="bg-background text-on-surface overflow-hidden h-screen flex flex-col"
+      className="bg-background text-on-surface overflow-hidden h-screen flex flex-col relative tc-life-surface"
       style={{ backgroundColor: 'var(--tc-background)' }}
     >
+      <div className="tc-life-atmosphere" aria-hidden="true">
+        <span className="tc-life-blob" />
+      </div>
       {/* Top Navigation Bar (Progress) */}
       <header
-        className="w-full z-50 px-6 py-3 flex flex-col items-center shadow-sm shrink-0"
+        className="w-full z-50 px-6 py-3 flex flex-col items-center shadow-sm shrink-0 relative"
         style={{
           backgroundColor: 'color-mix(in srgb, var(--tc-surface) 80%, transparent)',
           backdropFilter: 'blur(8px)',
@@ -212,7 +217,7 @@ export default function SemillasGamePage() {
       </header>
 
       {/* Main Content Canvas */}
-      <main className="grow overflow-hidden relative">
+      <main className="grow overflow-hidden relative z-10">
         <div
           ref={containerRef}
           className="tc-slide-container"
@@ -220,9 +225,9 @@ export default function SemillasGamePage() {
         >
           {/* Slide 0: Intro */}
           <section className="tc-slide justify-center px-6" id="step-0">
-            <div className="max-w-md text-center space-y-6">
+            <div className="max-w-md text-center space-y-6 tc-rise-in">
               <div
-                className="relative w-64 h-64 mx-auto rounded-full flex items-center justify-center p-4"
+                className="relative w-64 h-64 mx-auto rounded-full flex items-center justify-center p-4 tc-soft-float"
                 style={{ backgroundColor: 'color-mix(in srgb, var(--tc-primary-fixed) 30%, transparent)' }}
               >
                 <img
@@ -283,18 +288,18 @@ export default function SemillasGamePage() {
                 <div className="relative w-full h-1/2 flex items-center justify-center p-4">
                   <img
                     alt={day.badge}
-                    className="max-h-full max-w-full object-contain"
+                    className="max-h-full max-w-[min(100%,calc(100%-4.5rem))] sm:max-w-full object-contain rounded-3xl"
                     style={{ filter: 'drop-shadow(0 25px 25px rgba(0, 0, 0, 0.15))' }}
                     src={day.img}
                   />
 
                   {/* Stamp Button (fixed bottom-right) */}
-                  <div className="absolute bottom-4 right-4 flex flex-col items-center gap-1 z-30">
+                  <div className="absolute bottom-2 right-2 sm:bottom-4 sm:right-4 flex flex-col items-center gap-1 z-30">
                     <button
                       onClick={() => applyStamp(day.id)}
                       disabled={isStamped}
                       aria-label={`Sello del ${day.badge}`}
-                      className={`w-[70px] h-[70px] rounded-full flex items-center justify-center shadow-xl transition-all active:scale-90 border-4 ${
+                      className={`w-12 h-12 sm:w-[70px] sm:h-[70px] rounded-full flex items-center justify-center shadow-xl transition-all active:scale-90 border-4 ${
                         isStamped
                           ? 'border-solid scale-100'
                           : 'border-dashed hover:scale-110'
@@ -306,7 +311,7 @@ export default function SemillasGamePage() {
                       }}
                     >
                       <span
-                        className={`material-symbols-outlined text-4xl ${isStamped ? 'tc-stamp-anim' : ''}`}
+                        className={`material-symbols-outlined text-2xl sm:text-4xl ${isStamped ? 'tc-stamp-anim' : ''}`}
                       >
                         {isStamped ? day.icon : 'help'}
                       </span>
@@ -384,7 +389,7 @@ export default function SemillasGamePage() {
             >
               <img
                 alt="Tarjeta Final"
-                className="w-full max-h-48 object-contain mb-4"
+                className="w-full max-h-48 object-contain mb-4 rounded-3xl"
                 src={FINAL_IMG}
               />
               <h2
@@ -424,7 +429,7 @@ export default function SemillasGamePage() {
               </div>
 
               <button
-                onClick={() => goTo(0)}
+                onClick={restartPlanting}
                 className="font-bold font-tc-label text-xl px-10 py-4 rounded-full shadow-lg hover:brightness-110 active:scale-95 transition-all"
                 style={{
                   backgroundColor: 'var(--tc-tertiary)',
@@ -441,11 +446,12 @@ export default function SemillasGamePage() {
 
       {/* Bottom Navigation Bar - Docked */}
       <footer
-        className="w-full z-50 flex justify-between items-center px-6 py-4 shrink-0"
+        className={`w-full z-50 flex justify-between items-center px-6 py-4 shrink-0 ${
+          showBottomNav ? '' : 'hidden'
+        }`}
         style={{
           backgroundColor: 'color-mix(in srgb, var(--tc-surface) 40%, transparent)',
           backdropFilter: 'blur(8px)',
-          visibility: showBottomNav ? 'visible' : 'hidden',
         }}
       >
         <button
