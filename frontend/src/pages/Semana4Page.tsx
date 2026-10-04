@@ -127,7 +127,11 @@ export default function Semana4Page() {
         onBack={() => navigate('/home')}
       />
 
-      <main className="relative z-10 mx-auto flex w-full max-w-4xl flex-1 flex-col gap-5 overflow-y-auto px-4 py-8 pb-44 md:pb-10 scroll-pb-28" style={{ paddingBottom: 'max(11rem, calc(7.5rem + env(safe-area-inset-bottom)))' }}>
+      <main
+        className="relative z-10 min-h-0 w-full flex-1 overflow-y-auto overflow-x-hidden scroll-pb-28"
+        style={{ paddingBottom: 'max(11rem, calc(7.5rem + env(safe-area-inset-bottom)))' }}
+      >
+        <div className="mx-auto flex w-full max-w-5xl flex-col gap-5 px-4 py-8 pb-44 md:px-10 md:pb-10">
         <section className="s4-pop text-center">
           <p className="inline-block rounded-full bg-[#0f766e] px-3 py-1 text-[11px] font-black uppercase tracking-[0.22em] text-[#d9f99d]">
             Estación de experimentos
@@ -205,6 +209,7 @@ export default function Semana4Page() {
             Encender lab
           </button>
         </section>
+        </div>
       </main>
 
       <WeekBottomNav theme={WEEK_NAV_THEMES[4]} />

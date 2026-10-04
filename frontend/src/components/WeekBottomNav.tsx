@@ -117,13 +117,13 @@ export function WeekDesktopMenu({ theme }: ThemeProps) {
         aria-expanded={open}
         aria-controls={menuId}
         onClick={() => setOpen((value) => !value)}
-        className="flex h-11 w-11 items-center justify-center rounded-full transition-transform active:scale-95"
+        className="flex h-11 w-11 items-center justify-center rounded-full transition-transform active:scale-95 md:h-12 md:w-12"
         style={{
           backgroundColor: theme.headerBtnBg,
           color: theme.headerBtnText,
         }}
       >
-        <span className="material-symbols-outlined text-[24px]" aria-hidden="true">
+        <span className="material-symbols-outlined text-[26px] md:text-[28px]" aria-hidden="true">
           {open ? 'close' : 'menu'}
         </span>
       </button>
@@ -167,24 +167,24 @@ type WeekHubHeaderProps = ThemeProps & {
 export function WeekHubHeader({ title, theme, onBack }: WeekHubHeaderProps) {
   return (
     <header
-      className="z-40 flex w-full shrink-0 items-center justify-between gap-3 px-6 py-4 shadow-sm"
+      className="z-40 flex w-full shrink-0 items-center justify-between gap-3 px-5 py-3 shadow-sm md:px-10 md:py-5"
       style={{
         backgroundColor: theme.headerBg,
         color: theme.headerText,
         borderBottom: `3px solid ${theme.border}`,
       }}
     >
-      <div className="flex min-w-0 items-center gap-3">
+      <div className="flex min-w-0 items-center gap-3 md:gap-4">
         <button
           type="button"
           onClick={onBack}
           aria-label="Volver"
-          className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full transition-transform active:scale-95"
+          className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full transition-transform active:scale-95 md:h-12 md:w-12"
           style={{ backgroundColor: theme.headerBtnBg, color: theme.headerBtnText }}
         >
-          <span className="material-symbols-outlined">arrow_back</span>
+          <span className="material-symbols-outlined text-[26px] md:text-[28px]">arrow_back</span>
         </button>
-        <h1 className="truncate text-xl font-bold md:text-2xl" style={{ color: theme.headerText }}>
+        <h1 className="truncate text-xl font-bold md:text-3xl" style={{ color: theme.headerText }}>
           {title}
         </h1>
       </div>
