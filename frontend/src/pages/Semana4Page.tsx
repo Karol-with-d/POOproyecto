@@ -138,7 +138,7 @@ export default function Semana4Page() {
         </span>
       </header>
 
-      <main className="relative z-10 mx-auto flex w-full max-w-4xl flex-1 flex-col gap-5 px-4 py-8 pb-36 md:pb-10" style={{ paddingBottom: 'max(9rem, calc(6rem + env(safe-area-inset-bottom)))' }}>
+      <main className="relative z-10 mx-auto flex w-full max-w-4xl flex-1 flex-col gap-5 px-4 py-8 pb-44 md:pb-10 scroll-pb-28" style={{ paddingBottom: 'max(11rem, calc(7.5rem + env(safe-area-inset-bottom)))' }}>
         <section className="s4-pop text-center">
           <p className="inline-block rounded-full bg-[#0f766e] px-3 py-1 text-[11px] font-black uppercase tracking-[0.22em] text-[#d9f99d]">
             Estación de experimentos
@@ -158,7 +158,7 @@ export default function Semana4Page() {
                 playWhoosh();
                 navigate(mission.link);
               }}
-              className="s4-tube flex flex-col items-center gap-4 rounded-[1.75rem] border-2 bg-[#ecfeff] p-4 text-left shadow-[8px_8px_0_#99f6e4] sm:flex-row"
+              className="s4-tube flex flex-col items-center gap-4 rounded-[1.75rem] border-2 bg-[#ecfeff] p-4 text-left shadow-[8px_8px_0_#99f6e4] sm:flex-row scroll-mb-24"
               style={{ borderColor: mission.accent, ['--s4-bob' as string]: `${0.25 + index * 0.35}s` }}
             >
               <span className="s4-card-shine" aria-hidden="true" />
@@ -193,7 +193,7 @@ export default function Semana4Page() {
           ))}
         </section>
 
-        <section className="s4-tube flex flex-col items-center justify-between gap-4 rounded-[1.75rem] border-2 border-[#6d28d9] bg-[#2e1065] p-5 text-white shadow-[8px_8px_0_#c4b5fd] md:flex-row" style={{ ['--s4-bob' as string]: '1.8s' }}>
+        <section className="s4-tube flex flex-col items-center justify-between gap-4 rounded-[1.75rem] border-2 border-[#6d28d9] bg-[#2e1065] p-5 text-white shadow-[8px_8px_0_#c4b5fd] md:flex-row scroll-mb-24" style={{ ['--s4-bob' as string]: '1.8s' }}>
           <span className="s4-card-shine" aria-hidden="true" />
           <div className="flex items-center gap-4">
             <div className="s4-frame hidden h-20 w-20 overflow-hidden rounded-2xl border-4 border-white bg-white sm:flex">
