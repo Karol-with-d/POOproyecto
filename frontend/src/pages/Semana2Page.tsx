@@ -1,4 +1,5 @@
 import { useNavigate } from 'react-router-dom';
+import WeekBottomNav, { WeekHubHeader, WEEK_NAV_THEMES } from '../components/WeekBottomNav';
 
 const IMG_COLECCIONANDO = '/images/semana2/card-coleccionando.png';
 const IMG_CAJA = '/images/semana2/card-caja-misteriosa.webp';
@@ -34,7 +35,7 @@ export default function Semana2Page() {
 
   return (
     <div
-      className="font-sans antialiased min-h-screen w-full flex flex-col relative overflow-x-hidden"
+      className="font-sans antialiased h-screen w-full flex flex-col relative overflow-hidden"
       style={{ backgroundColor: '#FAF6F0', color: '#1A1A1A' }}
     >
       {/* Patrón de puntos */}
@@ -75,35 +76,14 @@ export default function Semana2Page() {
         </svg>
       </div>
 
-      {/* Header estilo videojuego */}
-      <header
-        className="w-full min-h-16 py-3 flex items-center justify-between gap-2 px-3 sm:px-6 lg:px-10 z-40 sticky top-0 rounded-b-2xl shadow-md border-b-4 border-[#3D5542]"
-        style={{ backgroundColor: '#A7D4AE' }}
-      >
-        <button
-          onClick={() => navigate('/home')}
-          className="shrink-0 rounded-2xl bg-white/90 p-2.5 shadow-[0_4px_0_#3D5542] hover:scale-105 active:scale-95 active:translate-y-0.5 active:shadow-none transition-all duration-200"
-          style={{ color: '#1A1A1A' }}
-          aria-label="Volver al inicio"
-        >
-          <svg className="h-6 w-6" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24">
-            <path d="M10 19l-7-7m0 0l7-7m-7 7h18" strokeLinecap="round" strokeLinejoin="round" />
-          </svg>
-        </button>
-        <h1
-          className="flex-1 min-w-0 text-center text-base sm:text-xl md:text-2xl font-black tracking-wide leading-tight px-1"
-          style={{
-            color: '#1A1A1A',
-            textShadow: '0 2px 0 rgba(255,255,255,0.75)',
-          }}
-        >
-          Semana 2: Materiales
-        </h1>
-        <div className="w-11 shrink-0" aria-hidden="true" />
-      </header>
+      <WeekHubHeader
+        title="Semana 2: Materiales"
+        theme={WEEK_NAV_THEMES[2]}
+        onBack={() => navigate('/home')}
+      />
 
       {/* Main Content */}
-      <main className="flex-1 w-full px-4 py-6 sm:px-6 sm:py-8 md:px-8 md:py-10 lg:px-12 lg:py-12 xl:px-16 flex flex-col z-10">
+      <main className="flex-1 w-full px-4 py-6 pb-40 sm:px-6 sm:py-8 md:px-8 md:py-10 md:pb-10 lg:px-12 lg:py-12 xl:px-16 flex flex-col z-10 overflow-y-auto">
 
         {/* Section Title */}
         <div className="text-center mb-6 sm:mb-8 md:mb-10 w-full">
@@ -246,6 +226,8 @@ export default function Semana2Page() {
         </section>
 
       </main>
+
+      <WeekBottomNav theme={WEEK_NAV_THEMES[2]} />
     </div>
   );
 }
