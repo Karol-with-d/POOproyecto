@@ -86,7 +86,7 @@ export default function HomePage() {
       </aside>
 
       {/* Main Canvas */}
-      <main className="flex-1 flex flex-col items-center px-margin-mobile md:px-margin-desktop py-lg pb-32 relative overflow-hidden">
+      <main className="flex-1 flex flex-col items-center px-margin-mobile md:px-margin-desktop py-lg pb-40 md:pb-32 relative overflow-y-auto overflow-x-hidden scroll-pb-28">
         {/* Character Guide */}
         <div className="flex flex-col items-center mb-8 z-40">
           <div className="bg-white border-4 border-surface-container-highest rounded-2xl p-4 mb-4 shadow-lg relative max-w-xs">
@@ -178,7 +178,7 @@ export default function HomePage() {
                 <button
                   onClick={() => handleWeekClick(week.number)}
                   disabled={isLocked}
-                  className={`btn-3d flex items-center gap-2 px-6 py-4 rounded-2xl border-4 font-label-lg text-xl z-10 w-full max-w-[280px] justify-center ${
+                  className={`btn-3d flex items-center gap-2 px-6 py-4 rounded-2xl border-4 font-label-lg text-xl z-10 w-full max-w-[280px] justify-center scroll-mb-28 min-h-[52px] ${
                     isLocked
                       ? 'bg-surface-container text-outline-variant border-surface-container-highest cursor-not-allowed'
                       : 'bg-primary text-white border-[#334d33] hover:bg-primary-container hover:text-on-primary-container'
@@ -196,7 +196,7 @@ export default function HomePage() {
           })}
         </div>
       </main>
-      <nav className="md:hidden fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-4 pb-4 pt-2 bg-[#fffdf6] border-t-4 border-[#2f6a38]">
+      <nav className="md:hidden fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-4 pt-2 bg-[#fffdf6] border-t-4 border-[#2f6a38] pb-[max(1rem,env(safe-area-inset-bottom))]">
         <Link to="/home" className="flex flex-col items-center justify-center min-h-[48px] px-4 py-2 font-bold text-[#243d24]">
           <span className="material-symbols-outlined">map</span>
           Mapa

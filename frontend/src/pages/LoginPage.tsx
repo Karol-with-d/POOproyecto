@@ -30,15 +30,22 @@ export default function LoginPage() {
     setError('');
     setIsLoading(true);
 
-    try {
-      const name = nickname.trim() || undefined;
-      const user = await createUser(name || 'Explorador');
+    const name = nickname.trim() || 'Explorador';
 
+    try {
+      const user = await createUser(name);
       localStorage.setItem('plataforma_user', JSON.stringify(user));
       navigate('/home');
-    } catch (err: any) {
-      console.error('Error al crear usuario:', err);
-      setError('Ups, algo salió mal. Intenta de nuevo.');
+    } catch (err: unknown) {
+      // Sin backend: entra igual en modo local para que el niño pueda jugar.
+      console.warn('API no disponible; entrando en modo local.', err);
+      const localUser = {
+        id: `local-${Date.now()}`,
+        randomName: name,
+        createdAt: new Date().toISOString(),
+      };
+      localStorage.setItem('plataforma_user', JSON.stringify(localUser));
+      navigate('/home');
     } finally {
       setIsLoading(false);
     }
@@ -147,9 +154,9 @@ export default function LoginPage() {
                 <button
                   type="button"
                   onClick={() => showKidMessage('Puedes tocar un nombre o entrar sin escribir. Tu aventura se guarda en este aparato.', 'soon')}
-                  className="font-label-md text-label-md text-primary hover:text-on-primary-fixed-variant flex items-center justify-center gap-xs transition-colors"
+                  className="font-label-md text-label-md text-primary hover:text-on-primary-fixed-variant inline-flex items-center justify-center gap-2 min-h-[44px] px-4 py-2 rounded-xl transition-colors"
                 >
-                  <span className="material-symbols-outlined text-[20px]">help</span>
+                  <span className="material-symbols-outlined text-[22px]">help</span>
                   ¿Necesitas ayuda?
                 </button>
               </div>

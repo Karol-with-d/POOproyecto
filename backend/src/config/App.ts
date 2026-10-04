@@ -62,15 +62,31 @@ export class App {
       })
     );
 
-    // CORS configurado para aceptar peticiones del frontend
-    const frontendUrl = process.env.FRONTEND_URL || 'http://localhost:5173';
+    // CORS: FRONTEND_URL + puertos locales comunes de Vite (5173/5174)
+    const configuredOrigin = process.env.FRONTEND_URL || 'http://localhost:5173';
+    const allowedOrigins = Array.from(
+      new Set([
+        configuredOrigin,
+        'http://localhost:5173',
+        'http://localhost:5174',
+        'http://127.0.0.1:5173',
+        'http://127.0.0.1:5174',
+      ])
+    );
     this.app.use(
       cors({
-        origin: frontendUrl,
+        origin: (origin, callback) => {
+          // Sin Origin (curl/Postman/health) o origen permitido
+          if (!origin || allowedOrigins.includes(origin)) {
+            callback(null, true);
+            return;
+          }
+          callback(new Error(`CORS bloqueado para origen: ${origin}`));
+        },
         credentials: false, // sin sesiones ni tokens (restricción global)
       })
     );
-    appLogger.info('CORS habilitado para', { frontendUrl });
+    appLogger.info('CORS habilitado para', { allowedOrigins });
 
     // Parseo de JSON
     this.app.use(express.json());
