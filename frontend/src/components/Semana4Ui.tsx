@@ -21,11 +21,62 @@ export const S4_STYLES = `
   overflow: hidden;
   background-color: #d7f6f4;
   background-image:
+    radial-gradient(circle at 16% 22%, #67e8f9 0 14%, transparent 36%),
+    radial-gradient(circle at 86% 18%, #ccfbf1 0 16%, transparent 38%),
+    radial-gradient(circle at 78% 80%, #0f766e 0 12%, transparent 34%),
+    radial-gradient(circle at 20% 78%, #d9f99d 0 13%, transparent 36%),
+    radial-gradient(circle at 52% 48%, #a5f3fc 0 11%, transparent 32%),
     linear-gradient(180deg, #c5f4f8 0%, #d7f6f4 42%, #e8fff4 100%),
     repeating-linear-gradient(60deg, transparent 0 18px, rgba(15,118,110,0.07) 18px 19px),
     repeating-linear-gradient(-60deg, transparent 0 18px, rgba(109,40,217,0.05) 18px 19px);
-  background-size: 100% 100%, 36px 40px, 36px 40px;
-  animation: s4-grid 22s linear infinite;
+  background-size: 160% 160%, 150% 150%, 170% 170%, 140% 140%, 130% 130%, 100% 100%, 36px 40px, 36px 40px;
+  animation: s4-sky-wash 7s ease-in-out infinite;
+}
+.s4-sky::before,
+.s4-sky::after,
+.s4-sky-blob,
+.s4-sky-blob::after {
+  content: '';
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(22px);
+  will-change: transform, background-color;
+}
+.s4-sky::before {
+  width: 40vmin;
+  height: 40vmin;
+  top: 6%;
+  left: 4%;
+  background: #67e8f9;
+  opacity: 0.55;
+  animation: s4-sky-drift-a 6.5s ease-in-out infinite;
+}
+.s4-sky::after {
+  width: 46vmin;
+  height: 46vmin;
+  bottom: 4%;
+  right: 2%;
+  background: #0f766e;
+  opacity: 0.28;
+  animation: s4-sky-drift-b 8s ease-in-out infinite;
+}
+.s4-sky-blob {
+  width: 34vmin;
+  height: 34vmin;
+  top: 38%;
+  left: 38%;
+  background: #ccfbf1;
+  opacity: 0.58;
+  animation: s4-sky-drift-c 7s ease-in-out infinite;
+}
+.s4-sky-blob::after {
+  width: 26vmin;
+  height: 26vmin;
+  top: -28%;
+  right: -36%;
+  background: #d9f99d;
+  opacity: 0.45;
+  animation: s4-sky-drift-a 9s ease-in-out infinite reverse;
 }
 .s4-hex {
   position: absolute;
@@ -82,7 +133,29 @@ export const S4_STYLES = `
   animation-delay: -2.4s;
 }
 
-@keyframes s4-grid { 0% { background-position: 0 0, 0 0, 0 0; } 100% { background-position: 0 0, 36px 20px, -36px 20px; } }
+@keyframes s4-sky-wash {
+  0% { background-position: 0% 10%, 100% 0%, 90% 100%, 0% 90%, 40% 40%, 0 0, 0 0, 0 0; }
+  50% { background-position: 80% 70%, 0% 55%, 15% 15%, 70% 5%, 85% 75%, 0 0, 18px 10px, -18px 10px; }
+  100% { background-position: 0% 10%, 100% 0%, 90% 100%, 0% 90%, 40% 40%, 0 0, 36px 20px, -36px 20px; }
+}
+@keyframes s4-sky-drift-a {
+  0% { transform: translate(0, 0) scale(1); background-color: #67e8f9; }
+  33% { transform: translate(28%, 18%) scale(1.26); background-color: #ccfbf1; }
+  66% { transform: translate(-12%, 30%) scale(0.82); background-color: #5eead4; }
+  100% { transform: translate(0, 0) scale(1); background-color: #67e8f9; }
+}
+@keyframes s4-sky-drift-b {
+  0% { transform: translate(0, 0) scale(1); background-color: #0f766e; }
+  40% { transform: translate(-26%, -20%) scale(1.22); background-color: #14b8a6; }
+  75% { transform: translate(16%, -26%) scale(0.86); background-color: #99f6e4; }
+  100% { transform: translate(0, 0) scale(1); background-color: #0f766e; }
+}
+@keyframes s4-sky-drift-c {
+  0% { transform: translate(0, 0) scale(1); background-color: #ccfbf1; }
+  45% { transform: translate(-24%, 20%) scale(1.2); background-color: #d9f99d; }
+  80% { transform: translate(22%, -16%) scale(0.84); background-color: #a5f3fc; }
+  100% { transform: translate(0, 0) scale(1); background-color: #ccfbf1; }
+}
 @keyframes s4-drift { 0%,100% { transform: translate(0,0) rotate(0deg); } 50% { transform: translate(18px,-22px) rotate(12deg); } }
 @keyframes s4-spin-hex { 0% { transform: rotate(0deg) translateY(0); } 50% { transform: rotate(180deg) translateY(-12px); } 100% { transform: rotate(360deg) translateY(0); } }
 @keyframes s4-pop { from { opacity: 0; transform: translateY(16px) rotate(-1deg); } to { opacity: 1; transform: translateY(0) rotate(0); } }
@@ -260,7 +333,7 @@ export const S4_STYLES = `
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .s4-sky, .s4-hex, .s4-lab-bubble, .s4-spark, .s4-drop, .s4-wave, .s4-pop, .s4-float, .s4-wiggle, .s4-glow, .s4-star, .s4-pulse, .s4-ring, .s4-tube, .s4-card-live, .s4-card-shine::after, .s4-pip { animation: none !important; }
+  .s4-sky, .s4-sky::before, .s4-sky::after, .s4-sky-blob, .s4-sky-blob::after, .s4-hex, .s4-lab-bubble, .s4-spark, .s4-drop, .s4-wave, .s4-pop, .s4-float, .s4-wiggle, .s4-glow, .s4-star, .s4-pulse, .s4-ring, .s4-tube, .s4-card-live, .s4-card-shine::after, .s4-pip { animation: none !important; }
   .s4-choice:hover, .s4-tube:hover, .s4-btn-lab:hover:not(:disabled), .s4-icon-btn:hover { transform: none; }
   .s4-frame:hover .s4-frame-img.is-on { transform: none; }
 }
@@ -281,6 +354,7 @@ const S4_BUBBLES = [
 export function S4Sky() {
   return (
     <div className="s4-sky" aria-hidden="true">
+      <span className="s4-sky-blob" />
       <span className="s4-wave" />
       <span className="s4-wave s4-wave-2" />
       <span className="s4-hex s4-hex-1" />
