@@ -549,7 +549,10 @@ const handleLaunch = useCallback(() => {
     setTimeout(() => { 
       setObjectLaunching(false); 
       setObjectBob(true); 
-      setGameState('REVEALING'); 
+      // Tras revelar, habilita los contenedores al tiro (sin un toque extra).
+      setGameState('SELECTING');
+      setShowBins(true);
+      setInstruction('object');
     }, 700);
    }, 350);
   },
@@ -798,7 +801,7 @@ const createCelebrationStars = useCallback(
       return ( 
       <>
        <SearchIcon />
-        <span> ¡Objeto en la bandeja! ¿A qué contenedor pertenece? 
+        <span> ¡Ya salió el residuo! Toca el contenedor correcto abajo. 
        </span> 
       </>
     );
@@ -806,7 +809,7 @@ const createCelebrationStars = useCallback(
    
    return ( 
      <>
-        <span> ¡Un residuo misterioso está listo para ser descubierto! Presiona el botón. 
+        <span> ¡Un residuo misterioso está listo! Toca «¡EXPULSAR OBJETO!» y luego elige su contenedor. 
         </span>
      </>
    );
