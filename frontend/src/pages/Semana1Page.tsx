@@ -252,7 +252,8 @@ export default function Semana1Page() {
       <WeekHubHeader title="Semana 1: Medidas" theme={WEEK_NAV_THEMES[1]} onBack={handleBack} />
 
       {/* ===== Main Content ===== */}
-      <main className="relative z-10 flex-1 w-full max-w-[920px] mx-auto px-5 py-8 pb-[120px] md:pb-10 flex flex-col gap-8 overflow-y-auto">
+      <main className="relative z-10 min-h-0 flex-1 w-full overflow-y-auto overflow-x-hidden">
+        <div className="mx-auto flex w-full max-w-[1100px] flex-col gap-8 px-5 py-8 pb-[120px] md:px-10 md:pb-10">
         {/* Hero */}
         <section className="text-center">
           <p className="font-headline-md text-2xl font-bold text-[#2f4a2f]">
@@ -336,6 +337,7 @@ export default function Semana1Page() {
             </article>
           ))}
         </section>
+        </div>
       </main>
 
       <WeekBottomNav theme={WEEK_NAV_THEMES[1]} />
