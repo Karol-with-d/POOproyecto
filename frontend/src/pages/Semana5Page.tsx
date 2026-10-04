@@ -1,5 +1,6 @@
-import { useNavigate, Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { showKidMessage } from '../components/KidFrame';
+import WeekBottomNav, { WeekHubHeader, WEEK_NAV_THEMES } from '../components/WeekBottomNav';
 import '../styles/terra-ciencia.css';
 
 /**
@@ -78,45 +79,11 @@ export default function Semana5Page() {
       <div className="tc-life-atmosphere" aria-hidden="true">
         <span className="tc-life-blob" />
       </div>
-      {/* Top Navigation Shell */}
-      <header
-        className="flex justify-between items-center w-full px-6 py-4 shadow-sm z-30"
-        style={{ backgroundColor: 'var(--tc-surface-container-low)' }}
-      >
-        <div className="flex items-center gap-3">
-          <button
-            onClick={handleHome}
-            aria-label="Volver"
-            className="w-10 h-10 flex items-center justify-center rounded-full transition-transform active:scale-95"
-            style={{ color: 'var(--tc-primary)' }}
-          >
-            <span className="material-symbols-outlined">arrow_back</span>
-          </button>
-          <h1 className="text-2xl font-bold" style={{ color: 'var(--tc-primary)' }}>
-            Semana 5: Vida
-          </h1>
-        </div>
-      </header>
+      <WeekHubHeader title="Semana 5: Vida" theme={WEEK_NAV_THEMES[5]} onBack={handleHome} />
 
       <main className="flex-1 relative flex flex-col items-center justify-start p-6 space-y-6 overflow-y-auto scroll-pb-32 md:scroll-pb-0">
         {/* Field Notebook Header */}
         <div className="relative w-full max-w-4xl text-center">
-          <div
-            className="absolute -top-12 -left-8 pointer-events-none opacity-40 hidden md:block"
-            aria-hidden="true"
-          >
-            <span className="material-symbols-outlined text-8xl" style={{ color: 'var(--tc-primary)' }}>
-              search
-            </span>
-          </div>
-          <div
-            className="absolute -top-4 -right-12 pointer-events-none rotate-12 opacity-30 hidden md:block"
-            aria-hidden="true"
-          >
-            <span className="material-symbols-outlined text-7xl" style={{ color: 'var(--tc-tertiary)' }}>
-              potted_plant
-            </span>
-          </div>
           <div
             className="rounded-3xl p-4 inline-block mb-4 shadow-sm border-2 rotate-1 tc-soft-float"
             style={{
@@ -229,74 +196,7 @@ export default function Semana5Page() {
         </div>
       </main>
 
-      {/* Bottom Nav (Mobile) */}
-      <nav
-        className="md:hidden fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-4 pt-2 rounded-t-xl pb-[max(1rem,env(safe-area-inset-bottom))]"
-        style={{
-          backgroundColor: 'var(--tc-surface)',
-          boxShadow: '0 -4px 20px rgba(46, 50, 48, 0.06)',
-        }}
-      >
-        <Link
-          to="/home"
-          className="flex flex-col items-center justify-center rounded-full px-5 py-1 scale-90 duration-200"
-          style={{
-            backgroundColor: 'var(--tc-primary-container)',
-            color: 'var(--tc-on-primary-container)',
-          }}
-        >
-          <span className="material-symbols-outlined">home</span>
-          <span className="text-xs font-semibold tc-nunito">Inicio</span>
-        </Link>
-        <Link
-          to="/semana/5"
-          className="flex flex-col items-center justify-center opacity-80 hover:text-[var(--tc-primary)] transition-all"
-          style={{ color: 'var(--tc-on-surface-variant)' }}
-        >
-          <span className="material-symbols-outlined">menu_book</span>
-          <span className="text-xs font-semibold tc-nunito">Lecciones</span>
-        </Link>
-        <Link
-          to="/semana/5/semillas"
-          className="flex flex-col items-center justify-center opacity-80 hover:text-[var(--tc-primary)] transition-all"
-          style={{ color: 'var(--tc-on-surface-variant)' }}
-        >
-          <span className="material-symbols-outlined">local_florist</span>
-          <span className="text-xs font-semibold tc-nunito">Semillas</span>
-        </Link>
-        <Link
-          to="/semana/5/quiz"
-          className="flex flex-col items-center justify-center opacity-80 hover:text-[var(--tc-primary)] transition-all"
-          style={{ color: 'var(--tc-on-surface-variant)' }}
-        >
-          <span className="material-symbols-outlined">emoji_events</span>
-          <span className="text-xs font-semibold tc-nunito">Premios</span>
-        </Link>
-      </nav>
-
-      {/* Floating Decor */}
-      <div
-        className="fixed bottom-12 right-8 pointer-events-none opacity-20 hidden md:block"
-        aria-hidden="true"
-      >
-        <span
-          className="material-symbols-outlined text-9xl transform -rotate-12"
-          style={{ color: 'var(--tc-primary)' }}
-        >
-          bug_report
-        </span>
-      </div>
-      <div
-        className="fixed top-32 left-10 pointer-events-none opacity-10 hidden md:block"
-        aria-hidden="true"
-      >
-        <span
-          className="material-symbols-outlined text-[10rem]"
-          style={{ color: 'var(--tc-tertiary)' }}
-        >
-          grass
-        </span>
-      </div>
+      <WeekBottomNav theme={WEEK_NAV_THEMES[5]} />
     </div>
   );
 }
