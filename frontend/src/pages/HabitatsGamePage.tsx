@@ -1,8 +1,8 @@
-import { useState, useEffect, useRef, type DragEvent, type ReactNode } from 'react';
+import { useState, useEffect, useRef, type DragEvent, type PointerEvent as ReactPointerEvent, type ReactNode } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useResetScrollOn } from '../components/WeekScrollReset';
 import '../styles/bosque-vivo.css';
-import { playLevelUp, playMiss, playSuccess } from '../services/sounds';
+import { playClick, playLevelUp, playMiss, playSuccess } from '../services/sounds';
 
 type Habitat = 'ocean' | 'forest' | 'desert' | 'field';
 type Screen = 'start' | 'game' | 'results';
@@ -96,7 +96,17 @@ function ConfettiCanvas() {
   return <canvas ref={ref} className="pointer-events-none fixed inset-0 z-10 h-full w-full" />;
 }
 
-function AnimalCard({ animal, onDragStart }: { animal: AnimalData; onDragStart: (id: string) => void }) {
+function AnimalCard({
+  animal,
+  onDragStart,
+  onFingerDown,
+  dimmed,
+}: {
+  animal: AnimalData;
+  onDragStart: (id: string) => void;
+  onFingerDown: (animalId: string, event: ReactPointerEvent<HTMLDivElement>) => void;
+  dimmed: boolean;
+}) {
   const spriteUrl = animal.sprite === 1 ? ANIMAL_SPRITE1 : ANIMAL_SPRITE2;
   const bgSize = animal.sprite === 1 ? '400% 400%' : '300% 300%';
   const innerSize = animal.sprite === 1 ? '48px' : '64px';
@@ -108,7 +118,9 @@ function AnimalCard({ animal, onDragStart }: { animal: AnimalData; onDragStart: 
         e.dataTransfer.setData('animalId', animal.id);
         onDragStart(animal.id);
       }}
-      className="bv-animal-card flex h-32 w-28 shrink-0 select-none flex-col items-center p-2 md:h-40 md:w-36"
+      onPointerDown={(e) => onFingerDown(animal.id, e)}
+      className={`bv-animal-card flex h-32 w-28 shrink-0 select-none flex-col items-center p-2 md:h-40 md:w-36 ${dimmed ? 'opacity-40' : ''}`}
+      style={{ touchAction: 'pan-x' }}
     >
       <div
         className="mb-2 flex w-full flex-1 items-center justify-center rounded-lg"
@@ -161,6 +173,16 @@ export default function HabitatsGamePage() {
   const [draggingId, setDraggingId] = useState<string | null>(null);
   const [dragOverHabitat, setDragOverHabitat] = useState<string | null>(null);
   const [flashHabitat, setFlashHabitat] = useState<{ id: string; type: 'correct' | 'wrong' } | null>(null);
+  const [ghost, setGhost] = useState<{ animalId: string; x: number; y: number } | null>(null);
+  const placedRef = useRef(placedAnimals);
+  placedRef.current = placedAnimals;
+  const pointerRef = useRef<{
+    id: string;
+    pointerId: number;
+    startX: number;
+    startY: number;
+    active: boolean;
+  } | null>(null);
 
   const remaining = ANIMALS.filter((a) => !placedAnimals.has(a.id));
 
@@ -170,16 +192,13 @@ export default function HabitatsGamePage() {
     }
   }, [placedAnimals, screen]);
 
-  function handleDrop(e: DragEvent, habitatId: string) {
-    e.preventDefault();
+  function placeAnimal(animalId: string, habitatId: string) {
     setDragOverHabitat(null);
-    const animalId = e.dataTransfer.getData('animalId') || draggingId || '';
-    if (!animalId) return;
     const animal = ANIMALS.find((a) => a.id === animalId);
-    if (!animal || placedAnimals.has(animalId)) return;
+    if (!animal || placedRef.current.has(animalId)) return;
 
     if (animal.correctHabitat === habitatId) {
-      if (placedAnimals.size + 1 === ANIMALS.length) playLevelUp();
+      if (placedRef.current.size + 1 === ANIMALS.length) playLevelUp();
       else playSuccess();
       setPlacedAnimals((prev) => new Set([...prev, animalId]));
       setFlashHabitat({ id: habitatId, type: 'correct' });
@@ -190,6 +209,76 @@ export default function HabitatsGamePage() {
       setTimeout(() => setFlashHabitat(null), 500);
     }
     setDraggingId(null);
+  }
+
+  const placeAnimalRef = useRef(placeAnimal);
+  placeAnimalRef.current = placeAnimal;
+
+  useEffect(() => {
+    function habitatAt(x: number, y: number) {
+      const under = document.elementFromPoint(x, y);
+      return under?.closest('[data-habitat]')?.getAttribute('data-habitat') ?? null;
+    }
+
+    function onMove(event: PointerEvent) {
+      const drag = pointerRef.current;
+      if (!drag || event.pointerId !== drag.pointerId) return;
+      const dx = event.clientX - drag.startX;
+      const dy = event.clientY - drag.startY;
+      if (!drag.active) {
+        if (Math.hypot(dx, dy) < 14) return;
+        if (Math.abs(dx) > Math.abs(dy)) {
+          pointerRef.current = null;
+          return;
+        }
+        drag.active = true;
+        setDraggingId(drag.id);
+      }
+      event.preventDefault();
+      setGhost({ animalId: drag.id, x: event.clientX, y: event.clientY });
+      setDragOverHabitat(habitatAt(event.clientX, event.clientY));
+    }
+
+    function onUp(event: PointerEvent) {
+      const drag = pointerRef.current;
+      if (!drag || event.pointerId !== drag.pointerId) return;
+      const wasActive = drag.active;
+      const animalId = drag.id;
+      pointerRef.current = null;
+      setGhost(null);
+      setDraggingId(null);
+      setDragOverHabitat(null);
+      if (!wasActive) return;
+      const habitatId = habitatAt(event.clientX, event.clientY);
+      if (habitatId) placeAnimalRef.current(animalId, habitatId);
+    }
+
+    window.addEventListener('pointermove', onMove, { passive: false });
+    window.addEventListener('pointerup', onUp);
+    window.addEventListener('pointercancel', onUp);
+    return () => {
+      window.removeEventListener('pointermove', onMove);
+      window.removeEventListener('pointerup', onUp);
+      window.removeEventListener('pointercancel', onUp);
+    };
+  }, []);
+
+  function handleDrop(e: DragEvent, habitatId: string) {
+    e.preventDefault();
+    const animalId = e.dataTransfer.getData('animalId') || draggingId || '';
+    if (!animalId) return;
+    placeAnimal(animalId, habitatId);
+  }
+
+  function handleFingerDown(animalId: string, event: ReactPointerEvent<HTMLDivElement>) {
+    if (event.pointerType === 'mouse') return;
+    pointerRef.current = {
+      id: animalId,
+      pointerId: event.pointerId,
+      startX: event.clientX,
+      startY: event.clientY,
+      active: false,
+    };
   }
 
   function zoneClass(habitatId: string) {
@@ -255,7 +344,7 @@ export default function HabitatsGamePage() {
             {ANIMALS.length} animales por clasificar
           </p>
 
-          <button type="button" onClick={() => setScreen('game')} className="bv-btn bv-btn-leaf">
+          <button type="button" onClick={() => { playClick(); setScreen('game'); }} className="bv-btn bv-btn-leaf">
             <span className="material-symbols-outlined" style={{ fontVariationSettings: "'FILL' 1" }}>play_circle</span>
             ¡Empezar Aventura!
           </button>
@@ -437,13 +526,49 @@ export default function HabitatsGamePage() {
             ) : (
               <div className="flex min-w-max gap-4 pb-3">
                 {remaining.map((animal) => (
-                  <AnimalCard key={animal.id} animal={animal} onDragStart={setDraggingId} />
+                  <AnimalCard
+                    key={animal.id}
+                    animal={animal}
+                    onDragStart={setDraggingId}
+                    onFingerDown={handleFingerDown}
+                    dimmed={ghost?.animalId === animal.id}
+                  />
                 ))}
               </div>
             )}
           </div>
         </div>
       </main>
+      {ghost && <AnimalGhost animalId={ghost.animalId} x={ghost.x} y={ghost.y} />}
     </BvShell>
+  );
+}
+
+function AnimalGhost({ animalId, x, y }: { animalId: string; x: number; y: number }) {
+  const animal = ANIMALS.find((item) => item.id === animalId);
+  if (!animal) return null;
+  const spriteUrl = animal.sprite === 1 ? ANIMAL_SPRITE1 : ANIMAL_SPRITE2;
+  return (
+    <div
+      className="pointer-events-none fixed z-[80] flex h-24 w-20 flex-col items-center justify-center rounded-2xl border-2 border-white shadow-lg"
+      style={{
+        left: x,
+        top: y,
+        transform: 'translate(-50%, -70%)',
+        background: animal.cardBg,
+      }}
+    >
+      <div
+        style={{
+          width: animal.sprite === 1 ? 48 : 56,
+          height: animal.sprite === 1 ? 48 : 56,
+          backgroundImage: `url(${spriteUrl})`,
+          backgroundSize: animal.sprite === 1 ? '400% 400%' : '300% 300%',
+          backgroundPosition: animal.bgPosition,
+          backgroundRepeat: 'no-repeat',
+        }}
+      />
+      <span className="bv-baloo text-xs font-bold">{animal.label}</span>
+    </div>
   );
 }
