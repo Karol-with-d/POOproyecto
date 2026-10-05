@@ -13,6 +13,11 @@ body * {
 }
 
 @layer base {
+  html {
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+  }
+
   body {
     font-family: 'Lexend', sans-serif;
     background-color: #fbf8fc;
@@ -785,8 +790,7 @@ a:hover span,
 .habitats-wrong,
 .error-shake,
 .tc-shake,
-.animate-shake,
-.bg-error-container {
+.animate-shake {
   outline: 4px solid #c62828;
   box-shadow: 0 0 0 4px #ffcdd2;
   background-color: #ffebee;
@@ -810,11 +814,22 @@ a:hover span,
   height: 100%;
   max-height: 100%;
   min-height: 0 !important;
-  overflow: auto;
+  overflow: hidden;
+  overscroll-behavior: auto;
   display: flex !important;
   flex-direction: column !important;
   -webkit-overflow-scrolling: touch;
+}
+
+.game-screen > *:not(:has(main)) {
+  overflow: auto;
+  -webkit-overflow-scrolling: touch;
   overscroll-behavior-y: contain;
+}
+
+.game-screen > .busqueda-root {
+  overflow: hidden;
+  overscroll-behavior: auto;
 }
 
 .game-screen .h-screen,
