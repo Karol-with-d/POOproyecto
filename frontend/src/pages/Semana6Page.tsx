@@ -1,6 +1,7 @@
 import { useNavigate } from 'react-router-dom';
 import WeekBottomNav, { WeekHubHeader, WEEK_NAV_THEMES } from '../components/WeekBottomNav';
 import '../styles/bosque-vivo.css';
+import { playClick } from '../services/sounds';
 
 const IMG_HERO = '/images/semana6/hero-personajes.webp';
 const IMG_SIMILITUDES = '/images/semana6/card-similitudes.webp';
