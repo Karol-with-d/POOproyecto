@@ -71,10 +71,11 @@ export default function ProfilePage() {
 
   const completedQuizCount = progress.filter((p) => p.score !== null).length;
 
-  const recordedScores = progress.filter((p) => p.score !== null).map((p) => p.score as number);
-  const averageOfRecordedScores = recordedScores.length > 0
-    ? recordedScores.reduce((sum, s) => sum + s, 0) / recordedScores.length
-    : 0;
+  const recordedByWeek = [1, 2, 3, 4, 5, 6].map((number) => {
+    const week = progress.find((item) => item.semanaNumber === number);
+    return week?.score ?? 0;
+  });
+  const averageOfRecordedScores = recordedByWeek.reduce((sum, score) => sum + score, 0) / 6;
 
   const displayGlobal = Math.round(
     globalScore && typeof globalScore.global === 'number'
@@ -85,7 +86,7 @@ export default function ProfilePage() {
     <div className="font-body-md text-on-surface antialiased min-h-screen selection:bg-primary-container selection:text-on-primary-container">
       {/* Top AppBar (Mobile Only) */}
       <header className="md:hidden flex justify-between items-center px-margin-mobile py-4 w-full top-0 sticky bg-surface shadow-sm z-50">
-        <div className="font-headline-md text-headline-md text-primary font-bold tracking-tight">CIENCIA SEGUNDO GRADO</div>
+        <div className="font-headline-md text-headline-md text-primary font-bold tracking-tight">AVENTURA CIENTÍFICA</div>
         <div className="flex gap-4 text-primary">
           <span className="material-symbols-outlined fill">star</span>
           <span className="material-symbols-outlined fill">bolt</span>
@@ -95,7 +96,7 @@ export default function ProfilePage() {
       <div className="flex min-h-screen w-full relative">
         {/* Side Navigation Bar (Desktop Only) */}
         <nav className="hidden md:flex flex-col p-6 gap-2 bg-surface-container-low border-r-2 border-outline-variant h-screen w-64 fixed left-0 top-0 z-40">
-          <div className="font-headline-md text-headline-md text-primary font-bold mb-8 tracking-tight pl-4">CIENCIA SEGUNDO GRADO</div>
+          <div className="font-headline-md text-headline-md text-primary font-bold mb-8 tracking-tight pl-4">AVENTURA CIENTÍFICA</div>
 
           <Link
             to="/home"
@@ -124,11 +125,11 @@ export default function ProfilePage() {
 
         {/* Main Content Canvas */}
         <main className="flex-1 md:ml-64 relative overflow-y-auto bg-surface bg-opacity-50">
-          {/* Floating Background Elements */}
-          <span className="material-symbols-outlined absolute top-[15%] left-[10%] opacity-10 animate-[float_15s_infinite_ease-in-out] pointer-events-none text-primary text-[80px]">search</span>
-          <span className="material-symbols-outlined absolute top-[60%] left-[8%] opacity-10 animate-[float_15s_infinite_ease-in-out] pointer-events-none text-primary text-[60px]" style={{ animationDelay: '2s' }}>science</span>
-          <span className="material-symbols-outlined absolute top-[20%] right-[15%] opacity-10 animate-[float_15s_infinite_ease-in-out] pointer-events-none text-primary text-[100px]" style={{ animationDelay: '4s' }}>biotech</span>
-          <span className="material-symbols-outlined absolute top-[70%] right-[12%] opacity-10 animate-[float_15s_infinite_ease-in-out] pointer-events-none text-primary text-[70px]" style={{ animationDelay: '1s' }}>emoji_nature</span>
+          {/* Adornos del margen. En el celular tapan el texto, así que solo se ven desde md, dentro del espacio lateral. */}
+          <span aria-hidden="true" className="material-symbols-outlined hidden md:block absolute top-16 left-4 z-0 opacity-10 animate-[float_15s_infinite_ease-in-out] pointer-events-none text-primary text-[64px]">search</span>
+          <span aria-hidden="true" className="material-symbols-outlined hidden md:block absolute top-[46%] left-6 z-0 opacity-10 animate-[float_15s_infinite_ease-in-out] pointer-events-none text-primary text-[52px]" style={{ animationDelay: '2s' }}>science</span>
+          <span aria-hidden="true" className="material-symbols-outlined hidden md:block absolute top-28 right-4 z-0 opacity-10 animate-[float_15s_infinite_ease-in-out] pointer-events-none text-primary text-[72px]" style={{ animationDelay: '4s' }}>biotech</span>
+          <span aria-hidden="true" className="material-symbols-outlined hidden md:block absolute top-[58%] right-6 z-0 opacity-10 animate-[float_15s_infinite_ease-in-out] pointer-events-none text-primary text-[56px]" style={{ animationDelay: '1s' }}>emoji_nature</span>
 
           <div className="max-w-[950px] w-full mx-auto px-margin-mobile md:px-margin-desktop py-lg min-h-full flex flex-col items-center justify-center relative z-10">
             {/* Avatar & Header Section */}
@@ -150,7 +151,7 @@ export default function ProfilePage() {
               <h1 className="font-headline-lg-mobile md:font-headline-lg text-headline-lg-mobile md:text-headline-lg text-on-surface tracking-tight mb-2">
                 ¡Hola, {userName}!
               </h1>
-              <p className="font-body-lg text-body-lg text-outline">Explorador Científico - Grado 2</p>
+              <p className="font-body-lg text-body-lg text-outline">Explorador de la aventura científica</p>
             </div>
 
             {/* Progress Section (Bento Box Style) */}
@@ -188,7 +189,7 @@ export default function ProfilePage() {
                             }`}
                           ></div>
                           <span
-                            className={`text-[10px] text-center font-bold ${
+                            className={`text-xs text-center font-bold ${
                               completed ? 'text-primary' : 'text-outline'
                             }`}
                           >
@@ -259,7 +260,7 @@ export default function ProfilePage() {
                       <div>
                         <h3 className="font-label-lg text-label-lg text-on-surface font-bold">Nota Global</h3>
                         <p className="font-body-md text-body-md text-outline">
-                          Promedio de tus actividades y quizes calificados.
+                          Promedio de los 6 quizzes. Si falta una semana, esa cuenta como 0.
                         </p>
                       </div>
                     </div>
@@ -330,7 +331,7 @@ export default function ProfilePage() {
             </div>
 
             {/* Action Buttons */}
-            <div className="mt-lg w-full flex flex-col sm:flex-row gap-4 justify-center">
+            <div className="mt-lg mb-28 md:mb-0 w-full flex flex-col sm:flex-row gap-4 justify-center">
               <Link
                 to="/login"
                 className="squishy-button flex items-center justify-center gap-2 px-8 py-4 bg-primary text-on-primary rounded-2xl font-label-lg text-label-lg w-full sm:w-auto"
@@ -344,21 +345,14 @@ export default function ProfilePage() {
       </div>
 
       {/* Bottom Navigation Bar (Mobile Only) */}
-      <nav className="md:hidden fixed bottom-0 w-full bg-surface-container-lowest flex justify-around items-center pb-6 pt-3 px-2 z-50 border-t-2 border-outline-variant">
-        <Link to="/home" className="flex flex-col items-center gap-1 text-on-surface-variant p-2 w-20">
-          <span className="material-symbols-outlined">school</span>
-          <span className="text-xs font-label-md">Aprender</span>
+      <nav className="md:hidden fixed bottom-0 left-0 w-full bg-surface-container-lowest flex justify-around items-center px-4 pt-2 z-50 border-t-4 border-[#2f6a38] pb-[max(1rem,env(safe-area-inset-bottom))]">
+        <Link to="/home" className="flex flex-col items-center justify-center min-h-[48px] px-4 py-2 font-bold text-[#243d24]">
+          <span className="material-symbols-outlined">map</span>
+          Mapa
         </Link>
-        <Link to="/home" className="flex flex-col items-center gap-1 text-on-surface-variant p-2 w-20">
-          <span className="material-symbols-outlined">rocket_launch</span>
-          <span className="text-xs font-label-md">Misiones</span>
-        </Link>
-        <Link
-          to="/perfil"
-          className="flex flex-col items-center gap-1 bg-secondary-container text-on-secondary-container rounded-2xl p-2 w-20 border-b-4 border-secondary"
-        >
-          <span className="material-symbols-outlined fill">person</span>
-          <span className="text-xs font-label-md font-bold">Perfil</span>
+        <Link to="/perfil" className="flex flex-col items-center justify-center min-h-[48px] px-4 py-2 font-bold text-[#243d24]">
+          <span className="material-symbols-outlined" style={{ fontVariationSettings: '"FILL" 1' }}>face</span>
+          Explorador
         </Link>
       </nav>
     </div>

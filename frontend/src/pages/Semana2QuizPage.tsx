@@ -41,11 +41,11 @@ const QUESTIONS: Question[] = [
   },
   {
     text: 'En el juego "Coleccionando objetos", ¿qué debemos hacer para encontrar los útiles?',
-    hint: '¡Piensa en lo que hiciste dentro del aula de clases! 🏫',
+    hint: '¡Piensa en lo que hiciste al coleccionar objetos! 🔍',
     options: [
-      { emoji: '🔍', label: 'Buscar las siluetas u objetos escondidos en el salón' },
-      { emoji: '🏃', label: 'Correr lo más rápido posible fuera de la escuela' },
-      { emoji: '😴', label: 'Esperar a que el timbre suene sin hacer nada' },
+      { emoji: '🔍', label: 'Buscar las siluetas u objetos escondidos' },
+      { emoji: '🏃', label: 'Correr sin mirar los objetos' },
+      { emoji: '😴', label: 'Esperar sin buscar nada' },
     ],
     correctIndex: 0,
   },
@@ -55,7 +55,7 @@ const QUESTIONS: Question[] = [
     options: [
       { emoji: '🎁', label: 'Para adivinar qué objeto hay dentro de la caja' },
       { emoji: '✂️', label: 'Para romper la caja con tijeras' },
-      { emoji: '🧹', label: 'Para limpiar el suelo del salón' },
+      { emoji: '🧹', label: 'Para limpiar el suelo' },
     ],
     correctIndex: 0,
   },
@@ -328,7 +328,7 @@ export default function Semana2QuizPage() {
                   ¿Listo para el quiz?
                 </h2>
                 <p className="text-base sm:text-lg font-medium" style={{ color: '#4A4A4A' }}>
-                  ¿Recuerdas tus superpoderes y lo que aprendiste en el aula? ¡Vamos a descubrirlo!
+                  ¿Recuerdas lo que aprendiste sobre los materiales? ¡Vamos a descubrirlo!
                 </p>
               </div>
             </div>

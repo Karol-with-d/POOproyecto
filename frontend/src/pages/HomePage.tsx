@@ -52,7 +52,7 @@ export default function HomePage() {
       {/* Sidebar (Desktop) */}
       <aside className="hidden md:flex flex-col w-64 border-r-4 border-surface-container-highest h-screen sticky top-0 p-6 z-50 bg-surface-bright">
         <div className="mb-8">
-          <h2 className="font-headline-md text-primary uppercase tracking-tighter text-headline-md">CIENCIA SEGUNDO GRADO</h2>
+          <h2 className="font-headline-md text-primary uppercase tracking-tighter text-headline-md">Aventura científica</h2>
         </div>
         <nav className="flex flex-col gap-4">
           <Link

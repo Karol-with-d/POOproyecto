@@ -299,7 +299,7 @@ export default function Semana3QuizPage() {
       <main className="relative h-screen pt-16 w-full overflow-hidden">
 
         {/* STATE 0 — INTRO */}
-        <div className={`s3-slide absolute inset-0 flex flex-col items-center justify-center p-8 overflow-y-auto ${getSlide(0)}`} style={{ backgroundColor: '#f8f5f0' }}>
+        <div className={`s3-slide absolute inset-0 flex flex-col items-center justify-start px-8 pb-8 pt-20 overflow-y-auto ${getSlide(0)}`} style={{ backgroundColor: '#f8f5f0' }}>
           <div className="max-w-lg w-full text-center space-y-7 mt-4 pb-24">
             <div className="w-52 h-52 mx-auto animate-bounce">
               <img src={IMG_HERO} alt="Mascota del quiz" className="w-full h-full object-contain drop-shadow-lg" />
@@ -365,7 +365,7 @@ export default function Semana3QuizPage() {
         {QUESTIONS.map((q, qi) => (
           <div
             key={qi}
-            className={`s3-slide absolute inset-0 flex flex-col p-5 pt-32 overflow-y-auto ${getSlide(qi + 1)}`}
+            className={`s3-slide absolute inset-0 flex flex-col px-5 pb-5 pt-40 md:pt-32 overflow-y-auto ${getSlide(qi + 1)}`}
             style={{ backgroundColor: '#f8f5f0' }}
           >
             <div className="max-w-2xl mx-auto w-full space-y-5 pb-24">

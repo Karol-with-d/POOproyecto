@@ -325,6 +325,19 @@
   overflow: hidden;
 }
 
+@media (max-height: 760px) {
+  .tc-slide {
+    overflow-x: hidden;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior-y: contain;
+  }
+
+  .tc-slide.justify-center {
+    justify-content: flex-start;
+  }
+}
+
 /* Observation bubble (hidden by default) */
 .tc-observation-bubble {
   display: none;

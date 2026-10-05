@@ -1,14 +1,13 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, type ReactNode } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useResetScrollOn } from '../components/WeekScrollReset';
+import '../styles/bosque-vivo.css';
 
 const IMG_HERO = '/images/semana6/similitudes/hero.webp';
 
 interface QuizOption {
   label: string;
   icon: string;
-  iconBgClass: string;
-  iconColorClass: string;
   correct: boolean;
 }
 
@@ -23,45 +22,45 @@ const QUESTIONS: QuizQuestion[] = [
     image: '/images/semana6/similitudes/q1-alimentan.webp',
     verb: 'Se alimentan',
     options: [
-      { label: 'Plantas',  icon: 'eco',      iconBgClass: 'bg-[#8ba888]/20', iconColorClass: 'text-[#4a6549]', correct: false },
-      { label: 'Animales', icon: 'pets',      iconBgClass: 'bg-[#bfe5fe]/30', iconColorClass: 'text-[#3e6378]', correct: false },
-      { label: 'Ambos',    icon: 'category',  iconBgClass: 'bg-[#af9e83]/30', iconColorClass: 'text-[#6a5d45]', correct: true  },
+      { label: 'Plantas', icon: 'eco', correct: false },
+      { label: 'Animales', icon: 'pets', correct: false },
+      { label: 'Ambos', icon: 'category', correct: true },
     ],
   },
   {
     image: '/images/semana6/similitudes/q2-crecen.png',
     verb: 'Crecen',
     options: [
-      { label: 'Plantas',  icon: 'eco',      iconBgClass: 'bg-[#8ba888]/20', iconColorClass: 'text-[#4a6549]', correct: false },
-      { label: 'Animales', icon: 'pets',      iconBgClass: 'bg-[#bfe5fe]/30', iconColorClass: 'text-[#3e6378]', correct: false },
-      { label: 'Ambos',    icon: 'category',  iconBgClass: 'bg-[#af9e83]/30', iconColorClass: 'text-[#6a5d45]', correct: true  },
+      { label: 'Plantas', icon: 'eco', correct: false },
+      { label: 'Animales', icon: 'pets', correct: false },
+      { label: 'Ambos', icon: 'category', correct: true },
     ],
   },
   {
     image: '/images/semana6/similitudes/q3-mueven.webp',
     verb: 'Se mueven',
     options: [
-      { label: 'Plantas',  icon: 'eco',      iconBgClass: 'bg-[#8ba888]/20', iconColorClass: 'text-[#4a6549]', correct: false },
-      { label: 'Animales', icon: 'pets',      iconBgClass: 'bg-[#bfe5fe]/30', iconColorClass: 'text-[#3e6378]', correct: true  },
-      { label: 'Ambos',    icon: 'category',  iconBgClass: 'bg-[#af9e83]/30', iconColorClass: 'text-[#6a5d45]', correct: false },
+      { label: 'Plantas', icon: 'eco', correct: false },
+      { label: 'Animales', icon: 'pets', correct: true },
+      { label: 'Ambos', icon: 'category', correct: false },
     ],
   },
   {
     image: '/images/semana6/similitudes/q4-fotosintesis.webp',
     verb: 'Hacen fotosíntesis',
     options: [
-      { label: 'Plantas',  icon: 'eco',      iconBgClass: 'bg-[#8ba888]/20', iconColorClass: 'text-[#4a6549]', correct: true  },
-      { label: 'Animales', icon: 'pets',      iconBgClass: 'bg-[#bfe5fe]/30', iconColorClass: 'text-[#3e6378]', correct: false },
-      { label: 'Ambos',    icon: 'category',  iconBgClass: 'bg-[#af9e83]/30', iconColorClass: 'text-[#6a5d45]', correct: false },
+      { label: 'Plantas', icon: 'eco', correct: true },
+      { label: 'Animales', icon: 'pets', correct: false },
+      { label: 'Ambos', icon: 'category', correct: false },
     ],
   },
   {
     image: '/images/semana6/similitudes/q5-respiran.webp',
     verb: 'Respiran',
     options: [
-      { label: 'Plantas',  icon: 'eco',      iconBgClass: 'bg-[#8ba888]/20', iconColorClass: 'text-[#4a6549]', correct: false },
-      { label: 'Animales', icon: 'pets',      iconBgClass: 'bg-[#bfe5fe]/30', iconColorClass: 'text-[#3e6378]', correct: false },
-      { label: 'Ambos',    icon: 'category',  iconBgClass: 'bg-[#af9e83]/30', iconColorClass: 'text-[#6a5d45]', correct: true  },
+      { label: 'Plantas', icon: 'eco', correct: false },
+      { label: 'Animales', icon: 'pets', correct: false },
+      { label: 'Ambos', icon: 'category', correct: true },
     ],
   },
 ];
@@ -87,7 +86,7 @@ function ConfettiCanvas() {
     window.addEventListener('resize', resize);
     resize();
 
-    const colors = ['#4a6549', '#3e6378', '#6a5d45', '#ccebc7', '#bfe5fe'];
+    const colors = ['#2f9e6b', '#1a7a96', '#d4f542', '#ff7a59', '#0f2f28'];
     const pieces = Array.from({ length: 60 }, () => ({
       x: Math.random() * canvas.width,
       y: Math.random() * canvas.height - canvas.height,
@@ -107,7 +106,10 @@ function ConfettiCanvas() {
         p.y += p.speedY;
         p.x += p.speedX;
         p.rotation += p.rotSpeed;
-        if (p.y > canvas.height) { p.y = -20; p.x = Math.random() * canvas.width; }
+        if (p.y > canvas.height) {
+          p.y = -20;
+          p.x = Math.random() * canvas.width;
+        }
         ctx.save();
         ctx.translate(p.x, p.y);
         ctx.rotate((p.rotation * Math.PI) / 180);
@@ -118,14 +120,30 @@ function ConfettiCanvas() {
       raf = requestAnimationFrame(animate);
     }
     animate();
-    return () => { window.removeEventListener('resize', resize); cancelAnimationFrame(raf); };
+    return () => {
+      window.removeEventListener('resize', resize);
+      cancelAnimationFrame(raf);
+    };
   }, []);
 
   return (
     <canvas
       ref={canvasRef}
-      className="pointer-events-none absolute inset-0 w-full h-full z-10"
+      className="pointer-events-none absolute inset-0 z-10 h-full w-full"
     />
+  );
+}
+
+function BvShell({ children }: { children: ReactNode }) {
+  return (
+    <div className="bv-root bv-page relative min-h-screen flex flex-col overflow-x-hidden">
+      <div className="bv-atmosphere" aria-hidden="true">
+        <div className="bv-fireflies">
+          <span /><span /><span /><span />
+        </div>
+      </div>
+      <div className="relative z-[1] flex min-h-screen flex-col">{children}</div>
+    </div>
   );
 }
 
@@ -140,8 +158,8 @@ export default function SimilitudesGamePage() {
   const [advancing, setAdvancing] = useState(false);
 
   const currentQ = QUESTIONS[qIdx];
-  const selectedIdx = optStates.findIndex((s) => s === 'selected');
-  const hasSelection = selectedIdx !== -1 || optStates.some((s) => s === 'correct' || s === 'incorrect');
+  const hasSelection =
+    optStates.some((s) => s === 'selected' || s === 'correct' || s === 'incorrect');
   const canCheck = !checked && optStates.some((s) => s === 'selected');
 
   function handleOptionClick(i: number) {
@@ -157,8 +175,7 @@ export default function SimilitudesGamePage() {
     if (idx === -1) return;
     setChecked(true);
     if (currentQ.options[idx].correct) {
-      const newStates = optStates.map((s, i) => (i === idx ? 'correct' : s)) as OptionState[];
-      setOptStates(newStates);
+      setOptStates(optStates.map((s, i) => (i === idx ? 'correct' : s)) as OptionState[]);
       setScore((prev) => prev + 1);
       setAdvancing(true);
       setTimeout(() => {
@@ -172,8 +189,7 @@ export default function SimilitudesGamePage() {
         }
       }, 1500);
     } else {
-      const newStates = optStates.map((s, i) => (i === idx ? 'incorrect' : s)) as OptionState[];
-      setOptStates(newStates);
+      setOptStates(optStates.map((s, i) => (i === idx ? 'incorrect' : s)) as OptionState[]);
     }
   }
 
@@ -197,242 +213,206 @@ export default function SimilitudesGamePage() {
     setScreen('start');
   }
 
-  function getOptionClass(state: OptionState) {
-    if (state === 'correct')   return 'bg-[#22c55e] border-[#22c55e] shadow-[0_4px_0_0_#16a34a]';
-    if (state === 'incorrect') return 'bg-[#ef4444] border-[#ef4444] shadow-[0_4px_0_0_#dc2626]';
-    if (state === 'selected')  return 'bg-[#4a6549] border-[#4a6549] shadow-[0_4px_0_0_#c3c8bf]';
-    return 'bg-surface border-surface-container-highest shadow-[0_4px_0_0_#c3c8bf] hover:bg-surface-container-low';
+  function optionClass(state: OptionState) {
+    if (state === 'correct') return 'bv-opt is-correct';
+    if (state === 'incorrect') return 'bv-opt is-wrong';
+    if (state === 'selected') return 'bv-opt is-selected';
+    return 'bv-opt';
   }
 
-  function getOptionIcon(state: OptionState, originalIcon: string) {
-    if (state === 'correct')   return 'check_circle';
+  function optionIcon(state: OptionState, original: string) {
+    if (state === 'correct') return 'check_circle';
     if (state === 'incorrect') return 'cancel';
-    return originalIcon;
-  }
-
-  function getOptionTextClass(state: OptionState) {
-    return state === 'idle' ? 'text-on-surface' : 'text-white';
+    return original;
   }
 
   const stars = score >= 5 ? 3 : score >= 3 ? 2 : score >= 1 ? 1 : 0;
   const progressPct = Math.round(((qIdx + 1) / QUESTIONS.length) * 100);
 
-  // ── START SCREEN ───────────────────────────────────────────────────────────
   if (screen === 'start') {
     return (
-      <div className="bg-surface text-on-surface font-body-md min-h-screen flex flex-col">
-        <header className="w-full top-0 bg-surface z-50 sticky">
-          <nav className="flex justify-between items-center gap-2 w-full px-3 sm:px-margin-mobile md:px-margin-desktop py-2 sm:py-base max-w-full">
-            <button
-              onClick={() => navigate('/semana/6')}
-              aria-label="Volver"
-              className="w-10 h-10 shrink-0 flex items-center justify-center rounded-full hover:bg-surface-variant transition-colors text-[#334d33]"
-            >
-              <span className="material-symbols-outlined">arrow_back</span>
-            </button>
-            <div className="font-headline-md text-sm sm:text-lg md:text-headline-md leading-tight text-center text-primary flex-1 min-w-0">
-              ¿Qué tenemos en común?
-            </div>
-            <div className="w-10 shrink-0" />
-          </nav>
+      <BvShell>
+        <header className="sticky top-0 z-40 flex items-center justify-between gap-2 px-4 py-3 md:px-8"
+          style={{ background: 'rgba(15,47,40,0.92)', color: '#eef8f4' }}>
+          <button
+            type="button"
+            onClick={() => navigate('/semana/6')}
+            aria-label="Volver"
+            className="bv-icon-btn"
+          >
+            <span className="material-symbols-outlined">arrow_back</span>
+          </button>
+          <h1 className="bv-baloo flex-1 truncate text-center text-lg font-extrabold md:text-xl">
+            ¿Qué tenemos en común?
+          </h1>
+          <div className="w-11" />
         </header>
 
-        <main className="scroll-board flex-1 min-h-0 overflow-y-auto flex flex-col items-center text-center px-4 sm:px-margin-mobile md:px-margin-desktop py-4 sm:py-8">
-          <div className="relative w-full max-w-[220px] sm:max-w-xs md:max-w-md mb-4 sm:mb-8">
-            <div className="absolute inset-0 bg-primary-fixed opacity-20 rounded-full blur-3xl -z-10" />
-            <img
-              src={IMG_HERO}
-              alt="Tortuga y ganso científicos"
-              className="w-full h-auto similitudes-float"
-            />
+        <main className="flex flex-1 flex-col items-center px-5 py-8 text-center">
+          <div className="bv-float relative mb-6 w-full max-w-[240px]">
+            <img src={IMG_HERO} alt="Tortuga y ganso científicos" className="h-auto w-full drop-shadow-lg" />
           </div>
-
-          <div className="max-w-2xl">
-            <h1 className="font-headline-lg-mobile md:font-headline-lg text-2xl sm:text-headline-lg-mobile md:text-headline-lg text-primary mb-2 sm:mb-3 leading-tight">
-              ¿Qué tenemos en común?
-            </h1>
-            <p className="font-body-lg text-base sm:text-body-lg text-on-surface-variant mb-4 sm:mb-8">
-              ¡Adivina qué une a las plantas y los animales!
-            </p>
-            <button
-              onClick={() => setScreen('question')}
-              className="bg-primary-container text-on-primary-container px-6 py-3 sm:px-8 sm:py-4 rounded-xl font-label-lg text-base sm:text-label-lg flex items-center justify-center gap-2 mx-auto w-full max-w-xs hover:scale-105 transition-transform active:translate-y-1"
-              style={{ boxShadow: '0 4px 0 0 #334d33' }}
-            >
-              <span className="material-symbols-outlined">rocket_launch</span>
-              ¡Empezar Aventura!
-            </button>
-          </div>
+          <span className="bv-chip mb-3" style={{ background: 'rgba(26,122,150,0.18)', color: '#1a7a96' }}>
+            Observación en el bosque
+          </span>
+          <h2 className="bv-title mb-2 text-3xl md:text-4xl">¿Qué tenemos en común?</h2>
+          <p className="bv-subtitle mb-8 max-w-md">
+            ¡Adivina qué une a las plantas y los animales!
+          </p>
+          <button type="button" onClick={() => setScreen('question')} className="bv-btn bv-btn-river w-full max-w-xs">
+            <span className="material-symbols-outlined">rocket_launch</span>
+            ¡Empezar Aventura!
+          </button>
         </main>
-      </div>
+      </BvShell>
     );
   }
 
-  // ── RESULTS SCREEN ──────────────────────────────────────────────────────────
   if (screen === 'results') {
     return (
-      <div className="bg-background text-on-background font-body-md min-h-screen flex flex-col relative overflow-y-auto">
+      <BvShell>
         <ConfettiCanvas />
+        <main className="relative z-20 m-auto flex w-full max-w-lg flex-col items-center px-5 py-10">
+          <h2 className="bv-title mb-2 text-center text-3xl">¡Excelente trabajo, explorador!</h2>
+          <p className="bv-subtitle mb-6 text-center">Has completado la misión de similitudes</p>
 
-        <div className="z-20 m-auto w-full max-w-4xl flex flex-col items-center px-4 sm:px-6 py-4 sm:py-8">
-          <div className="text-center mb-3 sm:mb-6 px-2">
-            <h2 className="font-headline-lg text-xl sm:text-2xl md:text-headline-lg text-primary mb-2 leading-tight">
-              ¡Excelente trabajo, Científico!
-            </h2>
-            <p className="font-body-lg text-base sm:text-body-lg text-on-surface-variant max-w-xl mx-auto">
-              ¡Has completado el quiz con éxito!
+          <div className="bv-card mb-8 w-full p-6 text-center">
+            <p className="bv-chip mx-auto mb-3" style={{ background: 'rgba(212,245,66,0.4)', color: '#0f2f28' }}>
+              Puntuación final
             </p>
-          </div>
-
-          <div className="w-full max-w-lg grid grid-cols-1 mb-4 sm:mb-8">
-            <div className="bg-surface-container-lowest border-2 border-outline-variant p-4 sm:p-6 rounded-xl shadow-sm text-center relative overflow-hidden">
-              <p className="font-label-lg text-xs sm:text-label-lg text-on-surface-variant uppercase tracking-widest mb-2">
-                Puntuación Final
-              </p>
-              <div className="text-4xl sm:text-6xl md:text-8xl font-headline-lg text-primary mb-2 sm:mb-4 leading-none">
-                {score}<span className="text-xl sm:text-3xl text-outline">/{QUESTIONS.length}</span>
-              </div>
-              <div className="flex justify-center gap-2 sm:gap-4">
-                {[0, 1, 2].map((i) => (
-                  <span
-                    key={i}
-                    className={`material-symbols-outlined similitudes-star-pop ${i === 1 ? 'text-4xl sm:text-6xl' : 'text-3xl sm:text-5xl'} ${i < stars ? 'text-[#6a5d45]' : 'text-outline-variant'}`}
-                    style={{ fontVariationSettings: "'FILL' 1" }}
-                  >
-                    star
-                  </span>
-                ))}
-              </div>
+            <div className="bv-baloo text-6xl font-extrabold text-[var(--bv-river)]">
+              {score}
+              <span className="text-2xl text-[var(--bv-muted)]">/{QUESTIONS.length}</span>
+            </div>
+            <div className="mt-4 flex justify-center gap-3">
+              {[0, 1, 2].map((i) => (
+                <span
+                  key={i}
+                  className="material-symbols-outlined text-4xl"
+                  style={{
+                    fontVariationSettings: "'FILL' 1",
+                    color: i < stars ? '#d4f542' : 'rgba(15,47,40,0.2)',
+                    filter: i < stars ? 'drop-shadow(0 0 6px rgba(212,245,66,0.8))' : undefined,
+                  }}
+                >
+                  star
+                </span>
+              ))}
             </div>
           </div>
 
-          <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 w-full max-w-lg">
-            <button
-              onClick={() => navigate('/semana/6')}
-              className="flex-1 bg-primary text-on-primary font-label-lg text-base sm:text-label-lg py-3 px-4 sm:py-4 sm:px-6 rounded-xl flex items-center justify-center gap-2 hover:bg-primary/90 transition-colors active:translate-y-0.5"
-              style={{ boxShadow: '0 4px 0 0 #334d33', borderBottom: '4px solid #334d33' }}
-            >
+          <div className="flex w-full flex-col gap-3 sm:flex-row">
+            <button type="button" onClick={() => navigate('/semana/6')} className="bv-btn bv-btn-leaf flex-1">
               <span className="material-symbols-outlined">sports_esports</span>
               Siguiente juego
             </button>
-            <button
-              onClick={resetQuiz}
-              className="flex-1 bg-surface-container-high text-on-surface-variant font-label-lg text-base sm:text-label-lg py-3 px-4 sm:py-4 sm:px-6 rounded-xl flex items-center justify-center gap-2 hover:bg-surface-variant transition-colors active:translate-y-0.5"
-              style={{ borderBottom: '4px solid #c3c8bf' }}
-            >
+            <button type="button" onClick={resetQuiz} className="bv-btn bv-btn-ghost flex-1">
               <span className="material-symbols-outlined">replay</span>
               Intentar de nuevo
             </button>
           </div>
-        </div>
-      </div>
+        </main>
+      </BvShell>
     );
   }
 
-  // ── QUESTION SCREEN ─────────────────────────────────────────────────────────
   return (
-    <div className="bg-background text-on-background min-h-screen flex flex-col font-body-md overflow-x-hidden">
-      <header className="w-full shrink-0 sticky top-0 flex justify-between items-center px-3 sm:px-margin-mobile md:px-margin-desktop h-14 sm:h-16 md:h-20 bg-surface shadow-sm z-10">
+    <BvShell>
+      <header
+        className="sticky top-0 z-40 flex items-center gap-3 px-4 py-3 md:px-8"
+        style={{ background: 'rgba(255,255,255,0.88)', borderBottom: '3px solid rgba(15,47,40,0.1)' }}
+      >
         <button
+          type="button"
           onClick={() => navigate('/semana/6')}
-          className="w-10 h-10 sm:w-12 sm:h-12 shrink-0 rounded-full flex items-center justify-center bg-surface-container-low hover:bg-surface-variant transition-colors text-on-surface"
+          aria-label="Cerrar"
+          className="bv-icon-btn"
+          style={{ background: '#ff7a59', color: '#fff' }}
         >
           <span className="material-symbols-outlined">close</span>
         </button>
-
-        <div className="flex-1 min-w-0 max-w-xl mx-2 sm:mx-6 flex items-center gap-2 sm:gap-4">
-          <div className="h-3 sm:h-4 flex-1 bg-surface-container-high rounded-full overflow-hidden border-2 border-surface-container-highest">
-            <div
-              className="h-full bg-primary rounded-full transition-[width] duration-500"
-              style={{ width: `${progressPct}%` }}
-            />
-          </div>
-          <span className="font-headline-md text-sm sm:text-headline-md text-primary font-bold shrink-0 tabular-nums">
-            {qIdx + 1}/{QUESTIONS.length}
-          </span>
+        <div className="bv-progress flex-1">
+          <span style={{ width: `${progressPct}%` }} />
         </div>
-
-        <div className="w-10 h-10 sm:w-12 sm:h-12 shrink-0" />
+        <span className="bv-baloo shrink-0 font-bold text-[var(--bv-river)]">
+          {qIdx + 1}/{QUESTIONS.length}
+        </span>
       </header>
 
-      <main className="scroll-board flex-1 min-h-0 overflow-y-auto px-4 sm:px-margin-mobile md:px-margin-desktop py-3 sm:py-6 flex flex-col items-center gap-3 sm:gap-6">
-        <div className="w-full max-w-2xl flex flex-col items-center text-center gap-2 sm:gap-4">
-          <h2 className="font-headline-md text-lg sm:text-headline-md text-secondary">¿Quién lo hace?</h2>
+      <main className="flex flex-1 flex-col items-center gap-4 px-5 py-5">
+        <span className="bv-chip" style={{ background: 'rgba(26,122,150,0.15)', color: '#1a7a96' }}>
+          ¿Quién lo hace?
+        </span>
 
-          <div className="w-40 h-40 sm:w-56 sm:h-56 md:w-80 md:h-80 max-w-[34dvh] max-h-[34dvh] relative bg-surface-container-low rounded-[2rem] border-4 border-surface-container-high flex items-center justify-center p-2 sm:p-3 shadow-[0_8px_30px_rgba(74,101,73,0.15)] overflow-hidden">
-            <img
-              src={currentQ.image}
-              alt={currentQ.verb}
-              className="w-full h-full object-contain mix-blend-multiply"
-            />
-          </div>
-
-          <h1 className="font-headline-lg-mobile text-xl sm:text-headline-lg-mobile md:font-headline-lg md:text-headline-lg text-on-surface leading-tight">
-            {currentQ.verb}
-          </h1>
+        <div className="bv-panel flex h-40 w-40 items-center justify-center p-3 sm:h-56 sm:w-56 md:h-72 md:w-72">
+          <img src={currentQ.image} alt={currentQ.verb} className="h-full w-full object-contain" />
         </div>
 
-        <div className="w-full max-w-lg flex flex-col gap-2 sm:gap-3">
+        <h1 className="bv-title text-center text-2xl md:text-3xl">{currentQ.verb}</h1>
+
+        <div className="flex w-full max-w-lg flex-col gap-3">
           {currentQ.options.map((opt, i) => {
             const state = optStates[i];
             return (
               <button
                 key={opt.label}
+                type="button"
                 onClick={() => handleOptionClick(i)}
                 disabled={advancing || (checked && state === 'correct')}
-                className={`w-full p-3 sm:p-4 border-2 rounded-xl flex items-center gap-3 sm:gap-4 transition-all duration-100 active:translate-y-1 ${getOptionClass(state)}`}
+                className={`${optionClass(state)} flex items-center gap-3`}
               >
-                <div className={`w-10 h-10 sm:w-12 sm:h-12 shrink-0 rounded-full flex items-center justify-center transition-transform ${state === 'idle' ? opt.iconBgClass : 'bg-white/20'} group-hover:scale-110`}>
-                  <span
-                    className={`material-symbols-outlined text-[22px] sm:text-[28px] ${state === 'idle' ? opt.iconColorClass : 'text-white'}`}
-                    style={{ fontVariationSettings: "'FILL' 1" }}
-                  >
-                    {getOptionIcon(state, opt.icon)}
+                <span
+                  className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full"
+                  style={{
+                    background: state === 'idle' ? 'rgba(26,122,150,0.12)' : 'rgba(255,255,255,0.25)',
+                  }}
+                >
+                  <span className="material-symbols-outlined" style={{ fontVariationSettings: "'FILL' 1" }}>
+                    {optionIcon(state, opt.icon)}
                   </span>
-                </div>
-                <span className={`font-headline-md text-lg sm:text-headline-md flex-1 text-left leading-tight ${getOptionTextClass(state)}`}>
-                  {opt.label}
                 </span>
+                <span className="flex-1 text-left text-lg">{opt.label}</span>
               </button>
             );
           })}
         </div>
       </main>
 
-      <div className="w-full shrink-0 max-w-lg mx-auto px-4 sm:px-margin-mobile md:px-margin-desktop pt-2 pb-3 sm:pb-6">
+      <div className="mx-auto w-full max-w-lg shrink-0 px-5 pb-6 pt-2">
         {!checked ? (
           <button
+            type="button"
             onClick={handleCheck}
             disabled={!canCheck}
-            className={`w-full py-3 sm:py-4 font-headline-md text-lg sm:text-headline-md rounded-xl transition-colors ${
-              canCheck
-                ? 'bg-primary text-on-primary shadow-[0_4px_0_0_#334d33] active:translate-y-1 active:shadow-none'
-                : 'bg-surface-container-high text-on-surface-variant cursor-not-allowed'
-            }`}
+            className={`bv-btn w-full ${canCheck ? 'bv-btn-leaf' : 'bv-btn-ghost'}`}
+            style={canCheck ? undefined : { opacity: 0.6, cursor: 'not-allowed', boxShadow: 'none' }}
           >
             Comprobar
           </button>
+        ) : optStates.some((s) => s === 'incorrect') && !advancing ? (
+          <button
+            type="button"
+            onClick={() => {
+              setChecked(false);
+              setOptStates(['idle', 'idle', 'idle']);
+            }}
+            className="bv-btn bv-btn-ghost w-full"
+          >
+            Intentar de nuevo
+          </button>
         ) : (
-          optStates.some((s) => s === 'incorrect') && !advancing ? (
+          hasSelection && (
             <button
-              onClick={() => { setChecked(false); setOptStates(['idle', 'idle', 'idle']); }}
-              className="w-full py-3 sm:py-4 bg-surface-container-high text-on-surface-variant font-headline-md text-lg sm:text-headline-md rounded-xl hover:bg-surface-variant transition-colors"
+              type="button"
+              onClick={handleNext}
+              disabled={advancing}
+              className="bv-btn bv-btn-river w-full"
             >
-              Intentar de nuevo
+              Siguiente →
             </button>
-          ) : (
-            hasSelection && (
-              <button
-                onClick={handleNext}
-                disabled={advancing}
-                className="w-full py-3 sm:py-4 bg-primary text-on-primary font-headline-md text-lg sm:text-headline-md rounded-xl shadow-[0_4px_0_0_#334d33] active:translate-y-1 active:shadow-none transition-all"
-              >
-                Siguiente →
-              </button>
-            )
           )
         )}
       </div>
-    </div>
+    </BvShell>
   );
 }

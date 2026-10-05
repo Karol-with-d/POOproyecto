@@ -9,27 +9,35 @@ export class ScoreCalculator {
   /**
    * Calcula la nota global promedio de los 6 quiz.
    */
-  calculateGlobal(scores: UserScore[]): { global: number; breakdown: { semanaId: string; score: number }[]; missing: number[] } {
+  calculateGlobal(
+    scores: UserScore[],
+    semanas: { id: string; number: number }[] = [],
+  ): { global: number; breakdown: { semanaId: string; score: number }[]; missing: number[] } {
     const quizScores = scores.filter((s) => s.type === 'quiz');
 
-    // Agrupar por semanaId, tomar el último score de cada semana
     const semanaMap = new Map<string, number>();
     for (const score of quizScores) {
       semanaMap.set(score.semanaId, score.score);
     }
 
-    const breakdown: { semanaId: string; score: number }[] = [];
-    for (const [semanaId, score] of semanaMap.entries()) {
-      breakdown.push({ semanaId, score });
+    const weeks = semanas
+      .filter((semana) => semana.number >= 1 && semana.number <= 6)
+      .sort((a, b) => a.number - b.number);
+
+    if (weeks.length === 0) {
+      const breakdown = [...semanaMap.entries()].map(([semanaId, score]) => ({ semanaId, score }));
+      const total = breakdown.reduce((sum, item) => sum + item.score, 0);
+      const global = breakdown.length > 0 ? Math.round((total / breakdown.length) * 10) / 10 : 0;
+      return { global, breakdown, missing: [] };
     }
 
+    const breakdown = weeks.map((semana) => ({
+      semanaId: semana.id,
+      score: semanaMap.get(semana.id) ?? 0,
+    }));
     const total = breakdown.reduce((sum, item) => sum + item.score, 0);
-    const global = breakdown.length > 0 ? Math.round((total / breakdown.length) * 10) / 10 : 0;
-
-    // Verificar semanas faltantes
-    const allWeeks = [1, 2, 3, 4, 5, 6]; // Asumiendo semanas 1-6
-    // TODO: mapear semanaId a número de semana para missing
-    const missing: number[] = []; // Simplificado
+    const global = Math.round((total / weeks.length) * 10) / 10;
+    const missing = weeks.filter((semana) => !semanaMap.has(semana.id)).map((semana) => semana.number);
 
     return { global, breakdown, missing };
   }

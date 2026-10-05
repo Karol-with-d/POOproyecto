@@ -214,8 +214,8 @@ export default function WeekBottomNav({ theme }: ThemeProps) {
   );
 }
 
-/** Temas alineados a la decoración de cada hub (semanas 1–5). */
-export const WEEK_NAV_THEMES: Record<1 | 2 | 3 | 4 | 5, WeekBottomNavTheme> = {
+/** Temas alineados a la decoración de cada hub (semanas 1–6). */
+export const WEEK_NAV_THEMES: Record<1 | 2 | 3 | 4 | 5 | 6, WeekBottomNavTheme> = {
   // Semana 1: papel cálido + ámbar de medidas
   1: {
     bar: '#b45309',
@@ -275,5 +275,17 @@ export const WEEK_NAV_THEMES: Record<1 | 2 | 3 | 4 | 5, WeekBottomNavTheme> = {
     headerText: '#4a7c59',
     headerBtnBg: '#c4a66a',
     headerBtnText: '#3f3420',
+  },
+  // Semana 6: Bosque Vivo (dosel + río + luciérnaga)
+  6: {
+    bar: '#0f2f28',
+    border: '#2f9e6b',
+    muted: '#d9f0e7',
+    activeBg: '#d4f542',
+    activeText: '#0f2f28',
+    headerBg: '#0f2f28',
+    headerText: '#eef8f4',
+    headerBtnBg: '#d4f542',
+    headerBtnText: '#0f2f28',
   },
 };

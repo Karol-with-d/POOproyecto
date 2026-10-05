@@ -55,15 +55,20 @@ export class ScoreService {
 
   async calculateGlobalScore(userId: string): Promise<{ global: number; breakdown: any[]; message: string }> {
     const scores = await this.findByUserId(userId);
-    const { global, breakdown, missing } = this.calculator.calculateGlobal(scores);
+    const semanas = await prisma.semana.findMany({
+      select: { id: true, number: true },
+      orderBy: { number: 'asc' },
+    });
+    const { global, breakdown, missing } = this.calculator.calculateGlobal(scores, semanas);
 
+    const hasQuiz = scores.some((score) => score.type === 'quiz');
     let message = '';
-    if (missing.length > 0) {
-      message = `Faltan ${missing.length} semanas por completar.`;
-    } else if (breakdown.length === 0) {
-      message = 'Aún no hay scores registrados.';
+    if (!hasQuiz) {
+      message = 'Aún no hay quizzes registrados.';
+    } else if (missing.length > 0) {
+      message = `Nota final sobre ${breakdown.length} quizzes. Faltan las semanas ${missing.join(', ')}.`;
     } else {
-      message = '¡Todas las semanas completadas!';
+      message = `Nota final de los ${breakdown.length} quizzes.`;
     }
 
     return { global, breakdown, message };

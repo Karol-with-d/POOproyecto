@@ -130,35 +130,32 @@ export default function BuildItGamePage() {
       <div className="fixed inset-0 z-0 pointer-events-none bg-overlay"></div>
 
       {/* TopAppBar */}
-      <header className="fixed top-0 left-0 w-full z-40 flex justify-between items-center px-5 md:px-8 h-20 bg-surface-container-low border-b border-outline-variant shadow-sm">
-        <div className="flex items-center gap-4">
-          <button
-            onClick={() => navigate(`/semana/${semanaId}`)}
-            className="material-symbols-outlined text-primary hover:text-secondary transition-colors text-[28px]"
-          >
-            arrow_back
-          </button>
-          <h1 className="font-headline-md text-headline-md-mobile md:text-headline-md text-primary font-bold hidden sm:block">
-            ¿Qué va dónde?
-          </h1>
-          <h1 className="font-headline-md text-primary font-bold sm:hidden">¡A reparar!</h1>
+      <header className="relative z-40 shrink-0 flex items-center gap-2 px-3 md:px-8 py-2 min-h-16 bg-surface-container-low border-b border-outline-variant shadow-sm">
+        <button
+          onClick={() => navigate(`/semana/${semanaId}`)}
+          className="material-symbols-outlined shrink-0 text-primary hover:text-secondary transition-colors text-[28px]"
+        >
+          arrow_back
+        </button>
+        <h1 className="flex-1 min-w-0 font-headline-md text-lg md:text-headline-md text-primary font-bold leading-tight">
+          <span className="sm:hidden">¡A reparar!</span>
+          <span className="hidden sm:inline">¿Qué va dónde?</span>
+        </h1>
+        <div className="shrink-0 bg-primary-container text-on-primary-container px-3 py-1.5 rounded-full font-label-lg shadow-inner text-sm md:text-base">
+          <span className="font-bold">{score}</span>/{totalRepairs}
+          <span className="hidden sm:inline"> Reparaciones</span>
         </div>
-        <div className="flex items-center gap-3">
-          <div className="bg-primary-container text-on-primary-container px-4 py-2 rounded-full font-label-lg shadow-inner">
-            <span className="font-bold">{score}</span>/{totalRepairs} Reparaciones
-          </div>
-          <button
-            onClick={() => navigate('/home')}
-            className="material-symbols-outlined text-primary hover:bg-secondary-container rounded-full p-2 transition-colors active:scale-95"
-            style={{ fontSize: '28px' }}
-          >
-            map
-          </button>
-        </div>
+        <button
+          onClick={() => navigate('/home')}
+          className="material-symbols-outlined shrink-0 text-primary hover:bg-secondary-container rounded-full p-1 transition-colors active:scale-95"
+          style={{ fontSize: '28px' }}
+        >
+          map
+        </button>
       </header>
 
       {/* Main Game Area */}
-      <main className="flex-grow pt-20 pb-24 md:pb-8 relative min-h-screen z-10">
+      <main className="flex-grow min-h-0 pb-6 md:pb-8 relative z-10">
         <div className="container mx-auto px-5 md:px-8 flex flex-col items-center justify-center min-h-[calc(100vh-80px)]">
           {/* Hero text */}
           <div className="text-center mb-8">
