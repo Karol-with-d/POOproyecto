@@ -1,5 +1,6 @@
 import { useNavigate, Link } from 'react-router-dom';
 import '../styles/terra-ciencia.css';
+import { playClick } from '../services/sounds';
 
 /**
  * SuperpoderesStartPage — Pantalla de inicio de "Superpoderes" (Semana 5).
@@ -16,6 +17,7 @@ export default function SuperpoderesStartPage() {
 
   const handleBack = () => navigate('/semana/5');
   const handleStart = () => {
+    playClick();
     navigate('/semana/5/superpoderes/play');
   };
 
