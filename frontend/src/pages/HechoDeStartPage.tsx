@@ -1,4 +1,5 @@
 import { useNavigate } from 'react-router-dom';
+import { playClick } from '../services/sounds';
 
 /**
  * HechoDeStartPage — Pantalla de inicio de "¿De qué están hechos?".

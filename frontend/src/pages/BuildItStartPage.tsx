@@ -1,4 +1,5 @@
 import { useNavigate } from 'react-router-dom';
+import { playClick } from '../services/sounds';
 
 /**
  * BuildItStartPage — Pantalla de inicio de "¡A reparar!".
@@ -10,7 +11,7 @@ export default function BuildItStartPage() {
   const navigate = useNavigate();
 
   const handleBack = () => navigate('/semana/3');
-  const handlePlay = () => navigate('/semana/3/build-it/play');
+  const handlePlay = () => { playClick(); navigate('/semana/3/build-it/play'); };
 
   return (
     <div

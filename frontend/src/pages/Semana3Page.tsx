@@ -1,5 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 import WeekBottomNav, { WeekHubHeader, WEEK_NAV_THEMES } from '../components/WeekBottomNav';
+import { playClick } from '../services/sounds';
 
 /**
  * Semana3Page — Hub de actividades de la Semana 3: Utilidad y Reciclaje.
@@ -85,7 +86,7 @@ export default function Semana3Page() {
                 <h3 className="font-headline-md text-headline-md text-[#4a6549]">{activity.title}</h3>
                 <p className="font-body-md text-body-md text-[#434841] mt-1 flex-grow">{activity.desc}</p>
                 <button
-                  onClick={() => navigate(activity.link)}
+                  onClick={() => { playClick(); navigate(activity.link); }}
                   className="mt-4 w-full bg-[#4a6549] text-white font-label-lg py-3 px-6 rounded-full border-b-4 border-[#334d33] active:translate-y-0.5 active:border-b-2 flex items-center justify-center gap-2"
                 >
                   <span className="material-symbols-outlined" style={{ fontVariationSettings: '"FILL" 1' }}>play_arrow</span>
@@ -105,7 +106,7 @@ export default function Semana3Page() {
             </div>
           </div>
           <button
-            onClick={() => navigate('/semana/3/quiz')}
+            onClick={() => { playClick(); navigate('/semana/3/quiz'); }}
             className="whitespace-nowrap py-3 px-8 bg-[#4a6549] text-white font-label-lg rounded-full border-b-4 border-[#334d33] active:translate-y-0.5 active:border-b-2 flex items-center gap-2"
           >
             <span className="material-symbols-outlined">emoji_events</span>

@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { saveScore, markSemanaCompleted } from '../services/api';
+import { playLevelUp, playMiss, playSuccess } from '../services/sounds';
 
 type ZoneId = 'table' | 'window' | 'toolbox';
 type Material = 'wood' | 'glass' | 'metal';
@@ -91,11 +92,15 @@ export default function BuildItGamePage() {
     if (material === zone.correct) {
       const next = { ...repaired, [activeZone]: true };
       setRepaired(next);
+      const nextScore = score + 1;
+      if (nextScore === totalRepairs) playLevelUp();
+      else playSuccess();
       setScore((s) => s + 1);
       setShowSuccessFlash(activeZone);
       setTimeout(() => setShowSuccessFlash(null), 1000);
       setActiveZone(null);
     } else {
+      playMiss();
       setPanelShake((k) => k + 1);
     }
   };
@@ -289,7 +294,7 @@ export default function BuildItGamePage() {
               </p>
             </div>
             <button
-              onClick={() => navigate('/home')}
+              onClick={() => navigate(`/semana/${semanaId}`)}
               className="clay-button bg-primary text-on-primary font-label-lg text-label-lg px-8 py-3 rounded-full border-b-4 border-[#334d33] active:translate-y-0.5 active:border-b-2 w-full"
             >
               Volver al inicio
