@@ -904,13 +904,13 @@ const createCelebrationStars = useCallback(
           {/* Título */} 
           <div className="flex items-center justify-center min-w-0 flex-1"> 
             
-            <span className="font-bold text-[11px] xs:text-xs sm:text-lg md:text-xl xl:text-2xl text-[#54624d] text-center leading-tight"> Máquina de Reciclaje </span> 
+            <span className="font-bold text-base xs:text-xs sm:text-lg md:text-xl xl:text-2xl text-[#54624d] text-center leading-tight"> Máquina de Reciclaje </span> 
           </div> 
           
           {/* Progreso y sonido */} 
           <div className="flex items-center gap-1 sm:gap-2 shrink-0"> 
             <div className="bg-gradient-to-r from-cyan-100/70 to-emerald-100/70 border border-teal-200 px-1.5 sm:px-3 py-1 sm:py-1.5 rounded-xl sm:rounded-2xl shadow-sm whitespace-nowrap"> 
-              <span className="text-[9px] sm:text-xs md:text-sm min-[1440px]:text-base font-bold text-teal-950"> 
+              <span className="text-sm sm:text-xs md:text-sm min-[1440px]:text-base font-bold text-teal-950"> 
                 Objeto {currentRound + 1} de{' '} {gameSequence.length} 
               </span> 
             </div> 
@@ -940,7 +940,7 @@ const createCelebrationStars = useCallback(
                 <main className="relative z-20 flex min-h-0 w-full flex-1 flex-col overflow-hidden px-3 sm:px-5 lg:px-8">
                 {/* Instrucción */} 
                 <div className="mx-auto mt-2 sm:mt-3 mb-2 w-full max-w-3xl xl:max-w-4xl shrink-0 bg-white/95 border-2 border-teal-200/90 px-3 sm:px-6 xl:px-8 py-2 sm:py-2.5 rounded-2xl sm:rounded-full shadow-sm text-center flex items-center justify-center">
-                   <p className="w-full text-[11px] sm:text-sm md:text-base xl:text-lg font-bold text-teal-900 flex flex-wrap items-center justify-center gap-1.5 sm:gap-2 text-center leading-snug"> 
+                   <p className="w-full text-base sm:text-sm md:text-base xl:text-lg font-bold text-teal-900 flex flex-wrap items-center justify-center gap-1.5 sm:gap-2 text-center leading-snug"> 
                       {renderInstruction()}
                    </p>
                 </div>
@@ -998,7 +998,7 @@ const createCelebrationStars = useCallback(
                      <div className="robot-eye animate-blink-robot" /> 
                    </div> 
                    
-                   <div className="text-[7px] xs:text-[8px] sm:text-[10px] min-[1440px]:text-xs font-extrabold text-teal-950 mt-1 uppercase tracking-wider sm:tracking-widest bg-white/90 px-2 sm:px-3 min-[1440px]:px-4 py-0.5 sm:py-1 rounded-full border border-teal-200/80 shadow-sm whitespace-nowrap"> 
+                   <div className="text-sm xs:text-sm sm:text-sm min-[1440px]:text-xs font-extrabold text-teal-950 mt-1 uppercase tracking-wider sm:tracking-widest bg-white/90 px-2 sm:px-3 min-[1440px]:px-4 py-0.5 sm:py-1 rounded-full border border-teal-200/80 shadow-sm whitespace-nowrap"> 
                       <span className="inline-block w-1 h-1 sm:w-1.5 sm:h-1.5 rounded-full bg-teal-500 animate-pulse mr-1 sm:mr-1.5" /> DISPENSADOR MISTERIOSO 
                     </div> 
                   </div> 
@@ -1011,7 +1011,7 @@ const createCelebrationStars = useCallback(
                      <span className="w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full bg-emerald-200 border-2 border-emerald-400" /> 
                     </div> 
                     
-                    <div className="w-5 h-5 sm:w-6 sm:h-6 rounded-full border-2 border-emerald-400/60 border-dashed flex items-center justify-center text-[10px] sm:text-xs animate-spin-slow">
+                    <div className="w-5 h-5 sm:w-6 sm:h-6 rounded-full border-2 border-emerald-400/60 border-dashed flex items-center justify-center text-sm sm:text-xs animate-spin-slow">
                      ↻
                     </div> 
                   </div> 
@@ -1046,7 +1046,7 @@ const createCelebrationStars = useCallback(
                              </div> 
                              
                              <div className="mt-1.5 sm:mt-2 max-w-full bg-white/95 border-2 border-teal-300 px-2 sm:px-3.5 py-1 sm:py-1.5 rounded-xl sm:rounded-2xl shadow-md text-center backdrop-blur-sm"> 
-                               <h3 className="text-[10px] sm:text-xs md:text-sm xl:text-base font-extrabold text-slate-900 leading-tight text-center"> 
+                               <h3 className="text-sm sm:text-xs md:text-sm xl:text-base font-extrabold text-slate-900 leading-tight text-center"> 
                                 {currentObject.name} 
                                </h3> 
                             </div> 
@@ -1061,7 +1061,7 @@ const createCelebrationStars = useCallback(
                       
                        {/* Botón de lanzamiento */} 
                        <button type="button" onClick={handleLaunch} disabled={ gameState !== 'IDLE' } 
-                       className="w-full py-2.5 sm:py-3.5 min-[1440px]:py-4 px-3 sm:px-6 min-[1440px]:px-8 rounded-xl sm:rounded-2xl min-[1440px]:rounded-3xl bg-gradient-to-r from-white via-[#F0FDF4] to-white hover:bg-emerald-50 border-b-[3px] sm:border-b-[5px] border-emerald-700 active:border-b-2 active:translate-y-1 text-emerald-950 font-black text-[11px] xs:text-xs sm:text-base md:text-lg min-[1440px]:text-xl flex items-center justify-center gap-1.5 sm:gap-2.5 min-[1440px]:gap-3 shadow-md transition-all disabled:opacity-50 disabled:cursor-not-allowed leading-tight text-center" 
+                       className="w-full py-2.5 sm:py-3.5 min-[1440px]:py-4 px-3 sm:px-6 min-[1440px]:px-8 rounded-xl sm:rounded-2xl min-[1440px]:rounded-3xl bg-gradient-to-r from-white via-[#F0FDF4] to-white hover:bg-emerald-50 border-b-[3px] sm:border-b-[5px] border-emerald-700 active:border-b-2 active:translate-y-1 text-emerald-950 font-black text-base xs:text-xs sm:text-base md:text-lg min-[1440px]:text-xl flex items-center justify-center gap-1.5 sm:gap-2.5 min-[1440px]:gap-3 shadow-md transition-all disabled:opacity-50 disabled:cursor-not-allowed leading-tight text-center" 
                        > 
                         <LaunchIcon />
                         
@@ -1078,7 +1078,7 @@ const createCelebrationStars = useCallback(
               {/* === CONTENEDORES === */} 
               <section className={`responsive-bins w-full shrink-0 pb-3 sm:pb-4 lg:pb-5 transition-all duration-700 ${ showBins ? 'opacity-100 translate-y-0' : 'opacity-0 pointer-events-none' }`} >
                  <div className="text-center mb-2 sm:mb-3 px-1">
-                   <span className="text-[9px] xs:text-[10px] sm:text-xs md:text-sm min-[1440px]:text-base font-extrabold text-teal-950 bg-white/95 px-2 sm:px-4 min-[1440px]:px-5 py-1 sm:py-1.5 rounded-xl sm:rounded-full border border-emerald-200 shadow-sm inline-flex items-center justify-center gap-1 sm:gap-1.5 text-center leading-tight"> 
+                   <span className="text-sm xs:text-sm sm:text-xs md:text-sm min-[1440px]:text-base font-extrabold text-teal-950 bg-white/95 px-2 sm:px-4 min-[1440px]:px-5 py-1 sm:py-1.5 rounded-xl sm:rounded-full border border-emerald-200 shadow-sm inline-flex items-center justify-center gap-1 sm:gap-1.5 text-center leading-tight"> 
                      <SearchIcon /> 
                        <span> ¿A qué contenedor pertenece este residuo? </span> 
                     </span> 
@@ -1112,11 +1112,11 @@ const createCelebrationStars = useCallback(
               <div className="w-9 h-9 xs:w-10 xs:h-10 sm:w-12 sm:h-12 md:w-14 md:h-14 min-[1440px]:w-16 min-[1440px]:h-16 rounded-xl sm:rounded-2xl bg-white/90 border border-white/80 flex items-center justify-center p-1 sm:p-1.5 mb-1 sm:mb-1.5 shadow-sm group-hover:scale-110 transition-transform shrink-0"> 
                  <BinIcon type={type} /> 
                </div> 
-               <span className="font-bold text-[10px] xs:text-[11px] sm:text-sm md:text-base min-[1440px]:text-lg tracking-wide text-center leading-tight">
+               <span className="font-bold text-sm xs:text-base sm:text-sm md:text-base min-[1440px]:text-lg tracking-wide text-center leading-tight">
                  {type === 'Papel' ? 'Papel y Cartón' : type} 
                </span> 
                  
-                <span className="text-[8px] xs:text-[9px] sm:text-[10px] md:text-xs min-[1440px]:text-sm font-medium opacity-80 text-center leading-tight mt-0.5"> 
+                <span className="text-sm xs:text-sm sm:text-sm md:text-xs min-[1440px]:text-sm font-medium opacity-80 text-center leading-tight mt-0.5"> 
                  {type === 'Plástico' && 'Envases, botellas'} 
                  {type === 'Papel' && 'Libretas, cajas'} 
                  {type === 'Vidrio' && 'Botellas, frascos'} 
@@ -1143,13 +1143,13 @@ const createCelebrationStars = useCallback(
                                  </svg> 
                                 </div> 
                                 
-                                <span className="text-[9px] sm:text-xs min-[1440px]:text-sm font-bold text-teal-900 uppercase tracking-widest bg-emerald-100 px-2.5 sm:px-3.5 py-1 rounded-full border border-teal-200"> ¡Misión Científica Completada! </span> 
+                                <span className="text-sm sm:text-xs min-[1440px]:text-sm font-bold text-teal-900 uppercase tracking-widest bg-emerald-100 px-2.5 sm:px-3.5 py-1 rounded-full border border-teal-200"> ¡Misión Científica Completada! </span> 
                                 <h2 className="text-xl sm:text-2xl md:text-3xl min-[1440px]:text-4xl font-extrabold text-slate-900 mt-2 sm:mt-3 mb-1"> ¡Gran Pequeño Científico! </h2> 
                                 <p className="text-xs sm:text-sm md:text-base min-[1440px]:text-lg text-slate-600 font-medium mb-4 sm:mb-5 min-[1440px]:mb-6"> ¡Descubriste y clasificaste todos los objetos del laboratorio correctamente! </p> 
                                 
                                 {/* Resultados */} 
                                 <div className="bg-white rounded-xl sm:rounded-2xl p-2.5 sm:p-3 border border-emerald-100 mb-4 sm:mb-6 shadow-sm"> 
-                                  <p className="text-[9px] sm:text-[11px] font-bold text-slate-500 uppercase tracking-wider mb-2 sm:mb-3"> Materiales analizados con éxito: </p> 
+                                  <p className="text-sm sm:text-base font-bold text-slate-500 uppercase tracking-wider mb-2 sm:mb-3"> Materiales analizados con éxito: </p> 
                                   
                                   <div className="flex justify-center items-center gap-1.5 sm:gap-3 flex-wrap"> 
                                     {collectedResults.map( (object) => ( 
@@ -1461,8 +1461,11 @@ const createCelebrationStars = useCallback(
                           }
 
                           .game-screen .fabrica-root main {
-                            overflow: hidden;
+                            overflow-x: hidden;
+                            overflow-y: auto;
                             justify-content: flex-start;
+                            -webkit-overflow-scrolling: touch;
+                            overscroll-behavior-y: contain;
                           }
 
                           .game-screen .fabrica-root main > section {

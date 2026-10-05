@@ -164,7 +164,7 @@ export default function ReflectionCardsGamePage() {
           >
             arrow_back
           </button>
-          <div className="font-headline-md text-headline-md text-primary font-bold">UNIVO</div>
+          <div className="font-headline-md text-headline-md text-primary font-bold">Aventura científica</div>
         </div>
         <div className="absolute left-1/2 -translate-x-1/2 text-on-surface font-headline-md text-[22px] hidden sm:block">
           Tarjetas de Reflexión

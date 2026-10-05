@@ -18,14 +18,20 @@ export default function ReflectionCardsStartPage() {
       style={{ background: 'linear-gradient(135deg, #fbf8fc 0%, #e8f5e9 100%)' }}
     >
       {/* Top App Bar */}
-      <header className="absolute top-0 w-full flex justify-center items-center py-6 px-5 md:px-[120px] z-10">
-        <h1 className="font-headline-lg-mobile md:font-headline-lg text-[#4a6549] text-center">
+      <header className="relative w-full grid grid-cols-[2.75rem_1fr_2.75rem] items-center px-4 py-3 md:px-8 z-20 shrink-0">
+        <button
+          onClick={handleBack}
+          className="text-[#4a6549] hover:scale-105 transition-transform duration-200 active:scale-95 flex items-center justify-center p-2 rounded-full hover:bg-[#e3e2e6]"
+        >
+          <span className="material-symbols-outlined">arrow_back</span>
+        </button>
+        <h1 className="font-headline-lg-mobile md:font-headline-lg text-[#4a6549] text-center leading-tight">
           Tarjetas de Reflexión
         </h1>
       </header>
 
       {/* Main Content Canvas */}
-      <main className="w-full max-w-3xl flex-1 flex flex-col items-center justify-center mt-20 relative z-20 px-5">
+      <main className="w-full max-w-3xl flex-1 min-h-0 flex flex-col items-center justify-center relative z-20 px-5 pb-4">
         {/* Central Focus Card */}
         <div
           className="bg-[#fbf3e4] rounded-3xl p-8 md:p-10 flex flex-col items-center gap-6 w-full max-w-md border-4 border-[#e0c48a] relative overflow-hidden"
@@ -64,16 +70,7 @@ export default function ReflectionCardsStartPage() {
         </div>
       </main>
 
-      {/* Decorative Bottom Gradient */}
       <div className="fixed bottom-0 left-0 w-full h-32 bg-gradient-to-t from-[#b0cfad]/30 to-transparent pointer-events-none z-0"></div>
-
-      {/* Back Button */}
-      <button
-        onClick={handleBack}
-        className="absolute top-6 left-5 md:left-[120px] text-[#4a6549] hover:scale-105 transition-transform duration-200 active:scale-95 flex items-center justify-center p-2 rounded-full hover:bg-[#e3e2e6] z-30"
-      >
-        <span className="material-symbols-outlined">arrow_back</span>
-      </button>
     </div>
   );
 }

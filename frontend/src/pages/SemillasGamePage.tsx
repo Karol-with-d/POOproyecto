@@ -317,7 +317,7 @@ export default function SemillasGamePage() {
                       </span>
                     </button>
                     <span
-                      className="text-[10px] font-bold uppercase px-2 py-0.5 rounded-full"
+                      className="text-sm font-bold uppercase px-2 py-0.5 rounded-full"
                       style={{
                         color: 'var(--tc-primary)',
                         backgroundColor: 'color-mix(in srgb, #ffffff 80%, transparent)',

@@ -54,17 +54,17 @@ export default function LoginPage() {
   return (
     <div className="min-h-screen flex flex-col overflow-x-hidden bg-transparent text-on-background selection:bg-primary-container selection:text-on-primary-container">
       <header className="text-primary font-headline-md text-headline-md font-bold flex justify-between items-center w-full px-margin-mobile md:px-margin-desktop py-base z-50">
-        <span className="font-headline-md text-headline-md font-bold text-primary">UNIVO</span>
+        <span className="font-headline-md text-headline-md font-bold text-primary">Aventura científica</span>
       </header>
 
       {/* Main Content Canvas */}
-      <main className="flex-grow flex items-center justify-center px-margin-mobile md:px-margin-desktop py-xl">
+      <main className="flex-grow flex items-center justify-center px-margin-mobile md:px-margin-desktop py-3 md:py-xl">
         {/* Layout Grid */}
         <div className="w-full max-w-[1024px] grid grid-cols-4 md:grid-cols-12 gap-gutter items-center">
           {/* Illustration Area */}
-          <div className="col-span-4 md:col-span-6 flex justify-center items-center mb-lg md:mb-0">
+          <div className="col-span-4 md:col-span-6 flex justify-center items-center mb-3 md:mb-0">
             <div
-              className="relative w-full max-w-[400px] aspect-square rounded-full bg-surface-container-low flex items-center justify-center p-md overflow-hidden border-2 border-surface-container-high"
+              className="relative h-32 w-32 sm:h-auto sm:w-full sm:max-w-[400px] sm:aspect-square rounded-full bg-surface-container-low flex items-center justify-center p-2 sm:p-md overflow-hidden border-2 border-surface-container-high"
               style={{ boxShadow: 'inset 0 4px 24px rgba(74,101,73,0.05)' }}
             >
               {/* Soft organic blob background */}
@@ -85,10 +85,10 @@ export default function LoginPage() {
           {/* Form Area */}
           <div className="col-span-4 md:col-span-6 flex justify-center md:justify-start">
             <div
-              className="w-full max-w-[420px] bg-surface rounded-[24px] p-lg border-2 border-surface-container-high"
+              className="w-full max-w-[420px] bg-surface rounded-[24px] p-4 sm:p-lg border-2 border-surface-container-high"
               style={{ boxShadow: '0 8px 32px rgba(74,101,73,0.08)' }}
             >
-              <div className="text-center mb-lg">
+              <div className="text-center mb-2 sm:mb-lg">
                 <h1 className="font-headline-lg-mobile md:font-headline-lg text-headline-lg-mobile md:text-headline-lg text-on-surface mb-xs">
                   ¡Hola!
                 </h1>
@@ -103,7 +103,7 @@ export default function LoginPage() {
                 </div>
               )}
 
-              <form className="flex flex-col gap-lg" onSubmit={handleStart}>
+              <form className="flex flex-col gap-3 sm:gap-lg" onSubmit={handleStart}>
                 {/* Username Field */}
                 <div className="flex flex-col gap-xs">
                   <label className="font-label-lg text-label-lg text-on-surface ml-sm" htmlFor="username">
@@ -133,7 +133,7 @@ export default function LoginPage() {
                       value={nickname}
                       onChange={(e) => setNickname(e.target.value)}
                       disabled={isLoading}
-                      className="input-squishy w-full bg-surface-container-low text-on-surface rounded-xl py-sm pl-[48px] pr-sm font-body-lg text-body-lg h-[64px] border-2 border-surface-container placeholder:text-outline-variant focus:bg-surface-container-lowest disabled:opacity-60"
+                      className="input-squishy w-full bg-surface-container-low text-on-surface rounded-xl py-sm pl-[48px] pr-sm font-body-lg text-body-lg h-14 sm:h-[64px] border-2 border-surface-container placeholder:text-outline-variant focus:bg-surface-container-lowest disabled:opacity-60"
                     />
                   </div>
                 </div>
@@ -142,7 +142,7 @@ export default function LoginPage() {
                 <button
                   type="submit"
                   disabled={isLoading}
-                  className="kid-cta mt-sm w-full text-white font-headline-md text-headline-md py-sm rounded-xl h-[72px] flex items-center justify-center gap-sm btn-3d disabled:opacity-70 disabled:cursor-not-allowed"
+                  className="kid-cta mt-1 sm:mt-sm w-full text-white font-headline-md text-headline-md py-sm rounded-xl h-14 sm:h-[72px] flex items-center justify-center gap-sm btn-3d disabled:opacity-70 disabled:cursor-not-allowed"
                 >
                   {isLoading ? 'Estamos abriendo el laboratorio' : 'Entrar'}
                   <span className="material-symbols-outlined fill">arrow_forward</span>
@@ -150,7 +150,7 @@ export default function LoginPage() {
               </form>
 
               {/* Help Link */}
-              <div className="mt-lg text-center">
+              <div className="mt-2 sm:mt-lg text-center">
                 <button
                   type="button"
                   onClick={() => showKidMessage('Puedes tocar un nombre o entrar sin escribir. Tu aventura se guarda en este aparato.', 'soon')}

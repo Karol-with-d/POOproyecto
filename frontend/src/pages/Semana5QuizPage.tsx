@@ -245,7 +245,7 @@ export default function Semana5QuizPage() {
       <main className="relative h-screen pt-16 w-full overflow-hidden">
 
         {/* STATE 0 — INTRO */}
-        <div className={`absolute inset-0 flex flex-col items-center justify-center p-8 overflow-y-auto transition-all duration-400 ${getSlideClass(0)}`}>
+        <div className={`absolute inset-0 flex flex-col items-center justify-start overflow-y-auto px-8 pb-8 pt-20 transition-all duration-400 ${getSlideClass(0)}`}>
           <div className="max-w-lg w-full text-center space-y-8 mt-8 pb-24 tc-rise-in">
             <div className="relative w-56 h-56 mx-auto tc-soft-float">
               <img src={IMG_BRAIN} alt="Cerebro con birrete" className="w-full h-full object-contain rounded-3xl" />
@@ -285,7 +285,7 @@ export default function Semana5QuizPage() {
         {QUESTIONS.map((q, qi) => (
           <div
             key={qi}
-            className={`absolute inset-0 flex flex-col p-4 sm:p-6 pt-28 sm:pt-32 overflow-y-auto scroll-pb-10 transition-all duration-400 ${getSlideClass(qi + 1)}`}
+            className={`absolute inset-0 flex flex-col overflow-y-auto scroll-pb-10 px-4 pb-4 pt-40 transition-all duration-400 sm:px-6 sm:pb-6 sm:pt-36 ${getSlideClass(qi + 1)}`}
           >
             <div className="max-w-2xl mx-auto w-full space-y-4 sm:space-y-6 pb-12 sm:pb-16">
               <div className="bg-surface-container-low rounded-3xl p-3 sm:p-4 tc-rise-in" style={{ boxShadow: '0 4px 20px rgba(46,50,48,0.06)' }}>

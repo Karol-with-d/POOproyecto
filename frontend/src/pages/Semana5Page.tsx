@@ -81,7 +81,7 @@ export default function Semana5Page() {
       </div>
       <WeekHubHeader title="Semana 5: Vida" theme={WEEK_NAV_THEMES[5]} onBack={handleHome} />
 
-      <main className="flex-1 relative flex flex-col items-center justify-start p-6 space-y-6 overflow-y-auto scroll-pb-32 md:scroll-pb-0">
+      <main className="min-h-0 flex-1 relative flex flex-col items-center justify-start p-6 space-y-6 overflow-y-auto overflow-x-hidden scroll-pb-32 md:scroll-pb-0">
         {/* Field Notebook Header */}
         <div className="relative w-full max-w-4xl text-center">
           <div

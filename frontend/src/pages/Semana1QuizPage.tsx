@@ -83,7 +83,7 @@ const QUESTIONS: Question[] = [
   },
   {
     topic: 'Ordenar por tamaño',
-    prompt: 'En las bebidas escolares, ¿cuál tiene más líquido?',
+    prompt: 'En estas bebidas, ¿cuál tiene más líquido?',
     hint: 'Mira los mililitros de la etiqueta. 500 ml caben más que 100 ml.',
     options: [
       { emoji: '🍓', label: 'El yogur de fresa, de 100 ml' },
@@ -251,7 +251,7 @@ export default function Semana1QuizPage() {
           </button>
           <div className="min-w-0 flex-1">
             <p className="text-xs font-bold uppercase tracking-wide text-[#b7793d]">Semana 1 · Evaluación</p>
-            <h1 className="truncate font-headline-md text-lg text-[#3d2914]">El Director te pregunta</h1>
+            <h1 className="font-headline-md text-lg leading-tight text-[#3d2914]">El Director te pregunta</h1>
           </div>
           {screen === 'quiz' && (
             <div className="rounded-full bg-white px-3 py-1 text-sm font-bold text-[#8a5a2b] shadow-sm">

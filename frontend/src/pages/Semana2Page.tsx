@@ -13,7 +13,7 @@ export default function Semana2Page() {
     {
       id: 'coleccionando-objetos',
       title: 'Coleccionando objetos',
-      desc: 'Busca y colecciona objetos ocultos en el aula.',
+      desc: 'Busca y colecciona objetos ocultos en la escena.',
       image: IMG_COLECCIONANDO,
       onClick: () => navigate('/semana/2/coleccionando-objetos/play'),
     },
@@ -83,7 +83,7 @@ export default function Semana2Page() {
       />
 
       {/* Main Content */}
-      <main className="flex-1 w-full px-4 py-6 pb-40 sm:px-6 sm:py-8 md:px-8 md:py-10 md:pb-10 lg:px-12 lg:py-12 xl:px-16 flex flex-col z-10 overflow-y-auto">
+      <main className="min-h-0 flex-1 w-full px-4 py-6 pb-40 sm:px-6 sm:py-8 md:px-8 md:py-10 md:pb-10 lg:px-12 lg:py-12 xl:px-16 flex flex-col z-10 overflow-y-auto overflow-x-hidden">
 
         {/* Section Title */}
         <div className="text-center mb-6 sm:mb-8 md:mb-10 w-full">
@@ -168,7 +168,7 @@ export default function Semana2Page() {
               <img
                 src={IMG_MARTA_BG}
                 className="w-full h-full object-cover"
-                alt="Aula de clases"
+                alt="Escena para coleccionar objetos"
                 loading="lazy"
               />
               <div

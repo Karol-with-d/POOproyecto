@@ -681,7 +681,7 @@ export default function ColeccionandoObjetos() {
                     <div className="flex h-11 w-full items-center justify-center sm:h-16">
                       <ItemIllustration id={item.id} />
                     </div>
-                    <span className="text-[10px] font-extrabold leading-tight text-[#7a4b12] sm:text-xs">
+                    <span className="text-sm font-extrabold leading-tight text-[#7a4b12] sm:text-xs">
                       {item.label}
                     </span>
                   </div>

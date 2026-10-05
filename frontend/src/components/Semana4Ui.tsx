@@ -448,7 +448,7 @@ export function S4Header({
       </button>
       <div className="min-w-0 flex-1 text-center">
         <p className="text-[10px] font-black uppercase tracking-[0.28em] text-[#99f6e4]">Laboratorio 04</p>
-        <h1 className="truncate font-headline-md text-lg font-black md:text-xl">{title}</h1>
+        <h1 className="font-headline-md text-base font-black leading-tight md:text-xl">{title}</h1>
       </div>
       <div className="flex min-w-11 justify-end">{badge ?? <span className="w-11" aria-hidden="true" />}</div>
     </header>

@@ -460,7 +460,7 @@ export default function MartaDialogoPage() {
       <div className="pointer-events-none absolute inset-0 z-0 min-h-screen">
         <img
           src="/images/semana2/salon_clases.webp"
-          alt="Aula de clases"
+          alt="Escena de la aventura científica"
           className="h-full min-h-screen w-full object-cover opacity-90"
         />
         <div

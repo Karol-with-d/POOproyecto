@@ -1,73 +1,102 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, type ReactNode } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useResetScrollOn } from '../components/WeekScrollReset';
-import KidBackButton from '../components/KidBackButton';
+import '../styles/bosque-vivo.css';
 
-// ── Images ──────────────────────────────────────────────────────────────────
-const IMG_HERO       = '/images/semana6/moverse/hero.webp';
-const IMG_FEELINGS   = '/images/semana6/moverse/feelings.webp';
-const IMG_FINAL      = '/images/semana6/moverse/final.webp';
+const IMG_HERO = '/images/semana6/moverse/hero.webp';
+const IMG_FEELINGS = '/images/semana6/moverse/feelings.webp';
+const IMG_FINAL = '/images/semana6/moverse/final.webp';
 
 const ACTIVITIES = [
-  { title: '¡Salta 10 veces!',              image: '/images/semana6/moverse/act1-salta.webp',       duration: 10 },
-  { title: '¡Corre en tu lugar 15 segundos!', image: '/images/semana6/moverse/act2-corre.webp',     duration: 15 },
-  { title: '¡15 sentadillas!',               image: '/images/semana6/moverse/act3-sentadillas.webp', duration: 30 },
+  { title: '¡Salta 10 veces!', image: '/images/semana6/moverse/act1-salta.webp', duration: 10 },
+  { title: '¡Corre en tu lugar 15 segundos!', image: '/images/semana6/moverse/act2-corre.webp', duration: 15 },
+  { title: '¡15 sentadillas!', image: '/images/semana6/moverse/act3-sentadillas.webp', duration: 30 },
 ];
 
 const FEELINGS = [
-  { icon: 'wb_sunny',    bg: 'bg-tertiary-fixed',    iconColor: 'text-[#6a5d45]', question: '¿Sientes calor?' },
-  { icon: 'favorite',    bg: 'bg-error-container',   iconColor: 'text-[#ba1a1a]', question: '¿Late más rápido tu corazón?' },
-  { icon: 'water_drop',  bg: 'bg-secondary-container', iconColor: 'text-[#3e6378]', question: '¿Tienes sed?' },
+  { icon: 'wb_sunny', color: '#ff7a59', bg: 'rgba(255,122,89,0.2)', question: '¿Sientes calor?' },
+  { icon: 'favorite', color: '#e85a3a', bg: 'rgba(232,90,58,0.18)', question: '¿Late más rápido tu corazón?' },
+  { icon: 'water_drop', color: '#1a7a96', bg: 'rgba(26,122,150,0.18)', question: '¿Tienes sed?' },
 ];
 
-// ── SVG Timer ────────────────────────────────────────────────────────────────
-const CIRCUMFERENCE = 2 * Math.PI * 45; // ≈ 282.7
+const CIRCUMFERENCE = 2 * Math.PI * 45;
 
 function CircleTimer({ timeLeft, duration }: { timeLeft: number; duration: number }) {
   const offset = CIRCUMFERENCE * (1 - timeLeft / duration);
   return (
-    <div className="relative w-32 h-32 flex items-center justify-center bg-surface-container rounded-full shadow-[inset_0_2px_8px_rgba(0,0,0,0.05)] border-2 border-surface-dim">
-      <svg className="w-full h-full absolute inset-0" viewBox="0 0 100 100">
+    <div
+      className="relative flex h-36 w-36 items-center justify-center rounded-full"
+      style={{
+        background: 'rgba(255,255,255,0.9)',
+        border: '3px solid rgba(15,47,40,0.12)',
+        boxShadow: 'inset 0 2px 10px rgba(15,47,40,0.06)',
+      }}
+    >
+      <svg className="absolute inset-0 h-full w-full" viewBox="0 0 100 100">
+        <circle cx="50" cy="50" r="45" fill="none" stroke="rgba(15,47,40,0.12)" strokeWidth="8" />
         <circle
-          className="text-surface-variant opacity-30"
-          cx="50" cy="50" r="45" fill="none"
-          stroke="currentColor" strokeWidth="8"
-        />
-        <circle
-          cx="50" cy="50" r="45" fill="none"
-          stroke="#4a6549" strokeWidth="8" strokeLinecap="round"
+          cx="50"
+          cy="50"
+          r="45"
+          fill="none"
+          stroke="#ff7a59"
+          strokeWidth="8"
+          strokeLinecap="round"
           strokeDasharray={CIRCUMFERENCE}
           strokeDashoffset={offset}
           style={{ transform: 'rotate(-90deg)', transformOrigin: '50% 50%', transition: 'stroke-dashoffset 0.9s linear' }}
         />
       </svg>
       <div className="relative z-10 flex flex-col items-center">
-        <span className="font-headline-md text-headline-md text-primary leading-none">{timeLeft}</span>
-        <span className="font-label-md text-label-md text-on-surface-variant text-[12px]">segundos</span>
+        <span className="bv-baloo text-4xl font-extrabold text-[var(--bv-coral)] leading-none">{timeLeft}</span>
+        <span className="text-xs font-bold text-[var(--bv-muted)]">segundos</span>
       </div>
     </div>
   );
 }
 
-// ── Main Component ────────────────────────────────────────────────────────────
+function BvShell({ children }: { children: ReactNode }) {
+  return (
+    <div className="bv-root bv-page relative min-h-screen flex flex-col overflow-x-hidden">
+      <div className="bv-atmosphere" aria-hidden="true">
+        <div className="bv-fireflies">
+          <span /><span /><span /><span />
+        </div>
+      </div>
+      <div className="relative z-[1] flex min-h-screen flex-col">{children}</div>
+    </div>
+  );
+}
+
+function TopBar({ title, onBack }: { title: string; onBack: () => void }) {
+  return (
+    <header
+      className="sticky top-0 z-40 flex items-center justify-between gap-3 px-4 py-3 md:px-8"
+      style={{ background: 'rgba(15,47,40,0.92)', color: '#eef8f4' }}
+    >
+      <button type="button" onClick={onBack} aria-label="Volver" className="bv-icon-btn">
+        <span className="material-symbols-outlined">arrow_back</span>
+      </button>
+      <h1 className="bv-baloo flex-1 truncate text-center text-lg font-extrabold md:text-xl">{title}</h1>
+      <div className="w-11" />
+    </header>
+  );
+}
+
 type Screen = 'start' | 'activity' | 'feelings' | 'results';
 
 export default function MovimientoGamePage() {
   const navigate = useNavigate();
-
-  const [screen, setScreen]       = useState<Screen>('start');
-  const [actIdx, setActIdx]       = useState(0);
+  const [screen, setScreen] = useState<Screen>('start');
+  const [actIdx, setActIdx] = useState(0);
   useResetScrollOn(`${screen}-${actIdx}`);
-  const [timeLeft, setTimeLeft]   = useState(ACTIVITIES[0].duration);
+  const [timeLeft, setTimeLeft] = useState(ACTIVITIES[0].duration);
   const [timerRunning, setTimerRunning] = useState(false);
-
-  // feelings: null = unanswered, true = sí, false = no
   const [feelingAnswers, setFeelingAnswers] = useState<(boolean | null)[]>([null, null, null]);
 
   const currentAct = ACTIVITIES[actIdx];
   const allAnswered = feelingAnswers.every((a) => a !== null);
 
-  // ── Timer logic ──────────────────────────────────────────────────────────
   const startTimer = useCallback(() => {
     setTimeLeft(currentAct.duration);
     setTimerRunning(true);
@@ -79,19 +108,21 @@ export default function MovimientoGamePage() {
 
   useEffect(() => {
     if (!timerRunning) return;
-    if (timeLeft <= 0) { setTimerRunning(false); return; }
+    if (timeLeft <= 0) {
+      setTimerRunning(false);
+      return;
+    }
     const id = setInterval(() => setTimeLeft((t) => t - 1), 1000);
     return () => clearInterval(id);
   }, [timerRunning, timeLeft]);
 
-  // ── Navigation ───────────────────────────────────────────────────────────
   function handleReady() {
     setTimerRunning(false);
     if (actIdx + 1 < ACTIVITIES.length) {
       const next = actIdx + 1;
       setActIdx(next);
       setTimeLeft(ACTIVITIES[next].duration);
-      setScreen('activity'); // trigger useEffect via dependency change
+      setScreen('activity');
     } else {
       setScreen('feelings');
     }
@@ -99,10 +130,6 @@ export default function MovimientoGamePage() {
 
   function handleFeelingAnswer(i: number, val: boolean) {
     setFeelingAnswers((prev) => prev.map((a, idx) => (idx === i ? val : a)));
-  }
-
-  function handleFeelingsContinue() {
-    setScreen('results');
   }
 
   function handleRestart() {
@@ -113,162 +140,119 @@ export default function MovimientoGamePage() {
     setScreen('start');
   }
 
-  // ══════════════════════════════════════════════════════════════════════════
-  // START SCREEN
-  // ══════════════════════════════════════════════════════════════════════════
   if (screen === 'start') {
     return (
-      <div className="bg-surface text-on-surface min-h-screen flex flex-col items-center justify-center font-body-md overflow-hidden antialiased">
-        <header className="w-full flex items-center justify-between px-margin-mobile md:px-margin-desktop py-4 sticky top-0 z-40">
-          <KidBackButton onClick={() => navigate('/semana/6')} label="Volver a la Semana 6" />
-          <div className="w-12" aria-hidden="true" />
-        </header>
-        <main className="w-full max-w-4xl mx-auto px-margin-mobile md:px-margin-desktop flex flex-col items-center justify-center flex-grow gap-xl py-xl">
-          <header className="text-center">
-            <h1 className="font-headline-lg-mobile md:font-headline-lg text-headline-lg-mobile md:text-headline-lg text-primary tracking-tight">
-              ¡A moverse!
-            </h1>
-          </header>
-
-          {/* Circular image with decorative blobs */}
-          <div className="relative flex items-center justify-center w-full max-w-sm">
-            <div className="absolute inset-0 bg-primary-fixed opacity-40 rounded-full scale-110 blur-xl" />
-            <div className="absolute inset-0 bg-secondary-container rounded-full scale-90 mix-blend-multiply opacity-50" />
-            <div className="relative z-10 w-48 h-48 md:w-64 md:h-64 rounded-full overflow-hidden border-4 border-surface shadow-lg bg-surface-container flex items-center justify-center">
-              <img src={IMG_HERO} alt="Personaje en movimiento" className="w-full h-full object-cover rounded-full" />
-            </div>
-            <div className="absolute -top-4 -right-4 w-6 h-6 bg-tertiary-fixed rounded-full opacity-60 animate-bounce" style={{ animationDuration: '3s' }} />
-            <div className="absolute -bottom-2 -left-6 w-4 h-4 bg-primary-container rounded-full opacity-80 animate-pulse" style={{ animationDuration: '4s' }} />
-          </div>
-
-          <div className="w-full max-w-xs flex flex-col items-center pt-md">
-            <button
-              onClick={() => setScreen('activity')}
-              className="w-full bg-primary text-on-primary font-headline-md text-headline-md py-md px-lg rounded-xl flex items-center justify-center gap-sm active:translate-y-1 transition-transform"
-              style={{ boxShadow: '0 4px 0 0 #334d33', borderBottom: '4px solid #334d33' }}
+      <BvShell>
+        <TopBar title="¡A moverse!" onBack={() => navigate('/semana/6')} />
+        <main className="flex flex-1 flex-col items-center justify-center gap-6 px-5 py-8 text-center">
+          <span className="bv-chip" style={{ background: 'rgba(255,122,89,0.2)', color: '#e85a3a' }}>
+            Energía del bosque
+          </span>
+          <h2 className="bv-title text-4xl">¡A moverse!</h2>
+          <div className="bv-float relative">
+            <div
+              className="h-48 w-48 overflow-hidden rounded-full border-4 md:h-60 md:w-60"
+              style={{ borderColor: '#ff7a59', boxShadow: '0 12px 0 rgba(232,90,58,0.35)' }}
             >
-              <span>¡Empezar Aventura!</span>
-              <span className="material-symbols-outlined" style={{ fontVariationSettings: "'FILL' 1" }}>play_circle</span>
-            </button>
-            <p className="mt-sm text-center font-label-md text-label-md text-on-surface-variant max-w-xs">
-              Prepárate para explorar.
-            </p>
+              <img src={IMG_HERO} alt="Personaje en movimiento" className="h-full w-full object-cover" />
+            </div>
           </div>
+          <button type="button" onClick={() => setScreen('activity')} className="bv-btn bv-btn-coral w-full max-w-xs">
+            ¡Empezar Aventura!
+            <span className="material-symbols-outlined" style={{ fontVariationSettings: "'FILL' 1" }}>play_circle</span>
+          </button>
+          <p className="bv-subtitle text-sm">Prepárate para explorar con todo el cuerpo.</p>
         </main>
-      </div>
+      </BvShell>
     );
   }
 
-  // ══════════════════════════════════════════════════════════════════════════
-  // ACTIVITY SCREEN
-  // ══════════════════════════════════════════════════════════════════════════
   if (screen === 'activity') {
     return (
-      <div className="bg-surface text-on-surface font-body-md min-h-screen flex flex-col items-center">
-        <header className="bg-background w-full flex justify-between items-center px-margin-mobile md:px-margin-desktop py-4 sticky top-0 z-40">
-          <KidBackButton onClick={() => navigate('/semana/6')} label="Volver a la Semana 6" />
-          <h1 className="font-headline-md text-headline-md font-bold text-primary">¡A moverse!</h1>
-          <div className="w-12" aria-hidden="true" />
-        </header>
-
-        <main className="flex-grow w-full max-w-4xl mx-auto px-margin-mobile md:px-gutter pt-xl pb-32 flex flex-col items-center justify-center text-center">
-          {/* Progress dots */}
-          <div className="flex gap-2 mb-lg">
+      <BvShell>
+        <TopBar title="¡A moverse!" onBack={() => navigate('/semana/6')} />
+        <main className="flex flex-1 flex-col items-center justify-center px-5 py-8 text-center">
+          <div className="mb-5 flex gap-2">
             {ACTIVITIES.map((_, i) => (
               <div
                 key={i}
-                className={`rounded-full transition-all duration-300 ${i === actIdx ? 'w-6 h-3 bg-primary' : i < actIdx ? 'w-3 h-3 bg-primary-container' : 'w-3 h-3 bg-outline-variant'}`}
+                className="rounded-full transition-all duration-300"
+                style={{
+                  width: i === actIdx ? 28 : 12,
+                  height: 12,
+                  background:
+                    i === actIdx ? '#ff7a59' : i < actIdx ? '#2f9e6b' : 'rgba(15,47,40,0.15)',
+                }}
               />
             ))}
           </div>
 
-          <h2 className="font-headline-lg-mobile md:font-headline-lg text-primary mb-lg">
-            {currentAct.title}
-          </h2>
+          <h2 className="bv-title mb-6 text-2xl md:text-3xl">{currentAct.title}</h2>
 
-          {/* Character illustration */}
-          <div className="relative w-64 h-64 md:w-80 md:h-80 mb-lg">
-            <div className="absolute inset-0 bg-primary-fixed-dim opacity-30 rounded-[40%_60%_70%_30%/40%_50%_60%_50%] animate-spin" style={{ animationDuration: '10s' }} />
+          <div className="relative mb-4 h-40 w-40 sm:mb-6 sm:h-56 sm:w-56 md:h-72 md:w-72">
+            <div
+              className="absolute inset-0 rounded-[40%_60%_70%_30%/40%_50%_60%_50%] opacity-40 animate-spin"
+              style={{ background: 'rgba(255,122,89,0.35)', animationDuration: '10s' }}
+            />
             <img
               src={currentAct.image}
               alt={currentAct.title}
-              className="relative z-10 w-full h-full object-contain drop-shadow-md"
+              className="relative z-10 h-full w-full object-contain drop-shadow-md"
             />
           </div>
 
-          {/* Circular timer */}
-          <div className="mb-xl">
+          <div className="mb-8">
             <CircleTimer timeLeft={timeLeft} duration={currentAct.duration} />
           </div>
 
-          <button
-            onClick={handleReady}
-            className="bg-primary text-on-primary font-headline-md text-headline-md py-4 px-12 rounded-full flex items-center gap-3 shadow-lg active:translate-y-0.5 transition-transform"
-            style={{ boxShadow: '0 4px 0 0 #334d33', borderBottom: '4px solid #334d33' }}
-          >
-            <span className="material-symbols-outlined text-[28px]" style={{ fontVariationSettings: "'FILL' 1" }}>check_circle</span>
+          <button type="button" onClick={handleReady} className="bv-btn bv-btn-leaf px-12">
+            <span className="material-symbols-outlined" style={{ fontVariationSettings: "'FILL' 1" }}>
+              check_circle
+            </span>
             ¡LISTO!
           </button>
         </main>
-      </div>
+      </BvShell>
     );
   }
 
-  // ══════════════════════════════════════════════════════════════════════════
-  // FEELINGS SCREEN
-  // ══════════════════════════════════════════════════════════════════════════
   if (screen === 'feelings') {
     return (
-      <div className="bg-background text-on-background min-h-screen flex flex-col font-body-lg">
-        <header className="bg-background w-full flex justify-between items-center px-margin-mobile md:px-margin-desktop py-4 sticky top-0 z-40">
-          <KidBackButton onClick={() => navigate('/semana/6')} label="Volver a la Semana 6" />
-          <span className="font-headline-md text-headline-md font-bold text-primary">¡A moverse!</span>
-          <div className="w-12" aria-hidden="true" />
-        </header>
+      <BvShell>
+        <TopBar title="¡A moverse!" onBack={() => navigate('/semana/6')} />
+        <main className="mx-auto flex w-full max-w-2xl flex-1 flex-col items-center px-5 py-6 pb-16">
+          <img src={IMG_FEELINGS} alt="Sol, corazón y gota" className="mb-4 h-auto max-h-40 w-full max-w-xs object-contain" />
+          <h2 className="bv-title mb-6 text-center text-2xl md:text-3xl">¿Cómo se siente tu cuerpo?</h2>
 
-        <main className="flex-grow flex flex-col items-center px-margin-mobile md:px-margin-desktop py-lg pb-32 md:pb-lg w-full max-w-5xl mx-auto">
-          <div className="w-full max-w-md mb-8 flex justify-center">
-            <img src={IMG_FEELINGS} alt="Sol, corazón y gota de agua" className="w-full h-auto object-contain max-h-[200px]" />
-          </div>
-
-          <h1 className="font-headline-lg-mobile md:font-headline-lg text-headline-lg-mobile md:text-headline-lg text-primary text-center mb-12">
-            ¿Cómo se siente tu cuerpo?
-          </h1>
-
-          <div className="w-full max-w-2xl flex flex-col gap-6">
+          <div className="flex w-full flex-col gap-4">
             {FEELINGS.map((f, i) => (
-              <div
-                key={f.question}
-                className="bg-surface-container-lowest border-2 border-surface-variant rounded-[2rem] p-6 shadow-[0_8px_24px_rgba(74,101,73,0.05)] flex flex-col sm:flex-row items-center gap-6 sm:gap-8"
-              >
-                <div className={`${f.bg} w-24 h-24 rounded-full flex items-center justify-center shrink-0`}>
-                  <span className={`material-symbols-outlined text-6xl ${f.iconColor}`} style={{ fontVariationSettings: "'FILL' 1" }}>
+              <div key={f.question} className="bv-card flex flex-col items-center gap-4 p-5 sm:flex-row">
+                <div
+                  className="flex h-20 w-20 shrink-0 items-center justify-center rounded-full"
+                  style={{ background: f.bg }}
+                >
+                  <span
+                    className="material-symbols-outlined text-5xl"
+                    style={{ color: f.color, fontVariationSettings: "'FILL' 1" }}
+                  >
                     {f.icon}
                   </span>
                 </div>
-                <div className="flex-grow text-center sm:text-left w-full">
-                  <h2 className="font-headline-md text-headline-md text-on-surface mb-6">{f.question}</h2>
-                  <div className="flex gap-4 w-full">
+                <div className="w-full flex-1 text-center sm:text-left">
+                  <h3 className="bv-baloo mb-3 text-xl font-bold">{f.question}</h3>
+                  <div className="flex gap-3">
                     <button
+                      type="button"
                       onClick={() => handleFeelingAnswer(i, true)}
-                      className={`flex-1 py-4 font-label-lg text-label-lg rounded-2xl border-b-[6px] flex items-center justify-center gap-2 transition-all active:translate-y-1 ${
-                        feelingAnswers[i] === true
-                          ? 'bg-primary text-on-primary border-[#334d33]'
-                          : 'bg-primary text-on-primary border-on-primary-fixed-variant'
-                      }`}
+                      className={`bv-btn flex-1 ${feelingAnswers[i] === true ? 'bv-btn-coral' : 'bv-btn-ghost'}`}
                     >
-                      <span className="material-symbols-outlined" style={{ fontVariationSettings: "'FILL' 1" }}>check</span>
                       ¡Sí!
                     </button>
                     <button
+                      type="button"
                       onClick={() => handleFeelingAnswer(i, false)}
-                      className={`flex-1 py-4 font-label-lg text-label-lg rounded-2xl border-b-[6px] flex items-center justify-center gap-2 transition-all active:translate-y-1 ${
-                        feelingAnswers[i] === false
-                          ? 'bg-outline text-surface border-[#5a6b5a]'
-                          : 'bg-surface-variant text-on-surface-variant border-outline-variant'
-                      }`}
+                      className={`bv-btn flex-1 ${feelingAnswers[i] === false ? 'bv-btn-river' : 'bv-btn-ghost'}`}
                     >
-                      <span className="material-symbols-outlined" style={{ fontVariationSettings: "'FILL' 1" }}>close</span>
                       No
                     </button>
                   </div>
@@ -278,98 +262,40 @@ export default function MovimientoGamePage() {
           </div>
 
           {allAnswered && (
-            <button
-              onClick={handleFeelingsContinue}
-              className="mt-10 bg-primary text-on-primary font-label-lg text-label-lg py-md px-xl rounded-2xl border-b-4 border-[#334d33] active:translate-y-1 transition-transform"
-            >
+            <button type="button" onClick={() => setScreen('results')} className="bv-btn bv-btn-firefly mt-8">
               Continuar →
             </button>
           )}
         </main>
-      </div>
+      </BvShell>
     );
   }
 
-  // ══════════════════════════════════════════════════════════════════════════
-  // RESULTS SCREEN
-  // ══════════════════════════════════════════════════════════════════════════
   return (
-    <div className="bg-background min-h-screen flex flex-col font-body-md text-on-surface antialiased overflow-x-hidden">
-      <header className="flex justify-between items-center w-full px-margin-mobile md:px-margin-desktop py-4 bg-background z-40 sticky top-0">
-        <KidBackButton onClick={() => navigate('/semana/6')} label="Volver a la Semana 6" />
-        <div className="font-headline-md text-headline-md font-bold text-primary flex items-center gap-sm">
-          <span className="material-symbols-outlined text-[28px]" style={{ fontVariationSettings: "'FILL' 1" }}>directions_run</span>
-          ¡A moverse!
-        </div>
-        <div className="w-12" aria-hidden="true" />
-      </header>
-
-      <main className="flex-grow flex items-center justify-center p-margin-mobile md:p-margin-desktop relative z-10 w-full max-w-7xl mx-auto pb-32 md:pb-margin-desktop">
-        <div className="w-full max-w-3xl">
-          {/* Card */}
-          <div className="bg-surface-container-lowest rounded-3xl border-[3px] border-surface-container-highest overflow-hidden flex flex-col md:flex-row relative group shadow-[0_8px_32px_-4px_rgba(74,101,73,0.15)]">
-            <div className="absolute top-0 right-10 w-24 h-4 bg-tertiary-container rounded-b-xl opacity-50" />
-
-            {/* Image side */}
-            <div className="w-full md:w-1/2 p-lg flex items-center justify-center bg-error-container/30 relative overflow-hidden min-h-[300px]">
-              <img
-                src={IMG_FINAL}
-                alt="¡Misión cumplida!"
-                className="relative z-10 w-full max-w-[280px] h-auto object-contain group-hover:scale-105 transition-transform duration-500"
-              />
-            </div>
-
-            {/* Content side */}
-            <div className="w-full md:w-1/2 p-lg flex flex-col justify-center gap-lg bg-surface-container-lowest">
-              <div className="space-y-sm">
-                <h2 className="font-headline-lg-mobile md:font-headline-lg text-primary leading-tight">¡Misión Cumplida!</h2>
-                <p className="font-body-lg text-body-lg text-on-surface-variant leading-relaxed">
-                  ¡Felicidades! Has completado todos los ejercicios de hoy. Tu cuerpo y tu corazón están listos para seguir explorando.
-                </p>
-              </div>
-
-              <div className="mt-4 flex flex-col gap-3">
-                <button
-                  onClick={() => navigate('/semana/6')}
-                  className="w-full sm:w-auto inline-flex items-center justify-center gap-sm px-8 py-4 bg-primary text-on-primary rounded-2xl font-label-lg text-label-lg border-b-4 border-[#334d33] hover:-translate-y-1 active:translate-y-0 active:border-b-0 transition-all duration-200"
-                >
-                  Siguiente juego
-                </button>
-                <button
-                  onClick={handleRestart}
-                  className="w-full sm:w-auto inline-flex items-center justify-center gap-sm px-8 py-4 bg-surface-container text-primary rounded-2xl font-label-lg text-label-lg border-b-4 border-surface-container-highest hover:-translate-y-1 active:translate-y-0 active:border-b-0 transition-all duration-200"
-                >
-                  Intentar de nuevo
-                </button>
-              </div>
-            </div>
+    <BvShell>
+      <TopBar title="¡A moverse!" onBack={() => navigate('/semana/6')} />
+      <main className="mx-auto flex w-full max-w-3xl flex-1 items-center justify-center px-5 py-8">
+        <div className="bv-card flex w-full flex-col overflow-hidden md:flex-row">
+          <div
+            className="flex min-h-[240px] items-center justify-center p-6 md:w-1/2"
+            style={{ background: 'rgba(255,122,89,0.18)' }}
+          >
+            <img src={IMG_FINAL} alt="¡Misión cumplida!" className="max-w-[260px] object-contain" />
           </div>
-
-          {/* Progress dots */}
-          <div className="flex justify-center items-center gap-xs mt-lg">
-            <div className="w-2 h-2 rounded-full bg-outline-variant" />
-            <div className="w-2 h-2 rounded-full bg-outline-variant" />
-            <div className="w-4 h-2 rounded-full bg-primary transition-all duration-300" />
-            <div className="w-2 h-2 rounded-full bg-outline-variant" />
+          <div className="flex flex-col justify-center gap-4 p-6 md:w-1/2">
+            <h2 className="bv-title text-3xl">¡Misión Cumplida!</h2>
+            <p className="bv-subtitle">
+              Completaste los ejercicios. Tu cuerpo y tu corazón están listos para seguir explorando.
+            </p>
+            <button type="button" onClick={() => navigate('/semana/6')} className="bv-btn bv-btn-coral">
+              Siguiente juego
+            </button>
+            <button type="button" onClick={handleRestart} className="bv-btn bv-btn-ghost">
+              Intentar de nuevo
+            </button>
           </div>
         </div>
       </main>
-
-      {/* Mobile bottom nav */}
-      <nav className="md:hidden fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-4 py-3 bg-surface-container-lowest shadow-[0_-4px_12px_rgba(74,101,73,0.08)] rounded-t-2xl border-t border-surface-container-highest">
-        <button className="flex flex-col items-center justify-center text-on-surface-variant px-6 py-2 rounded-full transition-colors">
-          <span className="material-symbols-outlined">exercise</span>
-          <span className="font-label-md text-label-md mt-1">¡Jugar!</span>
-        </button>
-        <button className="flex flex-col items-center justify-center bg-primary-container text-on-primary-container rounded-3xl px-6 py-2">
-          <span className="material-symbols-outlined" style={{ fontVariationSettings: "'FILL' 1" }}>favorite</span>
-          <span className="font-label-md text-label-md mt-1 font-bold">Mi Cuerpo</span>
-        </button>
-        <button onClick={() => navigate('/home')} className="flex flex-col items-center justify-center text-on-surface-variant px-6 py-2 rounded-full transition-colors">
-          <span className="material-symbols-outlined">map</span>
-          <span className="font-label-md text-label-md mt-1">Mapa</span>
-        </button>
-      </nav>
-    </div>
+    </BvShell>
   );
 }
