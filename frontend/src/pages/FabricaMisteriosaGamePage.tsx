@@ -286,6 +286,7 @@ export default function FabricaMisteriosaGamePage() {
   /* Referencias de elementos importantes */ 
   const gameContainerRef = useRef<HTMLDivElement>(null); 
   const objectRef = useRef<HTMLDivElement>(null); 
+  const binsRef = useRef<HTMLElement>(null);
   const feedbackTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
  //ESTADOS DEL ERROR
@@ -306,7 +307,22 @@ export default function FabricaMisteriosaGamePage() {
   
   const [collectedResults, setCollectedResults] = useState<GameObject[]>([]); 
   
-  const [soundEnabled, setSoundEnabled] = useState(true); 
+  const [soundEnabled, setSoundEnabled] = useState(true);
+  const audioRef = useRef<AudioContext | null>(null);
+
+  const getFactoryAudio = useCallback(() => {
+    const AudioContextClass =
+      window.AudioContext ||
+      (window as typeof window & { webkitAudioContext?: typeof AudioContext }).webkitAudioContext;
+    if (!AudioContextClass) return null;
+    if (!audioRef.current || audioRef.current.state === 'closed') {
+      audioRef.current = new AudioContextClass();
+    }
+    if (audioRef.current.state === 'suspended') {
+      void audioRef.current.resume();
+    }
+    return audioRef.current;
+  }, []); 
   const [instruction, setInstruction] = useState< 
   'ready' | 'object' | 'success' | 'error' 
 >('ready'); 
@@ -335,15 +351,8 @@ const playTone = useCallback(
    ) => { 
     if (!soundEnabled) return; 
     try { 
-      const AudioContextClass = 
-        window.AudioContext || 
-        ( 
-          window as typeof window & { 
-            webkitAudioContext?: typeof AudioContext; 
-          } ).webkitAudioContext; 
-      if (!AudioContextClass) return; 
-      
-      const audioContext = new AudioContextClass(); 
+      const audioContext = getFactoryAudio();
+      if (!audioContext) return; 
       const oscillator = audioContext.createOscillator(); 
       const gain = audioContext.createGain(); 
       
@@ -370,15 +379,11 @@ const playTone = useCallback(
        oscillator.stop( 
         audioContext.currentTime + duration 
       );
-      
-      oscillator.onended = () => { 
-        audioContext.close(); 
-      };
      } catch { 
       /* El sonido es opcional; el juego continúa aunque falle. */
      }
     }, 
-    [soundEnabled] 
+    [soundEnabled, getFactoryAudio] 
   );  
 
 //SONIDO DE LANZAMIENTO
@@ -387,17 +392,8 @@ const playTone = useCallback(
   if (!soundEnabled) return;
   
   try { 
-    const AudioContextClass = 
-     window.AudioContext || 
-     ( 
-      window as typeof window & { 
-        webkitAudioContext?: typeof AudioContext; 
-      }
-     ).webkitAudioContext; 
-     
-    if (!AudioContextClass) return; 
-    
-    const audioContext = new AudioContextClass(); 
+    const audioContext = getFactoryAudio();
+    if (!audioContext) return; 
     const oscillator = audioContext.createOscillator(); 
     const gain = audioContext.createGain(); 
     
@@ -426,14 +422,10 @@ const playTone = useCallback(
     oscillator.stop( 
       audioContext.currentTime + 0.35 
     );
-    
-    oscillator.onended = () => { 
-      audioContext.close(); 
-    };
    } catch { 
     /* El juego continúa aunque el sonido no esté disponible. */ 
   }
- }, [soundEnabled]);
+ }, [soundEnabled, getFactoryAudio]);
 
  //SONIDO DE ACIERTO
 
@@ -526,6 +518,11 @@ const playTone = useCallback(
 //INICIAR EL JUEGO AL CARGAR LA PAGINA
 
 useEffect(() => { initGame(); }, [initGame]);
+
+useEffect(() => {
+  if (!showBins) return;
+  binsRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}, [showBins]);
 
 //LANZAR EL OBJETO DESDE LA MAQUINA
 
@@ -937,7 +934,7 @@ const createCelebrationStars = useCallback(
 
                 {/* === ÁREA PRINCIPAL === */} 
                 
-                <main className="relative z-20 flex min-h-0 w-full flex-1 flex-col overflow-hidden px-3 sm:px-5 lg:px-8">
+                <main className="relative z-20 flex min-h-0 w-full flex-1 flex-col overflow-x-hidden overflow-y-auto px-3 sm:px-5 lg:px-8">
                 {/* Instrucción */} 
                 <div className="mx-auto mt-2 sm:mt-3 mb-2 w-full max-w-3xl xl:max-w-4xl shrink-0 bg-white/95 border-2 border-teal-200/90 px-3 sm:px-6 xl:px-8 py-2 sm:py-2.5 rounded-2xl sm:rounded-full shadow-sm text-center flex items-center justify-center">
                    <p className="w-full text-base sm:text-sm md:text-base xl:text-lg font-bold text-teal-900 flex flex-wrap items-center justify-center gap-1.5 sm:gap-2 text-center leading-snug"> 
@@ -945,15 +942,15 @@ const createCelebrationStars = useCallback(
                    </p>
                 </div>
                 {/* === MÁQUINA === */} 
-                <div className="flex min-h-0 w-full flex-1 items-center justify-center py-1 sm:py-2">
-                <div className="responsive-machine relative flex h-full max-h-full min-h-0 w-full max-w-[18rem] xs:max-w-[19rem] sm:max-w-sm md:max-w-md lg:max-w-xl xl:max-w-2xl flex-col items-center justify-center"> 
+                <div className="flex w-full shrink-0 items-center justify-center py-2">
+                <div className="responsive-machine relative flex w-full max-w-[18rem] xs:max-w-[19rem] sm:max-w-sm md:max-w-md lg:max-w-xl xl:max-w-2xl flex-col items-center justify-center"> 
                   {/* Conectores laterales */} 
                 <div className="absolute top-24 sm:top-28 -left-3 sm:-left-4 w-4 sm:w-6 h-9 sm:h-12 bg-gradient-to-r from-emerald-300 to-emerald-200 border-2 border-emerald-400 rounded-l-xl z-0" />
                 
                 <div className="absolute top-24 sm:top-28 -right-3 sm:-right-4 w-4 sm:w-6 h-9 sm:h-12 bg-gradient-to-l from-purple-300 to-purple-200 border-2 border-purple-400 rounded-r-xl z-0" />
                   {/* Cuerpo */} 
                   <div 
-                    className={`flex h-full max-h-full min-h-0 w-full flex-col items-center relative z-10 overflow-hidden bg-white rounded-t-[3.5rem] sm:rounded-t-[5.5rem] xl:rounded-t-[6.5rem] rounded-b-[1.75rem] sm:rounded-b-[2.5rem] xl:rounded-b-[2.75rem] border-2 sm:border-4 border-emerald-300 shadow-[0_14px_28px_-4px_rgba(167,243,208,0.45),0_6px_12px_-2px_rgba(56,189,248,0.15),inset_0_2px_4px_rgba(255,255,255,0.95)] transition-transform ${ 
+                    className={`flex w-full flex-col items-center relative z-10 overflow-hidden bg-white rounded-t-[3.5rem] sm:rounded-t-[5.5rem] xl:rounded-t-[6.5rem] rounded-b-[1.75rem] sm:rounded-b-[2.5rem] xl:rounded-b-[2.75rem] border-2 sm:border-4 border-emerald-300 shadow-[0_14px_28px_-4px_rgba(167,243,208,0.45),0_6px_12px_-2px_rgba(56,189,248,0.15),inset_0_2px_4px_rgba(255,255,255,0.95)] transition-transform ${ 
                       machineVibrating
                        ? 'animate-vibrate' 
                        : '' 
@@ -961,7 +958,7 @@ const createCelebrationStars = useCallback(
                   > 
                    {/* Parte superior */} 
                    
-                   <div className="w-full shrink min-h-0 max-h-[38%] overflow-hidden pt-3 sm:pt-4 pb-1 sm:pb-1.5 px-3 sm:px-6 flex flex-col items-center bg-gradient-to-b from-[#F0FDF9] to-white"> 
+                   <div className="w-full shrink-0 pt-3 sm:pt-4 pb-1 sm:pb-1.5 px-3 sm:px-6 flex flex-col items-center bg-gradient-to-b from-[#F0FDF9] to-white"> 
                    {/* Chimenea */} 
                    <div className="w-10 sm:w-14 h-3 sm:h-4 bg-gradient-to-r from-[#FDE68A] via-[#FEF08A] to-[#FDE68A] border-2 border-amber-300 rounded-t-lg -mt-4 sm:-mt-5" /> 
                    
@@ -1017,12 +1014,12 @@ const createCelebrationStars = useCallback(
                   </div> 
 
                   {/* Bandeja */} 
-                  <div className="flex min-h-0 w-full flex-1 flex-col px-3 sm:px-5 pb-2"> 
-                    <div className="responsive-tray h-full min-h-[6.5rem] w-full bg-gradient-to-b from-[#DCFCE7]/70 via-[#ECFDF5]/50 to-[#D1FAE5]/60 rounded-2xl sm:rounded-3xl border-2 sm:border-4 border-emerald-300/80 shadow-inner flex items-center justify-center relative">
+                  <div className="flex w-full shrink-0 flex-col px-3 sm:px-5 pb-2"> 
+                    <div className="responsive-tray h-36 sm:h-44 w-full bg-gradient-to-b from-[#DCFCE7]/70 via-[#ECFDF5]/50 to-[#D1FAE5]/60 rounded-2xl sm:rounded-3xl border-2 sm:border-4 border-emerald-300/80 shadow-inner flex items-center justify-center relative">
                      {/* Aura */} 
-                     <div className="w-24 sm:w-36 h-7 sm:h-10 rounded-full bg-emerald-200/40 blur-sm absolute bottom-2 sm:bottom-3" /> 
-                     <div className="w-20 sm:w-28 h-5 sm:h-6 rounded-full bg-purple-300/30 blur-sm absolute bottom-3 sm:bottom-4 animate-chamber-aura" /> 
-                     <div className="absolute w-24 h-24 sm:w-32 sm:h-32 min-[1440px]:w-40 min-[1440px]:h-40 rounded-full bg-purple-200/25 blur-xl animate-chamber-aura" /> 
+                     <div className="pointer-events-none w-24 sm:w-36 h-7 sm:h-10 rounded-full bg-emerald-200/40 blur-sm absolute bottom-2 sm:bottom-3" /> 
+                     <div className="pointer-events-none w-20 sm:w-28 h-5 sm:h-6 rounded-full bg-purple-300/30 blur-sm absolute bottom-3 sm:bottom-4 animate-chamber-aura" /> 
+                     <div className="pointer-events-none absolute w-24 h-24 sm:w-32 sm:h-32 min-[1440px]:w-40 min-[1440px]:h-40 rounded-full bg-purple-200/25 blur-xl animate-chamber-aura" /> 
                      
                      {/* Objeto */} 
                      {showObject && currentObject && ( 
@@ -1076,7 +1073,7 @@ const createCelebrationStars = useCallback(
                     </div>
                 </div>
               {/* === CONTENEDORES === */} 
-              <section className={`responsive-bins w-full shrink-0 pb-3 sm:pb-4 lg:pb-5 transition-all duration-700 ${ showBins ? 'opacity-100 translate-y-0' : 'opacity-0 pointer-events-none' }`} >
+              <section ref={binsRef} className={`responsive-bins w-full shrink-0 pb-3 sm:pb-4 lg:pb-5 ${ showBins ? '' : 'hidden' }`} >
                  <div className="text-center mb-2 sm:mb-3 px-1">
                    <span className="text-sm xs:text-sm sm:text-xs md:text-sm min-[1440px]:text-base font-extrabold text-teal-950 bg-white/95 px-2 sm:px-4 min-[1440px]:px-5 py-1 sm:py-1.5 rounded-xl sm:rounded-full border border-emerald-200 shadow-sm inline-flex items-center justify-center gap-1 sm:gap-1.5 text-center leading-tight"> 
                      <SearchIcon /> 
@@ -1405,10 +1402,8 @@ const createCelebrationStars = useCallback(
 
                           @media (max-width: 767px) and (orientation: landscape) {
                              .responsive-machine {
-                              transform: scale(0.72);
-                              transform-origin: top center;
-                              margin-bottom: -18%;
-                              }
+                              max-width: 16rem;
+                             }
                            }
 
                           /* === ESCRITORIO GRANDE CON ALTURA SUFICIENTE === */

@@ -1,5 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 import WeekBottomNav, { WeekHubHeader, WEEK_NAV_THEMES } from '../components/WeekBottomNav';
+import { playClick } from '../services/sounds';
 
 const IMG_COLECCIONANDO = '/images/semana2/card-coleccionando.png';
 const IMG_CAJA = '/images/semana2/card-caja-misteriosa.webp';
@@ -22,14 +23,14 @@ export default function Semana2Page() {
       title: 'La caja misteriosa',
       desc: '¿Qué objeto hay dentro? Usa pistas para adivinar.',
       image: IMG_CAJA,
-      onClick: () => navigate('/semana/2/caja-misteriosa/play'),
+      onClick: () => { playClick(); navigate('/semana/2/caja-misteriosa/play'); },
     },
     {
       id: 'fabrica-misteriosa',
       title: 'La fábrica misteriosa',
       desc: 'Observa y clasifica objetos que se están creando.',
       image: IMG_FABRICA,
-      onClick: () => navigate('/semana/2/fabrica-misteriosa/play'),
+      onClick: () => { playClick(); navigate('/semana/2/fabrica-misteriosa/play'); },
     },
   ];
 
@@ -181,7 +182,7 @@ export default function Semana2Page() {
               <button
                 className="w-[4.5rem] h-[4.5rem] sm:w-24 sm:h-24 flex flex-col items-center justify-center rounded-full border-[5px] border-white shadow-[0_0_22px_#A7D4AE,0_6px_0_#364B3A] animate-pulse [animation-duration:2.4s] hover:scale-110 active:scale-95 active:translate-y-1 active:shadow-none transition-transform duration-300"
                 style={{ backgroundColor: '#4D6B53' }}
-                onClick={() => navigate('/semana/2/marta')}
+                onClick={() => { playClick(); navigate('/semana/2/marta'); }}
                 aria-label="Empezar Aprende con Marta"
               >
                 <svg className="w-7 h-7 sm:w-8 sm:h-8 text-white ml-1" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
@@ -217,7 +218,7 @@ export default function Semana2Page() {
             </p>
           </div>
           <button
-            onClick={() => navigate('/semana/2/quiz')}
+            onClick={() => { playClick(); navigate('/semana/2/quiz'); }}
             className="text-white font-black uppercase tracking-wider text-lg md:text-xl py-4 md:py-5 px-8 md:px-12 rounded-2xl border-4 border-[#A7D4AE] shadow-[0_6px_0_#1A1A1B] hover:-translate-y-1 hover:brightness-110 hover:shadow-[0_8px_0_#1A1A1B] active:translate-y-1 active:shadow-none transition-all duration-200 z-10 whitespace-nowrap w-full sm:w-auto shrink-0"
             style={{ backgroundColor: '#4D6B53' }}
           >
