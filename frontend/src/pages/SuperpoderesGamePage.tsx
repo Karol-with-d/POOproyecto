@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import '../styles/terra-ciencia.css';
+import { playLevelUp, playPop } from '../services/sounds';
 
 /**
  * SuperpoderesGamePage — Juego de tarjetas volteables de los 4 superpoderes.
@@ -26,6 +27,8 @@ export default function SuperpoderesGamePage() {
     next.add(cardId);
     setFlippedCards(next);
     setPopCounter(true);
+    if (next.size === totalCards) playLevelUp();
+    else playPop();
     if (next.size === totalCards) {
       setTimeout(() => setShowCelebration(true), 1200);
     }
@@ -462,7 +465,7 @@ export default function SuperpoderesGamePage() {
 
       {/* Misión Cumplida Overlay */}
       <div
-        className={`tc-celebration-overlay fixed inset-0 z-50 overflow-y-auto ${
+        className={`tc-celebration-overlay fixed inset-0 z-50 flex flex-col overflow-hidden ${
           showCelebration ? 'tc-active' : ''
         }`}
         style={{ backgroundColor: 'var(--tc-background)' }}
@@ -484,7 +487,7 @@ export default function SuperpoderesGamePage() {
         </div>
 
         <main
-          className="relative z-10 w-[92vw] max-w-4xl mx-auto p-4 sm:p-8 flex flex-col items-center text-center justify-center !min-h-[100dvh]"
+          className="tc-celebration-body relative z-10 w-full max-w-4xl mx-auto p-4 sm:p-8 flex flex-col items-center text-center"
         >
           {/* Badge Element */}
           <div className="relative mb-6 sm:mb-8 tc-float-anim">
@@ -670,7 +673,8 @@ export default function SuperpoderesGamePage() {
             </div>
           </div>
 
-          {/* Main Action Button */}
+        </main>
+        <div className="relative z-20 shrink-0 flex justify-center px-4 pt-2 pb-[max(0.75rem,env(safe-area-inset-bottom))]">
           <button
             onClick={handleSiguienteLeccion}
             className="group relative inline-flex items-center justify-center gap-2 sm:gap-3 font-bold font-tc-label text-base sm:text-xl md:text-2xl py-4 px-6 sm:py-5 sm:px-12 rounded-full hover:-translate-y-1 active:translate-y-0 transition-all duration-300 tc-bounce-subtle overflow-hidden w-full max-w-xs sm:w-auto"
@@ -699,7 +703,7 @@ export default function SuperpoderesGamePage() {
               arrow_forward
             </span>
           </button>
-        </main>
+        </div>
       </div>
 
       {/* BottomNavBar (Mobile Only) */}

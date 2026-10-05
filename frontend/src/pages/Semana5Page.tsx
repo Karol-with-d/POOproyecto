@@ -2,6 +2,7 @@ import { useNavigate } from 'react-router-dom';
 import { showKidMessage } from '../components/KidFrame';
 import WeekBottomNav, { WeekHubHeader, WEEK_NAV_THEMES } from '../components/WeekBottomNav';
 import '../styles/terra-ciencia.css';
+import { playClick } from '../services/sounds';
 
 /**
  * Semana5Page — Hub de actividades de la Semana 5: Vida.
@@ -52,6 +53,7 @@ export default function Semana5Page() {
   ];
 
   const handleActivityClick = (id: string) => {
+    playClick();
     if (id === 'superpoderes') {
       navigate('/semana/5/superpoderes');
       return;
@@ -68,6 +70,7 @@ export default function Semana5Page() {
   };
 
   const handleQuizClick = () => {
+    playClick();
     navigate('/semana/5/quiz');
   };
 
@@ -81,7 +84,7 @@ export default function Semana5Page() {
       </div>
       <WeekHubHeader title="Semana 5: Vida" theme={WEEK_NAV_THEMES[5]} onBack={handleHome} />
 
-      <main className="min-h-0 flex-1 relative flex flex-col items-center justify-start p-6 space-y-6 overflow-y-auto overflow-x-hidden scroll-pb-32 md:scroll-pb-0">
+      <main className="min-h-0 flex-1 relative flex flex-col items-center justify-start p-4 md:p-6 space-y-4 md:space-y-6 overflow-y-auto overflow-x-hidden scroll-pb-32 md:scroll-pb-0 pb-28 md:pb-6">
         {/* Field Notebook Header */}
         <div className="relative w-full max-w-4xl text-center">
           <div
@@ -93,7 +96,7 @@ export default function Semana5Page() {
           >
             <img
               alt="Escritorio de Explorador"
-              className="h-32 md:h-44 w-auto rounded-2xl"
+              className="h-20 sm:h-32 md:h-44 w-auto rounded-2xl"
               src="/images/hosted/3516f415c28c.webp"
             />
           </div>

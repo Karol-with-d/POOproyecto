@@ -2,6 +2,7 @@ import { useState, useRef, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useResetScrollOn } from '../components/WeekScrollReset';
 import '../styles/terra-ciencia.css';
+import { playClick, playLevelUp, playPop } from '../services/sounds';
 
 /**
  * SemillasGamePage — Juego de Germinación Mágica.
@@ -95,7 +96,11 @@ export default function SemillasGamePage() {
   };
 
   const goNext = () => {
-    if (currentStep < TOTAL_SLIDES - 1) goTo(currentStep + 1);
+    if (currentStep < TOTAL_SLIDES - 1) {
+      if (currentStep + 1 === TOTAL_SLIDES - 1) playLevelUp();
+      else playClick();
+      goTo(currentStep + 1);
+    }
   };
 
   const goBack = () => {
@@ -118,6 +123,7 @@ export default function SemillasGamePage() {
     if (stampedSteps.has(dayId)) return;
     const day = DAYS.find((d) => d.id === dayId);
     if (!day) return;
+    playPop();
     setStampedSteps((prev) => new Set([...prev, dayId]));
     setEffects((prev) => ({ ...prev, [dayId]: day.effect }));
     setTimeout(() => {

@@ -233,6 +233,22 @@
   opacity: 1;
   pointer-events: auto;
 }
+.tc-celebration-overlay .tc-celebration-body,
+.tc-celebration-overlay button {
+  pointer-events: none;
+}
+.tc-celebration-overlay.tc-active .tc-celebration-body,
+.tc-celebration-overlay.tc-active button {
+  pointer-events: auto;
+}
+.game-screen .tc-celebration-body {
+  flex: 1 1 auto !important;
+  min-height: 0 !important;
+  overflow-y: auto !important;
+  justify-content: flex-start !important;
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior-y: contain;
+}
 
 /* Bounce-slow animation */
 @keyframes tc-bounce-slow {

@@ -1,8 +1,8 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useResetScrollOn } from '../components/WeekScrollReset';
 import '../styles/terra-ciencia.css';
-import { playFromFeedback } from '../services/sounds';
+import { playLevelUp, playMiss, playSuccess } from '../services/sounds';
 
 /**
  * BusquedaGamePage — "La Lupa de Detective" (Modo Laboratorio).
@@ -71,10 +71,6 @@ export default function BusquedaGamePage() {
   const [solved, setSolved] = useState<Set<number>>(new Set());
   const [shakingIndex, setShakingIndex] = useState<number | null>(null);
   const [feedback, setFeedback] = useState<Record<number, string>>({});
-  useEffect(() => {
-    const values = Object.values(feedback);
-    playFromFeedback(values[values.length - 1]);
-  }, [feedback]);
   const startGame = () => {
     setView('game');
     setScore(0);
@@ -103,10 +99,16 @@ export default function BusquedaGamePage() {
         const newScore = score + 1;
         setScore(newScore);
         if (newScore === TOTAL_LIVING) {
+          playLevelUp();
           setTimeout(() => setView('finish'), 500);
+        } else {
+          playSuccess();
         }
+      } else {
+        playSuccess();
       }
     } else {
+      playMiss();
       setShakingIndex(index);
       setFeedback((prev) => ({ ...prev, [index]: '¡Inténtalo de nuevo!' }));
       setTimeout(() => {
@@ -122,7 +124,7 @@ export default function BusquedaGamePage() {
 
   return (
     <div
-      className="min-h-[100dvh] w-full overflow-y-auto tc-clay-texture tc-cursor-magnifier relative"
+      className="busqueda-root min-h-[100dvh] w-full tc-clay-texture tc-cursor-magnifier relative"
       style={{ color: 'var(--tc-on-surface)' }}
     >
       <div className="tc-life-atmosphere" aria-hidden="true">
