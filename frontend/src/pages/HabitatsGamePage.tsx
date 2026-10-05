@@ -2,6 +2,7 @@ import { useState, useEffect, useRef, type DragEvent, type ReactNode } from 'rea
 import { useNavigate } from 'react-router-dom';
 import { useResetScrollOn } from '../components/WeekScrollReset';
 import '../styles/bosque-vivo.css';
+import { playLevelUp, playMiss, playSuccess } from '../services/sounds';
 
 type Habitat = 'ocean' | 'forest' | 'desert' | 'field';
 type Screen = 'start' | 'game' | 'results';

@@ -2,6 +2,7 @@ import { useState, useEffect, useRef, type ReactNode } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useResetScrollOn } from '../components/WeekScrollReset';
 import '../styles/bosque-vivo.css';
+import { playLevelUp, playMiss, playPop, playSuccess } from '../services/sounds';
 
 const IMG_HERO = '/images/semana6/similitudes/hero.webp';
 
@@ -165,6 +166,7 @@ export default function SimilitudesGamePage() {
   function handleOptionClick(i: number) {
     if (advancing) return;
     if (checked && optStates[i] === 'correct') return;
+    playPop();
     setChecked(false);
     setOptStates(optStates.map((_, idx) => (idx === i ? 'selected' : 'idle')));
   }
@@ -175,6 +177,8 @@ export default function SimilitudesGamePage() {
     if (idx === -1) return;
     setChecked(true);
     if (currentQ.options[idx].correct) {
+      if (qIdx + 1 >= QUESTIONS.length) playLevelUp();
+      else playSuccess();
       setOptStates(optStates.map((s, i) => (i === idx ? 'correct' : s)) as OptionState[]);
       setScore((prev) => prev + 1);
       setAdvancing(true);
@@ -189,6 +193,7 @@ export default function SimilitudesGamePage() {
         }
       }, 1500);
     } else {
+      playMiss();
       setOptStates(optStates.map((s, i) => (i === idx ? 'incorrect' : s)) as OptionState[]);
     }
   }

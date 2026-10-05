@@ -2,6 +2,7 @@ import { useState, useEffect, useCallback, type ReactNode } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useResetScrollOn } from '../components/WeekScrollReset';
 import '../styles/bosque-vivo.css';
+import { playClick, playPop, playSuccess } from '../services/sounds';
 
 const IMG_HERO = '/images/semana6/moverse/hero.webp';
 const IMG_FEELINGS = '/images/semana6/moverse/feelings.webp';
