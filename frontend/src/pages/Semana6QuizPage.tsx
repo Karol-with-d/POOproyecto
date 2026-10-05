@@ -58,9 +58,82 @@ const QUESTIONS = [
     correctIdx: 3,
     summaryText: 'Hábitats: El pez vive en el océano',
   },
+  {
+    topic: 'Similitudes',
+    topicIcon: 'category',
+    img: IMG_Q1,
+    imgAlt: 'Plantas y animales juntos mostrando similitudes',
+    text: '¿Quiénes crecen?',
+    options: ['A) Solo las plantas', 'B) Solo los animales', 'C) Las plantas y los animales', 'D) Ninguno de los dos'],
+    correctIdx: 2,
+    summaryText: 'Similitudes: Plantas y animales crecen',
+  },
+  {
+    topic: 'Similitudes',
+    topicIcon: 'category',
+    img: IMG_Q1,
+    imgAlt: 'Plantas y animales juntos mostrando similitudes',
+    text: '¿Quiénes se mueven de un lugar a otro?',
+    options: ['A) Las plantas', 'B) Los animales', 'C) Las piedras', 'D) Las nubes'],
+    correctIdx: 1,
+    summaryText: 'Similitudes: Los animales se mueven',
+  },
+  {
+    topic: 'Similitudes',
+    topicIcon: 'category',
+    img: IMG_Q1,
+    imgAlt: 'Plantas y animales juntos mostrando similitudes',
+    text: '¿Quiénes hacen fotosíntesis?',
+    options: ['A) Los animales', 'B) Las plantas', 'C) Los peces y los camellos', 'D) Nadie'],
+    correctIdx: 1,
+    summaryText: 'Similitudes: Las plantas hacen fotosíntesis',
+  },
+  {
+    topic: 'Similitudes',
+    topicIcon: 'category',
+    img: IMG_Q1,
+    imgAlt: 'Plantas y animales juntos mostrando similitudes',
+    text: '¿Quiénes respiran?',
+    options: ['A) Solo las plantas', 'B) Solo los animales', 'C) Las plantas y los animales', 'D) Solo las piedras'],
+    correctIdx: 2,
+    summaryText: 'Similitudes: Plantas y animales respiran',
+  },
+  {
+    topic: 'Movimiento',
+    topicIcon: 'directions_run',
+    img: IMG_Q2,
+    imgAlt: 'Niño haciendo ejercicio y saltando',
+    text: 'Después de saltar y correr, es normal sentir…',
+    options: ['A) Que el corazón se detiene', 'B) Calor y sed', 'C) Que dejas de respirar', 'D) Que el corazón late más lento'],
+    correctIdx: 1,
+    summaryText: 'Movimiento: El ejercicio da calor y sed',
+  },
+  {
+    topic: 'Hábitats',
+    topicIcon: 'travel_explore',
+    img: IMG_Q3,
+    imgAlt: 'Animales en diferentes hábitats: océano, bosque, desierto y campo',
+    text: '¿Dónde vive un camello?',
+    options: ['A) Océano', 'B) Bosque', 'C) Desierto', 'D) Campo'],
+    correctIdx: 2,
+    summaryText: 'Hábitats: El camello vive en el desierto',
+  },
+  {
+    topic: 'Hábitats',
+    topicIcon: 'travel_explore',
+    img: IMG_Q3,
+    imgAlt: 'Animales en diferentes hábitats: océano, bosque, desierto y campo',
+    text: '¿Dónde vive una vaca?',
+    options: ['A) Océano', 'B) Campo', 'C) Desierto', 'D) Dentro de una nube'],
+    correctIdx: 1,
+    summaryText: 'Hábitats: La vaca vive en el campo',
+  },
 ];
 
-type Screen = 0 | 1 | 2 | 3 | 4;
+const POINTS_PER_QUESTION = 10;
+const MAX_SCORE = QUESTIONS.length * POINTS_PER_QUESTION;
+const RESULTS_SCREEN = QUESTIONS.length + 1;
+
 type OptionState = 'idle' | 'correct' | 'wrong' | 'highlight';
 
 function useConfetti() {
@@ -85,37 +158,33 @@ export default function Semana6QuizPage() {
   const navigate = useNavigate();
   const fireConfetti = useConfetti();
 
-  const [screen, setScreen] = useState<Screen>(0);
+  const [screen, setScreen] = useState(0);
   useResetScrollOn(screen);
   const [score, setScore] = useState(0);
   const hasSaved = useRef(false);
 
   useEffect(() => {
-    if (screen === 4 && !hasSaved.current) {
+    if (screen === RESULTS_SCREEN && !hasSaved.current) {
       hasSaved.current = true;
       const stored = localStorage.getItem('plataforma_user');
       if (stored) {
         const user = JSON.parse(stored) as { id: string };
-        const percentage = Math.round((score / 30) * 100);
+        const percentage = Math.round((score / MAX_SCORE) * 100);
         saveQuizScoreForSemanaNumber({ userId: user.id, semanaNumber: 6, score: percentage }).catch((err) => {
           console.error('Error guardando quiz Semana 6:', err);
           showKidMessage('No se pudo guardar tu nota. Intenta otra vez.', 'soon');
         });
       }
-    } else if (screen !== 4) {
+    } else if (screen !== RESULTS_SCREEN) {
       hasSaved.current = false;
     }
   }, [screen, score]);
 
   const [choices, setChoices] = useState<Record<number, boolean>>({});
-  const [optStates, setOptStates] = useState<OptionState[][]>([
-    ['idle', 'idle', 'idle', 'idle'],
-    ['idle', 'idle', 'idle', 'idle'],
-    ['idle', 'idle', 'idle', 'idle'],
-  ]);
-  const [locked, setLocked] = useState([false, false, false]);
+  const [optStates, setOptStates] = useState<OptionState[][]>(() => QUESTIONS.map(() => ['idle', 'idle', 'idle', 'idle']));
+  const [locked, setLocked] = useState<boolean[]>(() => QUESTIONS.map(() => false));
 
-  const goTo = (next: number) => setScreen(next as Screen);
+  const goTo = (next: number) => setScreen(next);
 
   const handleAnswer = (qi: number, oi: number) => {
     if (locked[qi]) return;
@@ -135,7 +204,7 @@ export default function Semana6QuizPage() {
     setLocked((l) => l.map((v, i) => (i === qi ? true : v)));
     setChoices((c) => ({ ...c, [qi]: correct }));
     if (correct) {
-      setScore((s) => s + 10);
+      setScore((s) => s + POINTS_PER_QUESTION);
       fireConfetti();
       playSuccess();
     } else {
@@ -148,12 +217,8 @@ export default function Semana6QuizPage() {
     setScreen(0);
     setScore(0);
     setChoices({});
-    setOptStates([
-      ['idle', 'idle', 'idle', 'idle'],
-      ['idle', 'idle', 'idle', 'idle'],
-      ['idle', 'idle', 'idle', 'idle'],
-    ]);
-    setLocked([false, false, false]);
+    setOptStates(QUESTIONS.map(() => ['idle', 'idle', 'idle', 'idle']));
+    setLocked(QUESTIONS.map(() => false));
   };
 
   const getSlide = (idx: number) =>
@@ -170,15 +235,15 @@ export default function Semana6QuizPage() {
     return 'bv-opt';
   };
 
-  const showProgress = screen >= 1 && screen <= 3;
+  const showProgress = screen >= 1 && screen <= QUESTIONS.length;
   const badgeFilter =
-    score === 30 ? 'none' : score >= 20 ? 'grayscale(0.5) contrast(1.2)' : 'sepia(0.8) hue-rotate(90deg) saturate(1.5)';
+    score === MAX_SCORE ? 'none' : score >= 70 ? 'grayscale(0.5) contrast(1.2)' : 'sepia(0.8) hue-rotate(90deg) saturate(1.5)';
   const resultTitle =
-    score === 30 ? '¡Eres un Explorador Experto!' : score >= 20 ? '¡Muy bien hecho!' : '¡Sigue explorando!';
+    score === MAX_SCORE ? '¡Eres un Explorador Experto!' : score >= 70 ? '¡Muy bien hecho!' : '¡Sigue explorando!';
   const resultSub =
-    score === 30
+    score === MAX_SCORE
       ? '¡Conoces perfectamente los seres vivos y sus hábitats!'
-      : score >= 20
+      : score >= 70
         ? '¡Casi lo tienes! Un poco más de práctica.'
         : 'Repasa las actividades y vuelve a intentarlo.';
 
@@ -238,30 +303,17 @@ export default function Semana6QuizPage() {
         }`}
         style={{ background: 'rgba(238,248,244,0.85)', backdropFilter: 'blur(8px)' }}
       >
-        {QUESTIONS.map((q, i) => {
-          const step = i + 1;
-          const done = screen > step;
-          const active = screen === step;
-          return (
-            <div key={i} className="flex items-center gap-3">
-              <div
-                className="flex h-10 w-10 items-center justify-center rounded-full border-2 text-sm font-bold transition-all"
-                style={{
-                  background: done ? '#2f9e6b' : active ? 'rgba(26,122,150,0.12)' : 'transparent',
-                  borderColor: done || active ? '#1a7a96' : 'rgba(15,47,40,0.2)',
-                  color: done ? '#fff' : active ? '#1a7a96' : 'rgba(15,47,40,0.35)',
-                }}
-              >
-                {done ? (
-                  <span className="material-symbols-outlined text-sm">check</span>
-                ) : (
-                  <span className="material-symbols-outlined text-base filled-icon">{q.topicIcon}</span>
-                )}
-              </div>
-              {i < 2 && <div className="h-0.5 w-8" style={{ background: 'rgba(15,47,40,0.15)' }} />}
-            </div>
-          );
-        })}
+        <div className="flex w-full max-w-xs flex-col items-center gap-2 px-4">
+          <span className="bv-baloo text-sm font-bold text-[var(--bv-river)]">
+            Pregunta {screen} de {QUESTIONS.length}
+          </span>
+          <div className="h-2 w-full overflow-hidden rounded-full" style={{ background: 'rgba(15,47,40,0.12)' }}>
+            <div
+              className="h-full transition-all"
+              style={{ width: `${(screen / QUESTIONS.length) * 100}%`, background: '#1a7a96' }}
+            />
+          </div>
+        </div>
       </div>
 
       <main className="relative z-[1] h-screen w-full overflow-hidden pt-16">
@@ -300,8 +352,8 @@ export default function Semana6QuizPage() {
 
             <div className="flex justify-center gap-6">
               {[
-                { icon: 'help', label: '3 preguntas', color: '#1a7a96' },
-                { icon: 'stars', label: '30 puntos', color: '#ff7a59' },
+                { icon: 'help', label: `${QUESTIONS.length} preguntas`, color: '#1a7a96' },
+                { icon: 'stars', label: `${MAX_SCORE} puntos`, color: '#ff7a59' },
                 { icon: 'emoji_events', label: 'Insignia', color: '#2f9e6b' },
               ].map(({ icon, label, color }) => (
                 <div key={label} className="flex flex-col items-center gap-1">
@@ -336,7 +388,7 @@ export default function Semana6QuizPage() {
                   <span className="material-symbols-outlined text-base filled-icon">{q.topicIcon}</span>
                   {q.topic}
                 </span>
-                <span className="text-sm font-semibold text-[var(--bv-muted)]">Pregunta {qi + 1} de 3</span>
+                <span className="text-sm font-semibold text-[var(--bv-muted)]">Pregunta {qi + 1} de {QUESTIONS.length}</span>
               </div>
 
               <div className="bv-panel p-4">
@@ -364,7 +416,7 @@ export default function Semana6QuizPage() {
 
         {/* RESULTS */}
         <div
-          className={`s6-slide absolute inset-0 flex flex-col items-center overflow-y-auto px-5 pb-10 pt-20 ${getSlide(4)}`}
+          className={`s6-slide absolute inset-0 flex flex-col items-center overflow-y-auto px-5 pb-10 pt-20 ${getSlide(RESULTS_SCREEN)}`}
         >
           <div className="mt-2 w-full max-w-lg space-y-6 pb-24 text-center">
             <div className="relative mx-auto h-52 w-52">
@@ -380,7 +432,7 @@ export default function Semana6QuizPage() {
               <h2 className="bv-title text-3xl md:text-4xl">{resultTitle}</h2>
               <div className="bv-baloo text-5xl font-black text-[var(--bv-coral)]">
                 {score}{' '}
-                <span className="text-2xl font-bold text-[var(--bv-muted)]">/ 30 pts</span>
+                <span className="text-2xl font-bold text-[var(--bv-muted)]">/ {MAX_SCORE} pts</span>
               </div>
               <p className="bv-subtitle">{resultSub}</p>
             </div>
@@ -393,8 +445,8 @@ export default function Semana6QuizPage() {
                   style={{
                     fontVariationSettings: "'FILL' 1",
                     fontSize: '2.5rem',
-                    color: i * 10 < score ? '#d4f542' : 'rgba(15,47,40,0.2)',
-                    filter: i * 10 < score ? 'drop-shadow(0 0 6px rgba(212,245,66,0.7))' : undefined,
+                    color: score / MAX_SCORE > i / 3 ? '#d4f542' : 'rgba(15,47,40,0.2)',
+                    filter: score / MAX_SCORE > i / 3 ? 'drop-shadow(0 0 6px rgba(212,245,66,0.7))' : undefined,
                   }}
                 >
                   star
