@@ -86,14 +86,14 @@ export default function HomePage() {
       </aside>
 
       {/* Main Canvas */}
-      <main className="flex-1 flex flex-col items-center px-margin-mobile md:px-margin-desktop py-lg pb-40 md:pb-32 relative overflow-x-clip scroll-pb-28">
+      <main className="flex-1 flex flex-col items-center px-margin-mobile md:px-margin-desktop pt-4 pb-40 md:py-lg md:pb-32 relative overflow-x-clip scroll-pb-28">
         {/* Character Guide */}
-        <div className="flex flex-col items-center mb-8 z-40">
+        <div className="flex flex-col items-center mb-4 md:mb-8 z-40">
           <div className="bg-white border-4 border-surface-container-highest rounded-2xl p-4 mb-4 shadow-lg relative max-w-xs">
             <p className="font-label-lg text-on-surface text-center">¡Hola {userName}! ¿Listo para nuestra aventura científica?</p>
             <div className="absolute -bottom-2 left-1/2 -translate-x-1/2 w-4 h-4 bg-white border-b-4 border-r-4 border-surface-container-highest transform rotate-45"></div>
           </div>
-          <div className="w-32 h-32 md:w-40 md:h-40 rounded-full border-4 border-surface-container-highest shadow-md bg-primary-container flex items-center justify-center overflow-hidden">
+          <div className="w-24 h-24 md:w-40 md:h-40 rounded-full border-4 border-surface-container-highest shadow-md bg-primary-container flex items-center justify-center overflow-hidden">
             <img
               alt="Guia de aventura"
               className="w-full h-full object-cover"
@@ -114,7 +114,7 @@ export default function HomePage() {
         </div>
 
         {/* Section Title */}
-        <div className="w-full max-w-2xl flex flex-col items-center mb-xl">
+        <div className="w-full max-w-2xl flex flex-col items-center mb-4 md:mb-xl">
           <h1 className="font-headline-md text-headline-md text-on-surface text-center font-extrabold uppercase tracking-wide">
             Nuestra Gran Aventura Científica
           </h1>

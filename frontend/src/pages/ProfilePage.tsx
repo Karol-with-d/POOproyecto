@@ -83,11 +83,11 @@ export default function ProfilePage() {
       : averageOfRecordedScores
   );
   return (
-    <div className="font-body-md text-on-surface antialiased min-h-screen selection:bg-primary-container selection:text-on-primary-container">
+    <div className="font-body-md text-on-surface antialiased min-h-screen max-w-[100vw] overflow-x-clip selection:bg-primary-container selection:text-on-primary-container" style={{ touchAction: 'manipulation' }}>
       {/* Top AppBar (Mobile Only) */}
-      <header className="md:hidden flex justify-between items-center px-margin-mobile py-4 w-full top-0 sticky bg-surface shadow-sm z-50">
-        <div className="font-headline-md text-headline-md text-primary font-bold tracking-tight">AVENTURA CIENTÍFICA</div>
-        <div className="flex gap-4 text-primary">
+      <header className="lg:hidden flex justify-between items-center gap-3 px-margin-mobile py-4 w-full max-w-full top-0 sticky bg-surface shadow-sm z-50">
+        <div className="min-w-0 text-lg font-bold leading-tight tracking-tight text-primary">Aventura científica</div>
+        <div className="flex shrink-0 gap-3 text-primary">
           <span className="material-symbols-outlined fill">star</span>
           <span className="material-symbols-outlined fill">bolt</span>
         </div>
@@ -95,7 +95,7 @@ export default function ProfilePage() {
 
       <div className="flex min-h-screen w-full relative">
         {/* Side Navigation Bar (Desktop Only) */}
-        <nav className="hidden md:flex flex-col p-6 gap-2 bg-surface-container-low border-r-2 border-outline-variant h-screen w-64 fixed left-0 top-0 z-40">
+        <nav className="hidden lg:flex flex-col p-6 gap-2 bg-surface-container-low border-r-2 border-outline-variant h-screen w-64 fixed left-0 top-0 z-40">
           <div className="font-headline-md text-headline-md text-primary font-bold mb-8 tracking-tight pl-4">AVENTURA CIENTÍFICA</div>
 
           <Link
@@ -124,21 +124,21 @@ export default function ProfilePage() {
         </nav>
 
         {/* Main Content Canvas */}
-        <main className="flex-1 md:ml-64 relative overflow-x-clip bg-surface bg-opacity-50">
-          {/* Adornos del margen. En el celular tapan el texto, así que solo se ven desde md, dentro del espacio lateral. */}
-          <span aria-hidden="true" className="material-symbols-outlined hidden md:block absolute top-16 left-4 z-0 opacity-10 animate-[float_15s_infinite_ease-in-out] pointer-events-none text-primary text-[64px]">search</span>
-          <span aria-hidden="true" className="material-symbols-outlined hidden md:block absolute top-[46%] left-6 z-0 opacity-10 animate-[float_15s_infinite_ease-in-out] pointer-events-none text-primary text-[52px]" style={{ animationDelay: '2s' }}>science</span>
-          <span aria-hidden="true" className="material-symbols-outlined hidden md:block absolute top-28 right-4 z-0 opacity-10 animate-[float_15s_infinite_ease-in-out] pointer-events-none text-primary text-[72px]" style={{ animationDelay: '4s' }}>biotech</span>
-          <span aria-hidden="true" className="material-symbols-outlined hidden md:block absolute top-[58%] right-6 z-0 opacity-10 animate-[float_15s_infinite_ease-in-out] pointer-events-none text-primary text-[56px]" style={{ animationDelay: '1s' }}>emoji_nature</span>
+        <main className="min-w-0 w-full max-w-full flex-1 lg:ml-64 relative overflow-x-clip bg-surface bg-opacity-50">
+          {/* Adornos del margen. Solo caben cuando el perfil ya tiene el menú lateral y sobra espacio. */}
+          <span aria-hidden="true" className="material-symbols-outlined hidden xl:block absolute top-16 left-4 z-0 opacity-10 animate-[float_15s_infinite_ease-in-out] pointer-events-none text-primary text-[64px]">search</span>
+          <span aria-hidden="true" className="material-symbols-outlined hidden xl:block absolute top-[46%] left-6 z-0 opacity-10 animate-[float_15s_infinite_ease-in-out] pointer-events-none text-primary text-[52px]" style={{ animationDelay: '2s' }}>science</span>
+          <span aria-hidden="true" className="material-symbols-outlined hidden xl:block absolute top-28 right-4 z-0 opacity-10 animate-[float_15s_infinite_ease-in-out] pointer-events-none text-primary text-[72px]" style={{ animationDelay: '4s' }}>biotech</span>
+          <span aria-hidden="true" className="material-symbols-outlined hidden xl:block absolute top-[58%] right-6 z-0 opacity-10 animate-[float_15s_infinite_ease-in-out] pointer-events-none text-primary text-[56px]" style={{ animationDelay: '1s' }}>emoji_nature</span>
 
-          <div className="max-w-[950px] w-full mx-auto px-margin-mobile md:px-margin-desktop py-lg min-h-full flex flex-col items-center justify-center relative z-10">
+          <div className="max-w-[950px] w-full min-w-0 mx-auto px-margin-mobile lg:px-10 xl:px-margin-desktop py-lg min-h-full flex flex-col items-center justify-start relative z-10">
             {/* Avatar & Header Section */}
             <div className="flex flex-col items-center text-center mb-xl w-full max-w-md">
               <div className="relative mb-6">
                 {/* Decorative ring */}
                 <div className="absolute inset-0 -m-4 border-4 border-dashed border-primary opacity-20 rounded-full animate-[spin_60s_linear_infinite]"></div>
                 {/* Avatar Container */}
-                <div className="w-48 h-48 md:w-56 md:h-56 rounded-full bg-surface-container-lowest border-4 border-surface-tint shadow-[0_8px_24px_rgba(74,101,73,0.15)] overflow-hidden flex items-center justify-center relative z-10">
+                <div className="w-36 h-36 sm:w-44 sm:h-44 lg:w-56 lg:h-56 rounded-full bg-surface-container-lowest border-4 border-surface-tint shadow-[0_8px_24px_rgba(74,101,73,0.15)] overflow-hidden flex items-center justify-center relative z-10">
                   <img
                     alt="Avatar de usuario"
                     className="w-full h-full object-cover"
@@ -148,17 +148,17 @@ export default function ProfilePage() {
                 </div>
               </div>
 
-              <h1 className="font-headline-lg-mobile md:font-headline-lg text-headline-lg-mobile md:text-headline-lg text-on-surface tracking-tight mb-2">
+              <h1 className="font-headline-lg-mobile lg:font-headline-lg text-2xl leading-tight sm:text-headline-lg-mobile lg:text-headline-lg text-on-surface tracking-tight mb-2 break-words max-w-full">
                 ¡Hola, {userName}!
               </h1>
               <p className="font-body-lg text-body-lg text-outline">Explorador de la aventura científica</p>
             </div>
 
             {/* Progress Section (Bento Box Style) */}
-            <div className="w-full grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="w-full grid grid-cols-1 lg:grid-cols-2 gap-6">
               {/* Main XP Card */}
               <div className="glass-card rounded-3xl p-6 md:col-span-2 flex flex-col gap-4">
-                <div className="flex justify-between items-end mb-2">
+                <div className="flex flex-wrap justify-between items-end gap-2 mb-2">
                   <h2 className="font-label-lg text-label-lg text-on-surface flex items-center gap-2">
                     <span className="material-symbols-outlined text-primary">bolt</span>
                     Energía de Aprendizaje
@@ -257,7 +257,7 @@ export default function ProfilePage() {
                           </text>
                         </svg>
                       </div>
-                      <div>
+                      <div className="min-w-0">
                         <h3 className="font-label-lg text-label-lg text-on-surface font-bold">Nota Global</h3>
                         <p className="font-body-md text-body-md text-outline">
                           Promedio de los 6 quizzes. Si falta una semana, esa cuenta como 0.
@@ -273,7 +273,7 @@ export default function ProfilePage() {
                           {completedQuizCount}/{semanas.length || 6}
                         </span>
                       </div>
-                      <div>
+                      <div className="min-w-0">
                         <h3 className="font-label-lg text-label-lg text-on-surface font-bold">Pruebas Completadas</h3>
                         <p className="font-body-md text-body-md text-outline">
                           Quizes aprobados y guardados en tu bitácora de ciencias.
@@ -282,8 +282,34 @@ export default function ProfilePage() {
                     </div>
                   </div>
 
+                  {/* Notas en el teléfono: una tarjeta por semana, para que no se salgan de la pantalla. */}
+                  <ul className="lg:hidden flex flex-col gap-3">
+                    {semanas.slice().sort((a, b) => a.number - b.number).map((semana) => {
+                      const matchingProgress = progress.find(
+                        (p) => p.semanaId === semana.id || p.semanaNumber === semana.number
+                      );
+                      const score = matchingProgress?.score ?? null;
+                      const topicText = semana.title.replace(/^Semana \d+:\s*/, '');
+                      return (
+                        <li key={semana.id} className="rounded-2xl border border-outline-variant bg-surface-container-low p-4">
+                          <div className="flex items-start justify-between gap-3">
+                            <div className="min-w-0">
+                              <p className="font-semibold text-primary">Semana {semana.number}</p>
+                              <p className="mt-1 text-on-surface-variant break-words">{topicText}</p>
+                            </div>
+                            {score !== null ? (
+                              <span className="shrink-0 font-bold text-primary">{score}/100</span>
+                            ) : (
+                              <span className="shrink-0 text-outline italic">Pendiente</span>
+                            )}
+                          </div>
+                        </li>
+                      );
+                    })}
+                  </ul>
+
                   {/* Table of Scores */}
-                  <div className="overflow-x-auto border border-outline-variant rounded-2xl bg-surface-container-low w-full">
+                  <div className="hidden lg:block overflow-x-auto border border-outline-variant rounded-2xl bg-surface-container-low w-full min-w-0">
                     <table className="w-full text-left border-collapse">
                       <thead>
                         <tr className="bg-surface-container-high border-b border-outline-variant">
@@ -331,7 +357,7 @@ export default function ProfilePage() {
             </div>
 
             {/* Action Buttons */}
-            <div className="mt-lg mb-28 md:mb-0 w-full flex flex-col sm:flex-row gap-4 justify-center">
+            <div className="mt-lg mb-28 lg:mb-0 w-full flex flex-col sm:flex-row gap-4 justify-center">
               <Link
                 to="/login"
                 className="squishy-button flex items-center justify-center gap-2 px-8 py-4 bg-primary text-on-primary rounded-2xl font-label-lg text-label-lg w-full sm:w-auto"
@@ -345,7 +371,7 @@ export default function ProfilePage() {
       </div>
 
       {/* Bottom Navigation Bar (Mobile Only) */}
-      <nav className="md:hidden fixed bottom-0 left-0 w-full bg-surface-container-lowest flex justify-around items-center px-4 pt-2 z-50 border-t-4 border-[#2f6a38] pb-[max(1rem,env(safe-area-inset-bottom))]">
+      <nav className="lg:hidden fixed bottom-0 left-0 w-full bg-surface-container-lowest flex justify-around items-center px-4 pt-2 z-50 border-t-4 border-[#2f6a38] pb-[max(1rem,env(safe-area-inset-bottom))]">
         <Link to="/home" className="flex flex-col items-center justify-center min-h-[48px] px-4 py-2 font-bold text-[#243d24]">
           <span className="material-symbols-outlined">map</span>
           Mapa
