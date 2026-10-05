@@ -124,7 +124,7 @@ export default function ProfilePage() {
         </nav>
 
         {/* Main Content Canvas */}
-        <main className="flex-1 md:ml-64 relative overflow-y-auto bg-surface bg-opacity-50">
+        <main className="flex-1 md:ml-64 relative overflow-x-clip bg-surface bg-opacity-50">
           {/* Adornos del margen. En el celular tapan el texto, así que solo se ven desde md, dentro del espacio lateral. */}
           <span aria-hidden="true" className="material-symbols-outlined hidden md:block absolute top-16 left-4 z-0 opacity-10 animate-[float_15s_infinite_ease-in-out] pointer-events-none text-primary text-[64px]">search</span>
           <span aria-hidden="true" className="material-symbols-outlined hidden md:block absolute top-[46%] left-6 z-0 opacity-10 animate-[float_15s_infinite_ease-in-out] pointer-events-none text-primary text-[52px]" style={{ animationDelay: '2s' }}>science</span>
