@@ -39,7 +39,67 @@ const QUESTIONS = [
     correctIdx: 1,
     summaryText: 'Detective: Perro y planta están vivos',
   },
+  {
+    img: IMG_Q1,
+    imgAlt: 'Las 4 Superpoderes: rana, planta, guepardo y manzana feliz',
+    text: '¿Cuál de estos sí es un superpoder de los seres vivos?',
+    options: ['A) Brillar en la oscuridad', 'B) Crecer', 'C) Volverse de piedra', 'D) Quedarse igual para siempre'],
+    correctIdx: 1,
+    summaryText: 'Superpoderes: Crecer sí es vital',
+  },
+  {
+    img: IMG_Q2,
+    imgAlt: 'Una semilla germinando y convirtiéndose en planta',
+    text: 'Cuando una semilla germina, ¿qué aparece primero?',
+    options: ['A) Una raíz', 'B) Una flor', 'C) Un fruto', 'D) Una nube'],
+    correctIdx: 0,
+    summaryText: 'Siembra: Primero aparece la raíz',
+  },
+  {
+    img: IMG_Q2,
+    imgAlt: 'Una semilla germinando y convirtiéndose en planta',
+    text: '¿Qué necesita una plántula para seguir creciendo?',
+    options: ['A) Solo oscuridad', 'B) Luz y agua', 'C) Una bicicleta', 'D) Una piedra'],
+    correctIdx: 1,
+    summaryText: 'Siembra: La plántula necesita luz y agua',
+  },
+  {
+    img: IMG_Q3,
+    imgAlt: 'Niño detective con lupa apuntando a un perro, piedra, bicicleta y planta',
+    text: '¿Cuál de estos no está vivo?',
+    options: ['A) Mariposa', 'B) Hongo', 'C) Pelota', 'D) Cachorro'],
+    correctIdx: 2,
+    summaryText: 'Detective: La pelota no está viva',
+  },
+  {
+    img: IMG_Q3,
+    imgAlt: 'Niño detective con lupa apuntando a un perro, piedra, bicicleta y planta',
+    text: '¿Cuál de estos sí está vivo?',
+    options: ['A) Nube', 'B) Piedra', 'C) Bicicleta', 'D) Planta'],
+    correctIdx: 3,
+    summaryText: 'Detective: La planta está viva',
+  },
+  {
+    img: IMG_Q1,
+    imgAlt: 'Las 4 Superpoderes: rana, planta, guepardo y manzana feliz',
+    text: 'El superpoder de tener familia significa que los seres vivos…',
+    options: ['A) Brillan', 'B) Pueden tener crías', 'C) Se vuelven de metal', 'D) Dejan de comer'],
+    correctIdx: 1,
+    summaryText: 'Superpoderes: Tener familia es tener crías',
+  },
+  {
+    img: IMG_Q1,
+    imgAlt: 'Las 4 Superpoderes: rana, planta, guepardo y manzana feliz',
+    text: '¿Qué hace el superpoder de comer?',
+    options: ['A) Los seres vivos se alimentan', 'B) Las piedras caminan', 'C) Las nubes germinan', 'D) Las bicicletas crecen'],
+    correctIdx: 0,
+    summaryText: 'Superpoderes: Comer es alimentarse',
+  },
 ];
+
+const POINTS_PER_QUESTION = 10;
+const MAX_SCORE = QUESTIONS.length * POINTS_PER_QUESTION;
+const RESULTS_SCREEN = QUESTIONS.length + 1;
 
 
 type OptionState = 'idle' | 'correct' | 'wrong' | 'highlight';
@@ -76,12 +136,12 @@ export default function Semana5QuizPage() {
   const hasSaved = useRef(false);
 
   useEffect(() => {
-    if (screenIdx === 4 && !hasSaved.current) {
+    if (screenIdx === RESULTS_SCREEN && !hasSaved.current) {
       hasSaved.current = true;
       const stored = localStorage.getItem('plataforma_user');
       if (stored) {
         const user = JSON.parse(stored) as { id: string };
-        const percentage = Math.round((score / 30) * 100);
+        const percentage = Math.round((score / MAX_SCORE) * 100);
         saveQuizScoreForSemanaNumber({ userId: user.id, semanaNumber: 5, score: percentage }).catch(err => {
           console.error('Error guardando quiz Semana 5:', err);
           showKidMessage('No se pudo guardar tu nota. Intenta otra vez.', 'soon');
@@ -90,7 +150,7 @@ export default function Semana5QuizPage() {
       } else {
         setSaveNote('Inicia sesión para guardar tu nota.');
       }
-    } else if (screenIdx !== 4) {
+    } else if (screenIdx !== RESULTS_SCREEN) {
       hasSaved.current = false;
       setSaveNote(null);
     }
@@ -98,12 +158,8 @@ export default function Semana5QuizPage() {
 
   const [userChoices, setUserChoices] = useState<Record<number, boolean>>({});
   // per-question option states: idle | correct | wrong | highlight
-  const [optStates, setOptStates] = useState<OptionState[][]>([
-    ['idle','idle','idle','idle'],
-    ['idle','idle','idle','idle'],
-    ['idle','idle','idle','idle'],
-  ]);
-  const [locked, setLocked] = useState([false, false, false]);
+  const [optStates, setOptStates] = useState<OptionState[][]>(() => QUESTIONS.map(() => ['idle', 'idle', 'idle', 'idle']));
+  const [locked, setLocked] = useState<boolean[]>(() => QUESTIONS.map(() => false));
   const transitioning = useRef(false);
 
   const goTo = (next: number) => {
@@ -131,7 +187,7 @@ export default function Semana5QuizPage() {
     setOptStates(newStates);
     setLocked(locked.map((v, i) => i === qNum ? true : v));
     setUserChoices(prev => ({ ...prev, [qNum]: correct }));
-    if (correct) { setScore(s => s + 10); fireConfetti(); playSuccess(); }
+    if (correct) { setScore(s => s + POINTS_PER_QUESTION); fireConfetti(); playSuccess(); }
     else playMiss();
 
     setTimeout(() => goTo(screenIdx + 1), 1200);
@@ -141,12 +197,8 @@ export default function Semana5QuizPage() {
     setScreenIdx(0);
     setScore(0);
     setUserChoices({});
-    setOptStates([
-      ['idle','idle','idle','idle'],
-      ['idle','idle','idle','idle'],
-      ['idle','idle','idle','idle'],
-    ]);
-    setLocked([false, false, false]);
+    setOptStates(QUESTIONS.map(() => ['idle', 'idle', 'idle', 'idle']));
+    setLocked(QUESTIONS.map(() => false));
   };
 
 
@@ -166,13 +218,13 @@ export default function Semana5QuizPage() {
     }
   };
 
-  const showProgress = screenIdx >= 1 && screenIdx <= 3;
+  const showProgress = screenIdx >= 1 && screenIdx <= QUESTIONS.length;
 
   // Results data
-  const badgeFilter = score === 30 ? 'none' : score >= 20 ? 'grayscale(0.5) contrast(1.2)' : 'sepia(0.8) hue-rotate(90deg) saturate(1.5)';
-  const resultTitle = score === 30 ? '¡Increíble trabajo!' : score >= 20 ? '¡Muy bien hecho!' : '¡Buen intento!';
-  const resultSub   = score === 30 ? '¡Eres todo un Experto Naturalista!' : score >= 20 ? '¡Eres un gran Explorador Naturalista!' : 'Eres un Aprendiz Naturalista. ¡Sigue aprendiendo!';
-  const rankLabel = score === 30 ? 'Experto' : score >= 20 ? 'Explorador' : 'Aprendiz';
+  const badgeFilter = score === MAX_SCORE ? 'none' : score >= 70 ? 'grayscale(0.5) contrast(1.2)' : 'sepia(0.8) hue-rotate(90deg) saturate(1.5)';
+  const resultTitle = score === MAX_SCORE ? '¡Increíble trabajo!' : score >= 70 ? '¡Muy bien hecho!' : '¡Buen intento!';
+  const resultSub   = score === MAX_SCORE ? '¡Eres todo un Experto Naturalista!' : score >= 70 ? '¡Eres un gran Explorador Naturalista!' : 'Eres un Aprendiz Naturalista. ¡Sigue aprendiendo!';
+  const rankLabel = score === MAX_SCORE ? 'Experto' : score >= 70 ? 'Explorador' : 'Aprendiz';
 
   return (
     <div className="bg-surface text-on-surface font-body min-h-screen overflow-hidden antialiased relative tc-life-surface" style={{ fontFamily: "'Nunito Sans', sans-serif" }}>
@@ -218,26 +270,11 @@ export default function Semana5QuizPage() {
       <div
         className={`fixed top-16 left-0 w-full bg-surface-container/50 backdrop-blur-md py-4 z-50 flex justify-center items-center gap-4 transition-all duration-300 ${showProgress ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}
       >
-        <div className="flex items-center gap-3">
-          {[1, 2, 3].map((step) => {
-            const done = screenIdx > step;
-            const active = screenIdx === step;
-            return (
-              <div key={step} className="flex items-center gap-3">
-                <div
-                  className={`w-10 h-10 rounded-full flex items-center justify-center border-2 font-bold transition-colors text-sm
-                    ${done   ? 'bg-primary border-primary text-white'
-                    : active ? 'border-primary text-primary'
-                    :          'border-outline-variant text-outline-variant'}`}
-                >
-                  {done
-                    ? <span className="material-symbols-outlined text-sm">check</span>
-                    : step}
-                </div>
-                {step < 3 && <div className="w-8 h-0.5 bg-outline-variant" />}
-              </div>
-            );
-          })}
+        <div className="flex w-full max-w-xs flex-col items-center gap-2 px-4">
+          <span className="text-sm font-bold text-primary">Pregunta {screenIdx} de {QUESTIONS.length}</span>
+          <div className="h-2 w-full overflow-hidden rounded-full bg-outline-variant/40">
+            <div className="h-full bg-primary transition-all" style={{ width: `${(screenIdx / QUESTIONS.length) * 100}%` }} />
+          </div>
         </div>
       </div>
 
@@ -255,7 +292,7 @@ export default function Semana5QuizPage() {
                 ¡Hora del Quiz!
               </h2>
               <p className="text-on-surface-variant text-lg font-medium leading-relaxed max-w-sm mx-auto">
-                Demuestra todo lo que aprendiste sobre los seres vivos
+                Demuestra todo lo que aprendiste sobre los seres vivos. Son {QUESTIONS.length} preguntas y {MAX_SCORE} puntos.
               </p>
             </div>
             <div className="grid grid-cols-3 gap-4 py-2">
@@ -311,7 +348,7 @@ export default function Semana5QuizPage() {
         ))}
 
         {/* STATE 4 — RESULTS */}
-        <div className={`absolute inset-0 flex flex-col overflow-hidden transition-all duration-400 ${getSlideClass(4)}`}>
+        <div className={`absolute inset-0 flex flex-col overflow-hidden transition-all duration-400 ${getSlideClass(RESULTS_SCREEN)}`}>
           <div className="flex-1 min-h-0 overflow-y-auto px-4 sm:px-8 pt-20">
             <div className="max-w-lg w-full text-center space-y-4 mx-auto">
               <div className="relative w-36 h-36 sm:w-48 sm:h-48 mx-auto">
@@ -325,7 +362,7 @@ export default function Semana5QuizPage() {
               </div>
               <div className="space-y-1">
                 <h2 className="text-2xl sm:text-4xl font-extrabold text-primary" style={{ fontFamily: 'Literata, serif' }}>{resultTitle}</h2>
-                <div className="text-4xl sm:text-5xl font-black text-tertiary">{score} / 30 puntos</div>
+                <div className="text-4xl sm:text-5xl font-black text-tertiary">{score} / {MAX_SCORE} puntos</div>
                 <p className="text-on-surface-variant text-base sm:text-lg font-medium">{resultSub}</p>
                 {saveNote && (
                   <p className="text-sm font-semibold text-tertiary">{saveNote}</p>
