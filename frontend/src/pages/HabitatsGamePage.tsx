@@ -179,10 +179,13 @@ export default function HabitatsGamePage() {
     if (!animal || placedAnimals.has(animalId)) return;
 
     if (animal.correctHabitat === habitatId) {
+      if (placedAnimals.size + 1 === ANIMALS.length) playLevelUp();
+      else playSuccess();
       setPlacedAnimals((prev) => new Set([...prev, animalId]));
       setFlashHabitat({ id: habitatId, type: 'correct' });
       setTimeout(() => setFlashHabitat(null), 600);
     } else {
+      playMiss();
       setFlashHabitat({ id: habitatId, type: 'wrong' });
       setTimeout(() => setFlashHabitat(null), 500);
     }
