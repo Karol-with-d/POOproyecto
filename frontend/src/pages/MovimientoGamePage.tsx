@@ -118,6 +118,7 @@ export default function MovimientoGamePage() {
   }, [timerRunning, timeLeft]);
 
   function handleReady() {
+    playSuccess();
     setTimerRunning(false);
     if (actIdx + 1 < ACTIVITIES.length) {
       const next = actIdx + 1;
@@ -130,6 +131,7 @@ export default function MovimientoGamePage() {
   }
 
   function handleFeelingAnswer(i: number, val: boolean) {
+    playPop();
     setFeelingAnswers((prev) => prev.map((a, idx) => (idx === i ? val : a)));
   }
 
@@ -158,7 +160,7 @@ export default function MovimientoGamePage() {
               <img src={IMG_HERO} alt="Personaje en movimiento" className="h-full w-full object-cover" />
             </div>
           </div>
-          <button type="button" onClick={() => setScreen('activity')} className="bv-btn bv-btn-coral w-full max-w-xs">
+          <button type="button" onClick={() => { playClick(); setScreen('activity'); }} className="bv-btn bv-btn-coral w-full max-w-xs">
             ¡Empezar Aventura!
             <span className="material-symbols-outlined" style={{ fontVariationSettings: "'FILL' 1" }}>play_circle</span>
           </button>

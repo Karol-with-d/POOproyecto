@@ -11,7 +11,10 @@ export default function HechoDeStartPage() {
   const navigate = useNavigate();
 
   const handleBack = () => navigate('/semana/3');
-  const handlePlay = () => navigate('/semana/3/hecho-de/play');
+  const handlePlay = () => {
+    playClick();
+    navigate('/semana/3/hecho-de/play');
+  };
 
   return (
     <div

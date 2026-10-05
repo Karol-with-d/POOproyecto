@@ -159,7 +159,7 @@ export default function Semana6Page() {
                     <p className="bv-subtitle text-sm flex-1">{m.desc}</p>
                     <button
                       type="button"
-                      onClick={() => navigate(m.path)}
+                      onClick={() => { playClick(); navigate(m.path); }}
                       className="bv-btn w-full text-white"
                       style={{
                         background: m.accent,
@@ -203,7 +203,7 @@ export default function Semana6Page() {
               </div>
               <button
                 type="button"
-                onClick={() => navigate('/semana/6/quiz')}
+                onClick={() => { playClick(); navigate('/semana/6/quiz'); }}
                 className="bv-btn bv-btn-coral shrink-0 whitespace-nowrap"
               >
                 ¡Empezar Quiz!
