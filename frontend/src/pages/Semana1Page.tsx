@@ -1,5 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 import WeekBottomNav, { WeekHubHeader, WEEK_NAV_THEMES } from '../components/WeekBottomNav';
+import { playClick } from '../services/sounds';
 
 /** Paleta por nivel: cada actividad de la semana tiene su color propio. */
 type Activity = {
@@ -321,7 +322,7 @@ export default function Semana1Page() {
                   <p className="mt-1 font-body-md text-sm text-[#3a3228]">{activity.desc}</p>
                 </div>
                 <button
-                  onClick={() => navigate(activity.link)}
+                  onClick={() => { playClick(); navigate(activity.link); }}
                   className="mt-4 flex w-full items-center justify-center gap-2 rounded-full px-6 py-2.5 font-label-md text-label-md font-bold text-white transition-all active:translate-y-0.5 active:border-b-2"
                   style={{
                     backgroundColor: activity.accent,
