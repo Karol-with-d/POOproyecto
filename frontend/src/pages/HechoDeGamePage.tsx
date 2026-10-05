@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { saveScore, markSemanaCompleted } from '../services/api';
+import { playMiss, playPop, playSuccess } from '../services/sounds';
 
 type ObjectId = 'regadera' | 'caja' | 'molino' | 'tarros' | 'ropa' | 'caja_calabazas';
 
@@ -243,9 +244,11 @@ export default function HechoDeGamePage() {
     if (questionNumber === 1) {
       setQ1Selected(optionIndex);
       if (isCorrect) {
+        playPop();
         setQ1Answered(true);
       } else {
         setShakeKey((k) => k + 1);
+        playMiss();
         setTimeout(() => {
           setShowFeedback(true);
           setWasCorrect(false);
@@ -254,12 +257,14 @@ export default function HechoDeGamePage() {
     } else if (questionNumber === 2 && q1Answered) {
       setQ2Selected(optionIndex);
       if (isCorrect) {
+        playSuccess();
         setShowFeedback(true);
         setWasCorrect(true);
         const next = new Set(completed);
         next.add(currentObject.id);
         setCompleted(next);
       } else {
+        playMiss();
         setShakeKey((k) => k + 1);
         setTimeout(() => {
           setShowFeedback(true);
@@ -603,7 +608,7 @@ export default function HechoDeGamePage() {
               </p>
             </div>
             <button
-              onClick={() => navigate('/home')}
+              onClick={() => navigate(`/semana/${semanaId}`)}
               className="clay-button bg-primary text-on-primary font-label-lg text-label-lg px-8 py-3 rounded-full border-b-4 border-[#334d33] active:translate-y-0.5 active:border-b-2 w-full"
             >
               Volver al inicio

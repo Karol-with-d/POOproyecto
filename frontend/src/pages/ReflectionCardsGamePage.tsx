@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { saveScore, markSemanaCompleted } from '../services/api';
-import { playFromFeedback } from '../services/sounds';
+import { playLevelUp, playMiss, playSuccess } from '../services/sounds';
 
 type CardAction = 'bota' | 'recicla' | 'reutiliza';
 type ContainerClass =
@@ -9,12 +9,14 @@ type ContainerClass =
   | 'bg-primary-container'
   | 'bg-tertiary-container'
   | 'bg-surface-variant'
+  | 'bg-tertiary-fixed'
   | 'bg-error-container';
 type TextClass =
   | 'text-on-secondary-container'
   | 'text-on-primary-container'
   | 'text-on-tertiary-container'
   | 'text-on-surface-variant'
+  | 'text-on-tertiary-fixed'
   | 'text-on-error-container';
 
 interface CardData {
@@ -32,22 +34,22 @@ const CARDS: CardData[] = [
   { id: 'jar', name: 'Frasco de Vidrio', icon: 'potted_plant', image: '/images/semana3/reflexion/frasco.webp', colorClass: 'bg-primary-container', textClass: 'text-on-primary-container', correct: 'recicla' },
   { id: 'bottle', name: 'Botella de Plástico', icon: 'water_bottle', image: '/images/semana3/reflexion/botella-plastico.webp', colorClass: 'bg-tertiary-container', textClass: 'text-on-tertiary-container', correct: 'recicla' },
   { id: 'box', name: 'Caja de Cartón', icon: 'inventory_2', image: '/images/semana3/reflexion/carton.webp', colorClass: 'bg-surface-variant', textClass: 'text-on-surface-variant', correct: 'recicla' },
-  { id: 'peel', name: 'Cáscara de Plátano', icon: 'nutrition', image: '/images/semana3/reflexion/platano.webp', colorClass: 'bg-error-container', textClass: 'text-on-error-container', correct: 'bota' },
-  { id: 'apple', name: 'Corazón de Manzana', icon: 'eco', image: '/images/semana3/reflexion/manzana.webp', colorClass: 'bg-error-container', textClass: 'text-on-error-container', correct: 'bota' },
+  { id: 'peel', name: 'Cáscara de Plátano', icon: 'nutrition', image: '/images/semana3/reflexion/platano.webp', colorClass: 'bg-tertiary-fixed', textClass: 'text-on-tertiary-fixed', correct: 'bota' },
+  { id: 'apple', name: 'Corazón de Manzana', icon: 'eco', image: '/images/semana3/reflexion/manzana.webp', colorClass: 'bg-tertiary-fixed', textClass: 'text-on-tertiary-fixed', correct: 'bota' },
   { id: 'newspaper', name: 'Periódico', icon: 'newspaper', image: '/images/semana3/reflexion/periodico.webp', colorClass: 'bg-surface-variant', textClass: 'text-on-surface-variant', correct: 'recicla' },
   { id: 'shoe', name: 'Zapato Viejo', icon: 'directions_run', image: '/images/semana3/reflexion/zapato.webp', colorClass: 'bg-tertiary-container', textClass: 'text-on-tertiary-container', correct: 'bota' },
-  { id: 'eggs', name: 'Cáscaras de Huevo', icon: 'egg_alt', image: '/images/semana3/reflexion/huevo.webp', colorClass: 'bg-error-container', textClass: 'text-on-error-container', correct: 'bota' },
+  { id: 'eggs', name: 'Cáscaras de Huevo', icon: 'egg_alt', image: '/images/semana3/reflexion/huevo.webp', colorClass: 'bg-tertiary-fixed', textClass: 'text-on-tertiary-fixed', correct: 'bota' },
   { id: 'bag', name: 'Bolsa de Plástico', icon: 'shopping_bag', image: '/images/semana3/reflexion/bolsa.webp', colorClass: 'bg-secondary-container', textClass: 'text-on-secondary-container', correct: 'recicla' },
   { id: 'milk', name: 'Cartón de Leche', icon: 'takeout_dining', image: '/images/semana3/reflexion/leche.webp', colorClass: 'bg-surface-variant', textClass: 'text-on-surface-variant', correct: 'recicla' },
   { id: 'toy', name: 'Juguete Roto', icon: 'toys', image: '/images/semana3/reflexion/juguete.webp', colorClass: 'bg-tertiary-container', textClass: 'text-on-tertiary-container', correct: 'bota' },
   { id: 'metalcan', name: 'Lata de Metal', icon: 'kitchen', image: '/images/semana3/reflexion/lata-metal.webp', colorClass: 'bg-secondary-container', textClass: 'text-on-secondary-container', correct: 'recicla' },
-  { id: 'leaves', name: 'Hojas Secas', icon: 'forest', image: '/images/semana3/reflexion/hojas.webp', colorClass: 'bg-error-container', textClass: 'text-on-error-container', correct: 'bota' },
+  { id: 'leaves', name: 'Hojas Secas', icon: 'forest', image: '/images/semana3/reflexion/hojas.webp', colorClass: 'bg-tertiary-fixed', textClass: 'text-on-tertiary-fixed', correct: 'bota' },
   { id: 'glassbottle', name: 'Botella de Vidrio', icon: 'liquor', image: '/images/semana3/reflexion/botella-vidrio.webp', colorClass: 'bg-primary-container', textClass: 'text-on-primary-container', correct: 'recicla' },
   { id: 'tire', name: 'Neumático Viejo', icon: 'tire_repair', image: '/images/semana3/reflexion/neumatico.webp', colorClass: 'bg-surface-variant', textClass: 'text-on-surface-variant', correct: 'reutiliza' },
   { id: 'emptyjar', name: 'Frasco Vacío', icon: 'inventory', image: '/images/semana3/reflexion/frasco-vacio.webp', colorClass: 'bg-primary-container', textClass: 'text-on-primary-container', correct: 'reutiliza' },
   { id: 'cerealbox', name: 'Caja de Cereal', icon: 'dashboard', image: '/images/semana3/reflexion/cereal.webp', colorClass: 'bg-tertiary-container', textClass: 'text-on-tertiary-container', correct: 'reutiliza' },
   { id: 'glassvase', name: 'Jarrón de Vidrio', icon: 'local_florist', image: '/images/semana3/reflexion/jarron.webp', colorClass: 'bg-secondary-container', textClass: 'text-on-secondary-container', correct: 'reutiliza' },
-  { id: 'fabric', name: 'Retazos de Tela', icon: 'dry_cleaning', image: '/images/semana3/reflexion/tela.webp', colorClass: 'bg-error-container', textClass: 'text-on-error-container', correct: 'reutiliza' },
+  { id: 'fabric', name: 'Retazos de Tela', icon: 'dry_cleaning', image: '/images/semana3/reflexion/tela.webp', colorClass: 'bg-tertiary-fixed', textClass: 'text-on-tertiary-fixed', correct: 'reutiliza' },
 ];
 
 const ACTION_LABELS: Record<CardAction, { label: string; icon: string; container: ContainerClass; text: TextClass }> = {
@@ -86,7 +88,6 @@ export default function ReflectionCardsGamePage() {
   const [completed, setCompleted] = useState<Set<string>>(new Set());
   const [score, setScore] = useState(0);
   const [feedback, setFeedback] = useState<null | 'correct' | 'wrong'>(null);
-  useEffect(() => { playFromFeedback(feedback); }, [feedback]);
   const [shakeKey, setShakeKey] = useState(0);
   const [gameFinished, setGameFinished] = useState(false);
 
@@ -106,8 +107,10 @@ export default function ReflectionCardsGamePage() {
   const handleAnswer = (action: CardAction) => {
     if (!activeCard) return;
     if (action === activeCard.correct) {
+      playSuccess();
       setFeedback('correct');
     } else {
+      playMiss();
       setFeedback('wrong');
       setShakeKey((k) => k + 1);
       setTimeout(() => {
@@ -121,6 +124,7 @@ export default function ReflectionCardsGamePage() {
     const next = new Set(completed);
     next.add(activeCard.id);
     setCompleted(next);
+    if (next.size === CARDS.length) playLevelUp();
     setScore((s) => s + 1);
     setActiveCardId(null);
     setFeedback(null);

@@ -1,4 +1,5 @@
 import { useNavigate } from 'react-router-dom';
+import { playClick } from '../services/sounds';
 
 /**
  * ReflectionCardsStartPage — Pantalla de inicio de "Tarjetas de Reflexión".
@@ -10,7 +11,7 @@ export default function ReflectionCardsStartPage() {
   const navigate = useNavigate();
 
   const handleBack = () => navigate('/semana/3');
-  const handlePlay = () => navigate('/semana/3/reflection-cards/play');
+  const handlePlay = () => { playClick(); navigate('/semana/3/reflection-cards/play'); };
 
   return (
     <div
