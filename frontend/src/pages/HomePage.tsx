@@ -86,7 +86,7 @@ export default function HomePage() {
       </aside>
 
       {/* Main Canvas */}
-      <main className="flex-1 flex flex-col items-center px-margin-mobile md:px-margin-desktop py-lg pb-40 md:pb-32 relative overflow-y-auto overflow-x-hidden scroll-pb-28">
+      <main className="flex-1 flex flex-col items-center px-margin-mobile md:px-margin-desktop py-lg pb-40 md:pb-32 relative overflow-x-clip scroll-pb-28">
         {/* Character Guide */}
         <div className="flex flex-col items-center mb-8 z-40">
           <div className="bg-white border-4 border-surface-container-highest rounded-2xl p-4 mb-4 shadow-lg relative max-w-xs">
