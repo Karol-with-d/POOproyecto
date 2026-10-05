@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import KidBackButton from '../components/KidBackButton';
+import { playPop, playSuccess } from '../services/sounds';
 
 
 const SENSOR_IMAGES = {
@@ -546,8 +547,10 @@ export default function MartaDialogoPage() {
               <button
                 onClick={() => {
                   if (isLast) {
+                    playSuccess();
                     navigate('/semana/2');
                   } else {
+                    playPop();
                     goTo(idx + 1);
                   }
                 }}

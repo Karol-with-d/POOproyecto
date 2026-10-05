@@ -1,6 +1,7 @@
 import { useState, useRef, useCallback, useEffect, type MouseEvent } from 'react';
 import { useNavigate } from 'react-router-dom';
 import KidBackButton from '../components/KidBackButton';
+import { playLevelUp, playMiss, playSuccess } from '../services/sounds';
 
 interface GameItem {
   id: string;
@@ -410,6 +411,7 @@ export default function ColeccionandoObjetos() {
     (x: number, y: number, itemId: string) => {
       const newId = wrongIdRef.current++;
 
+      playMiss();
       setWrongIndicators((previous) => [...previous, { id: newId, x, y }]);
       setShakingItem(itemId);
       setSpeechText('¡Ups! Inténtalo otra vez.');
@@ -449,6 +451,8 @@ export default function ColeccionandoObjetos() {
     }
 
     setIsProcessing(true);
+    if (currentRoundIndex === rounds.length - 1) playLevelUp();
+    else playSuccess();
     createSparkles(x, y);
 
     setFoundObjects((previous) => {
