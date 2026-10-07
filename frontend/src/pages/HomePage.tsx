@@ -52,7 +52,8 @@ export default function HomePage() {
       {/* Sidebar (Desktop) */}
       <aside className="hidden md:flex flex-col w-64 border-r-4 border-surface-container-highest h-screen sticky top-0 p-6 z-50 bg-surface-bright">
         <div className="mb-8">
-          <h2 className="font-headline-md text-primary uppercase tracking-tighter text-headline-md">Aventura científica</h2>
+          <p className="text-xs font-bold tracking-[0.18em] text-primary">GRAVCI</p>
+          <h2 className="font-headline-md text-primary uppercase tracking-tighter text-headline-md">Gran Aventura Científica</h2>
         </div>
         <nav className="flex flex-col gap-4">
           <Link
@@ -115,6 +116,7 @@ export default function HomePage() {
 
         {/* Section Title */}
         <div className="w-full max-w-2xl flex flex-col items-center mb-4 md:mb-xl">
+          <p className="text-sm font-bold tracking-[0.22em] text-primary mb-1">GRAVCI</p>
           <h1 className="font-headline-md text-headline-md text-on-surface text-center font-extrabold uppercase tracking-wide">
             Nuestra Gran Aventura Científica
           </h1>
