@@ -54,7 +54,10 @@ export default function LoginPage() {
   return (
     <div className="min-h-screen flex flex-col overflow-x-hidden bg-transparent text-on-background selection:bg-primary-container selection:text-on-primary-container">
       <header className="text-primary font-headline-md text-headline-md font-bold flex justify-between items-center w-full px-margin-mobile md:px-margin-desktop py-base z-50">
-        <span className="font-headline-md text-headline-md font-bold text-primary">Aventura científica</span>
+        <div className="flex flex-col leading-tight">
+          <span className="font-headline-md text-headline-md font-bold tracking-wide text-primary">GRAVCI</span>
+          <span className="text-sm font-semibold text-on-surface-variant">Gran Aventura Científica</span>
+        </div>
       </header>
 
       {/* Main Content Canvas */}
